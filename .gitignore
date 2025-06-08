@@ -12,7 +12,7 @@
 .externalNativeBuild
 .cxx
 local.properties
-/gradle
+
 /captures
 /build
 /local.properties
