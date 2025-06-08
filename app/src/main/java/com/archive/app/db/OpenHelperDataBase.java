@@ -8,12 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.archive.app.model.User;
+import com.archive.app.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.archive.app.model.Category;
-import com.archive.app.model.Note;
 
 public class OpenHelperDataBase extends SQLiteOpenHelper {
 
@@ -26,36 +24,14 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
     public static final String COLUMN_USER_NAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
 
-    // 分类表
-    public static final String TABLE_CATEGORIES = "categories";
-    public static final String COLUMN_CATEGORY_ID = "_id";
-    public static final String COLUMN_CATEGORY_NAME = "name";
-    public static final String COLUMN_CATEGORY_USER_ID = "user_id";
-
-    // 笔记表
-    public static final String TABLE_NOTES = "notes";
-    public static final String COLUMN_NOTE_ID = "_id";
-    public static final String COLUMN_NOTE_TITLE = "title";
-    public static final String COLUMN_NOTE_CONTENT = "content";
-    public static final String COLUMN_NOTE_IMAGE = "image";
-    public static final String COLUMN_NOTE_CATEGORY_ID = "category_id";
-    public static final String COLUMN_NOTE_USER_ID = "user_id";
-    public static final String COLUMN_NOTE_CREATED_AT = "created_at";
-    public static final String COLUMN_NOTE_UPDATED_AT = "updated_at";
-
-    // 回收站表
-    public static final String TABLE_DELETED_NOTES = "deleted_notes";
-    public static final String COLUMN_DELETED_NOTE_ID = "_id"; // The original note ID
-    public static final String COLUMN_DELETED_NOTE_TITLE = "title";
-    public static final String COLUMN_DELETED_NOTE_CONTENT = "content";
-    public static final String COLUMN_DELETED_NOTE_IMAGE = "image";
-    public static final String COLUMN_DELETED_NOTE_CATEGORY_ID = "category_id";
-    public static final String COLUMN_DELETED_NOTE_USER_ID = "user_id";
-    public static final String COLUMN_DELETED_NOTE_CREATED_AT = "created_at";
-    public static final String COLUMN_DELETED_NOTE_UPDATED_AT = "updated_at";
-    public static final String COLUMN_DELETED_NOTE_DELETED_AT = "deleted_at";
-
-
+    // 学生表
+    public static final String TABLE_STUDENTS = "students";
+    public static final String COLUMN_STUDENT_PK_ID = "_id";
+    public static final String COLUMN_STUDENT_NAME = "name";
+    public static final String COLUMN_STUDENT_ID = "student_id";
+    public static final String COLUMN_STUDENT_PHONE = "phone";
+    public static final String COLUMN_STUDENT_BIO = "bio";
+    public static final String COLUMN_STUDENT_AVATAR_PATH = "avatar_path";
 
     // 创建用户表的SQL语句
     private static final String TABLE_CREATE_USERS =
@@ -64,51 +40,22 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
                     COLUMN_USER_NAME + " TEXT NOT NULL UNIQUE, " +
                     COLUMN_USER_PASSWORD + " TEXT NOT NULL)";
 
-    // 创建分类表的SQL语句
-    private static final String TABLE_CREATE_CATEGORIES =
-            "CREATE TABLE " + TABLE_CATEGORIES + " (" +
-                    COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_CATEGORY_NAME + " TEXT NOT NULL, " +
-                    COLUMN_CATEGORY_USER_ID + " INTEGER, " +
-                    "FOREIGN KEY(" + COLUMN_CATEGORY_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "))";
-
-    // 创建笔记表的SQL语句
-    private static final String TABLE_CREATE_NOTES =
-            "CREATE TABLE " + TABLE_NOTES + " (" +
-                    COLUMN_NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_NOTE_TITLE + " TEXT NOT NULL, " +
-                    COLUMN_NOTE_CONTENT + " TEXT, " +
-                    COLUMN_NOTE_IMAGE + " BLOB, " +
-                    COLUMN_NOTE_CATEGORY_ID + " INTEGER, " +
-                    COLUMN_NOTE_USER_ID + " INTEGER, " +
-                    COLUMN_NOTE_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
-                    COLUMN_NOTE_UPDATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
-                    "FOREIGN KEY(" + COLUMN_NOTE_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_CATEGORY_ID + "), " +
-                    "FOREIGN KEY(" + COLUMN_NOTE_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "))";
-
-    // 创建回收站表的SQL语句
-    private static final String TABLE_CREATE_DELETED_NOTES =
-            "CREATE TABLE " + TABLE_DELETED_NOTES + " (" +
-                    COLUMN_DELETED_NOTE_ID + " INTEGER PRIMARY KEY, " +
-                    COLUMN_DELETED_NOTE_TITLE + " TEXT NOT NULL, " +
-                    COLUMN_DELETED_NOTE_CONTENT + " TEXT, " +
-                    COLUMN_DELETED_NOTE_IMAGE + " BLOB, " +
-                    COLUMN_DELETED_NOTE_CATEGORY_ID + " INTEGER, " +
-                    COLUMN_DELETED_NOTE_USER_ID + " INTEGER, " +
-                    COLUMN_DELETED_NOTE_CREATED_AT + " DATETIME, " +
-                    COLUMN_DELETED_NOTE_UPDATED_AT + " DATETIME, " +
-                    COLUMN_DELETED_NOTE_DELETED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
-
-
+    // 创建学生表的SQL语句
+    private static final String TABLE_CREATE_STUDENTS =
+            "CREATE TABLE " + TABLE_STUDENTS + " (" +
+                    COLUMN_STUDENT_PK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_STUDENT_NAME + " TEXT NOT NULL, " +
+                    COLUMN_STUDENT_ID + " TEXT NOT NULL UNIQUE, " +
+                    COLUMN_STUDENT_PHONE + " TEXT, " +
+                    COLUMN_STUDENT_BIO + " TEXT, " +
+                    COLUMN_STUDENT_AVATAR_PATH + " TEXT)";
 
     private static final String TAG = "OpenHelperDataBase";
-
 
     public OpenHelperDataBase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         Log.d(TAG, "数据库帮助类已创建。");
     }
-
 
     // 用户注册
     public boolean registerUser(String username, String password) {
@@ -170,17 +117,9 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE_USERS);
         Log.i(TAG, "用户表 (" + TABLE_USERS + ") 创建成功。");
 
-        Log.i(TAG, "正在创建分类表 (" + TABLE_CATEGORIES + ")...");
-        db.execSQL(TABLE_CREATE_CATEGORIES);
-        Log.i(TAG, "分类表 (" + TABLE_CATEGORIES + ") 创建成功。");
-
-        Log.i(TAG, "正在创建笔记表 (" + TABLE_NOTES + ")...");
-        db.execSQL(TABLE_CREATE_NOTES);
-        Log.i(TAG, "笔记表 (" + TABLE_NOTES + ") 创建成功。");
-
-        Log.i(TAG, "正在创建回收站表 (" + TABLE_DELETED_NOTES + ")...");
-        db.execSQL(TABLE_CREATE_DELETED_NOTES);
-        Log.i(TAG, "回收站表 (" + TABLE_DELETED_NOTES + ") 创建成功。");
+        Log.i(TAG, "正在创建学生表 (" + TABLE_STUDENTS + ")...");
+        db.execSQL(TABLE_CREATE_STUDENTS);
+        Log.i(TAG, "学生表 (" + TABLE_STUDENTS + ") 创建成功。");
 
         Log.i(TAG, "数据库表创建完成，正在插入模拟数据...");
         insertMockData(db);
@@ -194,47 +133,27 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
         userValues.put(COLUMN_USER_PASSWORD, "123456");
         long userId = db.insert(TABLE_USERS, null, userValues);
 
-        if (userId != -1) {
-            // 插入分类
-            ContentValues categoryValues1 = new ContentValues();
-            categoryValues1.put(COLUMN_CATEGORY_NAME, "工作笔记");
-            categoryValues1.put(COLUMN_CATEGORY_USER_ID, userId);
-            long categoryId1 = db.insert(TABLE_CATEGORIES, null, categoryValues1);
+        // 插入一些学生
+        ContentValues studentValues = new ContentValues();
+        studentValues.put(COLUMN_STUDENT_NAME, "张三");
+        studentValues.put(COLUMN_STUDENT_ID, "2023001");
+        studentValues.put(COLUMN_STUDENT_PHONE, "13800138000");
+        studentValues.put(COLUMN_STUDENT_BIO, "这是张三的简介。");
+        db.insert(TABLE_STUDENTS, null, studentValues);
 
-            ContentValues categoryValues2 = new ContentValues();
-            categoryValues2.put(COLUMN_CATEGORY_NAME, "生活杂记");
-            categoryValues2.put(COLUMN_CATEGORY_USER_ID, userId);
-            long categoryId2 = db.insert(TABLE_CATEGORIES, null, categoryValues2);
-
-            // 插入笔记
-            if (categoryId1 != -1) {
-                ContentValues noteValues1 = new ContentValues();
-                noteValues1.put(COLUMN_NOTE_TITLE, "关于安卓开发的第一次会议");
-                noteValues1.put(COLUMN_NOTE_CONTENT, "会议记录：讨论了MVP架构，并确定了数据库设计。");
-                noteValues1.put(COLUMN_NOTE_USER_ID, userId);
-                noteValues1.put(COLUMN_NOTE_CATEGORY_ID, categoryId1);
-                db.insert(TABLE_NOTES, null, noteValues1);
-            }
-
-            if (categoryId2 != -1) {
-                ContentValues noteValues2 = new ContentValues();
-                noteValues2.put(COLUMN_NOTE_TITLE, "购物清单");
-                noteValues2.put(COLUMN_NOTE_CONTENT, "牛奶、面包、水果。");
-                noteValues2.put(COLUMN_NOTE_USER_ID, userId);
-                noteValues2.put(COLUMN_NOTE_CATEGORY_ID, categoryId2);
-                db.insert(TABLE_NOTES, null, noteValues2);
-            }
-        }
+        studentValues.put(COLUMN_STUDENT_NAME, "李四");
+        studentValues.put(COLUMN_STUDENT_ID, "2023002");
+        studentValues.put(COLUMN_STUDENT_PHONE, "13900139000");
+        studentValues.put(COLUMN_STUDENT_BIO, "这是李四的简介。");
+        db.insert(TABLE_STUDENTS, null, studentValues);
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "正在升级数据库，版本从 " + oldVersion + " 到 " + newVersion + "。旧数据将被删除。");
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DELETED_NOTES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
 
         Log.i(TAG, "旧表已删除。");
         onCreate(db);
@@ -315,277 +234,157 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
         return rowsAffected;
     }
 
-    // ---- 分类表 (Category) 操作 ----
+    // ---- 学生表 (Student) 操作 ----
 
-    public long addCategory(String name, long userId) {
+    /**
+     * 新增学生信息
+     * @param student 学生对象 (不含id)
+     * @return 新插入行的id，如果发生错误则为-1
+     */
+    public long addStudent(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_CATEGORY_NAME, name);
-        values.put(COLUMN_CATEGORY_USER_ID, userId);
-        long id = db.insert(TABLE_CATEGORIES, null, values);
-        db.close();
-        return id;
-    }
+        values.put(COLUMN_STUDENT_NAME, student.getName());
+        values.put(COLUMN_STUDENT_ID, student.getStudentId());
+        values.put(COLUMN_STUDENT_PHONE, student.getPhone());
+        values.put(COLUMN_STUDENT_BIO, student.getBio());
+        values.put(COLUMN_STUDENT_AVATAR_PATH, student.getAvatarPath());
 
-    public List<Category> getAllCategories(long userId) {
-        List<Category> categoryList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_CATEGORIES, null, COLUMN_CATEGORY_USER_ID + "=?",
-                new String[]{String.valueOf(userId)}, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Category category = new Category();
-                category.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_ID)));
-                category.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_NAME)));
-                category.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_USER_ID)));
-                categoryList.add(category);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return categoryList;
-    }
-
-    public int updateCategory(long categoryId, String newName) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CATEGORY_NAME, newName);
-        int rows = db.update(TABLE_CATEGORIES, values, COLUMN_CATEGORY_ID + "=?",
-                new String[]{String.valueOf(categoryId)});
-        db.close();
-        return rows;
-    }
-
-    public void deleteCategory(long categoryId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        // 将该分类下的笔记的 category_id 设为 null
-        ContentValues values = new ContentValues();
-        values.putNull(COLUMN_NOTE_CATEGORY_ID);
-        db.update(TABLE_NOTES, values, COLUMN_NOTE_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
-
-        // 删除分类
-        db.delete(TABLE_CATEGORIES, COLUMN_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
-        db.close();
-    }
-
-
-    // ---- 笔记表 (Note) 操作 ----
-
-    public long addNote(Note note) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NOTE_TITLE, note.getTitle());
-        values.put(COLUMN_NOTE_CONTENT, note.getContent());
-        values.put(COLUMN_NOTE_IMAGE, note.getImage());
-        values.put(COLUMN_NOTE_CATEGORY_ID, note.getCategoryId());
-        values.put(COLUMN_NOTE_USER_ID, note.getUserId());
-        long id = db.insert(TABLE_NOTES, null, values);
-        db.close();
-        return id;
-    }
-
-    public Note getNote(long noteId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(noteId)}, null, null, null);
-        Note note = null;
-        if (cursor.moveToFirst()) {
-            note = cursorToNote(cursor);
-        }
-        cursor.close();
-        db.close();
-        return note;
-    }
-
-    public List<Note> getAllNotes(long userId) {
-        List<Note> noteList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_USER_ID + "=?",
-                new String[]{String.valueOf(userId)}, null, null, COLUMN_NOTE_UPDATED_AT + " DESC");
-        if (cursor.moveToFirst()) {
-            do {
-                noteList.add(cursorToNote(cursor));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return noteList;
-    }
-
-    public List<Note> getNotesByCategory(long userId, long categoryId) {
-        List<Note> noteList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_USER_ID + "=? AND " + COLUMN_NOTE_CATEGORY_ID + "=?",
-                new String[]{String.valueOf(userId), String.valueOf(categoryId)}, null, null, COLUMN_NOTE_UPDATED_AT + " DESC");
-        if (cursor.moveToFirst()) {
-            do {
-                noteList.add(cursorToNote(cursor));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return noteList;
-    }
-
-    public List<Note> searchNotes(long userId, String keyword) {
-        List<Note> noteList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        String selection = COLUMN_NOTE_USER_ID + "=? AND (" + COLUMN_NOTE_TITLE + " LIKE ? OR " + COLUMN_NOTE_CONTENT + " LIKE ?)";
-        String[] selectionArgs = {String.valueOf(userId), "%" + keyword + "%", "%" + keyword + "%"};
-        Cursor cursor = db.query(TABLE_NOTES, null, selection, selectionArgs, null, null, COLUMN_NOTE_UPDATED_AT + " DESC");
-        if (cursor.moveToFirst()) {
-            do {
-                noteList.add(cursorToNote(cursor));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return noteList;
-    }
-
-    public int updateNote(Note note) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NOTE_TITLE, note.getTitle());
-        values.put(COLUMN_NOTE_CONTENT, note.getContent());
-        values.put(COLUMN_NOTE_IMAGE, note.getImage());
-        values.put(COLUMN_NOTE_CATEGORY_ID, note.getCategoryId());
-        values.put(COLUMN_NOTE_UPDATED_AT, "CURRENT_TIMESTAMP");
-        int rows = db.update(TABLE_NOTES, values, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(note.getId())});
-        db.close();
-        return rows;
-    }
-
-    // 将笔记移动到回收站
-    public void deleteNote(long noteId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
+        long result = -1;
         try {
-            Note note = null;
-            // Query for the note inside the current transaction
-            Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(noteId)}, null, null, null);
-
-            if (cursor.moveToFirst()) {
-                note = cursorToNote(cursor);
+            result = db.insert(TABLE_STUDENTS, null, values);
+            if (result != -1) {
+                Log.i(TAG, "成功新增学生: " + student.getName());
+            } else {
+                Log.e(TAG, "新增学生失败: " + student.getName());
             }
-            cursor.close();
-
-            if (note != null) {
-                ContentValues values = new ContentValues();
-                values.put(COLUMN_DELETED_NOTE_ID, note.getId());
-                values.put(COLUMN_DELETED_NOTE_TITLE, note.getTitle());
-                values.put(COLUMN_DELETED_NOTE_CONTENT, note.getContent());
-                values.put(COLUMN_DELETED_NOTE_IMAGE, note.getImage());
-                values.put(COLUMN_DELETED_NOTE_CATEGORY_ID, note.getCategoryId());
-                values.put(COLUMN_DELETED_NOTE_USER_ID, note.getUserId());
-                values.put(COLUMN_DELETED_NOTE_CREATED_AT, note.getCreatedAt());
-                values.put(COLUMN_DELETED_NOTE_UPDATED_AT, note.getUpdatedAt());
-                db.insert(TABLE_DELETED_NOTES, null, values);
-                db.delete(TABLE_NOTES, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(noteId)});
-                db.setTransactionSuccessful();
-            }
+        } catch (Exception e) {
+            Log.e(TAG, "addStudent: 新增学生时发生错误", e);
         } finally {
-            db.endTransaction();
             db.close();
         }
+        return result;
     }
 
-
-    // ---- 回收站 (DeletedNote) 操作 ----
-
-    public List<Note> getAllDeletedNotes(long userId) {
-        List<Note> deletedNoteList = new ArrayList<>();
+    /**
+     * 根据主键ID获取学生信息
+     * @param id 主键
+     * @return 学生对象，未找到则为null
+     */
+    public Student getStudent(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_DELETED_NOTES, null, COLUMN_DELETED_NOTE_USER_ID + "=?",
-                new String[]{String.valueOf(userId)}, null, null, COLUMN_DELETED_NOTE_DELETED_AT + " DESC");
-
-        if (cursor.moveToFirst()) {
-            do {
-                Note note = new Note();
-                note.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_ID)));
-                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_TITLE)));
-                note.setContent(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CONTENT)));
-                note.setImage(cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_IMAGE)));
-                note.setCategoryId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CATEGORY_ID)));
-                note.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_USER_ID)));
-                note.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CREATED_AT)));
-                note.setUpdatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_UPDATED_AT)));
-                deletedNoteList.add(note);
-            } while (cursor.moveToNext());
+        Student student = null;
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_STUDENTS, null,
+                    COLUMN_STUDENT_PK_ID + "=?", new String[]{String.valueOf(id)},
+                    null, null, null);
+            if (cursor.moveToFirst()) {
+                student = cursorToStudent(cursor);
+                Log.i(TAG, "成功获取学生信息: " + student.getName());
+            } else {
+                Log.w(TAG, "未找到ID为 " + id + " 的学生");
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getStudent: 查询学生时发生错误", e);
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
         }
-        cursor.close();
-        db.close();
-        return deletedNoteList;
+        return student;
     }
 
-    // 从回收站恢复笔记
-    public void restoreNote(long noteId) {
+    /**
+     * 获取所有学生信息列表
+     * @return 学生对象列表
+     */
+    public List<Student> getAllStudents() {
+        List<Student> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_STUDENTS, null, null, null, null, null, COLUMN_STUDENT_PK_ID + " DESC");
+            if (cursor.moveToFirst()) {
+                do {
+                    list.add(cursorToStudent(cursor));
+                } while (cursor.moveToNext());
+            }
+            Log.i(TAG, "成功获取所有学生记录，数量: " + list.size());
+        } catch (Exception e) {
+            Log.e(TAG, "getAllStudents: 查询所有学生时发生错误", e);
+        } finally {
+            if (cursor != null) cursor.close();
+            // db is not closed here to allow cursor to be used by adapter, close it later
+        }
+        return list;
+    }
+
+    /**
+     * 更新学生信息
+     * @param student 包含新信息的学生对象 (必须有id)
+     * @return 受影响的行数
+     */
+    public int updateStudent(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
-        // 查找回收站中的笔记
-        Cursor cursor = db.query(TABLE_DELETED_NOTES, null, COLUMN_DELETED_NOTE_ID + "=?", new String[]{String.valueOf(noteId)}, null, null, null);
-        if (cursor.moveToFirst()) {
-            // 将其重新插入笔记表
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_NOTE_ID, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_ID)));
-            values.put(COLUMN_NOTE_TITLE, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_TITLE)));
-            values.put(COLUMN_NOTE_CONTENT, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CONTENT)));
-            values.put(COLUMN_NOTE_IMAGE, cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_IMAGE)));
-            values.put(COLUMN_NOTE_CATEGORY_ID, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CATEGORY_ID)));
-            values.put(COLUMN_NOTE_USER_ID, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_USER_ID)));
-            values.put(COLUMN_NOTE_CREATED_AT, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CREATED_AT)));
-            values.put(COLUMN_NOTE_UPDATED_AT, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_UPDATED_AT)));
-
-            db.insertWithOnConflict(TABLE_NOTES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-            // 从回收站删除
-            db.delete(TABLE_DELETED_NOTES, COLUMN_DELETED_NOTE_ID + "=?", new String[]{String.valueOf(noteId)});
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_STUDENT_NAME, student.getName());
+        values.put(COLUMN_STUDENT_ID, student.getStudentId());
+        values.put(COLUMN_STUDENT_PHONE, student.getPhone());
+        values.put(COLUMN_STUDENT_BIO, student.getBio());
+        values.put(COLUMN_STUDENT_AVATAR_PATH, student.getAvatarPath());
+        int rowsAffected = 0;
+        try {
+            rowsAffected = db.update(TABLE_STUDENTS, values, COLUMN_STUDENT_PK_ID + "=?",
+                    new String[]{String.valueOf(student.getId())});
+            if (rowsAffected > 0) {
+                Log.i(TAG, "学生信息更新成功, ID: " + student.getId());
+            } else {
+                Log.w(TAG, "学生信息更新失败或学生不存在, ID: " + student.getId());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "updateStudent: 更新学生信息时发生错误", e);
+        } finally {
+            db.close();
         }
-        cursor.close();
-        db.close();
+        return rowsAffected;
     }
 
-    // 从回收站永久删除笔记
-    public void permanentlyDeleteNote(long noteId) {
+    /**
+     * 删除学生信息
+     * @param id 要删除的学生的ID
+     * @return 如果删除成功返回true
+     */
+    public boolean deleteStudent(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_DELETED_NOTES, COLUMN_DELETED_NOTE_ID + "=?", new String[]{String.valueOf(noteId)});
-        db.close();
-    }
-
-    // ---- 统计功能 ----
-    public int getNotesCount(long userId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NOTES + " WHERE " + COLUMN_NOTE_USER_ID + "=?", new String[]{String.valueOf(userId)});
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            count = cursor.getInt(0);
+        int result = -1;
+        try {
+            result = db.delete(TABLE_STUDENTS, COLUMN_STUDENT_PK_ID + "=?", new String[]{String.valueOf(id)});
+            if (result > 0) {
+                Log.i(TAG, "成功删除学生记录, ID: " + id);
+            } else {
+                Log.w(TAG, "删除学生记录失败或学生不存在, ID: " + id);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "deleteStudent: 删除学生时发生错误", e);
+        } finally {
+            db.close();
         }
-        cursor.close();
-        db.close();
-        return count;
+        return result > 0;
     }
 
-    public int getCategoriesCount(long userId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_CATEGORIES + " WHERE " + COLUMN_CATEGORY_USER_ID + "=?", new String[]{String.valueOf(userId)});
-        int count = 0;
-        if (cursor.moveToFirst()) {
-            count = cursor.getInt(0);
-        }
-        cursor.close();
-        db.close();
-        return count;
-    }
-
-    private Note cursorToNote(Cursor cursor) {
-        Note note = new Note();
-        note.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_NOTE_ID)));
-        note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_TITLE)));
-        note.setContent(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_CONTENT)));
-        note.setImage(cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_NOTE_IMAGE)));
-        note.setCategoryId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_NOTE_CATEGORY_ID)));
-        note.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_NOTE_USER_ID)));
-        note.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_CREATED_AT)));
-        note.setUpdatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_UPDATED_AT)));
-        return note;
+    /**
+     * 将Cursor转换成Student对象
+     * @param cursor 数据集
+     * @return Student对象
+     */
+    private Student cursorToStudent(Cursor cursor) {
+        Student student = new Student();
+        student.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_PK_ID)));
+        student.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_NAME)));
+        student.setStudentId(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_ID)));
+        student.setPhone(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_PHONE)));
+        student.setBio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_BIO)));
+        student.setAvatarPath(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_AVATAR_PATH)));
+        return student;
     }
 } 
