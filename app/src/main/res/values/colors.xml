@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFFFF</color>
+    <color name="colorPrimary">#F8006C</color>
+    <color name="colorAccent">#365FF4</color>
+    <color name="gray">#A7A7A9</color>
+
+    <!-- Calculator Specific Colors -->
+    <!-- Backgrounds for buttons -->
+    <color name="calculator_digit_bg_color">#E0E0E0</color> <!-- Light gray for digits -->
+    <color name="calculator_operator_bg_color">#FF9800</color> <!-- Orange for operators -->
+    <color name="calculator_special_bg_color">#B0BEC5</color> <!-- Bluish gray for C, %, etc. -->
+    
+    <!-- Text colors for buttons -->
+    <color name="calculator_digit_text_color">#000000</color> <!-- Black text for digits -->
+    <color name="calculator_operator_text_color">#FFFFFF</color> <!-- White text for operators -->
+    <color name="calculator_special_text_color">#000000</color> <!-- Black text for special -->
+
+    <!-- General button background (fallback or if not overridden by specific types) -->
+    <color name="calculator_default_button_bg_color">#D3D3D3</color>
+</resources>

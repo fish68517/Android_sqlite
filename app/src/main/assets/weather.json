@@ -1,0 +1,29 @@
+{
+  "北京": {
+    "city": "北京",
+    "weather": "晴天",
+    "temp_low": "26℃",
+    "temp_high": "32℃",
+    "level": "3级",
+    "aqi": "98",
+    "icon": "sunny"
+  },
+  "上海": {
+    "city": "上海",
+    "weather": "多云",
+    "temp_low": "28℃",
+    "temp_high": "34℃",
+    "level": "2级",
+    "aqi": "80",
+    "icon": "sunny"
+  },
+  "广州": {
+    "city": "广州",
+    "weather": "小雨",
+    "temp_low": "27℃",
+    "temp_high": "33℃",
+    "level": "1级",
+    "aqi": "60",
+    "icon": "sunny"
+  }
+}
