@@ -69,8 +69,7 @@ public class UserManageFragment extends Fragment {
         new AlertDialog.Builder(getContext())
                 .setTitle("用户详情")
                 .setMessage("用户ID: " + record.getId() +
-                        "\n用户名: " + record.getUsername() +
-                        "\n角色: " + record.getRole())
+                        "\n用户名: " + record.getUsername())
                 .setPositiveButton("确定", null)
                 .show();
     }
@@ -101,7 +100,7 @@ public class UserManageFragment extends Fragment {
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             User record = data.get(position);
             holder.tvUsername.setText("用户名: " + record.getUsername());
-            holder.tvRole.setText("角色: " + record.getRole());
+
             holder.btnView.setOnClickListener(v -> listener.onView(record));
             holder.btnDelete.setOnClickListener(v -> listener.onDelete(record));
         }

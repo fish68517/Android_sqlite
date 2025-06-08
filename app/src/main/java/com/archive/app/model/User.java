@@ -4,14 +4,14 @@ public class User {
     public long id;
     public String username;
     public String password;
-    public String role; // "用户" 或 "管理员"
+
 
     public User() {}
 
-    public User(String username, String password, String role) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = role;
+
     }
 
     public long getId() {
@@ -38,11 +38,4 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 } 

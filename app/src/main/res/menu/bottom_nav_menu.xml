@@ -3,13 +3,10 @@
     <item
         android:id="@+id/nav_home"
         android:icon="@android:drawable/ic_menu_compass"
-        android:title="首页"/>
+        android:title="笔记"/>
+
     <item
-        android:id="@+id/nav_books"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="图书"/>
-    <item
-        android:id="@+id/nav_categories"
+        android:id="@+id/nav_category"
         android:icon="@android:drawable/ic_menu_mapmode"
         android:title="分类"/>
     <item

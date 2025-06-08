@@ -8,89 +8,98 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.archive.app.model.User;
-import com.archive.app.model.Book;
-import com.archive.app.model.Category;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.archive.app.model.Category;
+import com.archive.app.model.Note;
 
 public class OpenHelperDataBase extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "textbook_system.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // 用户表
     public static final String TABLE_USERS = "users";
     public static final String COLUMN_USER_ID = "_id";
     public static final String COLUMN_USER_NAME = "username";
     public static final String COLUMN_USER_PASSWORD = "password";
-    public static final String COLUMN_USER_ROLE = "role";
 
-    // 管理员表
-    public static final String TABLE_ADMIN = "admin";
-    public static final String COLUMN_ADMIN_ID = "_id";
-    public static final String COLUMN_ADMIN_USERNAME = "username";
-    public static final String COLUMN_ADMIN_PASSWORD = "password";
-    public static final String COLUMN_ADMIN_REMEMBER_PASSWORD = "remember_password";
-    public static final String COLUMN_ADMIN_CREATE_TIME = "create_time";
-
-    // 图书分类表
-    public static final String TABLE_CATEGORY = "category";
+    // 分类表
+    public static final String TABLE_CATEGORIES = "categories";
     public static final String COLUMN_CATEGORY_ID = "_id";
     public static final String COLUMN_CATEGORY_NAME = "name";
-    public static final String COLUMN_CATEGORY_DESCRIPTION = "description";
+    public static final String COLUMN_CATEGORY_USER_ID = "user_id";
 
-    // 图书表
-    public static final String TABLE_BOOK = "book";
-    public static final String COLUMN_BOOK_ID = "_id";
-    public static final String COLUMN_BOOK_TITLE = "title";
-    public static final String COLUMN_BOOK_AUTHOR = "author";
-    public static final String COLUMN_BOOK_ISBN = "isbn";
-    public static final String COLUMN_BOOK_COVER_IMAGE = "cover_image";
-    public static final String COLUMN_BOOK_DESCRIPTION = "description";
-    public static final String COLUMN_BOOK_PUBLISH_DATE = "publish_date";
-    public static final String COLUMN_BOOK_CATEGORY_ID = "category_id";
-    public static final String COLUMN_BOOK_CREATE_TIME = "create_time";
+    // 笔记表
+    public static final String TABLE_NOTES = "notes";
+    public static final String COLUMN_NOTE_ID = "_id";
+    public static final String COLUMN_NOTE_TITLE = "title";
+    public static final String COLUMN_NOTE_CONTENT = "content";
+    public static final String COLUMN_NOTE_IMAGE = "image";
+    public static final String COLUMN_NOTE_CATEGORY_ID = "category_id";
+    public static final String COLUMN_NOTE_USER_ID = "user_id";
+    public static final String COLUMN_NOTE_CREATED_AT = "created_at";
+    public static final String COLUMN_NOTE_UPDATED_AT = "updated_at";
+
+    // 回收站表
+    public static final String TABLE_DELETED_NOTES = "deleted_notes";
+    public static final String COLUMN_DELETED_NOTE_ID = "_id"; // The original note ID
+    public static final String COLUMN_DELETED_NOTE_TITLE = "title";
+    public static final String COLUMN_DELETED_NOTE_CONTENT = "content";
+    public static final String COLUMN_DELETED_NOTE_IMAGE = "image";
+    public static final String COLUMN_DELETED_NOTE_CATEGORY_ID = "category_id";
+    public static final String COLUMN_DELETED_NOTE_USER_ID = "user_id";
+    public static final String COLUMN_DELETED_NOTE_CREATED_AT = "created_at";
+    public static final String COLUMN_DELETED_NOTE_UPDATED_AT = "updated_at";
+    public static final String COLUMN_DELETED_NOTE_DELETED_AT = "deleted_at";
+
+
 
     // 创建用户表的SQL语句
     private static final String TABLE_CREATE_USERS =
             "CREATE TABLE " + TABLE_USERS + " (" +
                     COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_USER_NAME + " TEXT NOT NULL UNIQUE, " +
-                    COLUMN_USER_PASSWORD + " TEXT NOT NULL, " +
-                    COLUMN_USER_ROLE + " TEXT NOT NULL);";
+                    COLUMN_USER_PASSWORD + " TEXT NOT NULL)";
 
-    // 创建管理员表的SQL语句
-    private static final String TABLE_CREATE_ADMIN =
-            "CREATE TABLE " + TABLE_ADMIN + " (" +
-                    COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_ADMIN_USERNAME + " TEXT NOT NULL UNIQUE, " +
-                    COLUMN_ADMIN_PASSWORD + " TEXT NOT NULL, " +
-                    COLUMN_ADMIN_REMEMBER_PASSWORD + " INTEGER DEFAULT 0, " +
-                    COLUMN_ADMIN_CREATE_TIME + " TEXT DEFAULT CURRENT_TIMESTAMP);";
-
-    // 创建图书分类表的SQL语句
-    private static final String TABLE_CREATE_CATEGORY =
-            "CREATE TABLE " + TABLE_CATEGORY + " (" +
+    // 创建分类表的SQL语句
+    private static final String TABLE_CREATE_CATEGORIES =
+            "CREATE TABLE " + TABLE_CATEGORIES + " (" +
                     COLUMN_CATEGORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_CATEGORY_NAME + " TEXT NOT NULL, " +
-                    COLUMN_CATEGORY_DESCRIPTION + " TEXT);";
+                    COLUMN_CATEGORY_USER_ID + " INTEGER, " +
+                    "FOREIGN KEY(" + COLUMN_CATEGORY_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "))";
 
-    // 创建图书表的SQL语句
-    private static final String TABLE_CREATE_BOOK =
-            "CREATE TABLE " + TABLE_BOOK + " (" +
-                    COLUMN_BOOK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_BOOK_TITLE + " TEXT NOT NULL, " +
-                    COLUMN_BOOK_AUTHOR + " TEXT NOT NULL, " +
-                    COLUMN_BOOK_ISBN + " TEXT NOT NULL UNIQUE, " +
-                    COLUMN_BOOK_COVER_IMAGE + " TEXT, " +
-                    COLUMN_BOOK_DESCRIPTION + " TEXT, " +
-                    COLUMN_BOOK_PUBLISH_DATE + " TEXT, " +
-                    COLUMN_BOOK_CATEGORY_ID + " INTEGER, " +
-                    COLUMN_BOOK_CREATE_TIME + " TEXT DEFAULT CURRENT_TIMESTAMP, " +
-                    "FOREIGN KEY (" + COLUMN_BOOK_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORY + "(" + COLUMN_CATEGORY_ID + ") ON DELETE SET NULL);";
+    // 创建笔记表的SQL语句
+    private static final String TABLE_CREATE_NOTES =
+            "CREATE TABLE " + TABLE_NOTES + " (" +
+                    COLUMN_NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_NOTE_TITLE + " TEXT NOT NULL, " +
+                    COLUMN_NOTE_CONTENT + " TEXT, " +
+                    COLUMN_NOTE_IMAGE + " BLOB, " +
+                    COLUMN_NOTE_CATEGORY_ID + " INTEGER, " +
+                    COLUMN_NOTE_USER_ID + " INTEGER, " +
+                    COLUMN_NOTE_CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    COLUMN_NOTE_UPDATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP, " +
+                    "FOREIGN KEY(" + COLUMN_NOTE_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_CATEGORY_ID + "), " +
+                    "FOREIGN KEY(" + COLUMN_NOTE_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USER_ID + "))";
+
+    // 创建回收站表的SQL语句
+    private static final String TABLE_CREATE_DELETED_NOTES =
+            "CREATE TABLE " + TABLE_DELETED_NOTES + " (" +
+                    COLUMN_DELETED_NOTE_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_DELETED_NOTE_TITLE + " TEXT NOT NULL, " +
+                    COLUMN_DELETED_NOTE_CONTENT + " TEXT, " +
+                    COLUMN_DELETED_NOTE_IMAGE + " BLOB, " +
+                    COLUMN_DELETED_NOTE_CATEGORY_ID + " INTEGER, " +
+                    COLUMN_DELETED_NOTE_USER_ID + " INTEGER, " +
+                    COLUMN_DELETED_NOTE_CREATED_AT + " DATETIME, " +
+                    COLUMN_DELETED_NOTE_UPDATED_AT + " DATETIME, " +
+                    COLUMN_DELETED_NOTE_DELETED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP)";
+
+
 
     private static final String TAG = "OpenHelperDataBase";
 
@@ -102,12 +111,12 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
 
 
     // 用户注册
-    public boolean registerUser(String username, String password, String role) {
+    public boolean registerUser(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_NAME, username);
         values.put(COLUMN_USER_PASSWORD, password);
-        values.put(COLUMN_USER_ROLE, role);
+
         long result = -1;
         try {
             result = db.insert(TABLE_USERS, null, values);
@@ -125,20 +134,19 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
     }
 
     // 用户登录
-    public User loginUser(String username, String password, String role) {
+    public User loginUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         User user = null;
         Cursor cursor = null;
         try {
             cursor = db.query(TABLE_USERS, null,
-                    COLUMN_USER_NAME + "=? AND " + COLUMN_USER_PASSWORD + "=? AND " + COLUMN_USER_ROLE + "=?",
-                    new String[]{username, password, role}, null, null, null);
+                    COLUMN_USER_NAME + "=? AND " + COLUMN_USER_PASSWORD + "=?",
+                    new String[]{username, password}, null, null, null);
             if (cursor.moveToFirst()) {
                 user = new User();
                 user.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
                 user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)));
                 user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_PASSWORD)));
-                user.setRole(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ROLE)));
                 Log.i(TAG, "用户登录成功: " + username);
             } else {
                 Log.w(TAG, "用户登录失败或用户不存在: " + username);
@@ -162,94 +170,72 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
         db.execSQL(TABLE_CREATE_USERS);
         Log.i(TAG, "用户表 (" + TABLE_USERS + ") 创建成功。");
 
-        Log.i(TAG, "正在创建管理员表 (" + TABLE_ADMIN + ")...");
-        db.execSQL(TABLE_CREATE_ADMIN);
-        Log.i(TAG, "管理员表 (" + TABLE_ADMIN + ") 创建成功。");
-        insertInitialAdminData(db);
+        Log.i(TAG, "正在创建分类表 (" + TABLE_CATEGORIES + ")...");
+        db.execSQL(TABLE_CREATE_CATEGORIES);
+        Log.i(TAG, "分类表 (" + TABLE_CATEGORIES + ") 创建成功。");
 
-        Log.i(TAG, "正在创建图书分类表 (" + TABLE_CATEGORY + ")...");
-        db.execSQL(TABLE_CREATE_CATEGORY);
-        Log.i(TAG, "图书分类表 (" + TABLE_CATEGORY + ") 创建成功。");
-        insertInitialCategoryData(db);
+        Log.i(TAG, "正在创建笔记表 (" + TABLE_NOTES + ")...");
+        db.execSQL(TABLE_CREATE_NOTES);
+        Log.i(TAG, "笔记表 (" + TABLE_NOTES + ") 创建成功。");
 
-        Log.i(TAG, "正在创建图书表 (" + TABLE_BOOK + ")...");
-        db.execSQL(TABLE_CREATE_BOOK);
-        Log.i(TAG, "图书表 (" + TABLE_BOOK + ") 创建成功。");
-        insertInitialBookData(db);
+        Log.i(TAG, "正在创建回收站表 (" + TABLE_DELETED_NOTES + ")...");
+        db.execSQL(TABLE_CREATE_DELETED_NOTES);
+        Log.i(TAG, "回收站表 (" + TABLE_DELETED_NOTES + ") 创建成功。");
 
-        Log.i(TAG, "数据库表创建和初始数据插入完成。");
+        Log.i(TAG, "数据库表创建完成，正在插入模拟数据...");
+        insertMockData(db);
+        Log.i(TAG, "模拟数据插入完成。");
     }
 
-    private void insertInitialAdminData(SQLiteDatabase db) {
-        Log.i(TAG, "正在插入管理员初始数据...");
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_ADMIN_USERNAME, "admin");
-        values.put(COLUMN_ADMIN_PASSWORD, "123456");
-        values.put(COLUMN_ADMIN_REMEMBER_PASSWORD, 0);
-        long id = db.insert(TABLE_ADMIN, null, values);
-        if (id != -1) {
-            Log.i(TAG, "管理员初始数据插入成功, ID: " + id);
-        } else {
-            Log.e(TAG, "管理员初始数据插入失败。");
-        }
-    }
+    private void insertMockData(SQLiteDatabase db) {
+        // 插入一个用户
+        ContentValues userValues = new ContentValues();
+        userValues.put(COLUMN_USER_NAME, "testuser");
+        userValues.put(COLUMN_USER_PASSWORD, "123456");
+        long userId = db.insert(TABLE_USERS, null, userValues);
 
-    private void insertInitialCategoryData(SQLiteDatabase db) {
-        Log.i(TAG, "正在插入图书分类初始数据...");
-        String[][] categories = {
-                {"计算机", "计算机相关书籍"},
-                {"文学", "文学类书籍"},
-                {"历史", "历史类书籍"},
-                {"科学", "科学类书籍"}
-        };
-        for (String[] category : categories) {
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_CATEGORY_NAME, category[0]);
-            values.put(COLUMN_CATEGORY_DESCRIPTION, category[1]);
-            long id = db.insert(TABLE_CATEGORY, null, values);
-            if (id != -1) {
-                Log.i(TAG, "图书分类数据插入成功: " + category[0] + ", ID: " + id);
-            } else {
-                Log.e(TAG, "图书分类数据插入失败: " + category[0]);
+        if (userId != -1) {
+            // 插入分类
+            ContentValues categoryValues1 = new ContentValues();
+            categoryValues1.put(COLUMN_CATEGORY_NAME, "工作笔记");
+            categoryValues1.put(COLUMN_CATEGORY_USER_ID, userId);
+            long categoryId1 = db.insert(TABLE_CATEGORIES, null, categoryValues1);
+
+            ContentValues categoryValues2 = new ContentValues();
+            categoryValues2.put(COLUMN_CATEGORY_NAME, "生活杂记");
+            categoryValues2.put(COLUMN_CATEGORY_USER_ID, userId);
+            long categoryId2 = db.insert(TABLE_CATEGORIES, null, categoryValues2);
+
+            // 插入笔记
+            if (categoryId1 != -1) {
+                ContentValues noteValues1 = new ContentValues();
+                noteValues1.put(COLUMN_NOTE_TITLE, "关于安卓开发的第一次会议");
+                noteValues1.put(COLUMN_NOTE_CONTENT, "会议记录：讨论了MVP架构，并确定了数据库设计。");
+                noteValues1.put(COLUMN_NOTE_USER_ID, userId);
+                noteValues1.put(COLUMN_NOTE_CATEGORY_ID, categoryId1);
+                db.insert(TABLE_NOTES, null, noteValues1);
+            }
+
+            if (categoryId2 != -1) {
+                ContentValues noteValues2 = new ContentValues();
+                noteValues2.put(COLUMN_NOTE_TITLE, "购物清单");
+                noteValues2.put(COLUMN_NOTE_CONTENT, "牛奶、面包、水果。");
+                noteValues2.put(COLUMN_NOTE_USER_ID, userId);
+                noteValues2.put(COLUMN_NOTE_CATEGORY_ID, categoryId2);
+                db.insert(TABLE_NOTES, null, noteValues2);
             }
         }
     }
 
-    private void insertInitialBookData(SQLiteDatabase db) {
-        Log.i(TAG, "正在插入图书初始数据...");
-        Object[][] books = {
-                {"Java编程思想", "Bruce Eckel", "9787111213826", "book_java", "Java编程经典著作", "2007-06-01", 1},
-                {"红楼梦", "曹雪芹", "9787020002207", "book_ds", "中国古典四大名著之一", "1996-12-01", 2},
-                {"明朝那些事儿", "当年明月", "9787801655037", "book_android", "讲述明朝历史的通俗读物", "2009-04-01", 3},
-                {"时间简史", "史蒂芬·霍金", "9787535732309", "book_network", "探索宇宙奥秘的科普著作", "2010-04-01", 4},
-                {"算法导论", "Thomas H.Cormen", "9787111187776", "book_os", "计算机算法经典教材", "2009-07-01", 1}
-        };
-
-        for (Object[] bookData : books) {
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_BOOK_TITLE, (String) bookData[0]);
-            values.put(COLUMN_BOOK_AUTHOR, (String) bookData[1]);
-            values.put(COLUMN_BOOK_ISBN, (String) bookData[2]);
-            values.put(COLUMN_BOOK_COVER_IMAGE, (String) bookData[3]);
-            values.put(COLUMN_BOOK_DESCRIPTION, (String) bookData[4]);
-            values.put(COLUMN_BOOK_PUBLISH_DATE, (String) bookData[5]);
-            values.put(COLUMN_BOOK_CATEGORY_ID, (Integer) bookData[6]);
-            long id = db.insert(TABLE_BOOK, null, values);
-            if (id != -1) {
-                Log.i(TAG, "图书数据插入成功: " + bookData[0] + ", ID: " + id);
-            } else {
-                Log.e(TAG, "图书数据插入失败: " + bookData[0]);
-            }
-        }
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.w(TAG, "正在升级数据库，版本从 " + oldVersion + " 到 " + newVersion + "。旧数据将被删除。");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DELETED_NOTES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORIES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMIN);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOK);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
+
         Log.i(TAG, "旧表已删除。");
         onCreate(db);
     }
@@ -266,7 +252,7 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
                     User record = new User();
                     record.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
                     record.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)));
-                    record.setRole(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ROLE)));
+
                     list.add(record);
                 } while (cursor.moveToNext());
             }
@@ -331,430 +317,275 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
 
     // ---- 分类表 (Category) 操作 ----
 
-    /**
-     * 添加新的图书分类
-     * @param category Category对象
-     * @return 新分类的ID，如果失败则返回-1
-     */
-    public long addCategory(Category category) {
+    public long addCategory(String name, long userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_CATEGORY_NAME, category.getName());
-        values.put(COLUMN_CATEGORY_DESCRIPTION, category.getDescription());
-        long id = -1;
-        try {
-            id = db.insert(TABLE_CATEGORY, null, values);
-            if (id != -1) {
-                Log.i(TAG, "图书分类添加成功: " + category.getName() + ", ID: " + id);
-            } else {
-                Log.e(TAG, "图书分类添加失败: " + category.getName());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "addCategory: 添加图书分类时发生错误", e);
-        } finally {
-            db.close();
-        }
+        values.put(COLUMN_CATEGORY_NAME, name);
+        values.put(COLUMN_CATEGORY_USER_ID, userId);
+        long id = db.insert(TABLE_CATEGORIES, null, values);
+        db.close();
         return id;
     }
 
-    /**
-     * 根据ID获取分类信息
-     * @param categoryId 分类ID
-     * @return Category 对象，未找到则返回 null
-     */
-    public Category getCategoryById(long categoryId) {
+    public List<Category> getAllCategories(long userId) {
+        List<Category> categoryList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Category category = null;
-        Cursor cursor = null;
-        try {
-            cursor = db.query(TABLE_CATEGORY, null, COLUMN_CATEGORY_ID + "=?",
-                    new String[]{String.valueOf(categoryId)}, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                category = new Category();
-                category.setId((int) cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_ID)));
+        Cursor cursor = db.query(TABLE_CATEGORIES, null, COLUMN_CATEGORY_USER_ID + "=?",
+                new String[]{String.valueOf(userId)}, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Category category = new Category();
+                category.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_ID)));
                 category.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_NAME)));
-                category.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_DESCRIPTION)));
-                Log.i(TAG, "查询到分类: " + category.getName());
-            } else {
-                Log.w(TAG, "未查询到分类, ID: " + categoryId);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getCategoryById: 查询分类时发生错误", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            db.close();
+                category.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_USER_ID)));
+                categoryList.add(category);
+            } while (cursor.moveToNext());
         }
-        return category;
+        cursor.close();
+        db.close();
+        return categoryList;
     }
 
-    /**
-     * 获取所有图书分类
-     * @return Category列表
-     */
-    public List<Category> getAllCategories() {
-        List<Category> categories = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        try {
-            cursor = db.query(TABLE_CATEGORY, null, null, null, null, null, COLUMN_CATEGORY_NAME + " ASC");
-            if (cursor.moveToFirst()) {
-                do {
-                    Category category = new Category();
-                    category.setId((int) cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_ID)));
-                    category.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_NAME)));
-                    category.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_DESCRIPTION)));
-                    categories.add(category);
-                } while (cursor.moveToNext());
-            }
-            Log.i(TAG, "获取到 " + categories.size() + " 个分类");
-        } catch (Exception e) {
-            Log.e(TAG, "getAllCategories: 获取所有分类时发生错误", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            db.close();
-        }
-        return categories;
-    }
-
-    /**
-     * 更新分类信息
-     * @param category Category对象，必须包含ID
-     * @return 受影响的行数
-     */
-    public int updateCategory(Category category) {
+    public int updateCategory(long categoryId, String newName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_CATEGORY_NAME, category.getName());
-        values.put(COLUMN_CATEGORY_DESCRIPTION, category.getDescription());
-        int rowsAffected = 0;
-        try {
-            rowsAffected = db.update(TABLE_CATEGORY, values, COLUMN_CATEGORY_ID + "=?",
-                    new String[]{String.valueOf(category.getId())});
-            if (rowsAffected > 0) {
-                Log.i(TAG, "分类信息更新成功: " + category.getName());
-            } else {
-                Log.w(TAG, "分类信息更新失败或分类不存在: " + category.getName());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "updateCategory: 更新分类信息时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return rowsAffected;
+        values.put(COLUMN_CATEGORY_NAME, newName);
+        int rows = db.update(TABLE_CATEGORIES, values, COLUMN_CATEGORY_ID + "=?",
+                new String[]{String.valueOf(categoryId)});
+        db.close();
+        return rows;
     }
 
-    /**
-     * 删除分类
-     * 注意：如果分类下有图书，根据外键约束 (ON DELETE SET NULL)，相关图书的 category_id 会被设为 NULL。
-     * @param categoryId 分类ID
-     * @return 受影响的行数 (通常为1如果删除成功)
-     */
-    public int deleteCategory(long categoryId) {
+    public void deleteCategory(long categoryId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int rowsAffected = 0;
-        try {
-            rowsAffected = db.delete(TABLE_CATEGORY, COLUMN_CATEGORY_ID + "=?",
-                    new String[]{String.valueOf(categoryId)});
-            if (rowsAffected > 0) {
-                Log.i(TAG, "分类删除成功, ID: " + categoryId);
-            } else {
-                Log.w(TAG, "分类删除失败或分类不存在, ID: " + categoryId);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "deleteCategory: 删除分类时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return rowsAffected;
+        // 将该分类下的笔记的 category_id 设为 null
+        ContentValues values = new ContentValues();
+        values.putNull(COLUMN_NOTE_CATEGORY_ID);
+        db.update(TABLE_NOTES, values, COLUMN_NOTE_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
+
+        // 删除分类
+        db.delete(TABLE_CATEGORIES, COLUMN_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
+        db.close();
     }
 
-    // ---- 图书表 (Book) 操作 ----
 
-    /**
-     * 添加新图书
-     * @param book Book对象
-     * @return 新图书的ID，如果失败则返回-1
-     */
-    public long addBook(Book book) {
+    // ---- 笔记表 (Note) 操作 ----
+
+    public long addNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_BOOK_TITLE, book.getTitle());
-        values.put(COLUMN_BOOK_AUTHOR, book.getAuthor());
-        values.put(COLUMN_BOOK_ISBN, book.getIsbn());
-        values.put(COLUMN_BOOK_COVER_IMAGE, book.getCoverImage());
-        values.put(COLUMN_BOOK_DESCRIPTION, book.getDescription());
-        values.put(COLUMN_BOOK_PUBLISH_DATE, book.getPublishDate());
-        if (book.getCategoryId() > 0) {
-            values.put(COLUMN_BOOK_CATEGORY_ID, book.getCategoryId());
-        } else {
-            values.putNull(COLUMN_BOOK_CATEGORY_ID);
-        }
-
-        long id = -1;
-        try {
-            id = db.insert(TABLE_BOOK, null, values);
-            if (id != -1) {
-                Log.i(TAG, "图书添加成功: " + book.getTitle() + ", ID: " + id);
-            } else {
-                Log.e(TAG, "图书添加失败: " + book.getTitle());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "addBook: 添加图书时发生错误", e);
-        } finally {
-            db.close();
-        }
+        values.put(COLUMN_NOTE_TITLE, note.getTitle());
+        values.put(COLUMN_NOTE_CONTENT, note.getContent());
+        values.put(COLUMN_NOTE_IMAGE, note.getImage());
+        values.put(COLUMN_NOTE_CATEGORY_ID, note.getCategoryId());
+        values.put(COLUMN_NOTE_USER_ID, note.getUserId());
+        long id = db.insert(TABLE_NOTES, null, values);
+        db.close();
         return id;
     }
 
-    /**
-     * 根据ID获取图书信息 (包含分类名称)
-     * @param bookId 图书ID
-     * @return Book 对象，未找到则返回 null
-     */
-    public Book getBookById(long bookId) {
+    public Note getNote(long noteId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Book book = null;
-        Cursor cursor = null;
-        String query = "SELECT b.*, c." + COLUMN_CATEGORY_NAME + " FROM " + TABLE_BOOK + " b LEFT JOIN " +
-                       TABLE_CATEGORY + " c ON b." + COLUMN_BOOK_CATEGORY_ID + " = c." + COLUMN_CATEGORY_ID +
-                       " WHERE b." + COLUMN_BOOK_ID + " = ?";
-        try {
-            cursor = db.rawQuery(query, new String[]{String.valueOf(bookId)});
-            if (cursor != null && cursor.moveToFirst()) {
-                book = new Book();
-                book.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOK_ID)));
-                book.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_TITLE)));
-                book.setAuthor(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_AUTHOR)));
-                book.setIsbn(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_ISBN)));
-                book.setCoverImage(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_COVER_IMAGE)));
-                book.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_DESCRIPTION)));
-                book.setPublishDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PUBLISH_DATE)));
-                book.setCategoryId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CATEGORY_ID)));
-                book.setCreateTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CREATE_TIME)));
-                int categoryNameColumnIndex = cursor.getColumnIndex(COLUMN_CATEGORY_NAME);
-                if (categoryNameColumnIndex != -1 && !cursor.isNull(categoryNameColumnIndex)) {
-                    book.setCategoryName(cursor.getString(categoryNameColumnIndex));
-                } else {
-                     book.setCategoryName( (book.getCategoryId()==0 || cursor.isNull(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CATEGORY_ID))) ? "未分类" : "分类未知");
-                }
-                Log.i(TAG, "查询到图书: " + book.getTitle());
-            } else {
-                Log.w(TAG, "未查询到图书, ID: " + bookId);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getBookById: 查询图书时发生错误", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            db.close();
+        Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(noteId)}, null, null, null);
+        Note note = null;
+        if (cursor.moveToFirst()) {
+            note = cursorToNote(cursor);
         }
-        return book;
+        cursor.close();
+        db.close();
+        return note;
     }
 
-    /**
-     * 获取所有图书信息 (包含分类名称)
-     * @return Book列表
-     */
-    public List<Book> getAllBooks() {
-        List<Book> books = new ArrayList<>();
+    public List<Note> getAllNotes(long userId) {
+        List<Note> noteList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        String query = "SELECT b.*, c." + COLUMN_CATEGORY_NAME + " AS category_name FROM " + TABLE_BOOK + " b LEFT JOIN " +
-                       TABLE_CATEGORY + " c ON b." + COLUMN_BOOK_CATEGORY_ID + " = c." + COLUMN_CATEGORY_ID +
-                       " ORDER BY b." + COLUMN_BOOK_TITLE + " ASC";
-        try {
-            cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
-                do {
-                    Book book = new Book();
-                    book.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOK_ID)));
-                    book.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_TITLE)));
-                    book.setAuthor(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_AUTHOR)));
-                    book.setIsbn(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_ISBN)));
-                    book.setCoverImage(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_COVER_IMAGE)));
-                    book.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_DESCRIPTION)));
-                    book.setPublishDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PUBLISH_DATE)));
-                    book.setCategoryId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CATEGORY_ID)));
-                    book.setCreateTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CREATE_TIME)));
-                    int categoryNameColumnIndex = cursor.getColumnIndex("category_name");
-                     if (categoryNameColumnIndex != -1 && !cursor.isNull(categoryNameColumnIndex)) {
-                        book.setCategoryName(cursor.getString(categoryNameColumnIndex));
-                    } else {
-                         book.setCategoryName( (book.getCategoryId()==0 || cursor.isNull(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CATEGORY_ID))) ? "未分类" : "分类未知");
-                    }
-                    books.add(book);
-                } while (cursor.moveToNext());
-            }
-            Log.i(TAG, "获取到 " + books.size() + " 本图书");
-        } catch (Exception e) {
-            Log.e(TAG, "getAllBooks: 获取所有图书时发生错误", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            db.close();
+        Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_USER_ID + "=?",
+                new String[]{String.valueOf(userId)}, null, null, COLUMN_NOTE_UPDATED_AT + " DESC");
+        if (cursor.moveToFirst()) {
+            do {
+                noteList.add(cursorToNote(cursor));
+            } while (cursor.moveToNext());
         }
-        return books;
+        cursor.close();
+        db.close();
+        return noteList;
     }
 
-    /**
-     * 更新图书信息
-     * @param book Book对象，必须包含ID
-     * @return 受影响的行数
-     */
-    public int updateBook(Book book) {
+    public List<Note> getNotesByCategory(long userId, long categoryId) {
+        List<Note> noteList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_USER_ID + "=? AND " + COLUMN_NOTE_CATEGORY_ID + "=?",
+                new String[]{String.valueOf(userId), String.valueOf(categoryId)}, null, null, COLUMN_NOTE_UPDATED_AT + " DESC");
+        if (cursor.moveToFirst()) {
+            do {
+                noteList.add(cursorToNote(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return noteList;
+    }
+
+    public List<Note> searchNotes(long userId, String keyword) {
+        List<Note> noteList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String selection = COLUMN_NOTE_USER_ID + "=? AND (" + COLUMN_NOTE_TITLE + " LIKE ? OR " + COLUMN_NOTE_CONTENT + " LIKE ?)";
+        String[] selectionArgs = {String.valueOf(userId), "%" + keyword + "%", "%" + keyword + "%"};
+        Cursor cursor = db.query(TABLE_NOTES, null, selection, selectionArgs, null, null, COLUMN_NOTE_UPDATED_AT + " DESC");
+        if (cursor.moveToFirst()) {
+            do {
+                noteList.add(cursorToNote(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return noteList;
+    }
+
+    public int updateNote(Note note) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_BOOK_TITLE, book.getTitle());
-        values.put(COLUMN_BOOK_AUTHOR, book.getAuthor());
-        values.put(COLUMN_BOOK_ISBN, book.getIsbn());
-        values.put(COLUMN_BOOK_COVER_IMAGE, book.getCoverImage());
-        values.put(COLUMN_BOOK_DESCRIPTION, book.getDescription());
-        values.put(COLUMN_BOOK_PUBLISH_DATE, book.getPublishDate());
-        if (book.getCategoryId() > 0) {
-            values.put(COLUMN_BOOK_CATEGORY_ID, book.getCategoryId());
-        } else {
-            values.putNull(COLUMN_BOOK_CATEGORY_ID);
-        }
-
-        int rowsAffected = 0;
-        try {
-            rowsAffected = db.update(TABLE_BOOK, values, COLUMN_BOOK_ID + "=?",
-                    new String[]{String.valueOf(book.getId())});
-            if (rowsAffected > 0) {
-                Log.i(TAG, "图书信息更新成功: " + book.getTitle());
-            } else {
-                Log.w(TAG, "图书信息更新失败或图书不存在: " + book.getTitle());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "updateBook: 更新图书信息时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return rowsAffected;
+        values.put(COLUMN_NOTE_TITLE, note.getTitle());
+        values.put(COLUMN_NOTE_CONTENT, note.getContent());
+        values.put(COLUMN_NOTE_IMAGE, note.getImage());
+        values.put(COLUMN_NOTE_CATEGORY_ID, note.getCategoryId());
+        values.put(COLUMN_NOTE_UPDATED_AT, "CURRENT_TIMESTAMP");
+        int rows = db.update(TABLE_NOTES, values, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(note.getId())});
+        db.close();
+        return rows;
     }
 
-    /**
-     * 删除图书
-     * @param bookId 图书ID
-     * @return 受影响的行数 (通常为1如果删除成功)
-     */
-    public int deleteBook(long bookId) {
+    // 将笔记移动到回收站
+    public void deleteNote(long noteId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int rowsAffected = 0;
+        db.beginTransaction();
         try {
-            rowsAffected = db.delete(TABLE_BOOK, COLUMN_BOOK_ID + "=?",
-                    new String[]{String.valueOf(bookId)});
-            if (rowsAffected > 0) {
-                Log.i(TAG, "图书删除成功, ID: " + bookId);
-            } else {
-                Log.w(TAG, "图书删除失败或图书不存在, ID: " + bookId);
+            Note note = null;
+            // Query for the note inside the current transaction
+            Cursor cursor = db.query(TABLE_NOTES, null, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(noteId)}, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                note = cursorToNote(cursor);
             }
-        } catch (Exception e) {
-            Log.e(TAG, "deleteBook: 删除图书时发生错误", e);
+            cursor.close();
+
+            if (note != null) {
+                ContentValues values = new ContentValues();
+                values.put(COLUMN_DELETED_NOTE_ID, note.getId());
+                values.put(COLUMN_DELETED_NOTE_TITLE, note.getTitle());
+                values.put(COLUMN_DELETED_NOTE_CONTENT, note.getContent());
+                values.put(COLUMN_DELETED_NOTE_IMAGE, note.getImage());
+                values.put(COLUMN_DELETED_NOTE_CATEGORY_ID, note.getCategoryId());
+                values.put(COLUMN_DELETED_NOTE_USER_ID, note.getUserId());
+                values.put(COLUMN_DELETED_NOTE_CREATED_AT, note.getCreatedAt());
+                values.put(COLUMN_DELETED_NOTE_UPDATED_AT, note.getUpdatedAt());
+                db.insert(TABLE_DELETED_NOTES, null, values);
+                db.delete(TABLE_NOTES, COLUMN_NOTE_ID + "=?", new String[]{String.valueOf(noteId)});
+                db.setTransactionSuccessful();
+            }
         } finally {
+            db.endTransaction();
             db.close();
         }
-        return rowsAffected;
     }
 
-    // ---- 统计信息 ----
 
-    /**
-     * 获取图书总数
-     * @return 图书总数
-     */
-    public int getTotalBookCount() {
+    // ---- 回收站 (DeletedNote) 操作 ----
+
+    public List<Note> getAllDeletedNotes(long userId) {
+        List<Note> deletedNoteList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        int count = 0;
-        try {
-            cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_BOOK, null);
-            if (cursor.moveToFirst()) {
-                count = cursor.getInt(0);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getTotalBookCount: 获取图书总数时出错", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            db.close();
+        Cursor cursor = db.query(TABLE_DELETED_NOTES, null, COLUMN_DELETED_NOTE_USER_ID + "=?",
+                new String[]{String.valueOf(userId)}, null, null, COLUMN_DELETED_NOTE_DELETED_AT + " DESC");
+
+        if (cursor.moveToFirst()) {
+            do {
+                Note note = new Note();
+                note.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_ID)));
+                note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_TITLE)));
+                note.setContent(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CONTENT)));
+                note.setImage(cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_IMAGE)));
+                note.setCategoryId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CATEGORY_ID)));
+                note.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_USER_ID)));
+                note.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CREATED_AT)));
+                note.setUpdatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_UPDATED_AT)));
+                deletedNoteList.add(note);
+            } while (cursor.moveToNext());
         }
+        cursor.close();
+        db.close();
+        return deletedNoteList;
+    }
+
+    // 从回收站恢复笔记
+    public void restoreNote(long noteId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // 查找回收站中的笔记
+        Cursor cursor = db.query(TABLE_DELETED_NOTES, null, COLUMN_DELETED_NOTE_ID + "=?", new String[]{String.valueOf(noteId)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            // 将其重新插入笔记表
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_NOTE_ID, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_ID)));
+            values.put(COLUMN_NOTE_TITLE, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_TITLE)));
+            values.put(COLUMN_NOTE_CONTENT, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CONTENT)));
+            values.put(COLUMN_NOTE_IMAGE, cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_IMAGE)));
+            values.put(COLUMN_NOTE_CATEGORY_ID, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CATEGORY_ID)));
+            values.put(COLUMN_NOTE_USER_ID, cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_USER_ID)));
+            values.put(COLUMN_NOTE_CREATED_AT, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_CREATED_AT)));
+            values.put(COLUMN_NOTE_UPDATED_AT, cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DELETED_NOTE_UPDATED_AT)));
+
+            db.insertWithOnConflict(TABLE_NOTES, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+            // 从回收站删除
+            db.delete(TABLE_DELETED_NOTES, COLUMN_DELETED_NOTE_ID + "=?", new String[]{String.valueOf(noteId)});
+        }
+        cursor.close();
+        db.close();
+    }
+
+    // 从回收站永久删除笔记
+    public void permanentlyDeleteNote(long noteId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_DELETED_NOTES, COLUMN_DELETED_NOTE_ID + "=?", new String[]{String.valueOf(noteId)});
+        db.close();
+    }
+
+    // ---- 统计功能 ----
+    public int getNotesCount(long userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NOTES + " WHERE " + COLUMN_NOTE_USER_ID + "=?", new String[]{String.valueOf(userId)});
+        int count = 0;
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
         return count;
     }
 
-    /**
-     * 获取分类总数
-     * @return 分类总数
-     */
-    public int getTotalCategoryCount() {
+    public int getCategoriesCount(long userId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_CATEGORIES + " WHERE " + COLUMN_CATEGORY_USER_ID + "=?", new String[]{String.valueOf(userId)});
         int count = 0;
-        try {
-            cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_CATEGORY, null);
-            if (cursor.moveToFirst()) {
-                count = cursor.getInt(0);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getTotalCategoryCount: 获取分类总数时出错", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            db.close();
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
         }
+        cursor.close();
+        db.close();
         return count;
     }
 
-    /**
-     * 获取各分类下的图书数量
-     * @return Map<String, Integer> 其中 Key 是分类名称，Value 是该分类下的图书数量
-     */
-    public Map<String, Integer> getBookCountPerCategory() {
-        Map<String, Integer> categoryCounts = new HashMap<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        String query = "SELECT c." + COLUMN_CATEGORY_NAME + ", COUNT(b." + COLUMN_BOOK_ID + ") as book_count " +
-                       "FROM " + TABLE_CATEGORY + " c LEFT JOIN " + TABLE_BOOK + " b " +
-                       "ON c." + COLUMN_CATEGORY_ID + " = b." + COLUMN_BOOK_CATEGORY_ID + " " +
-                       "GROUP BY c." + COLUMN_CATEGORY_ID + ", c." + COLUMN_CATEGORY_NAME + " " +
-                       "ORDER BY c." + COLUMN_CATEGORY_NAME + " ASC";
-        try {
-            cursor = db.rawQuery(query, null);
-            if (cursor.moveToFirst()) {
-                do {
-                    String categoryName = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY_NAME));
-                    int bookCount = cursor.getInt(cursor.getColumnIndexOrThrow("book_count"));
-                    categoryCounts.put(categoryName != null ? categoryName : "未分类", bookCount);
-                } while (cursor.moveToNext());
-            }
-            Log.i(TAG, "获取各分类图书数量成功，分类数: " + categoryCounts.size());
-        } catch (Exception e) {
-            Log.e(TAG, "getBookCountPerCategory: 获取各分类图书数量时发生错误", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            db.close();
-        }
-
-        String unCategorizedQuery = "SELECT COUNT(*) FROM " + TABLE_BOOK + " WHERE " + COLUMN_BOOK_CATEGORY_ID + " IS NULL OR " + COLUMN_BOOK_CATEGORY_ID + " = 0";
-        Cursor uncatCursor = null;
-        try {
-            uncatCursor = db.rawQuery(unCategorizedQuery, null);
-            if (uncatCursor.moveToFirst()) {
-                int uncatCount = uncatCursor.getInt(0);
-                if (uncatCount > 0) {
-                    if (!categoryCounts.containsKey("未分类") || categoryCounts.get("未分类") == 0 ) {
-                         categoryCounts.put("未分类图书", uncatCount);
-                    } else if (categoryCounts.containsKey("未分类") && categoryCounts.get("未分类") ==0 && uncatCount >0 ) {
-                        categoryCounts.put("未分类图书", uncatCount);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getBookCountPerCategory: 查询未分类图书数量时出错", e);
-        } finally {
-            if (uncatCursor != null) uncatCursor.close();
-        }
-
-        return categoryCounts;
+    private Note cursorToNote(Cursor cursor) {
+        Note note = new Note();
+        note.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_NOTE_ID)));
+        note.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_TITLE)));
+        note.setContent(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_CONTENT)));
+        note.setImage(cursor.getBlob(cursor.getColumnIndexOrThrow(COLUMN_NOTE_IMAGE)));
+        note.setCategoryId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_NOTE_CATEGORY_ID)));
+        note.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_NOTE_USER_ID)));
+        note.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_CREATED_AT)));
+        note.setUpdatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOTE_UPDATED_AT)));
+        return note;
     }
 } 

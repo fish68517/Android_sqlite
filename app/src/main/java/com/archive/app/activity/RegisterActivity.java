@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(this, "账号和密码不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
-            boolean success = dbHelper.registerUser(username, password, role);
+            boolean success = dbHelper.registerUser(username, password);
             if (success) {
                 Log.i(TAG, "注册成功: " + username + "，角色: " + role);
                 Toast.makeText(this, "注册成功，请登录", Toast.LENGTH_SHORT).show();

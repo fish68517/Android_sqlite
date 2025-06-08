@@ -1,36 +1,24 @@
 package com.archive.app.model;
 
-import java.io.Serializable;
-
-/**
- * 图书分类模型类
- */
-public class Category implements Serializable {
-    private int id;
+public class Category {
+    private long id;
     private String name;
-    private String description;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private long userId;
 
     public Category() {
     }
 
-    public Category(int id, String name) {
+    public Category(long id, String name, long userId) {
         this.id = id;
         this.name = name;
+        this.userId = userId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -42,9 +30,11 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        // Spinner中显示分类名称
-        return name;
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 } 

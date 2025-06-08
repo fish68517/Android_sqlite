@@ -38,11 +38,13 @@
 
 
 
-        <activity android:name="com.archive.app.activity.AdminMainActivity"/>
+        <activity android:name="com.archive.app.activity.MainActivity"/>
 
-        <activity android:name="com.archive.app.activity.AddEditBookActivity"/>
-        <activity android:name="com.archive.app.activity.BookDetailActivity"/>
-        <activity android:name="com.archive.app.activity.CategoryEditActivity"/>
+        <activity android:name="com.archive.app.activity.NoteEditorActivity"/>
+        <activity android:name="com.archive.app.activity.RecycleBinActivity"/>
+        <activity android:name="com.archive.app.activity.SearchActivity"/>
+
+
 
 
 

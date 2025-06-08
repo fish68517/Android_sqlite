@@ -4,13 +4,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.archive.app.fragment.BookFragment;
 import com.archive.app.fragment.CategoryFragment;
-import com.archive.app.fragment.HomeFragment;
+import com.archive.app.fragment.NoteFragment;
 import com.archive.app.fragment.ProfileFragment;
 import com.example.myapplication.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -18,20 +18,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 /**
  * 主界面
  */
-public class AdminMainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity  {
 
     private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_admin);
+        setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         // 默认加载首页Fragment
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NoteFragment()).commit();
         }
 
         setupBottomNavigation();
@@ -47,10 +50,8 @@ public class AdminMainActivity extends AppCompatActivity  {
             Fragment selectedFragment = null;
             int itemId = item.getItemId();
             if (itemId == R.id.nav_home) {
-                selectedFragment = new HomeFragment();
-            } else if (itemId == R.id.nav_books) {
-                selectedFragment = new BookFragment();
-            } else if (itemId == R.id.nav_categories) {
+                selectedFragment = new NoteFragment();
+            } else if (itemId == R.id.nav_category) {
                 selectedFragment = new CategoryFragment();
             } else if (itemId == R.id.nav_profile) {
                 selectedFragment = new ProfileFragment();
