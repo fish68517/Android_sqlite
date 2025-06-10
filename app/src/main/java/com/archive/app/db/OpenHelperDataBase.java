@@ -7,384 +7,507 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.archive.app.model.Attraction;
+import com.archive.app.model.Booking;
+import com.archive.app.model.Itinerary;
+import com.archive.app.model.ItineraryItem;
+import com.archive.app.model.Post;
 import com.archive.app.model.User;
-import com.archive.app.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenHelperDataBase extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "textbook_system.db";
-    private static final int DATABASE_VERSION = 2;
-
-    // 用户表
-    public static final String TABLE_USERS = "users";
-    public static final String COLUMN_USER_ID = "_id";
-    public static final String COLUMN_USER_NAME = "username";
-    public static final String COLUMN_USER_PASSWORD = "password";
-
-    // 学生表
-    public static final String TABLE_STUDENTS = "students";
-    public static final String COLUMN_STUDENT_PK_ID = "_id";
-    public static final String COLUMN_STUDENT_NAME = "name";
-    public static final String COLUMN_STUDENT_ID = "student_id";
-    public static final String COLUMN_STUDENT_PHONE = "phone";
-    public static final String COLUMN_STUDENT_BIO = "bio";
-    public static final String COLUMN_STUDENT_AVATAR_PATH = "avatar_path";
-
-    // 创建用户表的SQL语句
-    private static final String TABLE_CREATE_USERS =
-            "CREATE TABLE " + TABLE_USERS + " (" +
-                    COLUMN_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_USER_NAME + " TEXT NOT NULL UNIQUE, " +
-                    COLUMN_USER_PASSWORD + " TEXT NOT NULL)";
-
-    // 创建学生表的SQL语句
-    private static final String TABLE_CREATE_STUDENTS =
-            "CREATE TABLE " + TABLE_STUDENTS + " (" +
-                    COLUMN_STUDENT_PK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_STUDENT_NAME + " TEXT NOT NULL, " +
-                    COLUMN_STUDENT_ID + " TEXT NOT NULL UNIQUE, " +
-                    COLUMN_STUDENT_PHONE + " TEXT, " +
-                    COLUMN_STUDENT_BIO + " TEXT, " +
-                    COLUMN_STUDENT_AVATAR_PATH + " TEXT)";
-
+    private static final String DATABASE_NAME = "travel_app.db";
+    private static final int DATABASE_VERSION = 1;
     private static final String TAG = "OpenHelperDataBase";
+
+    // Users table
+    public static final String TABLE_USERS = "users";
+    public static final String COLUMN_USERS_ID = "id";
+    public static final String COLUMN_USERS_USERNAME = "username";
+    public static final String COLUMN_USERS_PASSWORD = "password";
+
+    // Attractions table
+    public static final String TABLE_ATTRACTIONS = "attractions";
+    public static final String COLUMN_ATTRACTIONS_ID = "id";
+    public static final String COLUMN_ATTRACTIONS_NAME = "name";
+    public static final String COLUMN_ATTRACTIONS_DESCRIPTION = "description";
+    public static final String COLUMN_ATTRACTIONS_IMAGE_URL = "image_url";
+    public static final String COLUMN_ATTRACTIONS_LOCATION = "location";
+    public static final String COLUMN_ATTRACTIONS_PRICE = "price";
+
+    // Bookings table
+    public static final String TABLE_BOOKINGS = "bookings";
+    public static final String COLUMN_BOOKINGS_ID = "id";
+    public static final String COLUMN_BOOKINGS_USER_ID = "user_id";
+    public static final String COLUMN_BOOKINGS_ATTRACTION_ID = "attraction_id";
+    public static final String COLUMN_BOOKINGS_DATE = "booking_date";
+    public static final String COLUMN_BOOKINGS_STATUS = "status";
+
+    // Itineraries table
+    public static final String TABLE_ITINERARIES = "itineraries";
+    public static final String COLUMN_ITINERARIES_ID = "id";
+    public static final String COLUMN_ITINERARIES_USER_ID = "user_id";
+    public static final String COLUMN_ITINERARIES_NAME = "name";
+    public static final String COLUMN_ITINERARIES_START_DATE = "start_date";
+    public static final String COLUMN_ITINERARIES_END_DATE = "end_date";
+
+    // Itinerary Items table
+    public static final String TABLE_ITINERARY_ITEMS = "itinerary_items";
+    public static final String COLUMN_ITINERARY_ITEMS_ID = "id";
+    public static final String COLUMN_ITINERARY_ITEMS_ITINERARY_ID = "itinerary_id";
+    public static final String COLUMN_ITINERARY_ITEMS_ATTRACTION_ID = "attraction_id";
+    public static final String COLUMN_ITINERARY_ITEMS_VISIT_DATE = "visit_date";
+    public static final String COLUMN_ITINERARY_ITEMS_VISIT_TIME = "visit_time";
+    public static final String COLUMN_ITINERARY_ITEMS_NOTES = "notes";
+
+    // Posts table
+    public static final String TABLE_POSTS = "posts";
+    public static final String COLUMN_POSTS_ID = "id";
+    public static final String COLUMN_POSTS_USER_ID = "user_id";
+    public static final String COLUMN_POSTS_CONTENT = "content";
+    public static final String COLUMN_POSTS_IMAGE_URL = "image_url";
+    public static final String COLUMN_POSTS_CREATED_AT = "created_at";
+
+    // region CREATE TABLE statements
+    private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
+            + COLUMN_USERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_USERS_USERNAME + " TEXT NOT NULL UNIQUE,"
+            + COLUMN_USERS_PASSWORD + " TEXT NOT NULL"
+            + ")";
+
+    private static final String CREATE_TABLE_ATTRACTIONS = "CREATE TABLE " + TABLE_ATTRACTIONS + "("
+            + COLUMN_ATTRACTIONS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_ATTRACTIONS_NAME + " TEXT NOT NULL,"
+            + COLUMN_ATTRACTIONS_DESCRIPTION + " TEXT,"
+            + COLUMN_ATTRACTIONS_IMAGE_URL + " TEXT,"
+            + COLUMN_ATTRACTIONS_LOCATION + " TEXT,"
+            + COLUMN_ATTRACTIONS_PRICE + " REAL"
+            + ")";
+
+    private static final String CREATE_TABLE_BOOKINGS = "CREATE TABLE " + TABLE_BOOKINGS + "("
+            + COLUMN_BOOKINGS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_BOOKINGS_USER_ID + " INTEGER,"
+            + COLUMN_BOOKINGS_ATTRACTION_ID + " INTEGER,"
+            + COLUMN_BOOKINGS_DATE + " TEXT,"
+            + COLUMN_BOOKINGS_STATUS + " TEXT,"
+            + "FOREIGN KEY(" + COLUMN_BOOKINGS_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USERS_ID + "),"
+            + "FOREIGN KEY(" + COLUMN_BOOKINGS_ATTRACTION_ID + ") REFERENCES " + TABLE_ATTRACTIONS + "(" + COLUMN_ATTRACTIONS_ID + ")"
+            + ")";
+
+    private static final String CREATE_TABLE_ITINERARIES = "CREATE TABLE " + TABLE_ITINERARIES + "("
+            + COLUMN_ITINERARIES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_ITINERARIES_USER_ID + " INTEGER,"
+            + COLUMN_ITINERARIES_NAME + " TEXT NOT NULL,"
+            + COLUMN_ITINERARIES_START_DATE + " TEXT,"
+            + COLUMN_ITINERARIES_END_DATE + " TEXT,"
+            + "FOREIGN KEY(" + COLUMN_ITINERARIES_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USERS_ID + ")"
+            + ")";
+
+    private static final String CREATE_TABLE_ITINERARY_ITEMS = "CREATE TABLE " + TABLE_ITINERARY_ITEMS + "("
+            + COLUMN_ITINERARY_ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_ITINERARY_ITEMS_ITINERARY_ID + " INTEGER,"
+            + COLUMN_ITINERARY_ITEMS_ATTRACTION_ID + " INTEGER,"
+            + COLUMN_ITINERARY_ITEMS_VISIT_DATE + " TEXT,"
+            + COLUMN_ITINERARY_ITEMS_VISIT_TIME + " TEXT,"
+            + COLUMN_ITINERARY_ITEMS_NOTES + " TEXT,"
+            + "FOREIGN KEY(" + COLUMN_ITINERARY_ITEMS_ITINERARY_ID + ") REFERENCES " + TABLE_ITINERARIES + "(" + COLUMN_ITINERARIES_ID + "),"
+            + "FOREIGN KEY(" + COLUMN_ITINERARY_ITEMS_ATTRACTION_ID + ") REFERENCES " + TABLE_ATTRACTIONS + "(" + COLUMN_ATTRACTIONS_ID + ")"
+            + ")";
+
+    private static final String CREATE_TABLE_POSTS = "CREATE TABLE " + TABLE_POSTS + "("
+            + COLUMN_POSTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + COLUMN_POSTS_USER_ID + " INTEGER,"
+            + COLUMN_POSTS_CONTENT + " TEXT,"
+            + COLUMN_POSTS_IMAGE_URL + " TEXT,"
+            + COLUMN_POSTS_CREATED_AT + " TEXT,"
+            + "FOREIGN KEY(" + COLUMN_POSTS_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_USERS_ID + ")"
+            + ")";
+    // endregion
 
     public OpenHelperDataBase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d(TAG, "数据库帮助类已创建。");
-    }
-
-    // 用户注册
-    public boolean registerUser(String username, String password) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_NAME, username);
-        values.put(COLUMN_USER_PASSWORD, password);
-
-        long result = -1;
-        try {
-            result = db.insert(TABLE_USERS, null, values);
-            if (result != -1) {
-                Log.i(TAG, "用户注册成功: " + username);
-            } else {
-                Log.e(TAG, "用户注册失败: " + username);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "registerUser: 注册用户时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return result != -1;
-    }
-
-    // 用户登录
-    public User loginUser(String username, String password) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        User user = null;
-        Cursor cursor = null;
-        try {
-            cursor = db.query(TABLE_USERS, null,
-                    COLUMN_USER_NAME + "=? AND " + COLUMN_USER_PASSWORD + "=?",
-                    new String[]{username, password}, null, null, null);
-            if (cursor.moveToFirst()) {
-                user = new User();
-                user.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
-                user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)));
-                user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_PASSWORD)));
-                Log.i(TAG, "用户登录成功: " + username);
-            } else {
-                Log.w(TAG, "用户登录失败或用户不存在: " + username);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "loginUser: 登录用户时发生错误", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            db.close();
-        }
-        return user;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.i(TAG, "正在创建数据库表...");
-
-        Log.i(TAG, "正在创建用户表 (" + TABLE_USERS + ")...");
-        db.execSQL(TABLE_CREATE_USERS);
-        Log.i(TAG, "用户表 (" + TABLE_USERS + ") 创建成功。");
-
-        Log.i(TAG, "正在创建学生表 (" + TABLE_STUDENTS + ")...");
-        db.execSQL(TABLE_CREATE_STUDENTS);
-        Log.i(TAG, "学生表 (" + TABLE_STUDENTS + ") 创建成功。");
-
-        Log.i(TAG, "数据库表创建完成，正在插入模拟数据...");
+        Log.i(TAG, "Creating database tables...");
+        db.execSQL(CREATE_TABLE_USERS);
+        db.execSQL(CREATE_TABLE_ATTRACTIONS);
+        db.execSQL(CREATE_TABLE_BOOKINGS);
+        db.execSQL(CREATE_TABLE_ITINERARIES);
+        db.execSQL(CREATE_TABLE_ITINERARY_ITEMS);
+        db.execSQL(CREATE_TABLE_POSTS);
+        Log.i(TAG, "Database tables created.");
         insertMockData(db);
-        Log.i(TAG, "模拟数据插入完成。");
-    }
-
-    private void insertMockData(SQLiteDatabase db) {
-        // 插入一个用户
-        ContentValues userValues = new ContentValues();
-        userValues.put(COLUMN_USER_NAME, "testuser");
-        userValues.put(COLUMN_USER_PASSWORD, "123456");
-        long userId = db.insert(TABLE_USERS, null, userValues);
-
-        // 插入一些学生
-        ContentValues studentValues = new ContentValues();
-        studentValues.put(COLUMN_STUDENT_NAME, "张三");
-        studentValues.put(COLUMN_STUDENT_ID, "2023001");
-        studentValues.put(COLUMN_STUDENT_PHONE, "13800138000");
-        studentValues.put(COLUMN_STUDENT_BIO, "这是张三的简介。");
-        db.insert(TABLE_STUDENTS, null, studentValues);
-
-        studentValues.put(COLUMN_STUDENT_NAME, "李四");
-        studentValues.put(COLUMN_STUDENT_ID, "2023002");
-        studentValues.put(COLUMN_STUDENT_PHONE, "13900139000");
-        studentValues.put(COLUMN_STUDENT_BIO, "这是李四的简介。");
-        db.insert(TABLE_STUDENTS, null, studentValues);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TAG, "正在升级数据库，版本从 " + oldVersion + " 到 " + newVersion + "。旧数据将被删除。");
-
+        Log.w(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
+        // Drop tables in reverse order of creation to avoid foreign key constraints issues
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_POSTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITINERARY_ITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ITINERARIES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_BOOKINGS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ATTRACTIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_STUDENTS);
-
-        Log.i(TAG, "旧表已删除。");
         onCreate(db);
     }
 
-    // 获取所有用户记录（管理员/全局）
-    public List<User> getAllUsers() {
-        List<User> list = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        try {
-            cursor = db.query(TABLE_USERS, null, null, null, null, null, COLUMN_USER_ID + " DESC");
-            if (cursor.moveToFirst()) {
-                do {
-                    User record = new User();
-                    record.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
-                    record.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)));
+    private void insertMockData(SQLiteDatabase db) {
+        Log.i(TAG, "Inserting mock data...");
 
-                    list.add(record);
-                } while (cursor.moveToNext());
-            }
-            Log.i(TAG, "成功获取所有用户记录，数量: " + list.size());
-        } catch (Exception e) {
-            Log.e(TAG, "getAllUsers: 查询所有用户记录时发生错误", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-        return list;
+        // Users
+        ContentValues userValues1 = new ContentValues();
+        userValues1.put(COLUMN_USERS_USERNAME, "1");
+        userValues1.put(COLUMN_USERS_PASSWORD, "1");
+        long userId1 = db.insert(TABLE_USERS, null, userValues1);
+
+        ContentValues userValues2 = new ContentValues();
+        userValues2.put(COLUMN_USERS_USERNAME, "2");
+        userValues2.put(COLUMN_USERS_PASSWORD, "2");
+        long userId2 = db.insert(TABLE_USERS, null, userValues2);
+
+        // Attractions
+        ContentValues attractionValues1 = new ContentValues();
+        attractionValues1.put(COLUMN_ATTRACTIONS_NAME, "故宫");
+        attractionValues1.put(COLUMN_ATTRACTIONS_DESCRIPTION, "北京故宫是中国明清两代的皇家宫殿，旧称紫禁城，位于北京中轴线的中心。");
+        attractionValues1.put(COLUMN_ATTRACTIONS_IMAGE_URL, "beijing_gugong.jpg");
+        attractionValues1.put(COLUMN_ATTRACTIONS_LOCATION, "北京市东城区景山前街4号");
+        attractionValues1.put(COLUMN_ATTRACTIONS_PRICE, 60.0);
+        db.insert(TABLE_ATTRACTIONS, null, attractionValues1);
+
+        ContentValues attractionValues2 = new ContentValues();
+        attractionValues2.put(COLUMN_ATTRACTIONS_NAME, "外滩");
+        attractionValues2.put(COLUMN_ATTRACTIONS_DESCRIPTION, "上海外滩地处黄浦江畔，是上海的标志性景点之一，全长约1.5公里。");
+        attractionValues2.put(COLUMN_ATTRACTIONS_IMAGE_URL, "shanghai_waitan.jpg");
+        attractionValues2.put(COLUMN_ATTRACTIONS_LOCATION, "上海市黄浦区中山东一路");
+        attractionValues2.put(COLUMN_ATTRACTIONS_PRICE, 0.0);
+        db.insert(TABLE_ATTRACTIONS, null, attractionValues2);
+
+        ContentValues attractionValues3 = new ContentValues();
+        attractionValues3.put(COLUMN_ATTRACTIONS_NAME, "西湖");
+        attractionValues3.put(COLUMN_ATTRACTIONS_DESCRIPTION, "杭州西湖以其秀丽的湖光山色和众多的名胜古迹而闻名中外，被誉为人间天堂。");
+        attractionValues3.put(COLUMN_ATTRACTIONS_IMAGE_URL, "hangzhou_xihu.jpg");
+        attractionValues3.put(COLUMN_ATTRACTIONS_LOCATION, "浙江省杭州市西湖区");
+        attractionValues3.put(COLUMN_ATTRACTIONS_PRICE, 0.0);
+        db.insert(TABLE_ATTRACTIONS, null, attractionValues3);
+
+        // Posts
+        ContentValues postValues1 = new ContentValues();
+        postValues1.put(COLUMN_POSTS_USER_ID, userId1);
+        postValues1.put(COLUMN_POSTS_CONTENT, "今天去了故宫，太宏伟了！");
+        postValues1.put(COLUMN_POSTS_IMAGE_URL, "post_1.jpg");
+        postValues1.put(COLUMN_POSTS_CREATED_AT, "2023-10-27 14:30:00");
+        db.insert(TABLE_POSTS, null, postValues1);
+
+        ContentValues postValues2 = new ContentValues();
+        postValues2.put(COLUMN_POSTS_USER_ID, userId2);
+        postValues2.put(COLUMN_POSTS_CONTENT, "夜游外滩，灯火辉煌，美不胜收。");
+        postValues2.put(COLUMN_POSTS_IMAGE_URL, "post_2.jpg");
+        postValues2.put(COLUMN_POSTS_CREATED_AT, "2023-10-28 20:00:00");
+        db.insert(TABLE_POSTS, null, postValues2);
+
+        Log.i(TAG, "Mock data inserted.");
     }
 
-    // 删除用户记录
-    public boolean deleteUser(long userId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int result = -1;
-        try {
-            result = db.delete(TABLE_USERS, COLUMN_USER_ID + "=?", new String[]{String.valueOf(userId)});
-            if (result > 0) {
-                Log.i(TAG, "成功删除用户记录, ID: " + userId);
-            } else {
-                Log.w(TAG, "删除用户记录失败或用户不存在, ID: " + userId);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "deleteUser: 删除用户记录时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return result > 0;
-    }
-
-    // ---- 用户表 (User) 操作 ----
-    /**
-     * 更新用户信息 (用户名和密码)
-     * @param userId 用户ID
-     * @param newUsername 新用户名
-     * @param newPassword 新密码
-     * @return 受影响的行数
-     */
-    public int updateUserProfile(long userId, String newUsername, String newPassword) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_NAME, newUsername);
-        values.put(COLUMN_USER_PASSWORD, newPassword);
-        int rowsAffected = 0;
-        try {
-            rowsAffected = db.update(TABLE_USERS, values, COLUMN_USER_ID + "=?", new String[]{String.valueOf(userId)});
-            if (rowsAffected > 0) {
-                Log.i(TAG, "用户资料更新成功, ID: " + userId);
-            } else {
-                Log.w(TAG, "用户资料更新失败或用户不存在, ID: " + userId);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "updateUserProfile: 更新用户资料时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return rowsAffected;
-    }
-
-    // ---- 学生表 (Student) 操作 ----
-
-    /**
-     * 新增学生信息
-     * @param student 学生对象 (不含id)
-     * @return 新插入行的id，如果发生错误则为-1
-     */
-    public long addStudent(Student student) {
+    // region User Methods
+    public boolean registerUser(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_STUDENT_NAME, student.getName());
-        values.put(COLUMN_STUDENT_ID, student.getStudentId());
-        values.put(COLUMN_STUDENT_PHONE, student.getPhone());
-        values.put(COLUMN_STUDENT_BIO, student.getBio());
-        values.put(COLUMN_STUDENT_AVATAR_PATH, student.getAvatarPath());
-
-        long result = -1;
-        try {
-            result = db.insert(TABLE_STUDENTS, null, values);
-            if (result != -1) {
-                Log.i(TAG, "成功新增学生: " + student.getName());
-            } else {
-                Log.e(TAG, "新增学生失败: " + student.getName());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "addStudent: 新增学生时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return result;
+        values.put(COLUMN_USERS_USERNAME, username);
+        values.put(COLUMN_USERS_PASSWORD, password);
+        long result = db.insert(TABLE_USERS, null, values);
+        db.close();
+        return result != -1;
     }
 
-    /**
-     * 根据主键ID获取学生信息
-     * @param id 主键
-     * @return 学生对象，未找到则为null
-     */
-    public Student getStudent(long id) {
+    public User loginUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Student student = null;
-        Cursor cursor = null;
-        try {
-            cursor = db.query(TABLE_STUDENTS, null,
-                    COLUMN_STUDENT_PK_ID + "=?", new String[]{String.valueOf(id)},
-                    null, null, null);
-            if (cursor.moveToFirst()) {
-                student = cursorToStudent(cursor);
-                Log.i(TAG, "成功获取学生信息: " + student.getName());
-            } else {
-                Log.w(TAG, "未找到ID为 " + id + " 的学生");
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getStudent: 查询学生时发生错误", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            db.close();
+        User user = null;
+        Cursor cursor = db.query(TABLE_USERS, null,
+                COLUMN_USERS_USERNAME + "=? AND " + COLUMN_USERS_PASSWORD + "=?",
+                new String[]{username, password}, null, null, null);
+        if (cursor.moveToFirst()) {
+            user = new User();
+            user.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_USERS_ID)));
+            user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERS_USERNAME)));
+            user.setPassword(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERS_PASSWORD)));
         }
-        return student;
+        cursor.close();
+        db.close();
+        return user;
     }
+    // endregion
 
-    /**
-     * 获取所有学生信息列表
-     * @return 学生对象列表
-     */
-    public List<Student> getAllStudents() {
-        List<Student> list = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        try {
-            cursor = db.query(TABLE_STUDENTS, null, null, null, null, null, COLUMN_STUDENT_PK_ID + " DESC");
-            if (cursor.moveToFirst()) {
-                do {
-                    list.add(cursorToStudent(cursor));
-                } while (cursor.moveToNext());
-            }
-            Log.i(TAG, "成功获取所有学生记录，数量: " + list.size());
-        } catch (Exception e) {
-            Log.e(TAG, "getAllStudents: 查询所有学生时发生错误", e);
-        } finally {
-            if (cursor != null) cursor.close();
-            // db is not closed here to allow cursor to be used by adapter, close it later
-        }
-        return list;
-    }
-
-    /**
-     * 更新学生信息
-     * @param student 包含新信息的学生对象 (必须有id)
-     * @return 受影响的行数
-     */
-    public int updateStudent(Student student) {
+    // region Attraction Methods
+    public long addAttraction(Attraction attraction) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_STUDENT_NAME, student.getName());
-        values.put(COLUMN_STUDENT_ID, student.getStudentId());
-        values.put(COLUMN_STUDENT_PHONE, student.getPhone());
-        values.put(COLUMN_STUDENT_BIO, student.getBio());
-        values.put(COLUMN_STUDENT_AVATAR_PATH, student.getAvatarPath());
-        int rowsAffected = 0;
-        try {
-            rowsAffected = db.update(TABLE_STUDENTS, values, COLUMN_STUDENT_PK_ID + "=?",
-                    new String[]{String.valueOf(student.getId())});
-            if (rowsAffected > 0) {
-                Log.i(TAG, "学生信息更新成功, ID: " + student.getId());
-            } else {
-                Log.w(TAG, "学生信息更新失败或学生不存在, ID: " + student.getId());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "updateStudent: 更新学生信息时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return rowsAffected;
+        values.put(COLUMN_ATTRACTIONS_NAME, attraction.getName());
+        values.put(COLUMN_ATTRACTIONS_DESCRIPTION, attraction.getDescription());
+        values.put(COLUMN_ATTRACTIONS_IMAGE_URL, attraction.getImageUrl());
+        values.put(COLUMN_ATTRACTIONS_LOCATION, attraction.getLocation());
+        values.put(COLUMN_ATTRACTIONS_PRICE, attraction.getPrice());
+        long id = db.insert(TABLE_ATTRACTIONS, null, values);
+        db.close();
+        return id;
     }
 
-    /**
-     * 删除学生信息
-     * @param id 要删除的学生的ID
-     * @return 如果删除成功返回true
-     */
-    public boolean deleteStudent(long id) {
+    public List<Attraction> getAllAttractions() {
+        List<Attraction> attractions = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_ATTRACTIONS, null);
+        if (cursor.moveToFirst()) {
+            do {
+                attractions.add(cursorToAttraction(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return attractions;
+    }
+
+    private Attraction cursorToAttraction(Cursor cursor) {
+        Attraction attraction = new Attraction();
+        attraction.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_ID)));
+        attraction.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_NAME)));
+        attraction.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_DESCRIPTION)));
+        attraction.setImageUrl(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_IMAGE_URL)));
+        attraction.setLocation(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_LOCATION)));
+        attraction.setPrice(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_PRICE)));
+        return attraction;
+    }
+
+    public Attraction getAttractionById(long attractionId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Attraction attraction = null;
+        Cursor cursor = db.query(TABLE_ATTRACTIONS, null, COLUMN_ATTRACTIONS_ID + " = ?",
+                new String[]{String.valueOf(attractionId)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            attraction = cursorToAttraction(cursor);
+        }
+        cursor.close();
+        db.close();
+        return attraction;
+    }
+    // endregion
+
+    // region Post Methods
+    public long addPost(Post post) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int result = -1;
-        try {
-            result = db.delete(TABLE_STUDENTS, COLUMN_STUDENT_PK_ID + "=?", new String[]{String.valueOf(id)});
-            if (result > 0) {
-                Log.i(TAG, "成功删除学生记录, ID: " + id);
-            } else {
-                Log.w(TAG, "删除学生记录失败或学生不存在, ID: " + id);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "deleteStudent: 删除学生时发生错误", e);
-        } finally {
-            db.close();
-        }
-        return result > 0;
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_POSTS_USER_ID, post.getUserId());
+        values.put(COLUMN_POSTS_CONTENT, post.getContent());
+        values.put(COLUMN_POSTS_IMAGE_URL, post.getImageUrl());
+        values.put(COLUMN_POSTS_CREATED_AT, post.getCreatedAt());
+        long id = db.insert(TABLE_POSTS, null, values);
+        db.close();
+        return id;
     }
 
-    /**
-     * 将Cursor转换成Student对象
-     * @param cursor 数据集
-     * @return Student对象
-     */
-    private Student cursorToStudent(Cursor cursor) {
-        Student student = new Student();
-        student.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_PK_ID)));
-        student.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_NAME)));
-        student.setStudentId(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_ID)));
-        student.setPhone(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_PHONE)));
-        student.setBio(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_BIO)));
-        student.setAvatarPath(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STUDENT_AVATAR_PATH)));
-        return student;
+    public List<Post> getAllPosts() {
+        List<Post> posts = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_POSTS + " ORDER BY " + COLUMN_POSTS_CREATED_AT + " DESC", null);
+        if (cursor.moveToFirst()) {
+            do {
+                posts.add(cursorToPost(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return posts;
     }
+    
+     public int updatePost(Post post) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_POSTS_CONTENT, post.getContent());
+        values.put(COLUMN_POSTS_IMAGE_URL, post.getImageUrl());
+        int rows = db.update(TABLE_POSTS, values, COLUMN_POSTS_ID + " = ?",
+                new String[]{String.valueOf(post.getId())});
+        db.close();
+        return rows;
+    }
+
+    public void deletePost(long postId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_POSTS, COLUMN_POSTS_ID + " = ?",
+                new String[]{String.valueOf(postId)});
+        db.close();
+    }
+
+
+    private Post cursorToPost(Cursor cursor) {
+        Post post = new Post();
+        post.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_POSTS_ID)));
+        post.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_POSTS_USER_ID)));
+        post.setContent(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_POSTS_CONTENT)));
+        post.setImageUrl(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_POSTS_IMAGE_URL)));
+        post.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_POSTS_CREATED_AT)));
+        return post;
+    }
+    // endregion
+    
+    // region Itinerary Methods
+    public long addItinerary(Itinerary itinerary) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITINERARIES_USER_ID, itinerary.getUserId());
+        values.put(COLUMN_ITINERARIES_NAME, itinerary.getName());
+        values.put(COLUMN_ITINERARIES_START_DATE, itinerary.getStartDate());
+        values.put(COLUMN_ITINERARIES_END_DATE, itinerary.getEndDate());
+        long id = db.insert(TABLE_ITINERARIES, null, values);
+        db.close();
+        return id;
+    }
+
+    public List<Itinerary> getItinerariesForUser(long userId) {
+        List<Itinerary> itineraries = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_ITINERARIES, null, COLUMN_ITINERARIES_USER_ID + " = ?",
+                new String[]{String.valueOf(userId)}, null, null, COLUMN_ITINERARIES_ID + " DESC");
+        if (cursor.moveToFirst()) {
+            do {
+                itineraries.add(cursorToItinerary(cursor));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return itineraries;
+    }
+
+    public int updateItinerary(Itinerary itinerary) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_ITINERARIES_NAME, itinerary.getName());
+        values.put(COLUMN_ITINERARIES_START_DATE, itinerary.getStartDate());
+        values.put(COLUMN_ITINERARIES_END_DATE, itinerary.getEndDate());
+        int rows = db.update(TABLE_ITINERARIES, values, COLUMN_ITINERARIES_ID + " = ?",
+                new String[]{String.valueOf(itinerary.getId())});
+        db.close();
+        return rows;
+    }
+
+    public void deleteItinerary(long itineraryId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Also delete associated itinerary items
+        db.delete(TABLE_ITINERARY_ITEMS, COLUMN_ITINERARY_ITEMS_ITINERARY_ID + " = ?",
+                new String[]{String.valueOf(itineraryId)});
+        db.delete(TABLE_ITINERARIES, COLUMN_ITINERARIES_ID + " = ?",
+                new String[]{String.valueOf(itineraryId)});
+        db.close();
+    }
+
+    private Itinerary cursorToItinerary(Cursor cursor) {
+        Itinerary itinerary = new Itinerary();
+        itinerary.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ITINERARIES_ID)));
+        itinerary.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ITINERARIES_USER_ID)));
+        itinerary.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ITINERARIES_NAME)));
+        itinerary.setStartDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ITINERARIES_START_DATE)));
+        itinerary.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ITINERARIES_END_DATE)));
+        return itinerary;
+    }
+
+    public Itinerary getItineraryById(long itineraryId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Itinerary itinerary = null;
+        Cursor cursor = db.query(TABLE_ITINERARIES, null, COLUMN_ITINERARIES_ID + " = ?",
+                new String[]{String.valueOf(itineraryId)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            itinerary = cursorToItinerary(cursor);
+        }
+        cursor.close();
+        db.close();
+        return itinerary;
+    }
+    // endregion
+
+    // region Booking Methods
+    public long addBooking(Booking booking) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_BOOKINGS_USER_ID, booking.getUserId());
+        values.put(COLUMN_BOOKINGS_ATTRACTION_ID, booking.getAttractionId());
+        values.put(COLUMN_BOOKINGS_DATE, booking.getBookingDate());
+        values.put(COLUMN_BOOKINGS_STATUS, booking.getStatus());
+        long id = db.insert(TABLE_BOOKINGS, null, values);
+        db.close();
+        return id;
+    }
+
+    public List<Booking> getBookingsByUserId(long userId) {
+        List<Booking> bookings = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        // SQL JOIN Query to get attraction name along with booking details
+        String query = "SELECT b.*, a." + COLUMN_ATTRACTIONS_NAME + " FROM " + TABLE_BOOKINGS + " b JOIN "
+                + TABLE_ATTRACTIONS + " a ON b." + COLUMN_BOOKINGS_ATTRACTION_ID + " = a." + COLUMN_ATTRACTIONS_ID
+                + " WHERE b." + COLUMN_BOOKINGS_USER_ID + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Booking booking = cursorToBooking(cursor);
+                // Also get the attraction name from the joined table
+                booking.setAttractionName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_NAME)));
+                bookings.add(booking);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return bookings;
+    }
+
+    public Booking getBookingById(long bookingId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Booking booking = null;
+        String query = "SELECT b.*, a." + COLUMN_ATTRACTIONS_NAME + " FROM " + TABLE_BOOKINGS + " b JOIN "
+                + TABLE_ATTRACTIONS + " a ON b." + COLUMN_BOOKINGS_ATTRACTION_ID + " = a." + COLUMN_ATTRACTIONS_ID
+                + " WHERE b." + COLUMN_BOOKINGS_ID + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(bookingId)});
+
+        if (cursor.moveToFirst()) {
+            booking = cursorToBooking(cursor);
+            booking.setAttractionName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ATTRACTIONS_NAME)));
+        }
+        cursor.close();
+        db.close();
+        return booking;
+    }
+
+
+    public int updateBooking(Booking booking) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_BOOKINGS_DATE, booking.getBookingDate());
+        values.put(COLUMN_BOOKINGS_STATUS, booking.getStatus());
+        int rows = db.update(TABLE_BOOKINGS, values, COLUMN_BOOKINGS_ID + " = ?",
+                new String[]{String.valueOf(booking.getId())});
+        db.close();
+        return rows;
+    }
+
+    public void deleteBooking(long bookingId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_BOOKINGS, COLUMN_BOOKINGS_ID + " = ?",
+                new String[]{String.valueOf(bookingId)});
+        db.close();
+    }
+
+    private Booking cursorToBooking(Cursor cursor) {
+        Booking booking = new Booking();
+        booking.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOKINGS_ID)));
+        booking.setUserId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOKINGS_USER_ID)));
+        booking.setAttractionId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOKINGS_ATTRACTION_ID)));
+        booking.setBookingDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOKINGS_DATE)));
+        booking.setStatus(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOKINGS_STATUS)));
+        return booking;
+    }
+    // endregion
 } 

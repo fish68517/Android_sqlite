@@ -23,7 +23,8 @@
 
 
 
-        <activity android:name="com.archive.app.activity.LoginActivity"
+        <activity
+            android:name="com.archive.app.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,21 +33,28 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.archive.app.activity.RegisterActivity"
+        <activity android:name="com.archive.app.activity.AttractionDetailActivity"
+            android:exported="true">
+        </activity>
+        <activity android:name="com.archive.app.activity.AddItineraryActivity"
             android:exported="true">
         </activity>
 
+        <activity android:name="com.archive.app.activity.BookingActivity"
+            android:exported="true">
+        </activity>
 
+        <activity android:name="com.archive.app.activity.ItineraryDetailActivity"
+            android:exported="true">
+        </activity>
 
-        <activity android:name="com.archive.app.activity.MainActivity"/>
+        <activity android:name="com.archive.app.activity.MyBookingsActivity"
+            android:exported="true">
+        </activity>
 
-        <activity android:name="com.archive.app.activity.NoteEditorActivity"/>
-        <activity android:name="com.archive.app.activity.RecycleBinActivity"/>
-        <activity android:name="com.archive.app.activity.SearchActivity"/>
-
-
-
-
+        <activity android:name="com.archive.app.activity.EditBookingActivity"
+            android:exported="true">
+        </activity>
 
 
 
