@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.example.studentmanagement"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
+        applicationId = "com.example.studentmanagement"
         minSdk = 25
         targetSdk = 34
         versionCode = 1
@@ -50,15 +50,6 @@ dependencies {
 
     implementation ("com.github.bumptech.glide:glide:4.12.0")
 
-
-
-
-    // implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-
- 
-
-
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
 
     // Stomp Protocol for Android
     implementation ("com.github.NaikSoftware:StompProtocolAndroid:1.6.6")

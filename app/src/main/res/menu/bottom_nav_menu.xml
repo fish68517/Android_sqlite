@@ -3,17 +3,21 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@android:drawable/ic_menu_compass"
-        android:title="首页" />
+        android:title="书架" />
     <item
         android:id="@+id/navigation_post"
         android:icon="@android:drawable/ic_menu_camera"
-        android:title="个人动态" />
+        android:title="书城" />
+    <item
+        android:id="@+id/navigation_add"
+        android:icon="@drawable/plus_circle"
+        android:title="" />
     <item
         android:id="@+id/navigation_itinerary"
         android:icon="@android:drawable/ic_menu_mapmode"
-        android:title="行程管理" />
+        android:title="原创" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="个人中心" />
+        android:title="我的" />
 </menu> 
