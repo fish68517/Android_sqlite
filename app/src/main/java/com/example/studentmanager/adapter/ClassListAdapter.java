@@ -141,7 +141,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
         TextView tvClassName;
         ImageView ivExpandArrow;
         RecyclerView studentsRecyclerView;
-        ImageView ivDelete;
+        TextView ivDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

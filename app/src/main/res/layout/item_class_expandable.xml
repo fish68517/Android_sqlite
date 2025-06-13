@@ -27,7 +27,18 @@
             android:textStyle="bold"
             tools:text="计算机科学1班" />
 
-        <ImageView
+        <TextView
+            android:id="@+id/iv_delete_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv_expand_arrow"
+            android:layout_centerVertical="true"
+            android:text="删除"
+            android:layout_marginEnd="8dp"
+            android:textColor="@color/deep_green"
+            android:textSize="16sp" />
+
+<!--        <ImageView
             android:id="@+id/iv_delete_class"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,7 +47,7 @@
             android:src="@drawable/ic_delete"
             android:padding="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="删除班级"/>
+            android:contentDescription="删除班级"/>-->
 
         <ImageView
             android:id="@+id/iv_expand_arrow"

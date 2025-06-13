@@ -64,42 +64,52 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE INDEX idx_student_status_history_change_date ON student_status_history(change_date)");
 
         // 插入班级数据
-        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('计算机科学1班', '计算机类')");
-        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('计算机科学2班', '计算机类')");
-        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('软件工程1班', '计算机类')");
-        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('电子信息1班', '电子信息类')");
-        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('通信工程1班', '电子信息类')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('17移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('18移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('19移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('20移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('21移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('22移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('23移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('24移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('21移动本1-8班', '移动应用开发')");
+        db.execSQL("INSERT INTO classes (class_name, class_type) VALUES ('22移动本1-8班', '移动应用开发')");
 
         // 插入学生数据
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('张三', '男', 1, '2020-09-01', NULL, '在校', 'zhangsan', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('李四', '女', 1, '2020-09-01', NULL, '在校', 'lisi', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('王五', '男', 2, '2020-09-01', '2024-07-01', '毕业', 'wangwu', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('赵六', '女', 2, '2020-09-01', NULL, '在校', 'zhaoliu', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('孙七', '男', 3, '2021-09-01', NULL, '在校', 'sunqi', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('周八', '女', 3, '2021-09-01', NULL, '在校', 'zhouba', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('吴九', '男', 4, '2021-09-01', NULL, '在校', 'wujiu', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('郑十', '女', 4, '2021-09-01', NULL, '在校', 'zhengshi', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('张小鱼', '女', 4, '2021-09-01', NULL, '在校', 'zhengshi', '123456', 0)");
-        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('王小二', '女', 4, '2021-09-01', NULL, '在校', 'zhengshi', '123456', 0)");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password) VALUES ('陈一', '男', 2, '2018-09-01', '2022-07-01', '毕业', 'chenyi', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password) VALUES ('林二', '女', 3, '2019-09-01', '2023-07-01', '毕业', 'liner', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('张三', '男', 5, '2021-09-01', '在校', 'zhangsan', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('李四', '女', 5, '2021-09-01', '在校', 'lisi', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('王五', '男', 9, '2021-09-01', '在校', 'wangwu', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('赵六', '女', 6, '2022-09-01', '在校', 'zhaoliu', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('孙七', '男', 10, '2022-09-01', '在校', 'sunqi', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('周八', '女', 7, '2023-09-01', '在校', 'zhouba', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('吴九', '男', 7, '2023-09-01', '在校', 'wujiu', '123456')");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, status, username, password) VALUES ('郑十', '女', 8, '2024-09-01', '在校', 'zhengshi', '123456')");
 
         // 插入学籍状态变更记录
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (2, '入学', '2020-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (2, '在校', '2020-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (3, '入学', '2020-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (3, '在校', '2020-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (3, '毕业', '2024-07-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (4, '入学', '2020-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (4, '在校', '2020-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (1, '入学', '2018-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (1, '在校', '2018-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (1, '毕业', '2022-07-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (2, '入学', '2019-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (2, '在校', '2019-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (2, '毕业', '2023-07-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (3, '入学', '2021-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (3, '在校', '2021-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (4, '入学', '2021-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (4, '在校', '2021-09-01')");
         db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (5, '入学', '2021-09-01')");
         db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (5, '在校', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (6, '入学', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (6, '在校', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (7, '入学', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (7, '在校', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (8, '入学', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (8, '在校', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (9, '入学', '2021-09-01')");
-        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (9, '在校', '2021-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (6, '入学', '2022-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (6, '在校', '2022-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (7, '入学', '2022-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (7, '在校', '2022-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (8, '入学', '2023-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (8, '在校', '2023-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (9, '入学', '2023-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (9, '在校', '2023-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (10, '入学', '2024-09-01')");
+        db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (10, '在校', '2024-09-01')");
     }
 
     /**

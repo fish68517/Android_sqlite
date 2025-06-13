@@ -6,6 +6,7 @@
     android:background="@color/deep_green">
 
     <!-- Top Bar -->
+
     <RelativeLayout
         android:id="@+id/top_bar_student"
         android:layout_width="match_parent"
@@ -22,7 +23,6 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/iv_add_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,6 +32,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
             android:src="@drawable/ic_add"
+            android:visibility="gone"
             app:tint="@android:color/white" />
     </RelativeLayout>
 

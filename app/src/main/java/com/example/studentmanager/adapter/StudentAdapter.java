@@ -97,7 +97,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         TextView tvName;
         TextView tvGender;
         TextView tvStatus;
-        ImageView ivDelete;
+        TextView ivDelete;
 
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
