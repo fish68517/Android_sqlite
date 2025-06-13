@@ -58,7 +58,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         Student student = studentList.get(position);
         
         // 设置学生头像（这里使用默认头像）
-        holder.ivAvatar.setImageResource(R.drawable.ic_avator);
+        holder.ivAvatar.setImageResource(R.drawable.avatar_img);
         
         // 设置学生信息
         holder.tvName.setText(student.getName());
