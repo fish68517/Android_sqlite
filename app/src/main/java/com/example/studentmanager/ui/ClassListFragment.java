@@ -23,7 +23,7 @@ import com.example.studentmanagement.R;
 import com.example.studentmanager.adapter.ClassListAdapter;
 import com.example.studentmanager.db.StudentDBHelper;
 import com.example.studentmanager.model.Student;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class ClassListFragment extends Fragment {
     private List<com.example.studentmanager.model.Class> classList;
     private StudentDBHelper dbHelper;
     private SearchView searchView;
-    private FloatingActionButton fabAddClass;
+    private ImageView ivAddClass;
 
     @Nullable
     @Override
@@ -52,7 +52,7 @@ public class ClassListFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        fabAddClass = view.findViewById(R.id.fab_add_class);
+        ivAddClass = view.findViewById(R.id.iv_add_class);
         searchView = view.findViewById(R.id.search_view_class);
         recyclerView = view.findViewById(R.id.class_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -85,7 +85,7 @@ public class ClassListFragment extends Fragment {
                     .show();
         });
 
-        fabAddClass.setOnClickListener(v -> {
+        ivAddClass.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddClassActivity.class);
             startActivity(intent);
         });

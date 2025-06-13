@@ -22,7 +22,7 @@ import com.example.studentmanagement.R;
 import com.example.studentmanager.adapter.StudentAdapter;
 import com.example.studentmanager.db.StudentDBHelper;
 import com.example.studentmanager.model.Student;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.ImageView;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -36,7 +36,7 @@ public class StudentListFragment extends Fragment implements StudentAdapter.OnIt
     private List<Student> studentList;
     private StudentDBHelper dbHelper;
     private SearchView searchView;
-    private FloatingActionButton fabAddStudent;
+    private ImageView ivAddStudent;
 
     @Nullable
     @Override
@@ -53,7 +53,7 @@ public class StudentListFragment extends Fragment implements StudentAdapter.OnIt
     }
 
     private void initViews(View view) {
-        fabAddStudent = view.findViewById(R.id.fab_add_student);
+        ivAddStudent = view.findViewById(R.id.iv_add_student);
         searchView = view.findViewById(R.id.search_view_student);
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -76,7 +76,7 @@ public class StudentListFragment extends Fragment implements StudentAdapter.OnIt
                     .show();
         });
 
-        fabAddStudent.setOnClickListener(v -> {
+        ivAddStudent.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), AddStudentActivity.class);
             startActivity(intent);
         });

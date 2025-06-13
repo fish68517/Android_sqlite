@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studentmanagement.R;
 import com.example.studentmanager.model.Student;
+import com.example.studentmanager.utils.AvatarUtils;
 
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         Student student = studentList.get(position);
         
         // 设置学生头像（这里使用默认头像）
-        holder.ivAvatar.setImageResource(R.drawable.avatar_img);
+        holder.ivAvatar.setImageResource(AvatarUtils.getRandomAvatar());
         
         // 设置学生信息
         holder.tvName.setText(student.getName());

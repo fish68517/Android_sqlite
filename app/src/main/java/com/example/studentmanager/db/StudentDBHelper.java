@@ -79,6 +79,8 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('周八', '女', 3, '2021-09-01', NULL, '在校', 'zhouba', '123456', 0)");
         db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('吴九', '男', 4, '2021-09-01', NULL, '在校', 'wujiu', '123456', 0)");
         db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('郑十', '女', 4, '2021-09-01', NULL, '在校', 'zhengshi', '123456', 0)");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('张小鱼', '女', 4, '2021-09-01', NULL, '在校', 'zhengshi', '123456', 0)");
+        db.execSQL("INSERT INTO students (name, gender, class_id, admission_date, graduation_date, status, username, password, is_admin) VALUES ('王小二', '女', 4, '2021-09-01', NULL, '在校', 'zhengshi', '123456', 0)");
 
         // 插入学籍状态变更记录
         db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (2, '入学', '2020-09-01')");
