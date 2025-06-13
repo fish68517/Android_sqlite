@@ -6,6 +6,7 @@
     <color name="colorPrimary">#F8006C</color>
     <color name="colorAccent">#365FF4</color>
     <color name="gray">#A7A7A9</color>
+    <color name="deep_green">#1B5E20</color>
 
     <!-- Calculator Specific Colors -->
     <!-- Backgrounds for buttons -->
@@ -20,4 +21,8 @@
 
     <!-- General button background (fallback or if not overridden by specific types) -->
     <color name="calculator_default_button_bg_color">#D3D3D3</color>
+
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
 </resources>

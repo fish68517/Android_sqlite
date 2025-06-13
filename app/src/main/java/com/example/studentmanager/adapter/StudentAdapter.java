@@ -22,10 +22,15 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     private List<Student> studentList;
     private Context context;
     private OnItemClickListener listener;
+    private OnDeleteClickListener deleteClickListener;
 
     // 点击事件接口
     public interface OnItemClickListener {
         void onItemClick(Student student);
+    }
+
+    public interface OnDeleteClickListener {
+        void onDeleteClick(Student student);
     }
 
     public StudentAdapter(Context context, List<Student> studentList) {
@@ -35,6 +40,10 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setOnDeleteClickListener(OnDeleteClickListener deleteClickListener) {
+        this.deleteClickListener = deleteClickListener;
     }
 
     @NonNull
@@ -62,6 +71,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 listener.onItemClick(student);
             }
         });
+
+        holder.ivDelete.setOnClickListener(v -> {
+            if (deleteClickListener != null) {
+                deleteClickListener.onDeleteClick(student);
+            }
+        });
     }
 
     @Override
@@ -81,6 +96,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         TextView tvName;
         TextView tvGender;
         TextView tvStatus;
+        ImageView ivDelete;
 
         public StudentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,6 +104,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             tvName = itemView.findViewById(R.id.tv_name);
             tvGender = itemView.findViewById(R.id.tv_gender);
             tvStatus = itemView.findViewById(R.id.tv_status);
+            ivDelete = itemView.findViewById(R.id.iv_delete_student);
         }
     }
 } 

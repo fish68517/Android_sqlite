@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_update_status"
+        android:title="一键毕业检查"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/action_logout"
         android:title="退出登录"
         android:icon="@drawable/ic_logout"

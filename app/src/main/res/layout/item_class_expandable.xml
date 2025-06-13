@@ -28,6 +28,17 @@
             tools:text="计算机科学1班" />
 
         <ImageView
+            android:id="@+id/iv_delete_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/iv_expand_arrow"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_delete"
+            android:padding="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="删除班级"/>
+
+        <ImageView
             android:id="@+id/iv_expand_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,6 +56,6 @@
         android:paddingEnd="16dp"
         android:visibility="gone"
         tools:visibility="visible"
-        tools:listitem="@layout/item_student"/>
+        tools:listitem="@layout/item_student_class"/>
 
 </LinearLayout> 

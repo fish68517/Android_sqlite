@@ -26,8 +26,7 @@ public class StatisticsFragment extends Fragment {
     private TextView tvTotalStudents;
     private TextView tvCurrentStudents;
     private TextView tvGraduatedStudents;
-    private TextView tvComputerClassStudents;
-    private TextView tvElectronicClassStudents;
+
     
     // 按年查询相关
     private TextInputEditText etYear;
@@ -57,8 +56,7 @@ public class StatisticsFragment extends Fragment {
         tvTotalStudents = view.findViewById(R.id.tv_total_students);
         tvCurrentStudents = view.findViewById(R.id.tv_current_students);
         tvGraduatedStudents = view.findViewById(R.id.tv_graduated_students);
-        tvComputerClassStudents = view.findViewById(R.id.tv_computer_class_students);
-        tvElectronicClassStudents = view.findViewById(R.id.tv_electronic_class_students);
+
 
         // 初始化按年查询的视图
         etYear = view.findViewById(R.id.et_year);
@@ -154,7 +152,7 @@ public class StatisticsFragment extends Fragment {
         Cursor computerCursor = db.rawQuery("SELECT COUNT(*) FROM students WHERE class_id IN (SELECT class_id FROM classes WHERE class_type = '计算机类')", null);
         if (computerCursor != null && computerCursor.moveToFirst()) {
             int computer = computerCursor.getInt(0);
-            tvComputerClassStudents.setText(String.valueOf(computer));
+
             computerCursor.close();
         }
 
@@ -162,7 +160,7 @@ public class StatisticsFragment extends Fragment {
         Cursor electronicCursor = db.rawQuery("SELECT COUNT(*) FROM students WHERE class_id IN (SELECT class_id FROM classes WHERE class_type = '电子信息类')", null);
         if (electronicCursor != null && electronicCursor.moveToFirst()) {
             int electronic = electronicCursor.getInt(0);
-            tvElectronicClassStudents.setText(String.valueOf(electronic));
+
             electronicCursor.close();
         }
     }

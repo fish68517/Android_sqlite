@@ -18,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
 
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication"
+        android:theme="@style/Theme.StudentManager"
         tools:targetApi="31">
 
 
@@ -56,6 +56,16 @@
 
         <activity
             android:name="com.example.studentmanager.ui.AddStudentActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.example.studentmanager.ui.AddClassActivity"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name="com.example.studentmanager.ui.EditClassActivity"
             android:exported="true">
         </activity>
 

@@ -3,6 +3,7 @@ package com.example.studentmanager.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.content.ContentValues;
 
 /**
  * 数据库帮助类
@@ -97,6 +98,59 @@ public class StudentDBHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (8, '在校', '2021-09-01')");
         db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (9, '入学', '2021-09-01')");
         db.execSQL("INSERT INTO student_status_history (student_id, status, change_date) VALUES (9, '在校', '2021-09-01')");
+    }
+
+    /**
+     * 添加班级
+     * @param className 班级名称
+     * @return a long
+     */
+    public long addClass(String className) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("class_name", className);
+        values.put("class_type", "未分类");
+        long result = db.insert("classes", null, values);
+        db.close();
+        return result;
+    }
+
+    /**
+     * 删除学生
+     * @param studentId 学生ID
+     */
+    public void deleteStudent(int studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("students", "student_id = ?", new String[]{String.valueOf(studentId)});
+        db.close();
+    }
+
+    /**
+     * 删除班级及其所有学生
+     * @param classId 班级ID
+     */
+    public void deleteClass(int classId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // 首先删除该班级下的所有学生
+        db.delete("students", "class_id = ?", new String[]{String.valueOf(classId)});
+        // 然后删除班级
+        db.delete("classes", "class_id = ?", new String[]{String.valueOf(classId)});
+        db.close();
+    }
+
+    /**
+     * 更新班级信息
+     * @param classId 班级ID
+     * @param className 新的班级名称
+     * @return a int
+     */
+    public int updateClass(int classId, String className) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("class_name", className);
+        int rows = db.update("classes", values, "class_id = ?", new String[]{String.valueOf(classId)});
+        db.close();
+        return rows;
     }
 
     @Override

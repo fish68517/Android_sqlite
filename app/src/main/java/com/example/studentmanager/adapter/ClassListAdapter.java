@@ -31,13 +31,31 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
     private final StudentDBHelper dbHelper;
     private final Map<Integer, Boolean> expandedState = new HashMap<>();
     private OnStudentClickListener onStudentClickListener;
+    private OnDeleteClickListener onDeleteClickListener;
+    private OnItemClickListener onItemClickListener;
 
     public interface OnStudentClickListener {
         void onStudentClick(Student student);
     }
 
+    public interface OnDeleteClickListener {
+        void onDeleteClick(Class aClass);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Class aClass);
+    }
+
     public void setOnStudentClickListener(OnStudentClickListener listener) {
         this.onStudentClickListener = listener;
+    }
+
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.onDeleteClickListener = listener;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     public ClassListAdapter(Context context, List<Class> classList) {
@@ -63,8 +81,20 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
         holder.ivExpandArrow.setRotation(isExpanded ? 180 : 0);
 
         holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(currentClass);
+            }
+        });
+
+        holder.ivExpandArrow.setOnClickListener(v -> {
             expandedState.put(currentClass.getClassId(), !isExpanded);
             notifyItemChanged(position);
+        });
+
+        holder.ivDelete.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) {
+                onDeleteClickListener.onDeleteClick(currentClass);
+            }
         });
 
         if (isExpanded) {
@@ -111,12 +141,14 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
         TextView tvClassName;
         ImageView ivExpandArrow;
         RecyclerView studentsRecyclerView;
+        ImageView ivDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvClassName = itemView.findViewById(R.id.tv_class_name);
             ivExpandArrow = itemView.findViewById(R.id.iv_expand_arrow);
             studentsRecyclerView = itemView.findViewById(R.id.students_recycler_view);
+            ivDelete = itemView.findViewById(R.id.iv_delete_class);
         }
     }
 } 

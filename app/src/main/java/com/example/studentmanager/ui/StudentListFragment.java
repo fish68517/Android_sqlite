@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +22,10 @@ import com.example.studentmanagement.R;
 import com.example.studentmanager.adapter.StudentAdapter;
 import com.example.studentmanager.db.StudentDBHelper;
 import com.example.studentmanager.model.Student;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +35,8 @@ public class StudentListFragment extends Fragment implements StudentAdapter.OnIt
     private StudentAdapter adapter;
     private List<Student> studentList;
     private StudentDBHelper dbHelper;
+    private SearchView searchView;
+    private FloatingActionButton fabAddStudent;
 
     @Nullable
     @Override
@@ -40,28 +49,69 @@ public class StudentListFragment extends Fragment implements StudentAdapter.OnIt
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
-        loadData();
+        loadData(null);
     }
 
     private void initViews(View view) {
+        fabAddStudent = view.findViewById(R.id.fab_add_student);
+        searchView = view.findViewById(R.id.search_view_student);
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         studentList = new ArrayList<>();
         adapter = new StudentAdapter(getContext(), studentList);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
+
+        adapter.setOnDeleteClickListener(student -> {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("确认删除")
+                    .setMessage("您确定要删除学生 " + student.getName() + " 吗？")
+                    .setPositiveButton("删除", (dialog, which) -> {
+                        dbHelper.deleteStudent(student.getStudentId());
+                        Toast.makeText(getContext(), "学生已删除", Toast.LENGTH_SHORT).show();
+                        loadData(searchView.getQuery().toString());
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        });
+
+        fabAddStudent.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddStudentActivity.class);
+            startActivity(intent);
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                loadData(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                loadData(newText);
+                return false;
+            }
+        });
     }
 
     @SuppressLint("Range")
-    private void loadData() {
+    private void loadData(String query) {
         // 直接通过 StudentDBHelper 查询所有学生
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selection = null;
+        String[] selectionArgs = null;
+        if (query != null && !query.isEmpty()) {
+            selection = "name LIKE ?";
+            selectionArgs = new String[]{"%" + query + "%"};
+        }
+
         Cursor cursor = db.query(
                 "students",
                 null,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 null,
                 null,
                 "student_id DESC"
@@ -96,6 +146,6 @@ public class StudentListFragment extends Fragment implements StudentAdapter.OnIt
     @Override
     public void onResume() {
         super.onResume();
-        loadData(); // 刷新数据
+        loadData(null); // 刷新数据
     }
 } 
