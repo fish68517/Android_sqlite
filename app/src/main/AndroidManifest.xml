@@ -1,63 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Android项目"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StudentManager"
+        android:name=".MyApplication"
+        android:theme="@style/Theme.OrderFood"
         tools:targetApi="31">
         <activity
-            android:name="com.example.studentmanager.ui.MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
+    <!--        <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
+
         <activity
-            android:name="com.example.studentmanager.ui.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="com.example.studentmanager.ui.RegisterActivity"
+            android:name=".activity.RegisterActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.CartActivity"
+            android:exported="true">
+
+        </activity>
+
+
+        <activity
+            android:name=".activity.MerchantMainActivity"
+            android:exported="true">
+
+        </activity>
+
+
+        <activity
+            android:name=".activity.MerchantDetailActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.SearchResultsActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.AdminMerchantActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.DishListActivity"
+            android:exported="true">
+
+        </activity>
+
+
+        <activity
+            android:name=".activity.CheckoutActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".activity.AddressActivity"
             android:exported="true">
         </activity>
 
         <activity
-            android:name="com.example.studentmanager.ui.StudentDetailActivity"
+            android:name=".activity.EditAddressActivity"
             android:exported="true">
         </activity>
 
         <activity
-            android:name="com.example.studentmanager.ui.EditStudentActivity"
+            android:name=".activity.MerchantMainActivity"
             android:exported="true">
         </activity>
 
         <activity
-            android:name="com.example.studentmanager.ui.AddStudentActivity"
-            android:exported="true">
-        </activity>
-
-        <activity
-            android:name="com.example.studentmanager.ui.AddClassActivity"
-            android:exported="true">
-        </activity>
-
-        <activity
-            android:name="com.example.studentmanager.ui.EditClassActivity"
-            android:exported="true">
-        </activity>
-
-
-
-
-
+            android:name=".activity.EditDishActivity"
+            android:exported="false"/>
 
     </application>
 

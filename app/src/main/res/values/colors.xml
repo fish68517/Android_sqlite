@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimaryDark">#FFFFFFFF</color>
-    <color name="colorPrimary">#F8006C</color>
-    <color name="colorAccent">#365FF4</color>
-    <color name="gray">#78787A</color>
-    <color name="deep_green">#1B5E20</color>
-    <color name="orange_primary">#FF9800</color>
-    <color name="search_bar_orange">#FFEFE2</color>
-
-    <!-- Calculator Specific Colors -->
-    <!-- Backgrounds for buttons -->
-    <color name="calculator_digit_bg_color">#E0E0E0</color> <!-- Light gray for digits -->
-    <color name="calculator_operator_bg_color">#FF9800</color> <!-- Orange for operators -->
-    <color name="calculator_special_bg_color">#B0BEC5</color> <!-- Bluish gray for C, %, etc. -->
-    
-    <!-- Text colors for buttons -->
-    <color name="calculator_digit_text_color">#000000</color> <!-- Black text for digits -->
-    <color name="calculator_operator_text_color">#FFFFFF</color> <!-- White text for operators -->
-    <color name="calculator_special_text_color">#000000</color> <!-- Black text for special -->
-
-    <!-- General button background (fallback or if not overridden by specific types) -->
-    <color name="calculator_default_button_bg_color">#D3D3D3</color>
-
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="red">#FFE53935</color>
+
+    <!-- 订单状态颜色 -->
+    <color name="status_pending">#FFF57C00</color>  <!-- 橙色 -->
+    <color name="status_paid">#FF4CAF50</color>     <!-- 绿色 -->
+    <color name="status_completed">#FF2196F3</color><!-- 蓝色 -->
+    <color name="status_cancelled">#FF9E9E9E</color>
+    <color name="lighter_gray11">#EEDBD9</color>
+    <color name="colorPrimary">#F44336</color>
+    <color name="yellow">#FFC107</color><!-- 灰色 -->
+
+
+    <color name="primaryColor">#36D8F4</color>
+    <color name="primaryTextColor">#212121</color>
+
+
+    <color name="light_blue">#36D8F4</color>
+    <color name="lime_green">#5FF436</color>
+
+    <color name="amber">#FF5722</color>
+    <color name="light_green">#F4A836</color>
+    <color name="gray">#E7D4D2</color>
+
+
+    <color name="blue">#1538EA</color>
+    <color name="gray_light">#A4ECEC</color>
+    <color name="green">#17D155</color>
+    <color name="orange">#EB920D</color>
+
 </resources>

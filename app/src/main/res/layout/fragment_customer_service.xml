@@ -1,0 +1,150 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 标题 -->
+        <TextView
+            android:id="@+id/customer_service_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客服中心"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 常见问题 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="常见问题"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Q1: 你觉得食堂饭菜好吃吗？"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A1: 您可以在首页选择人为康城进入"
+                android:textSize="14sp"
+                android:textColor="@color/gray"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Q2: 你觉得食堂干净卫生吗"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="A2: 在首页选择旅游攻略进入"
+                android:textSize="14sp"
+                android:textColor="@color/gray"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- 联系客服 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="联系客服"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:layout_marginBottom="16dp">
+
+            <Button
+                android:id="@+id/contact_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="电话客服"
+                android:backgroundTint="@color/green"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/contact_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邮件客服"
+                android:backgroundTint="@color/blue"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <!-- 在线聊天 -->
+        <Button
+            android:id="@+id/start_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="在线聊天"
+            android:visibility="gone"
+            android:backgroundTint="@color/orange"
+            android:textColor="@android:color/white" />
+
+        <!-- 用户反馈 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="用户反馈"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/feedback_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="请输入您的问题或建议"
+            android:gravity="top|start"
+            />
+
+        <Button
+            android:id="@+id/submit_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="提交反馈"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/green"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>

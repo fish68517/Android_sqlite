@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue">
+
+    <!-- 顶部导航栏 -->
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="8dp"
+        android:layout_marginTop="16dp">
+
+        <!-- 左侧标题 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="附近"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_sub_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐"
+                android:textSize="18sp"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginEnd="16dp" />
+
+            <TextView
+                android:id="@+id/tv_sub_title_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收藏"
+                android:textSize="18sp"
+                android:textColor="@android:color/darker_gray" />
+        </LinearLayout>
+
+        <!-- 搜索按钮 -->
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/btn_search"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_toStartOf="@id/btn_publish"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_search"
+            android:contentDescription="搜索按钮"
+            android:padding="4dp" />
+
+        <!-- 发布按钮 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_publish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="发布"
+            android:textSize="14sp"
+            app:cornerRadius="12dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/lime_green" />
+    </RelativeLayout>
+
+    <!-- 内容区域 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_posts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
+
+</RelativeLayout>
