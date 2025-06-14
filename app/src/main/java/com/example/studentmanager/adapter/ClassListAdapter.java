@@ -99,7 +99,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
 
         if (isExpanded) {
             List<Student> studentList = getStudentsForClass(currentClass.getClassId());
-            StudentAdapter studentAdapter = new StudentAdapter(context, studentList);
+            StudentAdapterClass studentAdapter = new StudentAdapterClass(context, studentList);
             studentAdapter.setOnItemClickListener(student -> {
                 if (onStudentClickListener != null) {
                     onStudentClickListener.onStudentClick(student);

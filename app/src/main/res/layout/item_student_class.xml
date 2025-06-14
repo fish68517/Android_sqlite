@@ -50,7 +50,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <ImageView
+    <TextView
         android:visibility="gone"
         android:id="@+id/iv_delete_student"
         android:layout_width="wrap_content"
