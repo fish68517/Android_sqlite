@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.alibaba.fastjson.JSON;
+
 import com.example.orderfood.DBMysqlHelper;
 import com.example.orderfood.MyApplication;
 import com.example.orderfood.R;
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginStudent(String username, String password) {
 
-        DBMysqlHelper.getInstance().loginStudent(username,password, new DBMysqlHelper.DatabaseCallback<Map<String, Object>>() {
+        DBMysqlHelper.getInstance(this).loginStudent(username,password, new DBMysqlHelper.DatabaseCallback<Map<String, Object>>() {
 
             @Override
             public void onSuccess(Map<String, Object> result) {
@@ -149,12 +149,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginMerchant(String username, String password) {
 
-        DBMysqlHelper.getInstance().loginMerchant(username, password,new DBMysqlHelper.DatabaseCallback<Map<String, String>>() {
+        DBMysqlHelper.getInstance(this).loginMerchant(username, password,new DBMysqlHelper.DatabaseCallback<Map<String, String>>() {
 
             @Override
             public void onSuccess(Map<String, String> result) {
                 // Convert studentJson to Student object
-                MerchantBean merchant = JSON.parseObject(result.get("merchant"), MerchantBean.class);
+                Gson gson = new Gson();
+                MerchantBean merchant = gson.fromJson(result.get("merchant"), MerchantBean.class);
                 if (merchant == null) {
                     Toast.makeText(LoginActivity.this, "商家不存在或密码错误", Toast.LENGTH_SHORT).show();
                     return;

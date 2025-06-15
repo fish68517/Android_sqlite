@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.orderfood.DataBaseHelper;
+import com.example.orderfood.DBMysqlHelper;
 import com.example.orderfood.R;
 import com.example.orderfood.model.Post;
 
@@ -27,12 +27,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private List<Post> postList;
     private SharedPreferences sp;
 
-    private DataBaseHelper db;
+    private DBMysqlHelper db;
 
     public PostAdapter(List<Post> postList, Context context) {
         this.postList = postList;
         this.context = context;
-        db = new DataBaseHelper(context);
+        db =  DBMysqlHelper.getInstance(context);
 
     }
 

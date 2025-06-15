@@ -37,7 +37,7 @@ public class EditAddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_address);
         
-        dbHelper = DBMysqlHelper.getInstance();
+        dbHelper = DBMysqlHelper.getInstance(this);
         addressId = getIntent().getIntExtra("address_id", -1);
         
         initViews();

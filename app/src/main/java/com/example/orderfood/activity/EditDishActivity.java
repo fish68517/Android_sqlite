@@ -49,7 +49,7 @@ public class EditDishActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_dish);
 
-        dbHelper = DBMysqlHelper.getInstance();
+        dbHelper = DBMysqlHelper.getInstance(this);
         dish = (Dish) getIntent().getSerializableExtra("dish");
 
         initViews();

@@ -28,7 +28,7 @@ public class MerchantRegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = DBMysqlHelper.getInstance();
+        dbHelper = DBMysqlHelper.getInstance(getActivity());
     }
 
     @Nullable

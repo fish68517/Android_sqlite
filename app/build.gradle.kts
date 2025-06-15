@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.studentmanagement"
+    namespace = "com.example.orderfood"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.studentmanagement"
+        applicationId = "com.example.orderfood"
         minSdk = 25
         targetSdk = 34
         versionCode = 1

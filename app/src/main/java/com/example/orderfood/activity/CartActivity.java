@@ -2,7 +2,6 @@ package com.example.orderfood.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,7 +65,7 @@ public class CartActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        dbHelper = DBMysqlHelper.getInstance();
+        dbHelper = DBMysqlHelper.getInstance(this);
     }
 
     private void loadCartData() {

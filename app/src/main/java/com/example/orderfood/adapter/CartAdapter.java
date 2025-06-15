@@ -11,10 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.orderfood.DBMysqlHelper;
 import com.example.orderfood.R;
 
@@ -146,7 +144,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         }
 
         private void updateItemQuantity(CartItem item, int newQuantity) {
-            DBMysqlHelper.getInstance().updateCartItemQuantity(
+            DBMysqlHelper.getInstance(context).updateCartItemQuantity(
                 item.getRecordId(),
                 newQuantity,
                 new DBMysqlHelper.DatabaseCallback<Void>() {

@@ -67,7 +67,7 @@ public class DishListActivity extends AppCompatActivity {
     }
 
     private void fetchDishes() {
-        DBMysqlHelper.getInstance().getAllDishes(new DBMysqlHelper.DatabaseCallback<List<Dish>>() {
+        DBMysqlHelper.getInstance(this).getAllDishes(new DBMysqlHelper.DatabaseCallback<List<Dish>>() {
             @Override
             public void onSuccess(List<Dish> result) {
                 dishList.clear();

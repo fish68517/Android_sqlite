@@ -34,7 +34,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
     public OrderAdapter(Context context, List<Orders> orders) {
         this.context = context;
         this.orders = orders;
-        this.dbHelper = DBMysqlHelper.getInstance();
+        this.dbHelper = DBMysqlHelper.getInstance(context);
     }
 
     public void setOnPayClickListener(OnPayClickListener listener) {

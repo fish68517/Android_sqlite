@@ -24,5 +24,6 @@
     </style>
 
 
-
-</resources> 
+    <color name="colorPrimaryDark">#F44336</color>
+    <color name="colorAccent">#3682F4</color>
+</resources>

@@ -39,7 +39,7 @@ public class DishAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<MerchantBean> merchantList;
     private boolean isGridLayout = false;
     private Map<Integer, Integer> dishQuantities = new HashMap<>();
-    private DBMysqlHelper dbHelper = DBMysqlHelper.getInstance();
+    private DBMysqlHelper dbHelper = DBMysqlHelper.getInstance(context);
 
     public DishAdapter(Context context, List<Dish> dishList,CartCountListener cartCountListener,
                        Fragment fragment) {

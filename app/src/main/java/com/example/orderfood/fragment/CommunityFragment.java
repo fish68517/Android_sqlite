@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.orderfood.DataBaseHelper;
+import com.example.orderfood.DBMysqlHelper;
 import com.example.orderfood.R;
 import com.example.orderfood.adapter.PostAdapter;
 import com.example.orderfood.model.Post;
@@ -44,7 +44,7 @@ public class CommunityFragment extends Fragment {
     private PostAdapter adapter;
     private List<Post> postList = new ArrayList();
     private AlertDialog alertDialog;
-    private DataBaseHelper db;
+    private DBMysqlHelper db;
     private Uri imageUri;
 
 
@@ -96,7 +96,7 @@ public class CommunityFragment extends Fragment {
             showPublishPostDialog();
         });
 
-        db = new DataBaseHelper(getActivity());
+        db =  DBMysqlHelper.getInstance(getActivity());
 
         // 初始化帖子列表
         recyclerView = view.findViewById(R.id.recyclerView_posts);

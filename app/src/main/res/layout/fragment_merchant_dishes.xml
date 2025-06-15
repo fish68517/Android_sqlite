@@ -19,7 +19,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:contentDescription="添加菜品"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_add_back"
         app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout> 

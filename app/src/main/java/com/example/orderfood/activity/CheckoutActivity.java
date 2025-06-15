@@ -47,7 +47,7 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         
-        dbHelper = DBMysqlHelper.getInstance();
+        dbHelper = DBMysqlHelper.getInstance(this);
         initViews();
         loadData();
         setupListeners();

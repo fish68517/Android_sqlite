@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            app:navigationIcon="@drawable/ic_back"
+            app:navigationIcon="@drawable/ic_back_back"
             app:title="编辑菜品"
             app:titleTextColor="@color/black"/>
 

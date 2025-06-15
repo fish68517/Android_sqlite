@@ -35,5 +35,6 @@
     <color name="gray_light">#A4ECEC</color>
     <color name="green">#17D155</color>
     <color name="orange">#EB920D</color>
+    <color name="deep_green">#365FF4</color>
 
 </resources>

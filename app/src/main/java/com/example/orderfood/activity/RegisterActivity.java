@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         student.setName(username);
         student.setPassword(password);
         student.setContactInfo(email);
-        DBMysqlHelper.getInstance().registerStudent(student, new DBMysqlHelper.DatabaseCallback<Student>() {
+        DBMysqlHelper.getInstance(this).registerStudent(student, new DBMysqlHelper.DatabaseCallback<Student>() {
             @Override
             public void onSuccess(Student result) {
                 Toast.makeText(RegisterActivity.this, "学生注册成功", Toast.LENGTH_SHORT).show();
@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
         merchant.setName(username);
         merchant.setWindowLocation(email);
         merchant.setPassword(password);
-        DBMysqlHelper.getInstance().registerMerchant(merchant, new DBMysqlHelper.DatabaseCallback<MerchantBean>() {
+        DBMysqlHelper.getInstance(this).registerMerchant(merchant, new DBMysqlHelper.DatabaseCallback<MerchantBean>() {
             @Override
             public void onSuccess(MerchantBean result) {
                 Toast.makeText(RegisterActivity.this, "商家注册成功", Toast.LENGTH_SHORT).show();

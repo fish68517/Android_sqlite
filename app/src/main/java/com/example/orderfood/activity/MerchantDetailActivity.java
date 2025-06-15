@@ -51,7 +51,7 @@ public class MerchantDetailActivity extends AppCompatActivity {
 
 
     private void fetchMerchantDetails(int merchantId) {
-        DBMysqlHelper.getInstance().getMerchantInfo(merchantId, new DBMysqlHelper.DatabaseCallback<MerchantBean>() {
+        DBMysqlHelper.getInstance(this).getMerchantInfo(merchantId, new DBMysqlHelper.DatabaseCallback<MerchantBean>() {
             @Override
             public void onSuccess(MerchantBean result) {
                 MerchantBean merchant = result;

@@ -3,7 +3,6 @@ package com.example.orderfood;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.example.orderfood.model.Dish;
 import com.example.orderfood.model.DishCategory;
@@ -75,12 +74,12 @@ public class MyApplication extends Application {
         super.onCreate();
         mContext = this;
         loadMerchants();
-        DBMysqlHelper.getInstance();
+        DBMysqlHelper.getInstance(this);
 
     }
 
     private void loadMerchants() {
-        DBMysqlHelper.getInstance().getAllMerchants(new DBMysqlHelper.DatabaseCallback<List<MerchantBean>>() {
+        DBMysqlHelper.getInstance(this).getAllMerchants(new DBMysqlHelper.DatabaseCallback<List<MerchantBean>>() {
             @Override
             public void onSuccess(List<MerchantBean> merchants) {
                 MerchantBean merchant = merchants.get(merchants.size() - 1);

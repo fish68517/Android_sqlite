@@ -21,7 +21,6 @@ import com.example.orderfood.model.MerchantBean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MerchantListFragment extends Fragment {
     private static final String ARG_CATEGORY = "category";
@@ -49,7 +48,7 @@ public class MerchantListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dbHelper = DBMysqlHelper.getInstance();
+        dbHelper = DBMysqlHelper.getInstance(getActivity());
         if (getArguments() != null) {
             category = getArguments().getString(ARG_CATEGORY);
             isPurchased = getArguments().getBoolean(ARG_IS_PURCHASED);
