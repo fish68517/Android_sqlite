@@ -75,6 +75,7 @@
         />
 
     <RadioGroup
+        android:visibility="gone"
         android:id="@+id/login_radio_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -89,7 +90,7 @@
             android:id="@+id/radio_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="学生登录" />
+            android:text="登录" />
 
         <RadioButton
             android:id="@+id/radio_merchant"

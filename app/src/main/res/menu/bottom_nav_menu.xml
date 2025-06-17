@@ -10,6 +10,7 @@
         android:title="订单" />
     <item
         android:id="@+id/nav_stufy"
+        android:visible="false"
         android:icon="@drawable/jiao"
         android:title="交流" />
 

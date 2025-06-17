@@ -54,6 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString();
         String email = emailEditText.getText().toString();
 
+        if (true) {
+            registerStudent(username, password, email);
+            return;
+        }
         if (studentRegisterRadioButton.isChecked()) {
             registerStudent(username, password, email);
         } else if (merchantRegisterRadioButton.isChecked()) {
@@ -71,14 +75,14 @@ public class RegisterActivity extends AppCompatActivity {
         DBMysqlHelper.getInstance(this).registerStudent(student, new DBMysqlHelper.DatabaseCallback<Student>() {
             @Override
             public void onSuccess(Student result) {
-                Toast.makeText(RegisterActivity.this, "学生注册成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
             @Override
             public void onError(Exception e) {
 
-                Toast.makeText(RegisterActivity.this, "学生注册失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -6,7 +6,7 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-
+.gradle
 /build
 /captures
 .externalNativeBuild

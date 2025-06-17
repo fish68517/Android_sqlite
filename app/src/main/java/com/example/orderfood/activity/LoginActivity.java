@@ -91,6 +91,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        if (true) {
+            loginStudent(username, password);
+            return;
+        }
         if (studentRadioButton.isChecked()) {
             loginStudent(username, password);
         } else if (merchantRadioButton.isChecked()) {
@@ -123,15 +127,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Map<String, Object> result) {
                 // Convert studentJson to Student object
-                System.out.println("打印学生信息：" + result);
+                System.out.println("打印信息：" + result);
                 Gson gson = new Gson();
                 Map<String, Object> resultMap = gson.fromJson(result.toString(), new TypeToken<Map<String, Object>>() {}.getType());
                 Student student = gson.fromJson(String.valueOf((LinkedTreeMap) resultMap.get("student")), Student.class);
                 String token = (String) resultMap.get("token");
 
-                System.out.println("学生信息: " + student);
+                System.out.println("信息: " + student);
                 System.out.println("Token: " + token);
-                Toast.makeText(LoginActivity.this, "学生登录成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                 MyApplication.saveUser(username,password, Integer.valueOf(student.getStudentId()));
                 saveLoginInfo(username, password);  // 保存登录信息
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

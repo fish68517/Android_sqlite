@@ -682,7 +682,7 @@ public class DBMysqlHelper extends SQLiteOpenHelper {
         }, callback);
     }
 
-    // 获取学生的所有订单
+    // 获取的所有订单
     public void getOrdersByStudent(int studentId, DatabaseCallback<List<Orders>> callback) {
         executeDbOperation(db -> {
             String sql = "SELECT * FROM orders WHERE student_id = ? ORDER BY order_time DESC";

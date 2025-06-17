@@ -82,6 +82,7 @@
         app:layout_constraintVertical_bias="0.1" />
 
     <RadioGroup
+        android:visibility="gone"
         android:id="@+id/register_radio_group"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -96,10 +97,10 @@
             android:id="@+id/radio_student_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="学生注册" />
+            android:text="注册" />
 
         <RadioButton
-            android:visibility="gone"
+
             android:id="@+id/radio_merchant_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

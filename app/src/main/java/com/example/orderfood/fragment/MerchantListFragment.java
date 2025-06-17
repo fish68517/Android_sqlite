@@ -103,7 +103,7 @@ public class MerchantListFragment extends Fragment {
     }
 
     private void loadPurchasedMerchants() {
-        // 从SharedPreferences或其他地方获取当前登录的学生ID
+        // 从SharedPreferences或其他地方获取当前登录的ID
         int studentId = getCurrentStudentId();
         
         dbHelper.getPurchasedMerchantsByCompletedOrders(studentId, new DBMysqlHelper.DatabaseCallback<List<MerchantBean>>() {
@@ -145,8 +145,8 @@ public class MerchantListFragment extends Fragment {
     }
 
     private int getCurrentStudentId() {
-        // TODO: 实现获取当前登录学生ID的逻辑
-        // 这里需要你实现从SharedPreferences或其他地方获取当前登录的学生ID
+        // TODO: 实现获取当前登录ID的逻辑
+        // 这里需要你实现从SharedPreferences或其他地方获取当前登录的ID
         return MyApplication.getUserId(); // 临时返回默认值
     }
 } 
