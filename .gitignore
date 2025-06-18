@@ -11,6 +11,7 @@
 /captures
 .externalNativeBuild
 .cxx
+.gradle
 local.properties
 
 /captures
