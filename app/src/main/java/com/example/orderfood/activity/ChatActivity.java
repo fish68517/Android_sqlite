@@ -1,11 +1,14 @@
 package com.example.orderfood.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +31,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
     private Button sendButton;
     private DataBaseOpenHelper dbHelper;
 
-    private int currentUserId = 1; // Assume user ID is 1
+    private int currentUserId = -1; // Default to an invalid ID
     private int contactId;
     private String contactNickname;
 
@@ -37,11 +40,20 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        // Enable the back button in the action bar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        // Get current user ID from SharedPreferences
+        SharedPreferences sessionPrefs = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        currentUserId = sessionPrefs.getInt("CURRENT_USER_ID", -1);
+
         contactId = getIntent().getIntExtra("CONTACT_ID", -1);
         contactNickname = getIntent().getStringExtra("CONTACT_NICKNAME");
 
-        if (contactId == -1 || contactNickname == null) {
-            Toast.makeText(this, "无效的联系人", Toast.LENGTH_SHORT).show();
+        if (contactId == -1 || contactNickname == null || currentUserId == -1) {
+            Toast.makeText(this, "无效的会话", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -66,6 +78,15 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
         sendButton.setOnClickListener(v -> sendMessage());
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull android.view.MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // Go back to the previous activity
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void loadMessages() {
         messageList.clear();
         Cursor cursor = dbHelper.getMessages(currentUserId, contactId);
@@ -75,9 +96,19 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
                 message.setId(cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_MESSAGE_ID)));
                 message.setSenderId(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_SENDER_ID)));
                 message.setReceiverId(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_RECEIVER_ID)));
-                message.setContent(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_CONTENT)));
                 message.setTimestamp(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_TIMESTAMP)));
-                message.setRetracted(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_IS_RETRACTED)) == 1);
+                boolean isRetracted = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_IS_RETRACTED)) == 1;
+                message.setRetracted(isRetracted);
+
+                if (isRetracted) {
+                    if (message.getSenderId() == currentUserId) {
+                        message.setContent("你撤回了一条消息");
+                    } else {
+                        message.setContent("对方撤回了一条消息");
+                    }
+                } else {
+                    message.setContent(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_CONTENT)));
+                }
                 messageList.add(message);
             } while (cursor.moveToNext());
             cursor.close();
@@ -91,17 +122,13 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
         }
 
         dbHelper.addDirectMessage(currentUserId, contactId, content);
-
-        Message message = new Message();
-        message.setSenderId(currentUserId);
-        message.setReceiverId(contactId);
-        message.setContent(content);
-        // We can get the timestamp from DB again, or just add it here for UI
-        messageList.add(message);
-
-        adapter.notifyItemInserted(messageList.size() - 1);
-        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
         messageEditText.setText("");
+
+        // Reload messages to get the new message with correct ID and timestamp from DB
+        int oldSize = messageList.size();
+        loadMessages();
+        adapter.notifyDataSetChanged(); // Use notifyDataSetChanged as positions might shift
+        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
     }
 
     @Override
@@ -109,7 +136,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         List<String> options = new ArrayList<>();
 
-        options.add("为我删除");
+        options.add("删除本条消息");
         // Only sender can retract a message
         if (message.getSenderId() == currentUserId) {
             options.add("撤回");
@@ -117,7 +144,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
 
         builder.setItems(options.toArray(new String[0]), (dialog, which) -> {
             String selectedOption = options.get(which);
-            if (selectedOption.equals("为我删除")) {
+            if (selectedOption.equals("删除本条消息")) {
                 deleteMessageForMe(message, position);
             } else if (selectedOption.equals("撤回")) {
                 retractMessage(message, position);

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.text.InputType;
 
 import com.example.orderfood.DataBaseOpenHelper;
+import com.example.orderfood.MyApplication;
 import com.example.orderfood.R;
 import com.example.orderfood.activity.AddContactActivity;
 import com.example.orderfood.activity.CreateGroupActivity;
@@ -39,6 +40,9 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
     private List<User> contactList;
     private List<Group> groupList;
 
+
+
+    private int currentUserId = MyApplication.user.getId();
     public ContactsFragment() {
         // Required empty public constructor
     }
@@ -49,9 +53,9 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
 
         dbHelper = new DataBaseOpenHelper(getContext());
-        // Assuming current user's ID is 1 for now. This should be fetched from a login session.
-        contactList = dbHelper.getContacts(1);
-        groupList = dbHelper.getGroupsForUser(1);
+
+        contactList = dbHelper.getContacts(currentUserId);
+        groupList = dbHelper.getGroupsForUser(currentUserId);
 
         contactsRecyclerView = view.findViewById(R.id.recycler_view_contacts);
         contactsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -64,12 +68,22 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
         groupsRecyclerView.setAdapter(groupsAdapter);
 
         Button addContactButton = view.findViewById(R.id.btn_add_contact);
-        addContactButton.setOnClickListener(v -> showAddOptions());
+        addContactButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AddContactActivity.class);
+            startActivityForResult(intent, ADD_CONTACT_REQUEST);
+        });
+        
+        Button createGroupButton = view.findViewById(R.id.btn_create_group);
+        createGroupButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+            startActivityForResult(intent, ADD_CONTACT_REQUEST); // Can reuse the same request code
+        });
 
         return view;
     }
 
     private void showAddOptions() {
+        // This method can be deprecated or removed if the new buttons are preferred
         final CharSequence[] options = {"增加联系人", "创建群聊", "取消"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("请选择操作");
@@ -118,7 +132,7 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
                 .setMessage("确定要删除联系人 " + contact.getNickname() + " 吗？")
                 .setPositiveButton("删除", (dialog, which) -> {
                     // Assuming current user ID is 1
-                    dbHelper.deleteContact(1, contact.getId());
+                    dbHelper.deleteContact(currentUserId, contact.getId());
                     refreshLists();
                     Toast.makeText(getContext(), "联系人已删除", Toast.LENGTH_SHORT).show();
                 })
@@ -139,10 +153,7 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
             String remark = input.getText().toString().trim();
             if (!remark.isEmpty()) {
                 // Assuming current user ID is 1
-                dbHelper.updateContactRemark(1, contact.getId(), remark);
-                // Note: This only changes the remark in the database.
-                // To show it in the UI, the User model and getContacts method needs to be updated
-                // to also fetch and hold the remark. For now, we just update the DB.
+                dbHelper.updateContactRemark(currentUserId, contact.getId(), remark);
                 Toast.makeText(getContext(), "备注已更新", Toast.LENGTH_SHORT).show();
                 refreshLists(); // Refresh to reflect changes if any
             }
@@ -155,11 +166,11 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
     private void refreshLists() {
         // Assuming current user's ID is 1
         contactList.clear();
-        contactList.addAll(dbHelper.getContacts(1));
+        contactList.addAll(dbHelper.getContacts(currentUserId));
         contactsAdapter.notifyDataSetChanged();
 
         groupList.clear();
-        groupList.addAll(dbHelper.getGroupsForUser(1));
+        groupList.addAll(dbHelper.getGroupsForUser(currentUserId));
         groupsAdapter.notifyDataSetChanged();
 
         Toast.makeText(getContext(), "列表已更新", Toast.LENGTH_SHORT).show();

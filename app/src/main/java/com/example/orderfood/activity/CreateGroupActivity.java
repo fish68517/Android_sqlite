@@ -1,5 +1,7 @@
 package com.example.orderfood.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,61 +17,80 @@ import com.example.orderfood.adapter.SelectableContactsAdapter;
 import com.example.orderfood.model.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CreateGroupActivity extends AppCompatActivity {
 
-    private EditText groupNameEditText;
-    private RecyclerView contactsRecyclerView;
-    private Button createGroupButton;
+    private EditText etGroupName;
+    private RecyclerView rvContacts;
+    private Button btnCreate;
     private SelectableContactsAdapter adapter;
     private DataBaseOpenHelper dbHelper;
-    private int currentUserId = 1; // Assume current user ID is 1
+    private int currentUserId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 
-        setTitle("创建群聊");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("创建群聊");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        SharedPreferences sessionPrefs = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        currentUserId = sessionPrefs.getInt("CURRENT_USER_ID", -1);
+
+        if (currentUserId == -1) {
+            Toast.makeText(this, "用户状态异常, 请重新登录", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         dbHelper = new DataBaseOpenHelper(this);
 
-        groupNameEditText = findViewById(R.id.et_group_name);
-        contactsRecyclerView = findViewById(R.id.recycler_view_contacts_selection);
-        createGroupButton = findViewById(R.id.btn_create_group);
+        etGroupName = findViewById(R.id.et_group_name);
+        rvContacts = findViewById(R.id.recycler_view_selectable_contacts);
+        btnCreate = findViewById(R.id.btn_create);
 
+        setupRecyclerView();
+
+        btnCreate.setOnClickListener(v -> createGroup());
+    }
+
+    private void setupRecyclerView() {
         List<User> contacts = dbHelper.getContacts(currentUserId);
         adapter = new SelectableContactsAdapter(contacts);
-        contactsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        contactsRecyclerView.setAdapter(adapter);
-
-        createGroupButton.setOnClickListener(v -> createGroup());
+        rvContacts.setLayoutManager(new LinearLayoutManager(this));
+        rvContacts.setAdapter(adapter);
     }
 
     private void createGroup() {
-        String groupName = groupNameEditText.getText().toString().trim();
+        String groupName = etGroupName.getText().toString().trim();
         if (groupName.isEmpty()) {
             Toast.makeText(this, "请输入群聊名称", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        List<User> selectedContacts = adapter.getSelectedContacts();
-        if (selectedContacts.size() < 2) {
-            Toast.makeText(this, "请至少选择2位联系人", Toast.LENGTH_SHORT).show();
+        List<Integer> selectedMemberIds = adapter.getSelectedContactIds();
+        if (selectedMemberIds.isEmpty()) {
+            Toast.makeText(this, "请至少选择一个群成员", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        List<Integer> memberIds = selectedContacts.stream().map(User::getId).collect(Collectors.toList());
-
-        long groupId = dbHelper.createGroup(groupName, currentUserId, memberIds);
+        long groupId = dbHelper.createGroup(groupName, currentUserId, selectedMemberIds);
 
         if (groupId != -1) {
             Toast.makeText(this, "群聊 '" + groupName + "' 创建成功", Toast.LENGTH_SHORT).show();
-            setResult(RESULT_OK);
+            setResult(RESULT_OK); // To notify ContactsFragment to refresh
             finish();
         } else {
-            Toast.makeText(this, "创建群聊失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "创建失败", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 } 

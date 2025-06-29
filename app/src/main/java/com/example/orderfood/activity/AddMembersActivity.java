@@ -1,5 +1,7 @@
 package com.example.orderfood.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,55 +16,73 @@ import com.example.orderfood.adapter.SelectableContactsAdapter;
 import com.example.orderfood.model.User;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class AddMembersActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private Button confirmButton;
+    private RecyclerView rvSelectableContacts;
+    private Button btnAddMembers;
     private SelectableContactsAdapter adapter;
     private DataBaseOpenHelper dbHelper;
 
-    private long groupId;
-    private int currentUserId = 1;
+    private int currentUserId = -1;
+    private long groupId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_members);
-        setTitle("添加成员");
+        setContentView(R.layout.activity_add_members); // Assume this layout exists
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("添加群成员");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        SharedPreferences sessionPrefs = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        currentUserId = sessionPrefs.getInt("CURRENT_USER_ID", -1);
         groupId = getIntent().getLongExtra("GROUP_ID", -1);
-        if (groupId == -1) {
-            Toast.makeText(this, "无效的群组", Toast.LENGTH_SHORT).show();
+
+        if (currentUserId == -1 || groupId == -1) {
+            Toast.makeText(this, "数据错误，无法添加成员", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
         dbHelper = new DataBaseOpenHelper(this);
-        recyclerView = findViewById(R.id.recycler_view_add_members);
-        confirmButton = findViewById(R.id.btn_confirm_add_members);
 
-        List<User> addableContacts = dbHelper.getContactsNotInGroup(currentUserId, groupId);
-        adapter = new SelectableContactsAdapter(addableContacts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        rvSelectableContacts = findViewById(R.id.recycler_view_add_members);
+        btnAddMembers = findViewById(R.id.btn_add_selected_members);
 
-        confirmButton.setOnClickListener(v -> addSelectedMembers());
+        setupRecyclerView();
+
+        btnAddMembers.setOnClickListener(v -> addSelectedMembers());
+    }
+
+    private void setupRecyclerView() {
+        List<User> contactsNotInGroup = dbHelper.getContactsNotInGroup(currentUserId, groupId);
+        if (contactsNotInGroup.isEmpty()) {
+            Toast.makeText(this, "没有可添加的联系人", Toast.LENGTH_SHORT).show();
+        }
+        adapter = new SelectableContactsAdapter(contactsNotInGroup);
+        rvSelectableContacts.setLayoutManager(new LinearLayoutManager(this));
+        rvSelectableContacts.setAdapter(adapter);
     }
 
     private void addSelectedMembers() {
-        List<User> selectedContacts = adapter.getSelectedContacts();
-        if (selectedContacts.isEmpty()) {
-            Toast.makeText(this, "请选择要添加的联系人", Toast.LENGTH_SHORT).show();
+        List<Integer> selectedMemberIds = adapter.getSelectedContactIds();
+        if (selectedMemberIds.isEmpty()) {
+            Toast.makeText(this, "请至少选择一个联系人", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        List<Integer> memberIds = selectedContacts.stream().map(User::getId).collect(Collectors.toList());
-        dbHelper.addGroupMembers(groupId, memberIds);
-
-        Toast.makeText(this, "成员已添加", Toast.LENGTH_SHORT).show();
+        dbHelper.addGroupMembers(groupId, selectedMemberIds);
+        Toast.makeText(this, "成员添加成功", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 } 

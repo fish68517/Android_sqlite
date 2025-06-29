@@ -148,10 +148,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     private void addDummyData(SQLiteDatabase db) {
         // Add users
-        addUser(db, "me", "123", "我的测试账号"); // id 1
-        addUser(db, "zhangsan", "123", "张三"); // id 2
-        addUser(db, "lisi", "123", "李四");     // id 3
-        addUser(db, "wangwu", "123", "王五");   // id 4
+        addUser(db, "我的测试账号", "123", "我的测试账号"); // id 1
+        addUser(db, "张三", "123", "张三"); // id 2
+        addUser(db, "李四", "123", "李四");     // id 3
+        addUser(db, "王五", "123", "王五");   // id 4
 
         // Add contacts for user 'me' (id=1)
         addContact(db, 1, 2);
@@ -278,7 +278,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
                 + " LEFT JOIN " + TABLE_DELETED_MESSAGES + " dm ON m." + COLUMN_MESSAGE_ID + " = dm." + COLUMN_DELETED_MSG_ID
                 + " AND dm." + COLUMN_DELETED_USER_ID + " = ?"
                 + " WHERE ((m." + COLUMN_SENDER_ID + " = ? AND m." + COLUMN_RECEIVER_ID + " = ?) OR (m." + COLUMN_SENDER_ID + " = ? AND m." + COLUMN_RECEIVER_ID + " = ?))"
-                + " AND m." + COLUMN_IS_RETRACTED + " = 0"
                 + " AND dm." + COLUMN_DELETED_MSG_ID + " IS NULL"
                 + " ORDER BY m." + COLUMN_TIMESTAMP + " ASC";
 
@@ -291,7 +290,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
                 + " LEFT JOIN " + TABLE_DELETED_MESSAGES + " dm ON m." + COLUMN_MESSAGE_ID + " = dm." + COLUMN_DELETED_MSG_ID
                 + " AND dm." + COLUMN_DELETED_USER_ID + " = ?"
                 + " WHERE m." + COLUMN_GROUP_ID + " = ?"
-                + " AND m." + COLUMN_IS_RETRACTED + " = 0"
                 + " AND dm." + COLUMN_DELETED_MSG_ID + " IS NULL"
                 + " ORDER BY m." + COLUMN_TIMESTAMP + " ASC";
 
@@ -303,7 +301,6 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_IS_RETRACTED, 1);
-        values.put(COLUMN_CONTENT, "此消息已被撤回"); // Replace content
         db.update(TABLE_MESSAGES, values, COLUMN_MESSAGE_ID + " = ?", new String[]{String.valueOf(messageId)});
     }
 

@@ -8,7 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.orderfood.R;
 import com.example.orderfood.model.Message;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
 
@@ -60,19 +64,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         Message message = messageList.get(position);
-        if (getItemViewType(position) != VIEW_TYPE_RETRACTED) {
-            holder.messageContent.setText(message.getContent());
-            holder.itemView.setOnLongClickListener(v -> {
-                if (longClickListener != null) {
-                    longClickListener.onMessageLongClicked(message, position);
-                }
-                return true;
-            });
-        } else {
-            // For retracted messages, we might have a different holder or just set text
-            holder.messageContent.setText(message.getContent());
-            holder.itemView.setOnLongClickListener(null); // No actions for retracted messages
-        }
+        holder.bind(message, position, longClickListener, getItemViewType(position));
     }
 
     @Override
@@ -82,10 +74,56 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageContent;
+        TextView timestamp;
+        // ImageView avatar; // If you have different avatars per user later
 
         MessageViewHolder(View itemView) {
             super(itemView);
             messageContent = itemView.findViewById(R.id.tv_message_content);
+            timestamp = itemView.findViewById(R.id.tv_timestamp);
+            // avatar = itemView.findViewById(R.id.iv_avatar);
+        }
+
+        void bind(final Message message, final int position, final OnMessageLongClickListener listener, int viewType) {
+            messageContent.setText(message.getContent());
+
+            if (viewType != VIEW_TYPE_RETRACTED) {
+                if (timestamp != null) {
+                    timestamp.setText(formatTimestamp(message.getTimestamp()));
+                }
+                itemView.setOnLongClickListener(v -> {
+                    if (listener != null) {
+                        listener.onMessageLongClicked(message, position);
+                    }
+                    return true;
+                });
+            } else {
+                // For retracted messages, we might have a different holder or just set text
+                if (timestamp != null) {
+                    timestamp.setVisibility(View.GONE);
+                }
+                itemView.setOnLongClickListener(null); // No actions for retracted messages
+            }
+        }
+
+        private String formatTimestamp(String dbTimestamp) {
+            if (dbTimestamp == null || dbTimestamp.isEmpty()) {
+                return "";
+            }
+            // Input format from SQLite: YYYY-MM-DD HH:MM:SS
+            SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            // Output format: HH:mm
+            SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+            try {
+                Date date = dbFormat.parse(dbTimestamp);
+                return displayFormat.format(date);
+            } catch (ParseException e) {
+                // If parsing fails, return a part of the string or empty
+                if (dbTimestamp.length() > 16) {
+                    return dbTimestamp.substring(11, 16);
+                }
+                return "";
+            }
         }
     }
 } 

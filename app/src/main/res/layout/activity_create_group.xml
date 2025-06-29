@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,28 +11,30 @@
         android:id="@+id/et_group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入群聊名称"
+        android:hint="输入群聊名称"
         android:layout_margin="16dp"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="选择联系人:"
+        android:text="选择群成员"
         android:textSize="16sp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_contacts_selection"
+        android:id="@+id/recycler_view_selectable_contacts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/btn_create_group"
+        android:id="@+id/btn_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="创建群聊"
+        android:text="创建"
         android:layout_margin="16dp"/>
 
 </LinearLayout> 

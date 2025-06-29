@@ -10,14 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.orderfood.R;
 import com.example.orderfood.model.User;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SelectableContactsAdapter extends RecyclerView.Adapter<SelectableContactsAdapter.ViewHolder> {
-    private List<User> contacts;
-    private List<User> selectedContacts = new ArrayList<>();
+    private List<User> contactList;
+    private Set<Integer> selectedContactIds = new HashSet<>();
 
-    public SelectableContactsAdapter(List<User> contacts) {
-        this.contacts = contacts;
+    public SelectableContactsAdapter(List<User> contactList) {
+        this.contactList = contactList;
     }
 
     @NonNull
@@ -29,49 +31,37 @@ public class SelectableContactsAdapter extends RecyclerView.Adapter<SelectableCo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User contact = contacts.get(position);
-        holder.contactName.setText(contact.getNickname());
-        holder.checkBox.setChecked(selectedContacts.contains(contact));
+        User contact = contactList.get(position);
+        holder.nickname.setText(contact.getNickname());
+        holder.checkBox.setChecked(selectedContactIds.contains(contact.getId()));
 
         holder.itemView.setOnClickListener(v -> {
-            holder.checkBox.setChecked(!holder.checkBox.isChecked());
-            if (holder.checkBox.isChecked()) {
-                if (!selectedContacts.contains(contact)) {
-                    selectedContacts.add(contact);
-                }
+            if (selectedContactIds.contains(contact.getId())) {
+                selectedContactIds.remove(contact.getId());
             } else {
-                selectedContacts.remove(contact);
+                selectedContactIds.add(contact.getId());
             }
-        });
-
-        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (!selectedContacts.contains(contact)) {
-                    selectedContacts.add(contact);
-                }
-            } else {
-                selectedContacts.remove(contact);
-            }
+            notifyItemChanged(position);
         });
     }
 
     @Override
     public int getItemCount() {
-        return contacts.size();
+        return contactList.size();
     }
 
-    public List<User> getSelectedContacts() {
-        return selectedContacts;
+    public List<Integer> getSelectedContactIds() {
+        return new ArrayList<>(selectedContactIds);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView contactName;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView nickname;
         CheckBox checkBox;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
-            contactName = itemView.findViewById(R.id.tv_contact_name);
-            checkBox = itemView.findViewById(R.id.checkbox_select_contact);
+            nickname = itemView.findViewById(R.id.tv_nickname);
+            checkBox = itemView.findViewById(R.id.checkbox_select);
         }
     }
 } 

@@ -1,9 +1,12 @@
 package com.example.orderfood.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,8 +25,10 @@ import com.example.orderfood.model.Message;
 import com.example.orderfood.model.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class GroupChatActivity extends AppCompatActivity implements GroupChatAdapter.OnMessageLongClickListener {
@@ -35,10 +40,10 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
     private Button sendButton;
     private DataBaseOpenHelper dbHelper;
 
-    private int currentUserId = 1; // Assume user ID is 1
+    private int currentUserId = -1;
     private long groupId;
     private String groupName;
-    private Map<Integer, String> memberNicknames;
+    private Map<Integer, User> membersMap;
 
 
     @Override
@@ -55,7 +60,13 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
             return;
         }
 
-        setTitle(groupName);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(groupName);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        SharedPreferences sessionPrefs = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        currentUserId = sessionPrefs.getInt("CURRENT_USER_ID", -1);
 
         dbHelper = new DataBaseOpenHelper(this);
 
@@ -64,26 +75,28 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
         sendButton = findViewById(R.id.btn_send);
 
         messageList = new ArrayList<>();
-        loadMemberNicknames();
+        membersMap = new HashMap<>();
+        loadGroupMembers();
         loadMessages();
 
-        adapter = new GroupChatAdapter(messageList, currentUserId, memberNicknames, this);
+        adapter = new GroupChatAdapter(messageList, currentUserId, membersMap, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+        recyclerView.scrollToPosition(adapter.getItemCount() > 0 ? adapter.getItemCount() - 1 : 0);
 
         sendButton.setOnClickListener(v -> sendMessage());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.group_chat_menu, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_group_chat, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_group_settings) {
             Intent intent = new Intent(this, GroupSettingsActivity.class);
             intent.putExtra("GROUP_ID", groupId);
@@ -93,9 +106,9 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadMemberNicknames() {
+    private void loadGroupMembers() {
         List<User> members = dbHelper.getGroupMembers(groupId);
-        memberNicknames = members.stream().collect(Collectors.toMap(User::getId, User::getNickname));
+        membersMap = members.stream().collect(Collectors.toMap(User::getId, Function.identity()));
     }
 
     private void loadMessages() {
@@ -106,10 +119,17 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
                 Message message = new Message();
                 message.setId(cursor.getLong(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_MESSAGE_ID)));
                 message.setSenderId(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_SENDER_ID)));
-                // receiverId and groupId might be null depending on message type, handle this
-                message.setContent(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_CONTENT)));
                 message.setTimestamp(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_TIMESTAMP)));
-                message.setRetracted(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_IS_RETRACTED)) == 1);
+                boolean isRetracted = cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_IS_RETRACTED)) == 1;
+                message.setRetracted(isRetracted);
+
+                if (isRetracted) {
+                    User sender = membersMap.get(message.getSenderId());
+                    String senderName = (sender != null && sender.getId() != currentUserId) ? sender.getNickname() : "你";
+                    message.setContent(senderName + " 撤回了一条消息");
+                } else {
+                    message.setContent(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseOpenHelper.COLUMN_CONTENT)));
+                }
                 messageList.add(message);
             } while (cursor.moveToNext());
             cursor.close();
@@ -123,15 +143,11 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
         }
 
         dbHelper.addGroupMessage(currentUserId, (int)groupId, content);
-
-        Message message = new Message();
-        message.setSenderId(currentUserId);
-        message.setContent(content);
-        messageList.add(message);
-
-        adapter.notifyItemInserted(messageList.size() - 1);
-        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
         messageEditText.setText("");
+
+        loadMessages();
+        adapter.notifyDataSetChanged();
+        recyclerView.scrollToPosition(adapter.getItemCount() > 0 ? adapter.getItemCount() - 1 : 0);
     }
 
     @Override
@@ -139,14 +155,14 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         List<String> options = new ArrayList<>();
 
-        options.add("为我删除");
+        options.add("删除本条消息");
         if (message.getSenderId() == currentUserId) {
             options.add("撤回");
         }
 
         builder.setItems(options.toArray(new String[0]), (dialog, which) -> {
             String selectedOption = options.get(which);
-            if (selectedOption.equals("为我删除")) {
+            if (selectedOption.equals("删除本条消息")) {
                 deleteMessageForMe(message, position);
             } else if (selectedOption.equals("撤回")) {
                 retractMessage(message, position);
@@ -166,14 +182,14 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
 
     private void retractMessage(Message message, int position) {
         dbHelper.retractMessage(message.getId());
-        Message retractedMessage = messageList.get(position);
-        retractedMessage.setRetracted(true);
-        if (retractedMessage.getSenderId() == currentUserId) {
-            retractedMessage.setContent("你撤回了一条消息");
-        } else {
-            retractedMessage.setContent("对方撤回了一条消息");
-        }
-        adapter.notifyItemChanged(position);
+        loadMessages();
+        adapter.notifyDataSetChanged();
         Toast.makeText(this, "消息已撤回", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 } 

@@ -1,6 +1,9 @@
 package com.example.orderfood.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +25,17 @@ public class ChatFragment extends Fragment {
     private ConversationAdapter adapter;
     private List<Conversation> conversationList;
     private DataBaseOpenHelper dbHelper;
-    private int currentUserId = 1; // Assume current user ID is 1
+    private int currentUserId = -1;
 
     public ChatFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        SharedPreferences sessionPrefs = getActivity().getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        currentUserId = sessionPrefs.getInt("CURRENT_USER_ID", -1);
     }
 
     @Override

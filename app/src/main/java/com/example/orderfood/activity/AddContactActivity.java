@@ -1,6 +1,10 @@
 package com.example.orderfood.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,22 +25,29 @@ import java.util.List;
 public class AddContactActivity extends AppCompatActivity implements UserSearchAdapter.OnAddContactListener {
 
     private EditText searchEditText;
-    private Button searchButton;
     private RecyclerView recyclerView;
     private UserSearchAdapter adapter;
     private List<User> searchResults;
     private DataBaseOpenHelper dbHelper;
-    private int currentUserId = 1; // This should be dynamically set based on logged in user
+    private int currentUserId = -1; 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
 
+        SharedPreferences sessionPrefs = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
+        currentUserId = sessionPrefs.getInt("CURRENT_USER_ID", -1);
+
+        if (currentUserId == -1) {
+            Toast.makeText(this, "用户状态异常, 请重新登录", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         dbHelper = new DataBaseOpenHelper(this);
 
         searchEditText = findViewById(R.id.et_search_username);
-        searchButton = findViewById(R.id.btn_search);
         recyclerView = findViewById(R.id.recycler_view_search_results);
 
         searchResults = new ArrayList<>();
@@ -44,14 +55,20 @@ public class AddContactActivity extends AppCompatActivity implements UserSearchA
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        searchButton.setOnClickListener(v -> {
-            String query = searchEditText.getText().toString().trim();
-            if (!query.isEmpty()) {
-                performSearch(query);
-            } else {
-                Toast.makeText(AddContactActivity.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                performSearch(s.toString().trim());
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
+
+        performSearch("");
     }
 
     private void performSearch(String query) {
@@ -60,8 +77,8 @@ public class AddContactActivity extends AppCompatActivity implements UserSearchA
         searchResults.addAll(users);
         adapter.notifyDataSetChanged();
 
-        if (users.isEmpty()) {
-            Toast.makeText(this, "未找到用户", Toast.LENGTH_SHORT).show();
+        if (users.isEmpty() && query.isEmpty()) {
+            Toast.makeText(this, "没有其他可添加的用户", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -70,5 +87,7 @@ public class AddContactActivity extends AppCompatActivity implements UserSearchA
         dbHelper.addContact(currentUserId, user.getId());
         Toast.makeText(this, "已添加 " + user.getNickname() + " 为联系人", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK); // Notify ContactsFragment to refresh
+        
+        performSearch(searchEditText.getText().toString().trim());
     }
 } 
