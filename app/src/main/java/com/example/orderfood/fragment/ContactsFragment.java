@@ -129,7 +129,7 @@ public class ContactsFragment extends Fragment implements ContactsAdapter.OnCont
     private void showDeleteConfirmationDialog(User contact) {
         new AlertDialog.Builder(getContext())
                 .setTitle("删除联系人")
-                .setMessage("确定要删除联系人 " + contact.getNickname() + " 吗？")
+                .setMessage("确定要删除联系人 " + contact.getNickname() + " 吗？\n\n注意：这将会永久删除你们之间的所有聊天记录。")
                 .setPositiveButton("删除", (dialog, which) -> {
                     // Assuming current user ID is 1
                     dbHelper.deleteContact(currentUserId, contact.getId());

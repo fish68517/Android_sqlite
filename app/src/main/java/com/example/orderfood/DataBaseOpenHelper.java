@@ -421,7 +421,22 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     public void deleteContact(int userId, int contactId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, COLUMN_FK_USER_ID + " = ? AND " + COLUMN_FK_CONTACT_USER_ID + " = ?", new String[]{String.valueOf(userId), String.valueOf(contactId)});
+        // Start a transaction to ensure both operations succeed or fail together
+        db.beginTransaction();
+        try {
+            // 1. Delete the contact relationship
+            db.delete(TABLE_CONTACTS, COLUMN_FK_USER_ID + " = ? AND " + COLUMN_FK_CONTACT_USER_ID + " = ?", new String[]{String.valueOf(userId), String.valueOf(contactId)});
+            db.delete(TABLE_CONTACTS, COLUMN_FK_USER_ID + " = ? AND " + COLUMN_FK_CONTACT_USER_ID + " = ?", new String[]{String.valueOf(contactId), String.valueOf(userId)});
+
+
+            // 2. Delete all direct messages between the two users
+            String whereClause = "((" + COLUMN_SENDER_ID + " = ? AND " + COLUMN_RECEIVER_ID + " = ?) OR (" + COLUMN_SENDER_ID + " = ? AND " + COLUMN_RECEIVER_ID + " = ?)) AND " + COLUMN_GROUP_ID + " IS NULL";
+            db.delete(TABLE_MESSAGES, whereClause, new String[]{String.valueOf(userId), String.valueOf(contactId), String.valueOf(contactId), String.valueOf(userId)});
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public void updateContactRemark(int userId, int contactId, String remark) {
