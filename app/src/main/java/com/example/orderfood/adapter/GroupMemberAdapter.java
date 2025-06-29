@@ -5,26 +5,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.orderfood.R;
 import com.example.orderfood.model.User;
+
 import java.util.List;
 
-public class GroupMembersAdapter extends RecyclerView.Adapter<GroupMembersAdapter.ViewHolder> {
-    private List<User> members;
-    private OnRemoveMemberClickListener listener;
-    private int creatorId;
+public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.ViewHolder> {
+
+    private List<User> memberList;
     private int currentUserId;
+    private int creatorId;
+    private OnRemoveMemberClickListener listener;
 
     public interface OnRemoveMemberClickListener {
-        void onRemoveMemberClick(User member);
+        void onRemoveMember(User member);
     }
 
-    public GroupMembersAdapter(List<User> members, int creatorId, int currentUserId, OnRemoveMemberClickListener listener) {
-        this.members = members;
-        this.creatorId = creatorId;
+    public GroupMemberAdapter(List<User> memberList, int currentUserId, int creatorId, OnRemoveMemberClickListener listener) {
+        this.memberList = memberList;
         this.currentUserId = currentUserId;
+        this.creatorId = creatorId;
         this.listener = listener;
     }
 
@@ -37,15 +41,15 @@ public class GroupMembersAdapter extends RecyclerView.Adapter<GroupMembersAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User member = members.get(position);
-        holder.memberName.setText(member.getNickname());
+        User member = memberList.get(position);
+        holder.nickname.setText(member.getNickname());
 
-        // Only the group creator can remove members
-        if (currentUserId == creatorId && member.getId() != creatorId) {
+        // Only the group creator can remove other members
+        if (currentUserId == creatorId && member.getId() != currentUserId) {
             holder.removeButton.setVisibility(View.VISIBLE);
             holder.removeButton.setOnClickListener(v -> {
                 if (listener != null) {
-                    listener.onRemoveMemberClick(member);
+                    listener.onRemoveMember(member);
                 }
             });
         } else {
@@ -55,16 +59,16 @@ public class GroupMembersAdapter extends RecyclerView.Adapter<GroupMembersAdapte
 
     @Override
     public int getItemCount() {
-        return members.size();
+        return memberList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView memberName;
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView nickname;
         Button removeButton;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
-            memberName = itemView.findViewById(R.id.tv_member_nickname);
+            nickname = itemView.findViewById(R.id.tv_member_nickname);
             removeButton = itemView.findViewById(R.id.btn_remove_member);
         }
     }

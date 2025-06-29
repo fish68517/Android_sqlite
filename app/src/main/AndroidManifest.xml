@@ -45,6 +45,7 @@
 
 
         <activity android:name=".activity.AddContactActivity" />
+        <activity android:name=".activity.SearchMessagesActivity" />
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.CreateGroupActivity" />
         <activity android:name=".activity.GroupChatActivity" />

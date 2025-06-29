@@ -236,6 +236,11 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
                     user.setNickname(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NICKNAME)));
                     userList.add(user);
                 }
+        /*        User user = new User();
+                user.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID)));
+                user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME)));
+                user.setNickname(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NICKNAME)));
+                userList.add(user);*/
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -383,6 +388,22 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
         return memberList;
     }
 
+    public Group getGroupDetails(long groupId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_GROUPS, null, COLUMN_GROUP_ID + " = ?",
+                new String[]{String.valueOf(groupId)}, null, null, null);
+        Group group = null;
+        if (cursor.moveToFirst()) {
+            group = new Group();
+            group.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_GROUP_ID)));
+            group.setName(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GROUP_NAME)));
+            group.setCreatorId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_CREATOR_ID)));
+            group.setCreatedAt(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GROUP_CREATED_AT)));
+        }
+        cursor.close();
+        return group;
+    }
+
     public User getUser(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USER_ID + " = ?";
@@ -420,6 +441,16 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
     public void removeGroupMember(long groupId, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_GROUP_MEMBERS, COLUMN_GM_GROUP_ID + " = ? AND " + COLUMN_GM_USER_ID + " = ?", new String[]{String.valueOf(groupId), String.valueOf(userId)});
+    }
+
+    public void deleteGroup(long groupId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        // First, delete all members of the group
+        db.delete(TABLE_GROUP_MEMBERS, COLUMN_GM_GROUP_ID + " = ?", new String[]{String.valueOf(groupId)});
+        // Optional: Delete all messages for the group
+        // db.delete(TABLE_MESSAGES, COLUMN_GROUP_ID + " = ?", new String[]{String.valueOf(groupId)});
+        // Then, delete the group itself
+        db.delete(TABLE_GROUPS, COLUMN_GROUP_ID + " = ?", new String[]{String.valueOf(groupId)});
     }
 
     public void addGroupMembers(long groupId, List<Integer> memberIds) {
@@ -554,5 +585,33 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NICKNAME, newNickname);
         return db.update(TABLE_USERS, values, COLUMN_USER_ID + " = ?", new String[]{String.valueOf(userId)});
+    }
+
+    public Cursor searchAllMessages(int userId, String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String searchQuery = "SELECT "
+                + "m." + COLUMN_MESSAGE_ID + ", "
+                + "m." + COLUMN_CONTENT + ", "
+                + "m." + COLUMN_TIMESTAMP + ", "
+                + "m." + COLUMN_SENDER_ID + ", "
+                + "us." + COLUMN_NICKNAME + " AS sender_nickname, "
+                + "COALESCE(ug." + COLUMN_NICKNAME + ", g." + COLUMN_GROUP_NAME + ") AS conversation_name, "
+                + "m." + COLUMN_RECEIVER_ID + ", " // For direct messages
+                + "m." + COLUMN_GROUP_ID + " "     // For group messages
+                + "FROM " + TABLE_MESSAGES + " m "
+                + "INNER JOIN " + TABLE_USERS + " us ON m." + COLUMN_SENDER_ID + " = us." + COLUMN_USER_ID + " "
+                // Join for direct message conversation name
+                + "LEFT JOIN " + TABLE_USERS + " ug ON (m." + COLUMN_RECEIVER_ID + " = ug." + COLUMN_USER_ID + " AND m." + COLUMN_SENDER_ID + " = " + userId + ") OR (m." + COLUMN_SENDER_ID + " = ug." + COLUMN_USER_ID + " AND m." + COLUMN_RECEIVER_ID + " = " + userId + " AND m." + COLUMN_SENDER_ID + " != " + userId + ") "
+                // Join for group message conversation name
+                + "LEFT JOIN " + TABLE_GROUPS + " g ON m." + COLUMN_GROUP_ID + " = g." + COLUMN_GROUP_ID + " "
+                // Ensure user is part of the conversation
+                + "WHERE (m." + COLUMN_RECEIVER_ID + " = " + userId + " OR m." + COLUMN_SENDER_ID + " = " + userId + " OR m." + COLUMN_GROUP_ID + " IN (SELECT " + COLUMN_GM_GROUP_ID + " FROM " + TABLE_GROUP_MEMBERS + " WHERE " + COLUMN_GM_USER_ID + " = " + userId + ")) "
+                + "AND m." + COLUMN_CONTENT + " LIKE ? "
+                + "AND m." + COLUMN_IS_RETRACTED + " = 0 "
+                // Exclude messages deleted by the current user
+                + "AND NOT EXISTS (SELECT 1 FROM " + TABLE_DELETED_MESSAGES + " dm WHERE dm." + COLUMN_DELETED_MSG_ID + " = m." + COLUMN_MESSAGE_ID + " AND dm." + COLUMN_DELETED_USER_ID + " = " + userId + ") "
+                + "ORDER BY m." + COLUMN_TIMESTAMP + " DESC";
+
+        return db.rawQuery(searchQuery, new String[]{"%" + query + "%"});
     }
 } 

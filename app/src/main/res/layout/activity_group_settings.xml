@@ -37,10 +37,10 @@
         android:background="?android:attr/listDivider"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="群成员"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:padding="16dp"/>
 
@@ -51,10 +51,19 @@
         android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/btn_add_members"
+        android:id="@+id/btn_add_group_members"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="添加成员"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
+
+    <Button
+        android:id="@+id/btn_leave_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="退出群聊"
+        android:backgroundTint="@color/design_default_color_error"
         android:layout_margin="16dp"/>
 
 </LinearLayout> 

@@ -10,22 +10,23 @@
         android:id="@+id/iv_avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginEnd="16dp"/>
 
     <TextView
-        android:id="@+id/tv_member_name"
+        android:id="@+id/tv_member_nickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginStart="16dp"
-        android:textSize="18sp"
-        android:text="Member Name"/>
+        android:text="Member Name"
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/btn_remove_member"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:text="移除"
+        android:textSize="12sp"
         android:visibility="gone"/>
 
 </LinearLayout> 

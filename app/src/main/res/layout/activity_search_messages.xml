@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragment.ChatFragment">
+    tools:context=".activity.SearchMessagesActivity">
 
-    <SearchView
-        android:id="@+id/search_view_messages"
+    <TextView
+        android:id="@+id/tv_search_results_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:queryHint="搜索消息"
-        android:iconifiedByDefault="false"
-        android:layout_margin="8dp"/>
+        android:padding="16dp"
+        android:textSize="16sp"
+        tools:text="“关键词”的搜索结果："/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_conversations"
+        android:id="@+id/recycler_view_search_results"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>

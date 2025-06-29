@@ -73,6 +73,7 @@ public class AddContactActivity extends AppCompatActivity implements UserSearchA
 
     private void performSearch(String query) {
         List<User> users = dbHelper.searchUsers(query, currentUserId);
+        System.out.println("users: " + users.size());
         searchResults.clear();
         searchResults.addAll(users);
         adapter.notifyDataSetChanged();
