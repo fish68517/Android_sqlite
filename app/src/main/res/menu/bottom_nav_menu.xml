@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_contacts"
         android:icon="@drawable/study"
-        android:title="主页" />
+        android:title="通讯录" />
     <item
-        android:id="@+id/nav_cart"
-        android:icon="@drawable/cart"
-        android:title="订单" />
-    <item
-        android:id="@+id/nav_stufy"
-        android:visible="false"
+        android:id="@+id/nav_chat"
         android:icon="@drawable/jiao"
-        android:title="交流" />
+        android:title="聊天" />
+
 
     <item
-        android:id="@+id/nav_mine"
-        android:icon="@drawable/study"
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_settings"
         android:title="我的" />
 
 </menu>

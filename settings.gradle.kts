@@ -24,6 +24,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Android项目"
+rootProject.name = "聊天系统"
 include(":app")
  

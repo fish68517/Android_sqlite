@@ -9,10 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.orderfood.DBMysqlHelper;
+import com.example.orderfood.DataBaseOpenHelper;
 import com.example.orderfood.R;
-import com.example.orderfood.model.Student;
-import com.example.orderfood.model.MerchantBean;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -20,92 +18,54 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerButton;
 
     private EditText emailEditText;
+    private DataBaseOpenHelper dbHelper;
 
-    private RadioGroup registerRadioGroup;
-    private RadioButton studentRegisterRadioButton;
-    private RadioButton merchantRegisterRadioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        dbHelper = new DataBaseOpenHelper(this);
+
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         emailEditText = findViewById(R.id.email);
 
-        registerRadioGroup = findViewById(R.id.register_radio_group);
-        studentRegisterRadioButton = findViewById(R.id.radio_student_register);
-        merchantRegisterRadioButton = findViewById(R.id.radio_merchant_register);
+
         registerButton = findViewById(R.id.register_button);
 
         registerButton = findViewById(R.id.register_button);
 
 
         registerButton.setOnClickListener(v -> {
-            if (true) {
-                handleRegister();
-            }
+            handleRegister();
         });
     }
 
     private void handleRegister() {
-        String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-        String email = emailEditText.getText().toString();
+        String username = usernameEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
 
-        if (true) {
-            registerStudent(username, password, email);
+        if (username.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (studentRegisterRadioButton.isChecked()) {
-            registerStudent(username, password, email);
-        } else if (merchantRegisterRadioButton.isChecked()) {
-            registerMerchant(username, password, email);
+
+        register(username, password);
+    }
+
+    private void register(String username, String password) {
+        long result = dbHelper.registerUser(username, password);
+        if (result == -1) {
+            Toast.makeText(this, "用户名已存在", Toast.LENGTH_SHORT).show();
+        } else if (result > 0) {
+            Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+            finish(); // 返回登录页
         } else {
-            Toast.makeText(this, "请选择注册类型", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "注册失败，请稍后再试", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void registerStudent(String username, String password, String email) {
-        Student student = new Student();
-        student.setName(username);
-        student.setPassword(password);
-        student.setContactInfo(email);
-        DBMysqlHelper.getInstance(this).registerStudent(student, new DBMysqlHelper.DatabaseCallback<Student>() {
-            @Override
-            public void onSuccess(Student result) {
-                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-                Toast.makeText(RegisterActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void registerMerchant(String username, String password, String email) {
-        MerchantBean merchant = new MerchantBean();
-        merchant.setName(username);
-        merchant.setWindowLocation(email);
-        merchant.setPassword(password);
-        DBMysqlHelper.getInstance(this).registerMerchant(merchant, new DBMysqlHelper.DatabaseCallback<MerchantBean>() {
-            @Override
-            public void onSuccess(MerchantBean result) {
-                Toast.makeText(RegisterActivity.this, "商家注册成功", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-                Toast.makeText(RegisterActivity.this, "商家注册失败", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
 
 }

@@ -7,23 +7,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.orderfood.DataBaseOpenHelper;
 
-import com.example.orderfood.DBMysqlHelper;
 import com.example.orderfood.MyApplication;
 import com.example.orderfood.R;
-import com.example.orderfood.model.Student;
-import com.example.orderfood.model.MerchantBean;
-import com.google.gson.Gson;
-import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.Map;
+import com.example.orderfood.model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -31,19 +23,16 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton, registerButton;
     private ImageView logoImageView;
     private CheckBox rememberMeCheckBox;  // 添加 CheckBox 的引用
-
+    private DataBaseOpenHelper dbHelper;
 
     private EditText regionEditText;
-
-    private RadioGroup loginRadioGroup;
-    private RadioButton studentRadioButton;
-    private RadioButton merchantRadioButton;
-    private RadioButton adminLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        dbHelper = new DataBaseOpenHelper(this);
 
         logoImageView = findViewById(R.id.logo);
         usernameEditText = findViewById(R.id.username);
@@ -53,11 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         rememberMeCheckBox = findViewById(R.id.remember_me);  // 初始化 CheckBox
 
         regionEditText = findViewById(R.id.region);
-        loginRadioGroup = findViewById(R.id.login_radio_group);
-        studentRadioButton = findViewById(R.id.radio_student);
-        merchantRadioButton = findViewById(R.id.radio_merchant);
-        adminLoginButton = findViewById(R.id.admin_login);
-
 
         // 检查是否保存了登录信息
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
@@ -83,104 +67,40 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleLogin() {
-        String username = usernameEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        String username = usernameEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
         String region = regionEditText.getText().toString();
         if (username.isEmpty() || password.isEmpty()) {  // 检查输入是否为空
             Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (true) {
-            loginStudent(username, password);
-            return;
-        }
-        if (studentRadioButton.isChecked()) {
-            loginStudent(username, password);
-        } else if (merchantRadioButton.isChecked()) {
-            loginMerchant(username, password);
-        } else if (adminLoginButton.isChecked()) {
-            loginAdmin(username, password);
-        } else {
-            Toast.makeText(this, "请选择登录类型", Toast.LENGTH_SHORT).show();
-        }
+        login(username, password);
     }
 
-    private void loginAdmin(String username, String password) {
-        if (username.equals("admin") && password.equals("admin")) {
-            MyApplication.saveAdmin(username, password);
-            Toast.makeText(LoginActivity.this, "校园管理员登录成功", Toast.LENGTH_SHORT).show();
-            saveLoginInfo(username, password);  // 保存登录信息
-            Intent intent = new Intent(LoginActivity.this, AdminMerchantActivity.class);
+    private void login(String username, String password) {
+        User user = dbHelper.loginUser(username, password);
+        if (user != null) {
+            Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+
+            // 如果勾选了"记住我"，则保存登录信息
+            saveLoginInfo(username, password);
+            MyApplication.saveUser(user);
+
+            // 保存当前用户ID以供整个应用使用
+            SharedPreferences sessionPrefs = getSharedPreferences("AppSession", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sessionPrefs.edit();
+            editor.putInt("CURRENT_USER_ID", user.getId());
+            editor.apply();
+
+            // 启动主活动
+            Intent intent = new Intent(LoginActivity.this, com.example.orderfood.activity.MainActivity.class);
             startActivity(intent);
-            finish();
+
+            finish(); // 关闭登录活动
         } else {
-            Toast.makeText(LoginActivity.this, "校园管理员登录失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
         }
-
-    }
-
-    private void loginStudent(String username, String password) {
-
-        DBMysqlHelper.getInstance(this).loginStudent(username,password, new DBMysqlHelper.DatabaseCallback<Map<String, Object>>() {
-
-            @Override
-            public void onSuccess(Map<String, Object> result) {
-                // Convert studentJson to Student object
-                System.out.println("打印信息：" + result);
-                Gson gson = new Gson();
-                Map<String, Object> resultMap = gson.fromJson(result.toString(), new TypeToken<Map<String, Object>>() {}.getType());
-                Student student = gson.fromJson(String.valueOf((LinkedTreeMap) resultMap.get("student")), Student.class);
-                String token = (String) resultMap.get("token");
-
-                System.out.println("信息: " + student);
-                System.out.println("Token: " + token);
-                Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                MyApplication.saveUser(username,password, Integer.valueOf(student.getStudentId()));
-                saveLoginInfo(username, password);  // 保存登录信息
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
-
-    }
-
-    private void loginMerchant(String username, String password) {
-
-        DBMysqlHelper.getInstance(this).loginMerchant(username, password,new DBMysqlHelper.DatabaseCallback<Map<String, String>>() {
-
-            @Override
-            public void onSuccess(Map<String, String> result) {
-                // Convert studentJson to Student object
-                Gson gson = new Gson();
-                MerchantBean merchant = gson.fromJson(result.get("merchant"), MerchantBean.class);
-                if (merchant == null) {
-                    Toast.makeText(LoginActivity.this, "商家不存在或密码错误", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (!merchant.getName() .equals(username) || !merchant.getPassword().equals(password)) {
-                    Toast.makeText(LoginActivity.this, "商家不存在或密码错误", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Toast.makeText(LoginActivity.this, "商家登录成功", Toast.LENGTH_SHORT).show();
-                MyApplication.saveMerchant(merchant);
-                saveLoginInfo(username, password);  // 保存登录信息
-                Intent intent = new Intent(LoginActivity.this, MerchantMainActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-        });
-
     }
 
     private void saveLoginInfo(String username, String password) {
