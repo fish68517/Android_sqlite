@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +19,9 @@ import com.example.orderfood.model.User;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEditText, passwordEditText;
-    private Button loginButton, registerButton;
-    private ImageView logoImageView;
-    private CheckBox rememberMeCheckBox;  // 添加 CheckBox 的引用
+    private Button loginButton;
+    private TextView registerLink;
     private DataBaseOpenHelper dbHelper;
-
-    private EditText regionEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +30,10 @@ public class LoginActivity extends AppCompatActivity {
 
         dbHelper = new DataBaseOpenHelper(this);
 
-        logoImageView = findViewById(R.id.logo);
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
         loginButton = findViewById(R.id.login_button);
-        registerButton = findViewById(R.id.register_button);
-        rememberMeCheckBox = findViewById(R.id.remember_me);  // 初始化 CheckBox
-
-        regionEditText = findViewById(R.id.region);
+        registerLink = findViewById(R.id.register_link);
 
         // 检查是否保存了登录信息
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
@@ -51,25 +43,22 @@ public class LoginActivity extends AppCompatActivity {
             String savedPassword = sharedPreferences.getString("password", "");
             usernameEditText.setText(savedUsername);
             passwordEditText.setText(savedPassword);
-            rememberMeCheckBox.setChecked(true); // 设置 CheckBox 状态
         }
 
         loginButton.setOnClickListener(v -> {
             handleLogin();
         });
 
-        registerButton.setOnClickListener(v -> {
+        registerLink.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
 
-        loadLoginInfo();
     }
 
     private void handleLogin() {
         String username = usernameEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
-        String region = regionEditText.getText().toString();
         if (username.isEmpty() || password.isEmpty()) {  // 检查输入是否为空
             Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -83,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
 
-            // 如果勾选了"记住我"，则保存登录信息
+            // 总是保存登录信息
             saveLoginInfo(username, password);
             MyApplication.saveUser(user);
 
@@ -106,13 +95,9 @@ public class LoginActivity extends AppCompatActivity {
     private void saveLoginInfo(String username, String password) {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (rememberMeCheckBox.isChecked()) {
-            editor.putBoolean("rememberMe", true);
-            editor.putString("username", username);
-            editor.putString("password", password);
-        } else {
-            editor.clear();  // 如果用户未勾选"记住我"，则清空保存的登录信息
-        }
+        editor.putBoolean("rememberMe", true); // 默认记住
+        editor.putString("username", username);
+        editor.putString("password", password);
         editor.apply();
     }
 
@@ -125,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
             String savedPassword = sharedPreferences.getString("password", "");
             usernameEditText.setText(savedUsername);
             passwordEditText.setText(savedPassword);
-            rememberMeCheckBox.setChecked(true); // 设置 CheckBox 状态
         }
     }
 }

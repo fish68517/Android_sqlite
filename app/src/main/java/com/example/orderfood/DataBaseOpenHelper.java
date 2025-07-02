@@ -148,10 +148,10 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
     private void addDummyData(SQLiteDatabase db) {
         // Add users
-        addUser(db, "我的测试账号", "123", "我的测试账号"); // id 1
-        addUser(db, "张三", "123", "张三"); // id 2
-        addUser(db, "李四", "123", "李四");     // id 3
-        addUser(db, "王五", "123", "王五");   // id 4
+        addUser(db, "Test", "Test", "Test"); // id 1
+        addUser(db, "小明", "123", "小明"); // id 2
+        addUser(db, "小红", "123", "小明");     // id 3
+        addUser(db, "小王", "123", "小王");   // id 4
 
         // Add contacts for user 'me' (id=1)
         addContact(db, 1, 2);
@@ -446,6 +446,14 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
         db.update(TABLE_CONTACTS, values, COLUMN_FK_USER_ID + " = ? AND " + COLUMN_FK_CONTACT_USER_ID + " = ?", new String[]{String.valueOf(userId), String.valueOf(contactId)});
     }
 
+
+    public void updateContactUsername(int userId, int contactId, String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_REMARK_NAME, username);
+        db.update(TABLE_CONTACTS, values, COLUMN_FK_USER_ID + " = ? AND " + COLUMN_FK_CONTACT_USER_ID + " = ?", new String[]{String.valueOf(userId), String.valueOf(contactId)});
+    }
+
     public void updateGroupName(long groupId, String newName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -629,4 +637,12 @@ public class DataBaseOpenHelper extends SQLiteOpenHelper {
 
         return db.rawQuery(searchQuery, new String[]{"%" + query + "%"});
     }
-} 
+
+    public void updateUsername(int currentUserId, String userName) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, userName);
+        db.update(TABLE_USERS, values, COLUMN_USER_ID + " = ?", new String[]{String.valueOf(currentUserId)});
+    }
+}

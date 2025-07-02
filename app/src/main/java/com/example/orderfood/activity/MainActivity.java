@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // Set default fragment
         if (savedInstanceState == null) {
             bottomNavigationView.setSelectedItemId(R.id.nav_chat); // Default to ChatFragment
-            loadFragment(new ChatFragment());
+            loadFragment(new ContactsFragment());
         }
     }
 

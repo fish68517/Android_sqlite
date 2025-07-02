@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +17,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText usernameEditText, passwordEditText;
     private Button registerButton;
-
-    private EditText emailEditText;
+    private TextView loginLink;
     private DataBaseOpenHelper dbHelper;
 
 
@@ -30,16 +30,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
-        emailEditText = findViewById(R.id.email);
-
-
         registerButton = findViewById(R.id.register_button);
-
-        registerButton = findViewById(R.id.register_button);
+        loginLink = findViewById(R.id.login_link);
 
 
         registerButton.setOnClickListener(v -> {
             handleRegister();
+        });
+
+        loginLink.setOnClickListener(v -> {
+            finish(); // 结束当前活动，返回登录页
         });
     }
 

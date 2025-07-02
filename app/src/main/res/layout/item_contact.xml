@@ -7,17 +7,33 @@
     android:gravity="center_vertical">
 
     <ImageView
-        android:id="@+id/iv_avatar"
+        android:id="@+id/iv_contact_avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@mipmap/ic_launcher_round" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/tv_contact_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:textSize="18sp"
-        android:text="Contact Name"/>
+        android:layout_weight="1"
+        android:text="联系人姓名"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_edit_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="修改"
+        android:layout_marginStart="8dp"/>
+
+    <Button
+        android:id="@+id/btn_delete_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="删除"
+        android:layout_marginStart="8dp"
+        android:backgroundTint="@color/design_default_color_error"/>
 
 </LinearLayout> 

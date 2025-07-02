@@ -13,6 +13,7 @@
         android:gravity="center_vertical"
         android:padding="8dp">
         <TextView
+            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -20,17 +21,13 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"/>
-        <Button
-            android:id="@+id/btn_create_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="创建群聊" />
-        <Button
-            android:id="@+id/btn_add_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="增加" />
+        <ImageView
+            android:id="@+id/iv_menu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_menu"
+            android:scaleType="center"
+            android:contentDescription="菜单" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

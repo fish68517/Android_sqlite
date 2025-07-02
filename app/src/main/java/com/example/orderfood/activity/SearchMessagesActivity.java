@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,9 @@ public class SearchMessagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_messages);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         query = getIntent().getStringExtra("QUERY");
         if (query == null || query.trim().isEmpty()) {
             Toast.makeText(this, "无效的搜索词", Toast.LENGTH_SHORT).show();
@@ -41,7 +45,7 @@ public class SearchMessagesActivity extends AppCompatActivity {
             return;
         }
 
-        setTitle("搜索: " + query);
+        getSupportActionBar().setTitle("搜索: " + query);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

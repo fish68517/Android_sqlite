@@ -6,6 +6,17 @@
     android:orientation="vertical"
     tools:context=".activity.AddMembersActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/green" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,13 +29,14 @@
         android:id="@+id/recycler_view_add_members"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:padding="8dp"/>
 
     <Button
         android:id="@+id/btn_add_selected_members"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="添加选中成员"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:text="添加选中成员" />
 
 </LinearLayout> 

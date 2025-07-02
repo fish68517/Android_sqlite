@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,9 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         // Enable the back button in the action bar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,7 +62,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.OnMes
             return;
         }
 
-        setTitle(contactNickname);
+        getSupportActionBar().setTitle(contactNickname);
 
         dbHelper = new DataBaseOpenHelper(this);
 

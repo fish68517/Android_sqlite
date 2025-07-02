@@ -6,6 +6,17 @@
     android:orientation="vertical"
     tools:context=".activity.SearchMessagesActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/green" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <TextView
         android:id="@+id/tv_search_results_info"
         android:layout_width="match_parent"

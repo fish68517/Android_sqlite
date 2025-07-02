@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +33,9 @@ public class CreateGroupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("创建群聊");
@@ -65,27 +70,38 @@ public class CreateGroupActivity extends AppCompatActivity {
     }
 
     private void createGroup() {
-        String groupName = etGroupName.getText().toString().trim();
-        if (groupName.isEmpty()) {
-            Toast.makeText(this, "请输入群聊名称", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         List<Integer> selectedMemberIds = adapter.getSelectedContactIds();
         if (selectedMemberIds.isEmpty()) {
             Toast.makeText(this, "请至少选择一个群成员", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        long groupId = dbHelper.createGroup(groupName, currentUserId, selectedMemberIds);
+        // Create an EditText for the dialog
+        final EditText input = new EditText(this);
+        input.setHint("输入群聊名称");
 
-        if (groupId != -1) {
-            Toast.makeText(this, "群聊 '" + groupName + "' 创建成功", Toast.LENGTH_SHORT).show();
-            setResult(RESULT_OK); // To notify ContactsFragment to refresh
-            finish();
-        } else {
-            Toast.makeText(this, "创建失败", Toast.LENGTH_SHORT).show();
-        }
+        // dialog to create group name
+        new AlertDialog.Builder(this)
+                .setTitle("群聊名称")
+                .setView(input) // Add EditText to dialog
+                .setPositiveButton("确定", (dialog, which) -> {
+                    String groupName = input.getText().toString().trim();
+                    if (groupName.isEmpty()) {
+                        Toast.makeText(CreateGroupActivity.this, "群聊名称不能为空", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    long groupId = dbHelper.createGroup(groupName, currentUserId, selectedMemberIds);
+
+                    if (groupId != -1) {
+                        Toast.makeText(this, "群聊 '" + groupName + "' 创建成功", Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK); // To notify ContactsFragment to refresh
+                        finish();
+                    } else {
+                        Toast.makeText(this, "创建失败", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,59 +14,100 @@ import com.example.orderfood.activity.ChatActivity;
 import com.example.orderfood.model.User;
 import java.util.List;
 
-public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
-    private List<User> contacts;
-    private OnContactLongClickListener longClickListener;
+public class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<Object> items;
+    private OnContactActionsListener actionsListener;
 
-    public interface OnContactLongClickListener {
-        void onContactLongClick(User contact);
+    private static final int VIEW_TYPE_HEADER = 0;
+    private static final int VIEW_TYPE_CONTACT = 1;
+
+    public interface OnContactActionsListener {
+        void onEditClick(User contact);
+        void onDeleteClick(User contact);
     }
 
-    public ContactsAdapter(List<User> contacts, OnContactLongClickListener listener) {
-        this.contacts = contacts;
-        this.longClickListener = listener;
+    public ContactsAdapter(List<Object> items, OnContactActionsListener listener) {
+        this.items = items;
+        this.actionsListener = listener;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (items.get(position) instanceof String) {
+            return VIEW_TYPE_HEADER;
+        } else {
+            return VIEW_TYPE_CONTACT;
+        }
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_HEADER) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact_header, parent, false);
+            return new HeaderViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
+            return new ContactViewHolder(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User contact = contacts.get(position);
-        holder.contactName.setText(contact.getNickname());
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (holder.getItemViewType() == VIEW_TYPE_HEADER) {
+            HeaderViewHolder headerHolder = (HeaderViewHolder) holder;
+            headerHolder.headerTitle.setText((String) items.get(position));
+        } else {
+            ContactViewHolder contactHolder = (ContactViewHolder) holder;
+            User contact = (User) items.get(position);
+            contactHolder.contactName.setText(contact.getNickname());
 
-        holder.itemView.setOnClickListener(v -> {
-            Context context = holder.itemView.getContext();
-            Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra("CONTACT_ID", contact.getId());
-            intent.putExtra("CONTACT_NICKNAME", contact.getNickname());
-            context.startActivity(intent);
-        });
+            contactHolder.itemView.setOnClickListener(v -> {
+                Context context = contactHolder.itemView.getContext();
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("CONTACT_ID", contact.getId());
+                intent.putExtra("CONTACT_NICKNAME", contact.getNickname());
+                context.startActivity(intent);
+            });
 
-        holder.itemView.setOnLongClickListener(v -> {
-            if (longClickListener != null) {
-                longClickListener.onContactLongClick(contact);
-                return true;
-            }
-            return false;
-        });
+            contactHolder.editButton.setOnClickListener(v -> {
+                if (actionsListener != null) {
+                    actionsListener.onEditClick(contact);
+                }
+            });
+
+            contactHolder.deleteButton.setOnClickListener(v -> {
+                if (actionsListener != null) {
+                    actionsListener.onDeleteClick(contact);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return contacts.size();
+        return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ContactViewHolder extends RecyclerView.ViewHolder {
         TextView contactName;
+        Button editButton;
+        Button deleteButton;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             contactName = itemView.findViewById(R.id.tv_contact_name);
+            editButton = itemView.findViewById(R.id.btn_edit_contact);
+            deleteButton = itemView.findViewById(R.id.btn_delete_contact);
+        }
+    }
+
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+        TextView headerTitle;
+
+        public HeaderViewHolder(@NonNull View itemView) {
+            super(itemView);
+            headerTitle = itemView.findViewById(R.id.tv_header);
         }
     }
 } 

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,6 +36,14 @@ public class AddContactActivity extends AppCompatActivity implements UserSearchA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("添加联系人");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         SharedPreferences sessionPrefs = getSharedPreferences("AppSession", Context.MODE_PRIVATE);
         currentUserId = sessionPrefs.getInt("CURRENT_USER_ID", -1);
@@ -71,6 +80,12 @@ public class AddContactActivity extends AppCompatActivity implements UserSearchA
         performSearch("");
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+
     private void performSearch(String query) {
         List<User> users = dbHelper.searchUsers(query, currentUserId);
         System.out.println("users: " + users.size());
@@ -89,6 +104,6 @@ public class AddContactActivity extends AppCompatActivity implements UserSearchA
         Toast.makeText(this, "已添加 " + user.getNickname() + " 为联系人", Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK); // Notify ContactsFragment to refresh
         
-        performSearch(searchEditText.getText().toString().trim());
+        // performSearch(searchEditText.getText().toString().trim());
     }
 } 

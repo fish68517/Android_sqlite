@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +51,9 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_chat);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         groupId = getIntent().getLongExtra("GROUP_ID", -1);
         groupName = getIntent().getStringExtra("GROUP_NAME");
@@ -88,7 +92,7 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
         sendButton.setOnClickListener(v -> sendMessage());
     }
 
-    @Override
+ /*   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_group_chat, menu);
@@ -105,7 +109,7 @@ public class GroupChatActivity extends AppCompatActivity implements GroupChatAda
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
     private void loadGroupMembers() {
         List<User> members = dbHelper.getGroupMembers(groupId);
         membersMap = members.stream().collect(Collectors.toMap(User::getId, Function.identity()));
