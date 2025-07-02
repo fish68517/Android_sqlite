@@ -27,11 +27,10 @@ class MessageSearchAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val result = results[position]
+        val content = result.content
 
-        // Highlight the query in the content
-        if (!query.isNullOrBlank()) {
-            val content = result.content
-            val startIndex = content?.lowercase()?.indexOf(query.lowercase())
+        if (!query.isNullOrBlank() && !content.isNullOrBlank()) {
+            val startIndex = content.lowercase().indexOf(query.lowercase())
             if (startIndex != -1) {
                 val highlightedContent = content.substring(0, startIndex) +
                         "<font color='red'>" + content.substring(startIndex, startIndex + query.length) + "</font>" +
@@ -41,7 +40,7 @@ class MessageSearchAdapter(
                 holder.content.text = content
             }
         } else {
-            holder.content.text = result.content
+            holder.content.text = content
         }
 
 
