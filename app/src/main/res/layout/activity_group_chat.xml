@@ -38,6 +38,7 @@
             android:hint="输入消息" />
 
         <Button
+            android:backgroundTint="@color/green"
             android:id="@+id/btn_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

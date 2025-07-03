@@ -24,6 +24,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "聊天系统"
+rootProject.name = "微信聊天"
 include(":app")
  

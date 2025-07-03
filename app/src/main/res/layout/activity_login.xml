@@ -11,34 +11,31 @@
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="#1E8449"
+        android:background="#FA0358"
         android:gravity="center"
         android:orientation="vertical">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo_1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="学生聊天系统"
+            android:text="仿微信聊天"
             android:textColor="@android:color/white"
             android:textSize="32sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="高效管理, 轻松掌握"
-            android:textColor="@android:color/white"
-            android:textSize="16sp" />
+
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header_layout"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="-60dp"
-        android:layout_marginRight="24dp"
+
+        android:layout_marginTop="-100dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp">
 
@@ -90,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="#1E8449"
+                android:backgroundTint="#FA0358"
                 android:text="登录"
                 android:textColor="@android:color/white"
                 app:cornerRadius="8dp" />
@@ -106,7 +103,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
         android:text="还没有账号? 点击注册"
-        android:textColor="#1E8449"
+        android:textColor="#FA0358"
         android:textSize="16sp" />
 
 </RelativeLayout>

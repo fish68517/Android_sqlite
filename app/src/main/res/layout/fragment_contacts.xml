@@ -13,14 +13,14 @@
         android:gravity="center_vertical"
         android:padding="8dp">
         <TextView
-            android:visibility="invisible"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="通讯录"
+            android:text="好友"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:gravity="center"/>
+            />
         <ImageView
             android:id="@+id/iv_menu"
             android:layout_width="48dp"
