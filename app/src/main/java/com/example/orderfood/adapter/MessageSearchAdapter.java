@@ -6,6 +6,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,21 +43,29 @@ public class MessageSearchAdapter extends RecyclerView.Adapter<MessageSearchAdap
         SearchResult result = results.get(position);
         String content = result.getContent();
 
+        // Set conversation name
+        holder.tvConversationName.setText(result.getConversationName());
+
+        // Set timestamp
+        holder.tvTimestamp.setText(result.getTimestamp());
+
+        // Highlight search query in message content
         if (query != null && !query.trim().isEmpty() && content != null && !content.trim().isEmpty()) {
             int startIndex = content.toLowerCase().indexOf(query.toLowerCase());
             if (startIndex != -1) {
                 String highlightedContent = content.substring(0, startIndex) +
                         "<font color='red'>" + content.substring(startIndex, startIndex + query.length()) + "</font>" +
                         content.substring(startIndex + query.length());
-                holder.content.setText(HtmlCompat.fromHtml(highlightedContent, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                holder.tvMessageContent.setText(HtmlCompat.fromHtml(highlightedContent, HtmlCompat.FROM_HTML_MODE_LEGACY));
             } else {
-                holder.content.setText(content);
+                holder.tvMessageContent.setText(content);
             }
         } else {
-            holder.content.setText(content);
+            holder.tvMessageContent.setText(content);
         }
 
-        holder.details.setText("来自 " + result.getSenderNickname() + " 在 " + result.getConversationName() + " - " + result.getTimestamp());
+        // Image (using default for now)
+        holder.ivProfileImage.setImageResource(R.drawable.ic_default_profile);
 
         holder.itemView.setOnClickListener(v -> {
             Context context = holder.itemView.getContext();
@@ -82,13 +91,17 @@ public class MessageSearchAdapter extends RecyclerView.Adapter<MessageSearchAdap
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView content;
-        public final TextView details;
+        public final ImageView ivProfileImage;
+        public final TextView tvConversationName;
+        public final TextView tvMessageContent;
+        public final TextView tvTimestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            content = itemView.findViewById(R.id.tv_message_content);
-            details = itemView.findViewById(R.id.tv_message_details);
+            ivProfileImage = itemView.findViewById(R.id.iv_profile_image);
+            tvConversationName = itemView.findViewById(R.id.tv_conversation_name);
+            tvMessageContent = itemView.findViewById(R.id.tv_message_content);
+            tvTimestamp = itemView.findViewById(R.id.tv_timestamp);
         }
     }
 } 
