@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".activity.DemoHubActivity">
+
+    <Button
+        android:id="@+id/btn_image_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="实盘交易" />
+
+    <Button
+        android:id="@+id/btn_image_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="交易入口" />
+
+    <Button
+        android:id="@+id/btn_image_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="模拟交易" />
+
+    <Button
+        android:id="@+id/btn_image_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加实盘交易账号" />
+
+</LinearLayout> 
