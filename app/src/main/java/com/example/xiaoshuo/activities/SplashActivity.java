@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         // Use Handler to delay moving to the main activity
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             // Start main activity
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
             
             // Close splash activity

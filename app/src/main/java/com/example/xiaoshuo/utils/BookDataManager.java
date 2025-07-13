@@ -15,122 +15,120 @@ public class BookDataManager {
 
     // 小说封面图片资源名称
     public static final String[] NOVEL_COVERS = {
-            "novel_cover_1",  // 单独神在异界
-            "novel_cover_2",  // 开局获得神级买卖
-            "novel_cover_3",  // 武道巅峰
-            "novel_cover_4",  // 绝地战龙
-            "novel_cover_5",  // 王女之说
-            "novel_cover_6",  // 天命妖刀人
-            "novel_cover_7",  // 捡漏我觉醒了黄金瞳
-            "novel_cover_8",  // 一念永恒
-            "novel_cover_9",  // 万界毒尊
-            "novel_cover_10", // 剑来
-            "novel_cover_11", // 古风仙侠图
-            "novel_cover_12", // 任生缘
-            "novel_cover_13", // 情难自已
-            "novel_cover_14", // 不可逆
-            "novel_cover_15", // 都市小说
-            "novel_cover_16", // 妖孽兵王
-            "novel_cover_17", // 魔道祖师
+            "novel_cover_1",  // 星河巨舰
+            "novel_cover_2",  // 都市修仙奇才
+            "novel_cover_3",  // 历史的尘埃
+            "novel_cover_4",  // 最终防线
+            "novel_cover_5",  // 神级铁匠
+            "novel_cover_6",  // 诡秘档案
+            "novel_cover_7",  // 全球进化
+            "novel_cover_8",  // 符文之地
+            "novel_cover_9",  // 虚拟神明
+            "novel_cover_10", // 深宫谍影
+            "novel_cover_11", // 星光下的约定
+            "novel_cover_12", // 医手遮天
+            "novel_cover_13", // 律政佳人
+            "novel_cover_14", // 时间的旅行者
+            "novel_cover_15", // 厨神之路
+            "novel_cover_16", // 探险笔记
+            "novel_cover_17", // 赛博之城
     };
 
     // 生成男生频道小说数据
     public static List<Book> getMaleBooks() {
         List<Book> books = new ArrayList<>();
-        books.add(new Book(UUID.randomUUID().toString(), "单独神在异界", "冥蓝妖姬", 
-                "在异世界获得神级力量，主角必须面对各种挑战和敌人，成为最强者。", 
-                NOVEL_COVERS[0], "玄幻", 1209));
-        books.add(new Book(UUID.randomUUID().toString(), "开局获得神级买卖", "小兵樱", 
-                "主角意外获得一个可以进行神级交易的系统，从此人生逆转。", 
-                NOVEL_COVERS[1], "游戏", 856));
-        books.add(new Book(UUID.randomUUID().toString(), "武道巅峰", "紫菜", 
-                "普通青年通过不懈努力，登上武道之巅，成就传奇人生。", 
-                NOVEL_COVERS[2], "武侠", 1532));
-        books.add(new Book(UUID.randomUUID().toString(), "绝地战龙", "罗晨永恒", 
-                "一个退伍特种兵回归都市，凭借超凡战斗力和军事素养，解决各种危机。", 
-                NOVEL_COVERS[3], "都市", 763));
-        books.add(new Book(UUID.randomUUID().toString(), "天命妖刀人", "血红", 
-                "一把拥有神秘力量的刀与一个命运多舛的少年，共同走过的传奇之路。", 
-                NOVEL_COVERS[5], "武侠", 1024));
-        books.add(new Book(UUID.randomUUID().toString(), "捡漏我觉醒了黄金瞳", "布凡", 
-                "主角意外获得鉴宝神眼，从此能够识别一切宝物，人生发生翻天覆地的变化。", 
-                NOVEL_COVERS[6], "都市", 689));
-        books.add(new Book(UUID.randomUUID().toString(), "一念永恒", "新雨哥", 
-                "修道之路漫长而艰辛，唯有保持初心，方可得道成仙。", 
-                NOVEL_COVERS[7], "修真", 1876));
-        books.add(new Book(UUID.randomUUID().toString(), "万界毒尊", "四夜暴君", 
-                "被世界抛弃的少年，凭借毒功逆天崛起，征服万界。", 
-                NOVEL_COVERS[8], "玄幻", 1342));
-        books.add(new Book(UUID.randomUUID().toString(), "剑来", "烽火戏诸侯", 
-                "这是一个关于剑的故事，一个少年剑客的成长历程。", 
-                NOVEL_COVERS[9], "仙侠", 2015));
-        books.add(new Book(UUID.randomUUID().toString(), "妖孽兵王", "天涯的盐巴", 
-                "退役特种兵回归都市，凭借超强实力，守护心爱之人，成就不凡人生。", 
-                NOVEL_COVERS[15], "都市", 782));
+        books.add(new Book(UUID.randomUUID().toString(), "星河巨舰", "银河之心",
+                "在遥远的未来，人类踏入星际时代。主角从一艘废弃的古老星舰开始，逐步建立起自己的银河舰队，探索未知宇宙的奥秘。",
+                NOVEL_COVERS[0], "星际科幻", 2105));
+        books.add(new Book(UUID.randomUUID().toString(), "都市修仙奇才", "一叶知秋",
+                "灵气复苏的现代都市，一位普通青年偶得修仙法门，从此在钢筋水泥的丛林中行侠仗义，守护一方安宁。",
+                NOVEL_COVERS[1], "都市异能", 1850));
+        books.add(new Book(UUID.randomUUID().toString(), "历史的尘埃", "时光旅人",
+                "一位历史系高材生意外穿越到风雨飘摇的古代王朝，凭借超越时代的知识在乱世中挣扎求生，并试图改变历史的洪流。",
+                NOVEL_COVERS[2], "历史穿越", 1532));
+        books.add(new Book(UUID.randomUUID().toString(), "最终防线", "末日号角",
+                "末日病毒爆发，丧尸横行，文明岌岌可危。主角带领一小队幸存者，建立最后的基地，为人类的延续而战。",
+                NOVEL_COVERS[3], "末日生存", 988));
+        books.add(new Book(UUID.randomUUID().toString(), "神级铁匠", "烈焰之锤",
+                "一个游戏宅男穿越到剑与魔法的异世界，获得了打造神器的逆天能力，传说中的武器都出自他手。",
+                NOVEL_COVERS[4], "奇幻冒险", 1342));
+        books.add(new Book(UUID.randomUUID().toString(), "诡秘档案", "黑夜之瞳",
+                "一座城市中接连发生无法用科学解释的怪事，一个专门处理超自然事件的秘密机构开始行动，揭开隐藏在现实世界下的另一面。",
+                NOVEL_COVERS[5], "悬疑灵异", 789));
+        books.add(new Book(UUID.randomUUID().toString(), "全球进化", "进化之光",
+                "一场来自外太空的射线风暴，导致地球生物开始疯狂进化，人类不再是食物链的顶端。主角在危机中觉醒了特殊能力。",
+                NOVEL_COVERS[6], "科幻末世", 1120));
+        books.add(new Book(UUID.randomUUID().toString(), "符文之地", "远古巫师",
+                "在一个以符文魔法为核心的世界里，一个被认为是“无魔者”的少年，走上了一条与众不同的强者之路。",
+                NOVEL_COVERS[7], "西幻史诗", 1680));
+        books.add(new Book(UUID.randomUUID().toString(), "虚拟神明", "代码意志",
+                "在完全潜行的虚拟现实游戏中，主角发现自己可以修改游戏代码，他成为了游戏世界中唯一的“神”。",
+                NOVEL_COVERS[8], "虚拟现实", 1450));
+        books.add(new Book(UUID.randomUUID().toString(), "赛博之城", "霓虹魅影",
+                "在科技高度发达的未来城市，机械义体、人工智能普及，主角作为一名侦探，在错综复杂的势力间游走，揭露惊天阴谋。",
+                NOVEL_COVERS[16], "赛博朋克", 955));
         return books;
     }
 
     // 生成女生频道小说数据
     public static List<Book> getFemaleBooks() {
         List<Book> books = new ArrayList<>();
-        books.add(new Book(UUID.randomUUID().toString(), "王女之说", "河岁岁", 
-                "被算计的王女重生归来，以自己的聪明才智，扭转乾坤，成就一番霸业。", 
-                NOVEL_COVERS[4], "宫廷", 645));
-        books.add(new Book(UUID.randomUUID().toString(), "古风仙侠图", "流萤", 
-                "一幅神秘画卷引领女主角进入仙侠世界，展开一段奇幻旅程。", 
-                NOVEL_COVERS[10], "仙侠", 832));
-        books.add(new Book(UUID.randomUUID().toString(), "任生缘", "安之", 
-                "前世恩怨，今生相遇。命中注定的姻缘，究竟能否修成正果？", 
-                NOVEL_COVERS[11], "古言", 578));
-        books.add(new Book(UUID.randomUUID().toString(), "情难自已", "阿斯顿", 
-                "都市白领与霸道总裁的爱恨情仇，一段扣人心弦的浪漫故事。", 
-                NOVEL_COVERS[12], "现言", 432));
-        books.add(new Book(UUID.randomUUID().toString(), "不可逆", "可爱多", 
-                "一对青梅竹马阴差阳错地错过，多年后再相遇时，是否还能重拾旧情？", 
-                NOVEL_COVERS[13], "现代", 367));
-        books.add(new Book(UUID.randomUUID().toString(), "魔道祖师", "墨香铜臭", 
-                "一个被误解的天才修士，死后重生，携手旧友，踏上寻找真相之路。", 
-                NOVEL_COVERS[16], "耽美", 1253));
+        books.add(new Book(UUID.randomUUID().toString(), "深宫谍影", "月下长安",
+                "她本是前朝遗孤，为复仇进入深宫，在权力的漩涡中步步为营，如履薄冰，最终影响了整个王朝的命运。",
+                NOVEL_COVERS[9], "宫廷权谋", 920));
+        books.add(new Book(UUID.randomUUID().toString(), "星光下的约定", "夏夜流萤",
+                "现代娱乐圈背景，一位努力的新人演员与才华横溢的顶流明星之间，从误会到相知相爱，共同成长的浪漫故事。",
+                NOVEL_COVERS[10], "都市言情", 732));
+        books.add(new Book(UUID.randomUUID().toString(), "医手遮天", "杏林春暖",
+                "天才女医师穿越古代，凭借精湛的现代医术救死扶伤，名动京城，并卷入一场场错综复杂的宫廷斗争。",
+                NOVEL_COVERS[11], "穿越重生", 1150));
+        books.add(new Book(UUID.randomUUID().toString(), "律政佳人", "正义之声",
+                "一位初出茅庐的女律师，在职场中不断成长，坚守正义，处理各种棘手案件，最终成为业界精英的故事。",
+                NOVEL_COVERS[12], "职场励志", 680));
+        books.add(new Book(UUID.randomUUID().toString(), "时间的旅行者", "光阴诗人",
+                "女主角意外获得穿越时空的能力，她在不同的历史片段中穿梭，遇见了不同的人，经历了不同的事，寻找时间的真谛。",
+                NOVEL_COVERS[13], "幻想罗曼", 543));
+        books.add(new Book(UUID.randomUUID().toString(), "厨神之路", "人间烟火",
+                "一位对美食充满热爱的少女，通过不断努力学习，参加各种烹饪大赛，最终成长为一代厨神的励志故事。",
+                NOVEL_COVERS[14], "现代美食", 610));
         return books;
     }
 
     // 生成有声书数据
     public static List<AudioBook> getAudioBooks() {
         List<AudioBook> audioBooks = new ArrayList<>();
-        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "单独神在异界", "冥蓝妖姬", 
-                "有声版：在异世界获得神级力量，主角必须面对各种挑战和敌人，成为最强者。", 
-                NOVEL_COVERS[0], "玄幻", 80, "李谷一"));
-        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "开局获得神级买卖", "小兵樱", 
-                "有声版：主角意外获得一个可以进行神级交易的系统，从此人生逆转。", 
-                NOVEL_COVERS[1], "游戏", 65, "刘凯"));
-        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "武道巅峰", "紫菜", 
-                "有声版：普通青年通过不懈努力，登上武道之巅，成就传奇人生。", 
-                NOVEL_COVERS[2], "武侠", 120, "王宇"));
-        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "王女之说", "河岁岁", 
-                "有声版：被算计的王女重生归来，以自己的聪明才智，扭转乾坤，成就一番霸业。", 
-                NOVEL_COVERS[4], "宫廷", 75, "白雪"));
+        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "星河巨舰", "银河之心",
+                "有声版：在遥远的未来，人类踏入星际时代。主角从一艘废弃的古老星舰开始...",
+                NOVEL_COVERS[0], "星际科幻", 150, "张三"));
+        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "都市修仙奇才", "一叶知秋",
+                "有声版：灵气复苏的现代都市，一位普通青年偶得修仙法门...",
+                NOVEL_COVERS[1], "都市异能", 125, "李四"));
+        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "深宫谍影", "月下长安",
+                "有声版：她本是前朝遗孤，为复仇进入深宫，在权力的漩涡中步步为营...",
+                NOVEL_COVERS[9], "宫廷权谋", 98, "王五"));
+        audioBooks.add(new AudioBook(UUID.randomUUID().toString(), "医手遮天", "杏林春暖",
+                "有声版：天才女医师穿越古代，凭借精湛的现代医术救死扶伤...",
+                NOVEL_COVERS[11], "穿越重生", 110, "赵六"));
         return audioBooks;
     }
 
     // 生成分类数据
     public static List<Category> getCategories(boolean isMale) {
         List<Category> categories = new ArrayList<>();
-        // 不再添加"全部"分类
-        
         if (isMale) {
-            categories.add(new Category("玄幻", "玄幻小说"));
-            categories.add(new Category("武侠", "武侠小说"));
-            categories.add(new Category("仙侠", "仙侠小说"));
-            categories.add(new Category("都市", "都市小说"));
-            categories.add(new Category("游戏", "游戏小说"));
-            categories.add(new Category("科幻", "科幻小说"));
+            categories.add(new Category("星际科幻", "未来宇宙的探索"));
+            categories.add(new Category("都市异能", "现代都市的超凡力量"));
+            categories.add(new Category("历史穿越", "回到过去改变历史"));
+            categories.add(new Category("末日生存", "在绝境中求生"));
+            categories.add(new Category("奇幻冒险", "剑与魔法的世界"));
+            categories.add(new Category("赛博朋克", "高科技低生活"));
         } else {
-            categories.add(new Category("古言", "古代言情"));
-            categories.add(new Category("现言", "现代言情"));
-            categories.add(new Category("仙侠", "仙侠奇缘"));
-            categories.add(new Category("宫廷", "宫廷小说"));
-            categories.add(new Category("穿越", "穿越小说"));
-            categories.add(new Category("耽美", "耽美小说"));
+            categories.add(new Category("宫廷权谋", "深宫中的爱恨情仇"));
+            categories.add(new Category("都市言情", "现代都市的浪漫爱恋"));
+            categories.add(new Category("穿越重生", "回到过去逆转人生"));
+            categories.add(new Category("职场励志", "女性在职场的奋斗"));
+            categories.add(new Category("幻想罗曼", "跨越时空的爱恋"));
+            categories.add(new Category("现代美食", "美食与人生的故事"));
         }
         return categories;
     }
@@ -138,59 +136,59 @@ public class BookDataManager {
     // 获取排行榜数据
     public static List<Ranking> getRankings() {
         List<Ranking> rankings = new ArrayList<>();
-        
+
         // 人气榜
         List<Book> popularBooks = new ArrayList<>();
-        popularBooks.add(new Book(UUID.randomUUID().toString(), "一念永恒", "新雨哥", 
-                "修道之路漫长而艰辛，唯有保持初心，方可得道成仙。", 
-                NOVEL_COVERS[7], "修真", 1876));
-        popularBooks.add(new Book(UUID.randomUUID().toString(), "剑来", "烽火戏诸侯", 
-                "这是一个关于剑的故事，一个少年剑客的成长历程。", 
-                NOVEL_COVERS[9], "仙侠", 2015));
-        popularBooks.add(new Book(UUID.randomUUID().toString(), "魔道祖师", "墨香铜臭", 
-                "一个被误解的天才修士，死后重生，携手旧友，踏上寻找真相之路。", 
-                NOVEL_COVERS[16], "耽美", 1253));
-        rankings.add(new Ranking("popular", "人气榜", "根据阅读量和评分综合排名", popularBooks));
-        
+        popularBooks.add(new Book(UUID.randomUUID().toString(), "星河巨舰", "银河之心",
+                "在遥远的未来，人类踏入星际时代。主角从一艘废弃的古老星舰开始...",
+                NOVEL_COVERS[0], "星际科幻", 2105));
+        popularBooks.add(new Book(UUID.randomUUID().toString(), "医手遮天", "杏林春暖",
+                "天才女医师穿越古代，凭借精湛的现代医术救死扶伤...",
+                NOVEL_COVERS[11], "穿越重生", 1150));
+        popularBooks.add(new Book(UUID.randomUUID().toString(), "赛博之城", "霓虹魅影",
+                "在科技高度发达的未来城市，机械义体、人工智能普及...",
+                NOVEL_COVERS[16], "赛博朋克", 955));
+        rankings.add(new Ranking("popular", "人气榜", "根据阅读热度和评分综合排名", popularBooks));
+
         // 新书榜
         List<Book> newBooks = new ArrayList<>();
-        newBooks.add(new Book(UUID.randomUUID().toString(), "单独神在异界", "冥蓝妖姬", 
-                "在异世界获得神级力量，主角必须面对各种挑战和敌人，成为最强者。", 
-                NOVEL_COVERS[0], "玄幻", 1209));
-        newBooks.add(new Book(UUID.randomUUID().toString(), "开局获得神级买卖", "小兵樱", 
-                "主角意外获得一个可以进行神级交易的系统，从此人生逆转。", 
-                NOVEL_COVERS[1], "游戏", 856));
-        newBooks.add(new Book(UUID.randomUUID().toString(), "天命妖刀人", "血红", 
-                "一把拥有神秘力量的刀与一个命运多舛的少年，共同走过的传奇之路。", 
-                NOVEL_COVERS[5], "武侠", 1024));
-        rankings.add(new Ranking("new", "新书榜", "最新上架的热门作品", newBooks));
-        
+        newBooks.add(new Book(UUID.randomUUID().toString(), "律政佳人", "正义之声",
+                "一位初出茅庐的女律师，在职场中不断成长，坚守正义...",
+                NOVEL_COVERS[12], "职场励志", 680));
+        newBooks.add(new Book(UUID.randomUUID().toString(), "诡秘档案", "黑夜之瞳",
+                "一座城市中接连发生无法用科学解释的怪事，一个专门处理超自然事件的秘密机构开始行动...",
+                NOVEL_COVERS[5], "悬疑灵异", 789));
+        newBooks.add(new Book(UUID.randomUUID().toString(), "厨神之路", "人间烟火",
+                "一位对美食充满热爱的少女，通过不断努力学习，参加各种烹饪大赛...",
+                NOVEL_COVERS[14], "现代美食", 610));
+        rankings.add(new Ranking("new", "新书榜", "最新上架的潜力作品", newBooks));
+
         // 完结榜
         List<Book> completedBooks = new ArrayList<>();
-        completedBooks.add(new Book(UUID.randomUUID().toString(), "武道巅峰", "紫菜", 
-                "普通青年通过不懈努力，登上武道之巅，成就传奇人生。", 
-                NOVEL_COVERS[2], "武侠", 1532));
-        completedBooks.add(new Book(UUID.randomUUID().toString(), "王女之说", "河岁岁", 
-                "被算计的王女重生归来，以自己的聪明才智，扭转乾坤，成就一番霸业。", 
-                NOVEL_COVERS[4], "宫廷", 645));
-        completedBooks.add(new Book(UUID.randomUUID().toString(), "情难自已", "阿斯顿", 
-                "都市白领与霸道总裁的爱恨情仇，一段扣人心弦的浪漫故事。", 
-                NOVEL_COVERS[12], "现言", 432));
+        completedBooks.add(new Book(UUID.randomUUID().toString(), "历史的尘埃", "时光旅人",
+                "一位历史系高材生意外穿越到风雨飘摇的古代王朝...",
+                NOVEL_COVERS[2], "历史穿越", 1532));
+        completedBooks.add(new Book(UUID.randomUUID().toString(), "最终防线", "末日号角",
+                "末日病毒爆发，丧尸横行，文明岌岌可危。主角带领一小队幸存者...",
+                NOVEL_COVERS[3], "末日生存", 988));
+        completedBooks.add(new Book(UUID.randomUUID().toString(), "星光下的约定", "夏夜流萤",
+                "现代娱乐圈背景，一位努力的新人演员与才华横溢的顶流明星之间...",
+                NOVEL_COVERS[10], "都市言情", 732));
         rankings.add(new Ranking("completed", "完结榜", "已完结的精品小说", completedBooks));
-        
-        // 新人榜
+
+        // 热销榜
         List<Book> newAuthorBooks = new ArrayList<>();
-        newAuthorBooks.add(new Book(UUID.randomUUID().toString(), "捡漏我觉醒了黄金瞳", "布凡", 
-                "主角意外获得鉴宝神眼，从此能够识别一切宝物，人生发生翻天覆地的变化。", 
-                NOVEL_COVERS[6], "都市", 689));
-        newAuthorBooks.add(new Book(UUID.randomUUID().toString(), "任生缘", "安之", 
-                "前世恩怨，今生相遇。命中注定的姻缘，究竟能否修成正果？", 
-                NOVEL_COVERS[11], "古言", 578));
-        newAuthorBooks.add(new Book(UUID.randomUUID().toString(), "不可逆", "可爱多", 
-                "一对青梅竹马阴差阳错地错过，多年后再相遇时，是否还能重拾旧情？", 
-                NOVEL_COVERS[13], "现代", 367));
-        rankings.add(new Ranking("newAuthor", "新人榜", "新晋作者的优秀作品", newAuthorBooks));
-        
+        newAuthorBooks.add(new Book(UUID.randomUUID().toString(), "都市修仙奇才", "一叶知秋",
+                "灵气复苏的现代都市，一位普通青年偶得修仙法门...",
+                NOVEL_COVERS[1], "都市异能", 1850));
+        newAuthorBooks.add(new Book(UUID.randomUUID().toString(), "深宫谍影", "月下长安",
+                "她本是前朝遗孤，为复仇进入深宫，在权力的漩涡中步步为营...",
+                NOVEL_COVERS[9], "宫廷权谋", 920));
+        newAuthorBooks.add(new Book(UUID.randomUUID().toString(), "神级铁匠", "烈焰之锤",
+                "一个游戏宅男穿越到剑与魔法的异世界，获得了打造神器的逆天能力...",
+                NOVEL_COVERS[4], "奇幻冒险", 1342));
+        rankings.add(new Ranking("hot", "热销榜", "当前最受欢迎的作品", newAuthorBooks));
+
         return rankings;
     }
 } 

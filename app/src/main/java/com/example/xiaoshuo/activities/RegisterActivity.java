@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                 // 直接登录并跳转到主页面
                 userManager.loadUser(username);
                 
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             } else {
