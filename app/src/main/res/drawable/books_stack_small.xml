@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 第一本书 - 底部 -->
+    <path
+        android:fillColor="#C87137"
+        android:pathData="M4,18L20,18L20,21L4,21Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M4,18L20,18L20,18.4L4,18.4Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M8,19.4L16,19.4L16,19.6L8,19.6Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M8,20L16,20L16,20.2L8,20.2Z" />
+
+    <!-- 第二本书 -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M3.5,14L19.5,14L19.5,18L3.5,18Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M3.5,14L19.5,14L19.5,14.4L3.5,14.4Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M7.5,16L15.5,16L15.5,16.2L7.5,16.2Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M7.5,16.6L15.5,16.6L15.5,16.8L7.5,16.8Z" />
+
+    <!-- 第三本书 -->
+    <path
+        android:fillColor="#ECDFC3"
+        android:pathData="M4.5,10L20.5,10L20.5,14L4.5,14Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M4.5,10L20.5,10L20.5,10.4L4.5,10.4Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M8.5,12L16.5,12L16.5,12.2L8.5,12.2Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M8.5,12.6L16.5,12.6L16.5,12.8L8.5,12.8Z" />
+
+    <!-- 第四本书 -->
+    <path
+        android:fillColor="#ECDFC3"
+        android:pathData="M5,6L21,6L21,10L5,10Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5,6L21,6L21,6.4L5,6.4Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M9,8L17,8L17,8.2L9,8.2Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M9,8.6L17,8.6L17,8.8L9,8.8Z" />
+
+    <!-- 书籍阴影 -->
+    <path
+        android:fillColor="#20000000"
+        android:pathData="M4,21L20,21L20,21.4L4,21.4Z" />
+    <path
+        android:fillColor="#10000000"
+        android:pathData="M3.5,18L19.5,18L19.5,18.4L3.5,18.4Z" />
+    <path
+        android:fillColor="#10000000"
+        android:pathData="M4.5,14L20.5,14L20.5,14.4L4.5,14.4Z" />
+    <path
+        android:fillColor="#10000000"
+        android:pathData="M5,10L21,10L21,10.4L5,10.4Z" />
+
+</vector> 

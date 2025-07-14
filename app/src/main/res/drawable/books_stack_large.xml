@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="220dp"
+    android:viewportWidth="400"
+    android:viewportHeight="220">
+
+    <!-- 第一本书 - 底部 -->
+    <path
+        android:fillColor="#C87137"
+        android:pathData="M60,160L340,160L340,190L60,190Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M60,160L340,160L340,164L60,164Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M120,175L280,175L280,177L120,177Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M120,181L280,181L280,183L120,183Z" />
+
+    <!-- 第二本书 -->
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M55,130L335,130L335,160L55,160Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M55,130L335,130L335,134L55,134Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M115,145L275,145L275,147L115,147Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M115,151L275,151L275,153L115,153Z" />
+
+    <!-- 第三本书 -->
+    <path
+        android:fillColor="#ECDFC3"
+        android:pathData="M65,100L345,100L345,130L65,130Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M65,100L345,100L345,104L65,104Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M125,115L285,115L285,117L125,117Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M125,121L285,121L285,123L125,123Z" />
+
+    <!-- 第四本书 -->
+    <path
+        android:fillColor="#ECDFC3"
+        android:pathData="M70,70L350,70L350,100L70,100Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M70,70L350,70L350,74L70,74Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M130,85L290,85L290,87L130,87Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M130,91L290,91L290,93L130,93Z" />
+
+    <!-- 第五本书 - 最上面 -->
+    <path
+        android:fillColor="#1E4D8C"
+        android:pathData="M75,40L355,40L355,70L75,70Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75,40L355,40L355,44L75,44Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M135,55L295,55L295,57L135,57Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M135,61L295,61L295,63L135,63Z" />
+
+    <!-- 左侧倾斜的书 -->
+    <path
+        android:fillColor="#ECDFC3"
+        android:pathData="M30,120L45,90L75,100L60,130Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M35,115L50,85L55,87L40,117Z" />
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M38,110L53,80L58,82L43,112Z" />
+
+    <!-- 右侧书籍 -->
+    <path
+        android:fillColor="#1E4D8C"
+        android:pathData="M355,70L375,75L375,105L355,100Z" />
+    <path
+        android:fillColor="#C87137"
+        android:pathData="M355,100L375,105L375,135L355,130Z" />
+    <path
+        android:fillColor="#E0E0E0"
+        android:pathData="M355,130L375,135L375,165L355,160Z" />
+    <path
+        android:fillColor="#8B4513"
+        android:pathData="M355,160L375,165L375,195L355,190Z" />
+
+    <!-- 书籍阴影 -->
+    <path
+        android:fillColor="#20000000"
+        android:pathData="M60,190L340,190L340,194L60,194Z" />
+    <path
+        android:fillColor="#10000000"
+        android:pathData="M55,160L335,160L335,164L55,164Z" />
+    <path
+        android:fillColor="#10000000"
+        android:pathData="M65,130L345,130L345,134L65,134Z" />
+    <path
+        android:fillColor="#10000000"
+        android:pathData="M70,100L350,100L350,104L70,104Z" />
+    <path
+        android:fillColor="#10000000"
+        android:pathData="M75,70L355,70L355,74L75,74Z" />
+
+</vector> 

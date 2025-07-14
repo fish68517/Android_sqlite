@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/border"
+    app:strokeWidth="0.5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_book_img"
+            android:layout_width="80dp"
+            android:layout_height="110dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/book1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.MediumComponent"
+            app:strokeColor="@color/border"
+            app:strokeWidth="0.5dp" />
+
+        <TextView
+            android:id="@+id/tv_book_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="思辨力35讲:像辩手一样思考"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tv_book_detail"
+            app:layout_constraintStart_toEndOf="@id/iv_book_img"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_book_author"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="庞颖"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintEnd_toEndOf="@id/tv_book_name"
+            app:layout_constraintStart_toEndOf="@id/iv_book_img"
+            app:layout_constraintTop_toBottomOf="@id/tv_book_name" />
+
+        <TextView
+            android:id="@+id/tv_book_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="本书是一套帮助你识破逻辑陷阱，迅速提升分析、表达问题的实用指南。"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="@color/text_secondary"
+            app:layout_constraintEnd_toEndOf="@id/tv_book_name"
+            app:layout_constraintStart_toEndOf="@id/iv_book_img"
+            app:layout_constraintTop_toBottomOf="@id/tv_book_author" />
+
+        <TextView
+            android:id="@+id/tv_book_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="剩余:6       总数:10"
+            android:textColor="@color/secondary_dark"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_book_num"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            app:layout_constraintStart_toEndOf="@id/iv_book_img"
+            app:layout_constraintTop_toBottomOf="@id/tv_book_desc" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tv_book_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="60dp"
+            android:text="详情"
+            android:textColor="@color/secondary"
+            android:textSize="12sp"
+            app:backgroundTint="@color/surface"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_book_borrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/secondary"
+            app:strokeWidth="1dp"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tv_book_borrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:minWidth="60dp"
+            android:text="借阅"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:backgroundTint="@color/secondary"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.Material3.Button" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tv_book_purchase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="60dp"
+            android:text="购买"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:backgroundTint="@color/main"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_book_borrow"
+            android:layout_marginTop="8dp"
+            style="@style/Widget.Material3.Button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

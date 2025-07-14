@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shape Appearance for components -->
+    <style name="ShapeAppearance.SmallComponent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.MediumComponent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.LargeComponent" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- Text Appearances -->
+    <style name="TextAppearance.BookTracker.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.BookTracker.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.BookTracker.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.BookTracker.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Button Styles -->
+    <style name="Widget.BookTracker.Button" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="backgroundTint">@color/secondary</item>
+        <item name="rippleColor">@color/secondary_dark</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Widget.BookTracker.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/secondary</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="rippleColor">@color/secondary_light</item>
+    </style>
+
+    <!-- Card Styles -->
+    <style name="Widget.BookTracker.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">1dp</item>
+        <item name="contentPadding">16dp</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">0.5dp</item>
+    </style>
+
+    <!-- Toolbar Style -->
+    <style name="Widget.BookTracker.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="titleTextColor">@color/text_primary</item>
+        <item name="subtitleTextColor">@color/text_secondary</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <!-- TextInputLayout Style -->
+    <style name="Widget.BookTracker.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/secondary</item>
+        <item name="hintTextColor">@color/secondary</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="android:textColorHint">@color/text_tertiary</item>
+    </style>
+
+    <!-- Dialog Styles -->
+    <style name="Widget.BookTracker.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="materialAlertDialogTitleTextStyle">@style/Widget.BookTracker.MaterialAlertDialog.Title</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/Widget.BookTracker.MaterialAlertDialog.Body</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.BookTracker.MaterialAlertDialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.BookTracker.MaterialAlertDialog.Button</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.BookTracker.MaterialAlertDialog.Button</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MediumComponent</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="strokeColor">@color/secondary</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
+
+    <style name="Widget.BookTracker.MaterialAlertDialog.Title" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="Widget.BookTracker.MaterialAlertDialog.Body" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <style name="Widget.BookTracker.MaterialAlertDialog.Button" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/secondary_dark</item>
+        <item name="rippleColor">@color/secondary_light</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:minWidth">120dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <!-- Legacy styles -->
+    <style name="RoundedCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <!-- Custom Dialog Style -->
+    <style name="CustomMaterialDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/white</item>
+        <item name="colorPrimary">@color/secondary_dark</item>
+        <item name="colorSecondary">@color/secondary_dark</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.App.MediumComponent</item>
+        
+        <!-- Title style -->
+        <item name="materialAlertDialogTitleTextStyle">@style/CustomMaterialDialog.Title</item>
+        
+        <!-- Message style -->
+        <item name="materialAlertDialogBodyTextStyle">@style/CustomMaterialDialog.Body</item>
+        
+        <!-- Button style -->
+        <item name="buttonBarPositiveButtonStyle">@style/CustomMaterialDialog.Button</item>
+        <item name="buttonBarNegativeButtonStyle">@style/CustomMaterialDialog.Button</item>
+    </style>
+    
+    <style name="CustomMaterialDialog.Title" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+    
+    <style name="CustomMaterialDialog.Body" parent="MaterialAlertDialog.Material3.Body.Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+    
+    <style name="CustomMaterialDialog.Button" parent="Widget.Material3.Button.TextButton.Dialog">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondary_dark</item>
+        <item name="rippleColor">@color/secondary_light</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    
+    <!-- Primary colors - simple white theme -->
+    <color name="primary">#FFFFFF</color>
+    <color name="primary_dark">#F5F5F5</color>
+    <color name="primary_light">#FFFFFF</color>
+    <color name="primary_variant">#FAFAFA</color>
+    
+    <!-- Secondary colors - stronger accent -->
+    <color name="secondary">#19D269</color>
+    <color name="secondary_dark">#0DA123</color>
+    <color name="secondary_light">#42F590</color>
+    
+    <!-- Neutral colors -->
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_surface">#212121</color>
+    <color name="on_background">#212121</color>
+    
+    <!-- Utility colors -->
+    <color name="error">#2F58D3</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="success">#8E3858</color>
+    <color name="info">#1AD102</color>
+    <color name="warning">#001DF5</color>
+    
+    <!-- Text colors - increased contrast -->
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#424242</color>
+    <color name="text_tertiary">#616161</color>
+    <color name="text_hint">#757575</color>
+
+    <!-- Borders & Dividers - increased contrast -->
+    <color name="border">#BDBDBD</color>
+    <color name="divider">#9E9E9E</color>
+    
+    <!-- Legacy colors (remap to new colors) -->
+    <color name="btn">#2CD219</color>
+    <color name="danger">#2F58D3</color>
+    <color name="main">#51D219</color>
+    <color name="main_light">#19D23B</color>
+</resources>
