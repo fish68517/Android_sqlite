@@ -21,13 +21,13 @@ public class TradeActivity extends AppCompatActivity {
         if ("16".equals(accountId)) {
             imageResId = R.drawable.image_4_16;
         } else if ("65".equals(accountId)) {
-            imageResId = R.drawable.image_4_65;
+            imageResId = R.drawable.image_4_65_2;
         } else {
             // Default or error image
             imageResId = R.drawable.image_4;
         }
 
-        imageResId = R.drawable.image_4_16;
+        imageResId = R.drawable.image_4_65_2;
         tradeImageView.setImageResource(imageResId);
     }
 } 
