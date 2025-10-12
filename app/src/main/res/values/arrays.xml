@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+     <string-array name="meal_types">
+         <item>早餐</item>
+         <item>午餐</item>
+         <item>晚餐</item>
+        <item>加餐</item>
+     </string-array>
+
+
+
+     <string-array name="exercise_types">
+        <item>跑步</item>
+        <item>篮球</item>
+        <item>游泳</item>
+        <item>健身房</item>
+        <item>瑜伽</item>
+     </string-array>
+
+    <string-array name="user_roles">
+        <item>学生</item>
+        <item>老师</item>
+        <item>医生</item>
+        <item>管理员</item>
+    </string-array>
+</resources>

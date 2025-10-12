@@ -63,4 +63,10 @@ dependencies {
 
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
+    // Navigation Components
+    implementation("androidx.navigation:navigation-fragment:2.7.7")
+// 请使用最新版本
+    implementation("androidx.navigation:navigation-ui:2.7.7")
+// 请使用最新版本
+
 }
