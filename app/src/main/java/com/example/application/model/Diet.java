@@ -1,4 +1,4 @@
-package com.example.orderfood.model;
+package com.example.application.model;
 
 public class Diet {
     private int id;

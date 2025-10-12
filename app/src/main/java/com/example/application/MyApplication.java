@@ -1,4 +1,4 @@
-package com.example.orderfood;
+package com.example.application;
 
 import android.app.Application;
 

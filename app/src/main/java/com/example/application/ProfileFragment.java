@@ -1,4 +1,4 @@
-package com.example.orderfood;
+package com.example.application;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.application.R;
+import com.example.application.activity.LoginActivity;
+import com.example.application.model.User;
 
 public class ProfileFragment extends Fragment {
 

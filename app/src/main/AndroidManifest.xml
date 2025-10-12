@@ -20,7 +20,7 @@
 
         <!-- LoginActivity is now the starting point -->
         <activity
-            android:name="com.example.orderfood.activity.LoginActivity"
+            android:name="com.example.application.activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,12 +29,12 @@
         </activity>
 
         <activity
-            android:name="com.example.orderfood.activity.RegisterActivity"
+            android:name="com.example.application.activity.RegisterActivity"
             android:exported="false" />
 
         <!-- MainActivity no longer has the LAUNCHER intent-filter -->
         <activity
-            android:name="com.example.orderfood.MainActivity"
+            android:name="com.example.application.MainActivity"
             android:exported="true">
             <!-- The intent-filter was here, but now it's gone -->
         </activity>

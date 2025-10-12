@@ -1,4 +1,4 @@
-package com.example.orderfood;
+package com.example.application;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-import com.example.orderfood.model.Appointment;
-import com.example.orderfood.model.CheckIn;
-import com.example.orderfood.model.Diet;
-import com.example.orderfood.model.Exercise;
-import com.example.orderfood.model.User;
+import com.example.application.model.Appointment;
+import com.example.application.model.CheckIn;
+import com.example.application.model.Diet;
+import com.example.application.model.Exercise;
+import com.example.application.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -404,4 +404,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public User getUserById(int loggedInUserId) {
+
+        // 获取用户信息
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USER, new String[]{KEY_ID, KEY_USERNAME, KEY_PASSWORD, KEY_ROLE},
+                KEY_ID + "=?", new String[]{String.valueOf(loggedInUserId)}, null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            User user = new User(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            cursor.close();
+            db.close();
+            return user;
+
+        } else {
+            cursor.close();
+            db.close();
+            return null;
+        }
+    }
 }

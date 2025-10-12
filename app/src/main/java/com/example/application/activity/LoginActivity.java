@@ -1,4 +1,4 @@
-package com.example.orderfood.activity;
+package com.example.application.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,9 +10,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.application.R;
-import com.example.orderfood.DatabaseHelper;
-import com.example.orderfood.MainActivity;
-import com.example.orderfood.model.User;
+import com.example.application.DatabaseHelper;
+import com.example.application.MainActivity;
+import com.example.application.model.User;
 
 
 public class LoginActivity extends AppCompatActivity {

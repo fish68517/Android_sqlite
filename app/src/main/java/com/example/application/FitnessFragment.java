@@ -1,4 +1,4 @@
-package com.example.orderfood;
+package com.example.application;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.application.R;
-import com.example.orderfood.model.Exercise;
+import com.example.application.model.Exercise;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

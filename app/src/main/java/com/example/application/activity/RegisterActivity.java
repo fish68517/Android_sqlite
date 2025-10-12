@@ -1,4 +1,4 @@
-package com.example.orderfood.activity;
+package com.example.application.activity;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -9,8 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.application.R;
-import com.example.orderfood.DatabaseHelper;
-import com.example.orderfood.model.User;
+import com.example.application.DatabaseHelper;
+import com.example.application.model.User;
 
 
 public class RegisterActivity extends AppCompatActivity {

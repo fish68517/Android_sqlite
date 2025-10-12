@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.campushealthguard.HomeFragment"
+        android:name="com.example.application.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_health"
-        android:name="com.example.campushealthguard.HealthFragment"
+        android:name="com.example.application.HealthFragment"
         android:label="fragment_health"
         tools:layout="@layout/fragment_health" />
     <fragment
         android:id="@+id/navigation_fitness"
-        android:name="com.example.campushealthguard.FitnessFragment"
+        android:name="com.example.application.FitnessFragment"
         android:label="fragment_fitness"
         tools:layout="@layout/fragment_fitness" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.campushealthguard.ProfileFragment"
+        android:name="com.example.application.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

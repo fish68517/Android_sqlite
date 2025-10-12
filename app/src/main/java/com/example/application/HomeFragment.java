@@ -1,4 +1,4 @@
-package com.example.orderfood;
+package com.example.application;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.application.R;
-import com.example.orderfood.model.CheckIn;
+import com.example.application.model.CheckIn;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
 
         // 设置模拟步数
         int randomSteps = new Random().nextInt(15000) + 500; // 500-15500的随机步数
-        tvStepCount.setText("今日步数 (模拟): " + randomSteps);
+        tvStepCount.setText("今日步数: " + randomSteps);
 
         // 设置按钮点击事件
         setupButtonClickListeners();
