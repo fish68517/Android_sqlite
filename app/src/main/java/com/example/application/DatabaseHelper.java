@@ -422,4 +422,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return null;
         }
     }
+
+    // Get all students
+    public List<User> getAllStudents() {
+        List<User> userList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_USER + " WHERE " + KEY_ROLE + " = '学生'";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(cursor.getInt(0));
+                user.setUsername(cursor.getString(1));
+                user.setPassword(cursor.getString(2));
+                user.setRole(cursor.getString(3));
+                userList.add(user);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return userList;
+    }
+
+    // Get all user IDs that have checked in today
+    public List<Integer> getTodayCheckInUserIds(String date) {
+        List<Integer> userIds = new ArrayList<>();
+        String selectQuery = "SELECT " + KEY_USER_ID + " FROM " + TABLE_CHECKIN + " WHERE " + KEY_CHECKIN_DATE + " = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, new String[]{date});
+
+        if (cursor.moveToFirst()) {
+            do {
+                userIds.add(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return userIds;
+    }
+
+    // Get all appointments for the doctor
+    public List<Appointment> getAllAppointments() {
+        List<Appointment> appointmentList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_APPOINTMENT;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Appointment appointment = new Appointment();
+                appointment.setId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID)));
+                appointment.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_USER_ID)));
+                appointment.setDepartment(cursor.getString(cursor.getColumnIndexOrThrow(KEY_DEPARTMENT)));
+                appointment.setAppointmentTime(cursor.getString(cursor.getColumnIndexOrThrow(KEY_APPOINTMENT_TIME)));
+                appointment.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(KEY_DESCRIPTION)));
+                appointmentList.add(appointment);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return appointmentList;
+    }
 }

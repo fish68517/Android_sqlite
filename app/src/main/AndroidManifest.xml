@@ -32,6 +32,19 @@
             android:name="com.example.application.activity.RegisterActivity"
             android:exported="false" />
 
+        <activity
+            android:name="com.example.application.activity.AdminMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.example.application.activity.DoctorMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.example.application.activity.TeacherMainActivity"
+            android:exported="false" />
+
+
         <!-- MainActivity no longer has the LAUNCHER intent-filter -->
         <activity
             android:name="com.example.application.MainActivity"

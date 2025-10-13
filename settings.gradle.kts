@@ -24,6 +24,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "随身行"
+rootProject.name = "健康卫士"
 include(":app")
  

@@ -62,12 +62,21 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("LOGGED_IN_USER_ID", user.getId());
             editor.putString("LOGGED_IN_USERNAME", user.getUsername());
+            editor.putString("LOGGED_IN_USER_ROLE", user.getRole()); // 保存角色
             editor.apply();
 
-            // 跳转到主页面
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            // 清除之前的活动栈，防止用户按返回键回到登录页
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            // 根据角色跳转到不同的主页面
+            // 根据角色跳转到不同的主页面
+            Intent intent;
+            if ("老师".equals(user.getRole())) {
+                intent = new Intent(LoginActivity.this, TeacherMainActivity.class);
+            } else if ("医生".equals(user.getRole())) {
+                intent = new Intent(LoginActivity.this, DoctorMainActivity.class);
+            } else if ("管理员".equals(user.getRole())) {
+                intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+            } else { // 学生和其他角色都跳转到默认的MainActivity
+                intent = new Intent(LoginActivity.this, MainActivity.class);
+            }
             startActivity(intent);
             finish();
 
