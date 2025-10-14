@@ -24,4 +24,13 @@
         <item>医生</item>
         <item>管理员</item>
     </string-array>
+
+    <string-array name="department_options">
+        <item>内科</item>
+        <item>外科</item>
+        <item>儿科</item>
+        <item>五官科</item>
+        <item>皮肤科</item>
+        <item>心理咨询</item>
+    </string-array>
 </resources>

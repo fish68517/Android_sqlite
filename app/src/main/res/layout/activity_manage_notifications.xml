@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".activity.ManageNotificationsActivity">
+
+    <TextView
+        android:id="@+id/tv_manage_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="管理消息通知"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"/>
+
+    <ListView
+        android:id="@+id/lv_manage_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_manage_title"
+        android:layout_above="@+id/btn_add_notification"/>
+
+    <Button
+        android:id="@+id/btn_add_notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="发布新通知"/>
+
+</RelativeLayout>

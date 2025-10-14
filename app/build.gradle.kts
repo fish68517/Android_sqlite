@@ -67,6 +67,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.7.7")
 // 请使用最新版本
     implementation("androidx.navigation:navigation-ui:2.7.7")
+
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 // 请使用最新版本
 
 }

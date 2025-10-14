@@ -33,7 +33,28 @@
             android:exported="false" />
 
         <activity
+            android:name=".UserManageActivity"
+            android:exported="false" />
+
+        <activity
             android:name="com.example.application.activity.AdminMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.AppointmentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.StudentCheckinStatusActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.DoctorHomeActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".activity.ManageNotificationsActivity"
             android:exported="false" />
 
         <activity

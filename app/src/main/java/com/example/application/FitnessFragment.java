@@ -97,7 +97,7 @@ public class FitnessFragment extends Fragment {
 
     private void showFitnessPlan() {
         new AlertDialog.Builder(getContext())
-                .setTitle("健身计划 (模拟)")
+                .setTitle("健身计划 ()")
                 .setMessage("周一: 胸部训练\n周二: 背部训练\n周三: 腿部训练\n周四: 肩部训练\n周五: 手臂训练\n周末: 有氧或休息")
                 .setPositiveButton("收到", null)
                 .show();

@@ -56,20 +56,48 @@
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
             android:text="通行码" />
+
+        <Button
+            android:id="@+id/btn_view_checkins"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="查看学生打卡情况" />
+
     </GridLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="消息通知"
-        android:textSize="18sp"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="消息通知"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"/>
+        <ImageView
+
+            android:layout_gravity="center_vertical"
+            android:id="@+id/btn_manage_notifications"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:text="管理消息通知"
+            android:src="@drawable/ic_home"/>
+
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/lv_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"/>
+
+
 
 </LinearLayout>

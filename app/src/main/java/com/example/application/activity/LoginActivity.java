@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity {
             // 根据角色跳转到不同的主页面
             Intent intent;
             if ("老师".equals(user.getRole())) {
-                intent = new Intent(LoginActivity.this, TeacherMainActivity.class);
+                intent = new Intent(LoginActivity.this, MainActivity.class);
             } else if ("医生".equals(user.getRole())) {
-                intent = new Intent(LoginActivity.this, DoctorMainActivity.class);
+                intent = new Intent(LoginActivity.this, MainActivity.class);
             } else if ("管理员".equals(user.getRole())) {
-                intent = new Intent(LoginActivity.this, AdminMainActivity.class);
+                intent = new Intent(LoginActivity.this, MainActivity.class);
             } else { // 学生和其他角色都跳转到默认的MainActivity
                 intent = new Intent(LoginActivity.this, MainActivity.class);
             }

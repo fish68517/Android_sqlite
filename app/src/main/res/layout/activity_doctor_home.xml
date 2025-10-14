@@ -15,33 +15,7 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:columnCount="1">
 
-        <Button
-            android:id="@+id/btn_view_appointments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="在线接诊 (查看预约)" />
-
-        <Button
-            android:id="@+id/btn_prescribe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="开处方 (待开发)" />
-
-        <Button
-            android:id="@+id/btn_report_epidemic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="报疫情 (待开发)" />
-    </GridLayout>
 
     <TextView
         android:layout_width="wrap_content"

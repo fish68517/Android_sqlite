@@ -72,9 +72,9 @@ public class TeacherHomeFragment extends Fragment {
 
         for (User student : allStudents) {
             if (checkedInUserIds.contains(student.getId())) {
-                studentStatusList.add(student.getUsername() + " - 今日已打卡");
+                studentStatusList.add("学生：" + student.getUsername() + " - 今日已打卡");
             } else {
-                studentStatusList.add(student.getUsername() + " - 今日未打卡");
+                studentStatusList.add("学生：" + student.getUsername() + " - 今日未打卡");
             }
         }
 

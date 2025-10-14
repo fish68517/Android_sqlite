@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.example.application.model.Notification; // 新增导入
 
 
 import com.example.application.model.Appointment;
@@ -19,7 +20,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Info
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "healthGuard.db";
 
     // Table Names
@@ -54,6 +55,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // EXERCISE Table - column names
     private static final String KEY_EXERCISE_TYPE = "exercise_type";
     private static final String KEY_EXERCISE_DATE = "exercise_date";
+
+    private static final String TABLE_NOTIFICATION = "notification_table"; // 新增通知表
+
+    // NOTIFICATION Table - column names
+    private static final String KEY_TITLE = "title"; // 新增
+    private static final String KEY_CONTENT = "content"; // 新增
+
+    // 新增：创建通知表的语句
+    private static final String CREATE_TABLE_NOTIFICATION = "CREATE TABLE " + TABLE_NOTIFICATION + "("
+            + KEY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_TITLE + " TEXT,"
+            + KEY_CONTENT + " TEXT)";
 
     // Table Create Statements
     private static final String CREATE_TABLE_USER = "CREATE TABLE " + TABLE_USER + "("
@@ -99,6 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_APPOINTMENT);
         db.execSQL(CREATE_TABLE_DIET);
         db.execSQL(CREATE_TABLE_EXERCISE);
+        db.execSQL(CREATE_TABLE_NOTIFICATION);
     }
 
     @Override
@@ -109,6 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPOINTMENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIET);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISE);
+        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_NOTIFICATION);
         // create new tables
         onCreate(db);
     }
@@ -302,7 +317,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Exercise> getAllExerciseLogsForUser(int userId) {
         List<Exercise> exerciseList = new ArrayList<>();
-        // ... (Implement logic similar to getAllUsers)
+        String selectQuery = "SELECT * FROM " + TABLE_EXERCISE + " WHERE " + KEY_USER_ID + " = " + userId;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Exercise exercise = new Exercise();
+                exercise.setId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID)));
+                exercise.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_USER_ID)));
+                exercise.setExerciseType(cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXERCISE_TYPE)));
+                exercise.setExerciseDate(cursor.getString(cursor.getColumnIndexOrThrow(KEY_EXERCISE_DATE)));
+                exerciseList.add(exercise);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
         return exerciseList;
     }
 
@@ -483,5 +511,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return appointmentList;
+    }
+
+    public ArrayList<Notification> getAllNotifications() {
+
+        ArrayList<Notification> notificationList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_NOTIFICATION;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Notification notification = new Notification();
+                notification.setId(cursor.getInt(cursor.getColumnIndexOrThrow(KEY_ID)));
+                notification.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(KEY_TITLE)));
+                notification.setContent(cursor.getString(cursor.getColumnIndexOrThrow(KEY_CONTENT)));
+                notificationList.add(notification);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return notificationList;
+    }
+
+    public void deleteNotification(Notification notification) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTIFICATION, KEY_ID + " = ?",
+                new String[]{String.valueOf(notification.getId())});
+        db.close();
+    }
+
+    public void addNotification(Notification newNotification) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, newNotification.getTitle());
+        values.put(KEY_CONTENT, newNotification.getContent());
+        db.insert(TABLE_NOTIFICATION, null, values);
+        db.close();
+    }
+
+    public void updateNotification(Notification notification) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_TITLE, notification.getTitle());
+        values.put(KEY_CONTENT, notification.getContent());
+        db.update(TABLE_NOTIFICATION, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(notification.getId())});
+        db.close();
     }
 }

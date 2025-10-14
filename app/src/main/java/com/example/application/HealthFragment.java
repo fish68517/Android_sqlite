@@ -92,7 +92,7 @@ public class HealthFragment extends Fragment {
 
     private void showCanteenCalories() {
         new AlertDialog.Builder(getContext())
-                .setTitle("食堂卡路里参考 (模拟)")
+                .setTitle("食堂卡路里参考 ()")
                 .setMessage("- 红烧肉 (1份): 约 450 大卡\n- 番茄炒蛋 (1份): 约 200 大卡\n- 米饭 (1碗): 约 250 大卡\n- 清炒时蔬 (1份): 约 90 大卡")
                 .setPositiveButton("了解", null)
                 .show();
@@ -100,7 +100,7 @@ public class HealthFragment extends Fragment {
 
     private void showDietAdvice() {
         new AlertDialog.Builder(getContext())
-                .setTitle("饮食建议 (模拟)")
+                .setTitle("饮食建议 ()")
                 .setMessage("1. 均衡营养，多吃蔬菜水果。\n2. 适量摄入蛋白质，如鱼、肉、蛋、奶。\n3. 减少高油、高糖、高盐食物的摄入。\n4. 每天保证充足饮水。")
                 .setPositiveButton("好的", null)
                 .show();
