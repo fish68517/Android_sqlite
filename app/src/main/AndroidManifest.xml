@@ -33,6 +33,13 @@
             android:exported="false" />
 
         <activity
+            android:name=".activity.LeaveApplicationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.LeaveApprovalActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".UserManageActivity"
             android:exported="false" />
 

@@ -1,5 +1,7 @@
 package com.example.application;
 
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.application.R;
+import com.example.application.activity.LeaveApprovalActivity;
 import com.example.application.activity.LoginActivity;
 import com.example.application.model.User;
 
@@ -23,6 +26,8 @@ public class ProfileFragment extends Fragment {
     private Button btnLogout;
     private DatabaseHelper dbHelper;
     private int loggedInUserId = -1;
+    private String userRole;
+    private Button leaveApproval;
 
     @Nullable
     @Override
@@ -36,6 +41,30 @@ public class ProfileFragment extends Fragment {
         tvUsername = view.findViewById(R.id.tv_profile_username);
         tvRole = view.findViewById(R.id.tv_profile_role);
         btnLogout = view.findViewById(R.id.btn_logout);
+        leaveApproval = view.findViewById(R.id.leave_approval);
+        // 获取登录用户ID
+
+        loggedInUserId = prefs.getInt("LOGGED_IN_USER_ID", -1);
+        String username = prefs.getString("LOGGED_IN_USERNAME", "用户");
+        userRole = prefs.getString("LOGGED_IN_USER_ROLE", "学生");
+        if (userRole.equals("老师") || userRole.equals("医生")) {
+            leaveApproval.setVisibility(VISIBLE);
+            if (userRole.equals("老师")) {
+
+            } else {
+                leaveApproval.setText("在线接诊");
+            }
+        } else {
+            leaveApproval.setVisibility(View.GONE);
+        }
+
+        leaveApproval.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LeaveApprovalActivity.class);
+                startActivity(intent);
+            }
+        });
 
         loadUserProfile();
 

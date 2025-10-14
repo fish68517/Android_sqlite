@@ -34,6 +34,13 @@
         android:layout_weight="1"/>
 
     <Button
+        android:id="@+id/leave_approval"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="查看学生请假"
+        android:layout_marginBottom="30dp"/>
+
+    <Button
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

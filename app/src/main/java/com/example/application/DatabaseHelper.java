@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.application.model.LeaveRequest;
 import com.example.application.model.Notification; // 新增导入
 
 
@@ -20,7 +22,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Info
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "healthGuard.db";
 
     // Table Names
@@ -61,6 +63,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // NOTIFICATION Table - column names
     private static final String KEY_TITLE = "title"; // 新增
     private static final String KEY_CONTENT = "content"; // 新增
+
+
+    private static final String TABLE_LEAVE = "leave_table"; // 新增请假表
+
+    // LEAVE Table - column names
+    private static final String KEY_REASON = "reason";
+    private static final String KEY_LEAVE_TIME = "leave_time";
+    private static final String KEY_STATUS = "status";
+
+    // 新增：创建请假表的语句
+    private static final String CREATE_TABLE_LEAVE = "CREATE TABLE " + TABLE_LEAVE + "("
+            + KEY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_USER_ID + " INTEGER,"
+            + KEY_REASON + " TEXT,"
+            + KEY_LEAVE_TIME + " TEXT,"
+            + KEY_STATUS + " TEXT)";
 
     // 新增：创建通知表的语句
     private static final String CREATE_TABLE_NOTIFICATION = "CREATE TABLE " + TABLE_NOTIFICATION + "("
@@ -113,6 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_DIET);
         db.execSQL(CREATE_TABLE_EXERCISE);
         db.execSQL(CREATE_TABLE_NOTIFICATION);
+        db.execSQL(CREATE_TABLE_LEAVE); // 添加建表语句
     }
 
     @Override
@@ -123,7 +142,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPOINTMENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIET);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISE);
-        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_NOTIFICATION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LEAVE); // 添加删表语句
         // create new tables
         onCreate(db);
     }
@@ -558,5 +578,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NOTIFICATION, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(notification.getId())});
         db.close();
+    }
+
+
+    //----------------------------- CRUD for LeaveRequest Table -----------------------------//
+
+    // 添加请假申请
+    public long addLeaveRequest(LeaveRequest leaveRequest) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_USER_ID, leaveRequest.getUserId());
+        values.put(KEY_REASON, leaveRequest.getReason());
+        values.put(KEY_LEAVE_TIME, leaveRequest.getLeaveTime());
+        values.put(KEY_STATUS, leaveRequest.getStatus());
+        long id = db.insert(TABLE_LEAVE, null, values);
+        db.close();
+        return id;
+    }
+
+    // 获取所有请假申请 (老师用)
+    public List<LeaveRequest> getAllLeaveRequests() {
+        List<LeaveRequest> leaveRequestList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_LEAVE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                LeaveRequest lr = new LeaveRequest();
+                lr.setId(cursor.getInt(0));
+                lr.setUserId(cursor.getInt(1));
+                lr.setReason(cursor.getString(2));
+                lr.setLeaveTime(cursor.getString(3));
+                lr.setStatus(cursor.getString(4));
+                leaveRequestList.add(lr);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return leaveRequestList;
+    }
+
+    // 更新请假申请状态 (老师用)
+    public int updateLeaveRequestStatus(LeaveRequest leaveRequest) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_STATUS, leaveRequest.getStatus());
+        return db.update(TABLE_LEAVE, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(leaveRequest.getId())});
     }
 }

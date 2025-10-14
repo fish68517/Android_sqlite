@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.example.application.R;
 import com.example.application.activity.AppointmentActivity;
 import com.example.application.activity.DoctorHomeActivity;
+import com.example.application.activity.LeaveApplicationActivity;
 import com.example.application.activity.ManageNotificationsActivity;
 import com.example.application.activity.StudentCheckinStatusActivity;
 import com.example.application.model.CheckIn;
@@ -87,12 +88,15 @@ public class HomeFragment extends Fragment {
                 btnViewCheckins.setText("查看学生打卡");
             } else if (userRole.equals("管理员")) {
                 btnViewCheckins.setText("用户管理");
+            } else if (userRole.equals("学生")) {
+                btnViewCheckins.setText("请假");
             }
             else {
                 btnViewCheckins.setText("查看预约就诊");
             }
         } else {
-            btnViewCheckins.setVisibility(View.GONE);
+            btnViewCheckins.setVisibility(View.VISIBLE);
+            btnViewCheckins.setText("请假");
         }
 
         btnViewCheckins.setOnClickListener(v -> loadStudentCheckinStatus());
@@ -275,6 +279,12 @@ public class HomeFragment extends Fragment {
         } else if (userRole.equals("管理员")) {
             Intent intent = new Intent(getActivity(), UserManageActivity.class);
             startActivity(intent);
+        } else if (userRole.equals("学生")) {
+            // 帮我写个 Dialgo 弹框提示请假理由和时间
+
+            Intent intent = new Intent(getActivity(), LeaveApplicationActivity.class);
+            startActivity(intent);
+
         }
         else {
             Intent intent = new Intent(getActivity(), StudentCheckinStatusActivity.class);
