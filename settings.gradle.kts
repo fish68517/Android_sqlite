@@ -24,6 +24,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "潮品汇"
+rootProject.name = "极客笔记"
 include(":app")
  

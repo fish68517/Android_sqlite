@@ -1,7 +1,11 @@
 
     <resources>
-        <string name="app_name">潮品汇 (Style Hub)</string>
-        <string name="title_home">首页</string>
-        <string name="title_search">搜索</string>
-        <string name="title_profile">我的</string>
+        <string name="app_name">极客笔记</string>
+        <string name="start_writing">开始记笔记</string>
+        <string name="export_notes">导出笔记</string>
+        <string name="add_note">添加笔记</string>
+        <string name="edit_note">编辑笔记</string>
+        <string name="title">标题</string>
+        <string name="export_notification_title">通知标题</string>
+        <string name="export_notification_text">通知内容</string>
     </resources>

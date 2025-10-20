@@ -38,66 +38,55 @@ android {
 
 dependencies {
 
-        implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
-    implementation("com.google.code.gson:gson:2.8.8")
-    implementation("androidx.recyclerview:recyclerview:1.2.1")
-    implementation("androidx.cardview:cardview:1.0.0")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-
-    implementation ("com.github.bumptech.glide:glide:4.12.0")
-
-
-    // Stomp Protocol for Android
-    implementation ("com.github.NaikSoftware:StompProtocolAndroid:1.6.6")
-
-    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
-
-    implementation ("io.reactivex.rxjava2:rxjava:2.2.21")
-    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
-
-    // MPAndroidChart
-
-    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
-    // Navigation Components
-    implementation("androidx.navigation:navigation-fragment:2.7.7")
-// 请使用最新版本
-    implementation("androidx.navigation:navigation-ui:2.7.7")
-
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
-// 请使用最新版本
-
+    // 基础UI库
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation ("com.google.android.material:material:1.11.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // --- 任务相关依赖 ---
 
-    // 任务: 卡片视图 (CardView) - 级别 1
-    implementation ("androidx.cardview:cardview:1.0.0")
-
-    // 任务: 带图片的列表 (RecyclerView) - 级别 2
-    implementation ("androidx.recyclerview:recyclerview:1.3.2")
-    // 图片加载库 Glide
-    implementation ("com.github.bumptech.glide:glide:4.15.1")
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
-
-    // 任务: MVVM 架构 - 级别 3
+    // 任务: MVVM 架构 & 离线模式 (Room) - 级别 3
     implementation ("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-livedata:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-common-java8:2.6.2")
 
-    // 任务: 离线模式 (Offline Mode with Room) - 级别 3
+    // 添加这行来解决 "无法访问ListenableFuture" 的问题
+    implementation("com.google.guava:guava:31.0.1-android")
     implementation ("androidx.room:room-runtime:2.6.1")
-    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
-    // 任务: 生物识别 (Biometrics) - 级别 3
-    implementation ("androidx.biometric:biometric:1.2.0-alpha05")
+    // 任务: 下拉刷新 (SwipeRefreshLayout) - 级别 2
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+
+
+    // 任务: 复杂动画 (MotionLayout) - 级别 3
+    // (已包含在 constraintlayout 中)
+    // 任务: 用于延迟任务的 WorkManager - 级别 3
+    implementation ("androidx.work:work-runtime:2.9.0")
+
+    // 任务: 单元/UI 测试 - 级别 3
+    implementation ("junit:junit:4.13.2")
+    implementation ("androidx.test.ext:junit:1.1.5")
+    implementation ("androidx.test.espresso:espresso-core:3.5.1")
+    // LiveData testing
+    implementation ("androidx.arch.core:core-testing:2.2.0")
+
+
+
+    // 任务: 欢迎屏幕 (Splash Screen) - 级别 1
+    implementation ("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.navigation:navigation-fragment:2.9.5")
+    implementation("androidx.navigation:navigation-ui:2.9.5")
+
+
+    // 图片加载库 Glide
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+
+}
+// 放置在 dependencies { ... } 代码块之后
+configurations.all {
+    // Kotlin 语法
+    exclude(group = "com.intellij", module = "annotations")
 }

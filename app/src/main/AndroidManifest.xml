@@ -7,6 +7,7 @@
 
     <!-- 任务: 生物识别 (Biometrics) - 级别 3 -->
     <!-- 声明使用生物识别的权限 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
     <!-- 任务: 使用相机/画廊 - 级别 3 -->
@@ -41,23 +42,13 @@
             </intent-filter>
         </activity>
 
-        <!-- 任务: 详细信息屏幕 - 级别 2 -->
-        <activity
-            android:name=".activity.ProductDetailActivity"
-            android:exported="false"
-            android:parentActivityName=".activity.MainActivity"/>
 
-        <!-- 任务: 使用相机/画廊 - 级别 3 -->
-        <!-- 为FileProvider定义路径，允许安全地分享文件URI -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+
+        <activity
+            android:name=".activity.NoteDetailActivity"
+            android:exported="true">
+
+        </activity>
 
     </application>
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!--
+      任务: 顶部应用栏 (Top App Bar) - 级别 1
+      描述: 这是主页顶部应用栏的菜单项。
+      集成: 关联 "前台服务" 任务，点击此菜单项将触发笔记导出功能。
+    -->
+    <item
+        android:id="@+id/action_export"
+        android:title="@string/export_notes"
+        app:showAsAction="never" />
+</menu>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.biometrics.BiometricManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,14 +22,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
+
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 
+import com.bumptech.glide.Glide;
 import com.example.application.R;
 import com.example.application.databinding.DialogLoginBinding;
 import com.example.application.databinding.FragmentProfileBinding;
@@ -89,6 +89,10 @@ public class ProfileFragment extends Fragment {
         binding.btnLogout.setOnClickListener(v -> showLogoutDialog());
         binding.btnBiometricLogin.setOnClickListener(v -> showBiometricPrompt());
         binding.profileImage.setOnClickListener(v -> showImagePickerDialog());
+    }
+
+    private void showBiometricPrompt() {
+
     }
 
     private void showImagePickerDialog() {
@@ -217,43 +221,9 @@ public class ProfileFragment extends Fragment {
     }
 
     private boolean isBiometricAvailable() {
-        BiometricManager biometricManager = BiometricManager.from(requireContext());
-        return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
+        return true;
     }
 
-    private void showBiometricPrompt() {
-        // 任务: 生物识别 (Biometrics) - 级别 3
-        // 描述: 这里是生物识别功能的完整实现流程。
-        Executor executor = ContextCompat.getMainExecutor(requireContext());
-        BiometricPrompt biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getContext(), "认证失败: " + errString, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                Toast.makeText(getContext(), "认证成功!", Toast.LENGTH_SHORT).show();
-                login(sharedPreferences.getString(KEY_EMAIL, "")); // 模拟登录
-            }
-
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                Toast.makeText(getContext(), "认证失败，请重试", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("生物识别登录")
-                .setSubtitle("使用你的指纹或面部来登录")
-                .setNegativeButtonText("使用账号密码登录")
-                .build();
-
-        biometricPrompt.authenticate(promptInfo);
-    }
 
     @Override
     public void onStart() {
