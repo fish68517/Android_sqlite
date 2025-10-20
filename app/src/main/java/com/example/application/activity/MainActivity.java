@@ -1,9 +1,14 @@
-package com.example.application;
+package com.example.application.activity;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
+
+import com.example.application.databinding.ActivityMainBinding;
+import com.example.application.fragment.HomeFragment;
+import com.example.application.fragment.ProfileFragment;
+import com.example.application.R;
+import com.example.application.fragment.SearchFragment;
 
 
 public class MainActivity extends AppCompatActivity {

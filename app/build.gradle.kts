@@ -29,6 +29,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+    // 启用视图绑定 (View Binding) 以简化UI操作
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -70,5 +75,29 @@ dependencies {
 
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 // 请使用最新版本
+
+
+    // --- 任务相关依赖 ---
+
+    // 任务: 卡片视图 (CardView) - 级别 1
+    implementation ("androidx.cardview:cardview:1.0.0")
+
+    // 任务: 带图片的列表 (RecyclerView) - 级别 2
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
+    // 图片加载库 Glide
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
+
+    // 任务: MVVM 架构 - 级别 3
+    implementation ("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-livedata:2.6.2")
+    implementation ("androidx.lifecycle:lifecycle-common-java8:2.6.2")
+
+    // 任务: 离线模式 (Offline Mode with Room) - 级别 3
+    implementation ("androidx.room:room-runtime:2.6.1")
+    annotationProcessor ("androidx.room:room-compiler:2.6.1")
+
+    // 任务: 生物识别 (Biometrics) - 级别 3
+    implementation ("androidx.biometric:biometric:1.2.0-alpha05")
 
 }

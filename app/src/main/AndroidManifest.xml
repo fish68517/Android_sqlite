@@ -2,9 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 网络权限，用于加载图片 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 任务: 生物识别 (Biometrics) - 级别 3 -->
+    <!-- 声明使用生物识别的权限 -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
+    <!-- 任务: 使用相机/画廊 - 级别 3 -->
+    <!-- 声明相机硬件功能 (非必需但推荐) -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <!-- 读写外部存储权限 (对于API < 29) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+
 
     <application
         android:allowBackup="true"
@@ -12,15 +28,12 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OrderFood"
+        android:theme="@style/Theme.StyleHub"
         tools:targetApi="31">
-
-        <!-- LoginActivity is now the starting point -->
         <activity
-            android:name="com.example.application.activity.LoginActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,57 +41,23 @@
             </intent-filter>
         </activity>
 
+        <!-- 任务: 详细信息屏幕 - 级别 2 -->
         <activity
-            android:name="com.example.application.activity.RegisterActivity"
-            android:exported="false" />
+            android:name=".activity.ProductDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".activity.MainActivity"/>
 
-        <activity
-            android:name=".activity.LeaveApplicationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.LeaveApprovalActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".UserManageActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="com.example.application.activity.AdminMainActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".activity.AppointmentActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".activity.StudentCheckinStatusActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".activity.DoctorHomeActivity"
-            android:exported="false" />
-
-
-        <activity
-            android:name=".activity.ManageNotificationsActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="com.example.application.activity.DoctorMainActivity"
-            android:exported="false" />
-
-        <activity
-            android:name="com.example.application.activity.TeacherMainActivity"
-            android:exported="false" />
-
-
-        <!-- MainActivity no longer has the LAUNCHER intent-filter -->
-        <activity
-            android:name="com.example.application.MainActivity"
-            android:exported="true">
-            <!-- The intent-filter was here, but now it's gone -->
-        </activity>
+        <!-- 任务: 使用相机/画廊 - 级别 3 -->
+        <!-- 为FileProvider定义路径，允许安全地分享文件URI -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
     </application>
 

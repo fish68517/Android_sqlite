@@ -1,4 +1,4 @@
-package com.example.application;
+package com.example.application.fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -29,6 +29,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
+import com.example.application.R;
+import com.example.application.databinding.DialogLoginBinding;
+import com.example.application.databinding.FragmentProfileBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -163,7 +166,7 @@ public class ProfileFragment extends Fragment {
             if(imageUriString != null){
                 Glide.with(this).load(Uri.parse(imageUriString)).circleCrop().into(binding.profileImage);
             } else {
-                binding.profileImage.setImageResource(R.drawable.ic_launcher_foreground);
+                binding.profileImage.setImageResource(R.drawable.ic_profile);
             }
 
         } else {
@@ -172,7 +175,7 @@ public class ProfileFragment extends Fragment {
             binding.btnLogin.setVisibility(View.VISIBLE);
             binding.btnLogout.setVisibility(View.GONE);
             binding.btnBiometricLogin.setVisibility(View.GONE);
-            binding.profileImage.setImageResource(R.drawable.ic_launcher_foreground);
+            binding.profileImage.setImageResource(R.drawable.ic_profile);
         }
     }
 

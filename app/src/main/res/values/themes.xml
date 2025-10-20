@@ -1,9 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.OrderFood" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- 任务: 黑暗主题 (Dark Theme) - 级别 2 -->
+    <!-- 描述: 基础主题继承自Theme.Material3.DayNight，使其能根据系统设置自动切换日间/夜间模式。 -->
+    <style name="Theme.StyleHub" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
-    <style name="Theme.OrderFood" parent="Base.Theme.OrderFood" />
 </resources>

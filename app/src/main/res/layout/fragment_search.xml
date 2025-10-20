@@ -1,47 +1,28 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<!-- 文件路径: app/src/main/res/layout/fragment_search.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".ui.search.SearchFragment">
 
-    <LinearLayout
+    <!-- 任务: 使用建议进行搜索 - 级别 2 -->
+    <!-- 描述: AutoCompleteTextView用于实现带建议的搜索框。 -->
+    <AutoCompleteTextView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".ui.detail.ProductDetailActivity">
+        android:hint="搜索潮品..."
+        android:inputType="text"
+        android:completionThreshold="1"/>
 
-        <ImageView
-            android:id="@+id/detail_product_image"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            tools:src="@tools:sample/backgrounds/scenic" />
+    <TextView
+        android:id="@+id/search_result_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="输入关键词开始搜索"
+        android:textAppearance="?attr/textAppearanceBodyMedium" />
 
-        <TextView
-            android:id="@+id/detail_product_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textAppearance="?attr/textAppearanceHeadlineSmall"
-            tools:text="潮流运动鞋 Pro Max" />
-
-        <TextView
-            android:id="@+id/detail_product_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:textColor="?attr/colorPrimary"
-            tools:text="¥ 599.00" />
-
-        <TextView
-            android:id="@+id/detail_product_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:lineSpacingExtra="4dp"
-            android:textAppearance="?attr/textAppearanceBodyMedium"
-            tools:text="这里是商品的详细描述。这款鞋采用了最新的科技，提供了无与伦比的舒适度和支撑性。适合各种场合穿着。" />
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

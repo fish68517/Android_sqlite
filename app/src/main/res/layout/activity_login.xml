@@ -11,7 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="校园健康卫士"
+        android:text="校园潮品汇"
         android:textSize="28sp"
         android:textStyle="bold"
         android:layout_marginBottom="32dp"/>
