@@ -1,5 +1,5 @@
 package com.example.application.viewmodel;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/viewmodel/NoteViewModel.java
+// 文件路径: app/src/main/java/com/example/application/viewmodel/NoteViewModel.java
 // 任务: MVVM 架构 - 级别 3
 // 描述: ViewModel层，持有UI数据，并在配置更改后存活。
 // =================================================================================

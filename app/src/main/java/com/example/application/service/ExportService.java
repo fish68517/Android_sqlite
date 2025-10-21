@@ -1,5 +1,5 @@
 package com.example.application.service;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/services/ExportService.java
+// 文件路径: app/src/main/java/com/example/application/services/ExportService.java
 // 任务: 前台服务 - 级别 3
 // 描述: 这是一个前台服务，模拟导出笔记的耗时操作，并在通知栏显示进度。
 // =================================================================================
@@ -10,6 +10,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -71,13 +72,18 @@ public class ExportService extends Service {
     }
 
     private void createNotificationChannel() {
-        NotificationChannel serviceChannel = new NotificationChannel(
-                CHANNEL_ID,
-                "Export Service Channel",
-                NotificationManager.IMPORTANCE_DEFAULT
-        );
+        NotificationChannel serviceChannel = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            serviceChannel = new NotificationChannel(
+                    CHANNEL_ID,
+                    "Export Service Channel",
+                    NotificationManager.IMPORTANCE_DEFAULT
+            );
+        }
         NotificationManager manager = getSystemService(NotificationManager.class);
-        manager.createNotificationChannel(serviceChannel);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            manager.createNotificationChannel(serviceChannel);
+        }
     }
 
     @Nullable

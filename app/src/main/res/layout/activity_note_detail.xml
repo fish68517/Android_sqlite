@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:transitionName="note_transition"
-    tools:context=".ui.NoteDetailActivity">
+    android:transitionName="note_transition">
 
     <!-- 任务: 顶部应用栏 (Top App Bar) - 级别 1 -->
     <com.google.android.material.appbar.AppBarLayout

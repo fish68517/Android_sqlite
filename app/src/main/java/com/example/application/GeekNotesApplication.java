@@ -1,5 +1,5 @@
 package com.example.application;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/GeekNotesApplication.java
+// 文件路径: app/src/main/java/com/example/application/applicationApplication.java
 // 描述: Application类，用于初始化一些全局任务，例如WorkManager。
 // =================================================================================
 

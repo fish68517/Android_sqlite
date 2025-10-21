@@ -1,5 +1,5 @@
 package com.example.application.activity;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/ui/NoteDetailActivity.java
+// 文件路径: app/src/main/java/com/example/application/ui/NoteDetailActivity.java
 // =================================================================================
 
 

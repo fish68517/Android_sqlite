@@ -1,7 +1,19 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.OrderFood" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 你的常规应用深色主题 -->
+    <style name="Theme.MyApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 其他常规主题属性 -->
+    </style>
+
+    <!-- ↓↓↓ 添加这个新的 Splash Screen 主题 (深色版本) ↓↓↓ -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- 设置深色模式下的背景颜色 -->
+        <item name="windowSplashScreenBackground">@color/black</item>
+
+        <!-- 设置要显示的启动图标 -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+
+        <!-- 指向深色模式的常规主题 -->
+        <item name="postSplashScreenTheme">@style/Theme.MyApp</item>
     </style>
 </resources>

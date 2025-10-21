@@ -1,5 +1,5 @@
 package com.example.application.dao;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/data/local/NoteDao.java
+// 文件路径: app/src/main/java/com/example/application/data/local/NoteDao.java
 // 任务: MVVM 架构 (Room) - 级别 3
 // 描述: 数据访问对象(DAO)，定义了所有与notes表交互的数据库操作。
 // =================================================================================

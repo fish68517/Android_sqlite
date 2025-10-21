@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FFE53935</color>
 
-    <!-- 订单状态颜色 -->
+
     <color name="status_pending">#FFF57C00</color>  <!-- 橙色 -->
     <color name="status_paid">#FF4CAF50</color>     <!-- 绿色 -->
     <color name="status_completed">#FF2196F3</color><!-- 蓝色 -->

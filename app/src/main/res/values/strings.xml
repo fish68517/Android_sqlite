@@ -6,6 +6,6 @@
         <string name="add_note">添加笔记</string>
         <string name="edit_note">编辑笔记</string>
         <string name="title">标题</string>
-        <string name="export_notification_title">通知标题</string>
-        <string name="export_notification_text">通知内容</string>
+        <string name="export_notification_title">下载通知</string>
+        <string name="export_notification_text">正在导出下载笔记</string>
     </resources>

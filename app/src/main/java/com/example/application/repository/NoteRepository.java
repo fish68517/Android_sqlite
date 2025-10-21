@@ -1,5 +1,5 @@
 package com.example.application.repository;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/data/repository/NoteRepository.java
+// 文件路径: app/src/main/java/com/example/application/data/repository/NoteRepository.java
 // 任务: MVVM 架构 - 级别 3
 // 描述: Repository层，作为数据来源的唯一入口，隔离了ViewModel和数据源。
 // =================================================================================

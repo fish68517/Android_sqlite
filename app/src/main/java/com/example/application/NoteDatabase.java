@@ -1,5 +1,5 @@
 package com.example.application;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/data/local/NoteDatabase.java
+// 文件路径: app/src/main/java/com/example/application/data/local/NoteDatabase.java
 // 任务: MVVM 架构 (Room) - 级别 3
 // 描述: Room数据库的主类。
 // =================================================================================

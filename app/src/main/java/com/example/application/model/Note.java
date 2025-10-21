@@ -1,5 +1,5 @@
 package com.example.application.model;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/data/model/Note.java
+// 文件路径: app/src/main/java/com/example/application/data/model/Note.java
 // 任务: MVVM 架构 - 级别 3
 // 描述: 这是Note数据模型，@Entity注解表明它是一个Room数据库的表。
 // =================================================================================
@@ -28,4 +28,13 @@ public class Note implements Serializable {
     public void setTitle(String title) { this.title = title; }
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

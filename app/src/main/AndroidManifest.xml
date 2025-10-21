@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 
+    <!-- ↓↓↓ 添加这个前台服务权限 ↓↓↓ -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <!-- 任务: 使用相机/画廊 - 级别 3 -->
     <!-- 声明相机硬件功能 (非必需但推荐) -->
     <uses-feature
@@ -31,10 +34,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StyleHub"
+        android:name=".GeekNotesApplication"
         tools:targetApi="31">
         <activity
             android:name=".activity.MainActivity"
+            android:theme="@style/Theme.App.Starting"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,9 +50,16 @@
 
         <activity
             android:name=".activity.NoteDetailActivity"
+            android:theme="@style/Theme.MyApp"
             android:exported="true">
 
         </activity>
+
+        <!-- ↓↓↓ 确保 Service 也被正确声明了 ↓↓↓ -->
+        <service
+            android:name=".service.ExportService"
+            android:exported="false" />
+
 
     </application>
 

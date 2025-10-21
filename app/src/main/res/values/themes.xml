@@ -1,8 +1,19 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- 任务: 黑暗主题 (Dark Theme) - 级别 2 -->
-    <!-- 描述: 基础主题继承自Theme.Material3.DayNight，使其能根据系统设置自动切换日间/夜间模式。 -->
-    <style name="Theme.StyleHub" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 你的常规应用主题，可能已经存在 -->
+    <style name="Theme.MyApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 其他常规主题属性 -->
+    </style>
+
+    <!--// 任务: 欢迎屏幕 (Splash Screen) - 级别 1-->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- 设置启动画面的背景颜色 -->
+        <item name="windowSplashScreenBackground">@color/status_pending</item>
+
+        <!-- 设置要显示的启动图标。它应该是你的应用图标 -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+
+        <!-- 关键：指定启动画面结束后，要应用哪个常规主题 -->
+        <item name="postSplashScreenTheme">@style/Theme.MyApp</item>
     </style>
 </resources>

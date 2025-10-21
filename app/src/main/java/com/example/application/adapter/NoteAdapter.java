@@ -1,5 +1,5 @@
 package com.example.application.adapter;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/ui/NoteAdapter.java
+// 文件路径: app/src/main/java/com/example/application/ui/NoteAdapter.java
 // =================================================================================
 
 
@@ -31,10 +31,12 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteViewHolder> {
     private static final DiffUtil.ItemCallback<Note> DIFF_CALLBACK = new DiffUtil.ItemCallback<Note>() {
         @Override
         public boolean areItemsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            // 通常使用唯一ID来判断是否是同一个项目
             return oldItem.getId() == newItem.getId();
         }
         @Override
         public boolean areContentsTheSame(@NonNull Note oldItem, @NonNull Note newItem) {
+            // 判断项目的内容是否相同
             return oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getContent().equals(newItem.getContent());
         }
@@ -53,6 +55,9 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteViewHolder> {
         holder.bind(currentNote, listener);
     }
 
+
+    // 使用 ListAdapter 内置的 getItem() 方法，而不是自定义的 getNoteAt()
+    // 这样可以确保你总是从当前已经过 Diff 计算的列表中获取数据
     public Note getNoteAt(int position){
         return getItem(position);
     }

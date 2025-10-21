@@ -1,5 +1,5 @@
 package com.example.application.activity;// =================================================================================
-// 文件路径: app/src/main/java/com/example/geeknotes/ui/MainActivity.java
+// 文件路径: app/src/main/java/com/example/application/ui/MainActivity.java
 // =================================================================================
 
 
@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -115,11 +116,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void observeViewModel() {
         noteViewModel.getAllNotes().observe(this, notes -> {
+            Log.d("MainActivity", "笔记列表更新：" + notes);
             adapter.submitList(notes);
-            // 模拟添加第一条笔记
-            if(notes.isEmpty()){
+          /*  if(notes.isEmpty()){
                 noteViewModel.insert(new Note("欢迎使用", "这是一个示例笔记。向右滑动可以删除它。"));
-            }
+            }*/
         });
     }
 }
