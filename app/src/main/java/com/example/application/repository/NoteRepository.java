@@ -35,4 +35,8 @@ public class NoteRepository {
     public void delete(Note note) {
         NoteDatabase.databaseWriteExecutor.execute(() -> mNoteDao.delete(note));
     }
+
+    public void update(Note note) {
+        NoteDatabase.databaseWriteExecutor.execute(() -> mNoteDao.update(note));
+    }
 }

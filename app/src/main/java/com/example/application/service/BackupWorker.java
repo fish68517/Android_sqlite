@@ -21,8 +21,7 @@ public class BackupWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        // 在这里执行实际的备份逻辑，例如上传到云端。
-        // 我们用一条日志来模拟这个过程。
+        // 我们用一条日志来模拟这个过程。备份逻辑
         Log.d(TAG, "正在执行每日笔记备份...");
 
         // 模拟工作

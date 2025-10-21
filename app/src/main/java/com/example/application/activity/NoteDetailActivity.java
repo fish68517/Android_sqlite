@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.application.databinding.ActivityNoteDetailBinding;
 import com.example.application.model.Note;
 import com.example.application.viewmodel.NoteViewModel;
+import android.text.Editable;
 
 
 public class NoteDetailActivity extends AppCompatActivity {
@@ -60,35 +61,51 @@ public class NoteDetailActivity extends AppCompatActivity {
             end = temp;
         }
 
-        SpannableStringBuilder ssb = new SpannableStringBuilder(binding.etNoteContent.getText());
-        StyleSpan[] spans = ssb.getSpans(start, end, StyleSpan.class);
+        // 如果没有选择任何文本，则不执行任何操作
+        if (start == end) {
+            return;
+        }
+
+        // 1. 直接获取 EditText 的 Editable 对象，而不是创建一个新的 SpannableStringBuilder
+        Editable editable = binding.etNoteContent.getText();
+
+        // 2. 在 editable 对象上直接操作
+        StyleSpan[] spans = editable.getSpans(start, end, StyleSpan.class);
         boolean styleExists = false;
         for (StyleSpan span : spans) {
             if (span.getStyle() == style) {
-                ssb.removeSpan(span);
+                editable.removeSpan(span);
                 styleExists = true;
             }
         }
 
         if (!styleExists) {
-            ssb.setSpan(new StyleSpan(style), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            editable.setSpan(new StyleSpan(style), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-        binding.etNoteContent.setText(ssb);
+
+        // 3. 【关键】删除下面这行代码！
+        // binding.etNoteContent.setText(editable); // 不再需要，EditText 会自动刷新
+
+        // 4. 恢复光标选择是好的做法，但通常在直接修改 Editable 时也不是必需的，
+        //    因为选择状态通常不会丢失。但保留也无妨。
         binding.etNoteContent.setSelection(start, end);
     }
 
     private void saveAndExit() {
         String title = binding.etNoteTitle.getText().toString();
+        // 注意：这里需要获取Spannable文本，但保存到数据库时通常存为HTML或纯文本
         String content = binding.etNoteContent.getText().toString();
 
-        if (currentNote == null) { // New note
+        if (currentNote == null) { // 新笔记
             if (!title.isEmpty() || !content.isEmpty()) {
                 noteViewModel.insert(new Note(title, content));
             }
-        } else { // Existing note
-            // Here you would implement update logic
+        } else { // 已存在的笔记
+            currentNote.setTitle(title);
+            currentNote.setContent(content);
+            noteViewModel.update(currentNote); // <-- 添加更新逻辑
         }
-        supportFinishAfterTransition(); // Smoothly transition back
+        supportFinishAfterTransition();
     }
 
     @Override
