@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.example.application.activity.ProductDetailActivity;
 import com.example.application.databinding.ItemProductBinding;
 import com.example.application.model.Product;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Locale;
 
@@ -67,6 +68,20 @@ public class ProductAdapter extends ListAdapter<Product, ProductAdapter.ProductV
                     context.startActivity(intent);
                 }
             });
+
+            // --- **** NEW: Click listener for the Add to Cart button **** ---
+            binding.btnAddToCart.setOnClickListener(v -> {
+                int position = getBindingAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Product product = getItem(position);
+                    // 任务: 小吃店 (Snackbar) - 级别 1
+                    // 描述: 点击“添加到购物车”按钮后，显示一个Snackbar提示。
+                    Snackbar.make(v, "Success to add " + product.getName() + " to Cart", Snackbar.LENGTH_SHORT)
+                            .show();
+                    // In a real app, you would add logic here to actually add the item to a cart data structure.
+                }
+            });
+            // --- **** END OF NEW LISTENER **** ---
         }
 
         public void bind(Product product) {

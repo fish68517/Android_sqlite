@@ -13,6 +13,9 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +26,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
@@ -32,6 +37,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 
 import com.example.application.R;
+import com.example.application.activity.Constants;
+import com.example.application.activity.LoginActivity;
 import com.example.application.databinding.DialogLoginBinding;
 import com.example.application.databinding.FragmentProfileBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -93,29 +100,45 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        setHasOptionsMenu(true);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateUI();
+        // **** MODIFIED: Set onClickListener to start LoginActivity ****
+        binding.btnLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        });
+        // **** END MODIFICATION ****
+      //  updateUI();
 
-        binding.btnLogin.setOnClickListener(v -> showLoginDialog());
+       // binding.btnLogin.setOnClickListener(v -> showLoginDialog());
         binding.btnLogout.setOnClickListener(v -> showLogoutDialog());
         binding.btnBiometricLogin.setOnClickListener(v -> showBiometricPrompt());
         binding.profileImage.setOnClickListener(v -> showImagePickerDialog());
     }
 
+    // **** NEW: onResume to update UI when returning to fragment ****
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI(); // Refresh UI in case login state changed
+    }
+    // **** END NEW METHOD ****
+
     private void showImagePickerDialog() {
         if (!sharedPreferences.getBoolean(KEY_LOGGED_IN, false)){
-            Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "please Login First", Toast.LENGTH_SHORT).show();
             return;
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("更换头像");
-        builder.setItems(new CharSequence[]{"拍照", "从相册选择"}, (dialog, which) -> {
+        builder.setTitle("Change Profile Picture");
+         // 任务: 使用相机/画廊 - 级别 3
+        builder.setItems(new CharSequence[]{"Take Photo", "Select From Galley"}, (dialog, which) -> {
             if (which == 0) {
                 // 任务: 使用相机/画廊 - 级别 3 (相机)
                 // 改为调用新的权限检查方法
@@ -178,7 +201,7 @@ public class ProfileFragment extends Fragment {
 
             // 任务: 小吃店 (Snackbar) - 级别 1
             // 描述: 在成功更新头像后，使用Snackbar给用户一个简短的提示。
-            Snackbar.make(binding.getRoot(), "头像更新成功!", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(binding.getRoot(), "Profile Image Update Success!", Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -269,7 +292,12 @@ public class ProfileFragment extends Fragment {
     }
 
     private void logout() {
-        sharedPreferences.edit().clear().apply();
+        // Clear all relevant user data
+        sharedPreferences.edit()
+                .remove(Constants.KEY_LOGGED_IN)
+                .remove(Constants.KEY_EMAIL)
+                .remove(Constants.KEY_PROFILE_IMAGE_URI) // Also clear image URI on logout
+                .apply();
         updateUI();
     }
 
@@ -305,7 +333,10 @@ public class ProfileFragment extends Fragment {
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(getContext(), "Authentication successful!", Toast.LENGTH_SHORT).show();
-                login(sharedPreferences.getString(KEY_EMAIL, "")); // 模拟登录
+                // login(sharedPreferences.getString(KEY_EMAIL, "")); // 模拟登录
+                // Simulate login success - SharedPreferences should already have email if biometric was set up
+                sharedPreferences.edit().putBoolean(Constants.KEY_LOGGED_IN, true).apply();
+                updateUI(); // Update UI after successful biometric login
             }
 
             @Override
@@ -395,5 +426,34 @@ public class ProfileFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.profile_menu, menu); // Create this new menu file
+
+        // Find the switch in the menu and set its state
+        MenuItem item = menu.findItem(R.id.action_dark_mode);
+        item.setActionView(R.layout.switch_item); // Create this new layout file
+        SwitchCompat themeSwitch = item.getActionView().findViewById(R.id.theme_switch);
+
+        if (themeSwitch != null) {
+            // Set initial switch state based on current mode
+            int currentNightMode = AppCompatDelegate.getDefaultNightMode();
+            themeSwitch.setChecked(currentNightMode == AppCompatDelegate.MODE_NIGHT_YES);
+
+            themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                setNightMode(isChecked);
+            });
+        }
+    }
+
+    private void setNightMode(boolean isNightMode) {
+        int mode = isNightMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO;
+        AppCompatDelegate.setDefaultNightMode(mode);
+        // Save the preference (optional, as DayNight theme often follows system)
+        sharedPreferences.edit().putInt(Constants.KEY_THEME, mode).apply();
+        // The activity will likely recreate to apply the theme change.
     }
 }

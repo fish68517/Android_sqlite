@@ -1,7 +1,9 @@
 package com.example.application.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.example.application.databinding.ActivityMainBinding;
@@ -18,9 +20,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // **** APPLY SAVED THEME ****
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE);
+        int savedThemeMode = sharedPreferences.getInt(Constants.KEY_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        AppCompatDelegate.setDefaultNightMode(savedThemeMode);
+        // **** END THEME APPLY ****
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Setup Toolbar
+        setSupportActionBar(binding.topAppBar); // Assuming you add a Toolbar with id 'top_app_bar'
         // 任务: 底部导航 (Bottom Navigation) - 级别 1
         // 描述: 设置底部导航栏的监听器，根据点击的菜单项切换不同的Fragment。
         binding.bottomNavigation.setOnItemSelectedListener(item -> {

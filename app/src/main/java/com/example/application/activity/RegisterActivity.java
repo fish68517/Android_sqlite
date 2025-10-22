@@ -1,85 +1,104 @@
+// java
 package com.example.application.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.application.DatabaseHelper;
-import com.example.application.R;
-import com.example.application.model.User;
+import com.example.application.databinding.ActivityRegisterBinding;
 
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etUsername, etPassword, etConfirmPassword;
-    private Spinner spinnerRole;
-    private Button btnRegister;
-    private DatabaseHelper dbHelper;
+    private ActivityRegisterBinding binding;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        dbHelper = new DatabaseHelper(this);
+        sharedPreferences = getSharedPreferences(Constants.PREFS_NAME, MODE_PRIVATE);
 
-        etUsername = findViewById(R.id.et_register_username);
-        etPassword = findViewById(R.id.et_register_password);
-        etConfirmPassword = findViewById(R.id.et_register_confirm_password);
-        spinnerRole = findViewById(R.id.spinner_role);
-        btnRegister = findViewById(R.id.btn_register);
-
-        // 设置角色下拉框
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.user_roles, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerRole.setAdapter(adapter);
-
-        btnRegister.setOnClickListener(v -> registerUser());
+        binding.btnPerformRegister.setOnClickListener(v -> attemptRegister());
+        binding.tvGoToLogin.setOnClickListener(v -> {
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            finish(); // Finish RegisterActivity when going to Login
+        });
     }
 
-    private void registerUser() {
-        String username = etUsername.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-        String confirmPassword = etConfirmPassword.getText().toString().trim();
-        String role = spinnerRole.getSelectedItem().toString();
+    private void attemptRegister() {
+        // Reset errors
+        binding.tilRegisterEmail.setError(null);
+        binding.tilRegisterPassword.setError(null);
+        binding.tilRegisterConfirmPassword.setError(null);
 
-        // 1. 检查输入是否为空
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(this, "请填写所有字段", Toast.LENGTH_SHORT).show();
-            return;
+        String email = binding.etRegisterEmail.getText().toString().trim();
+        String password = binding.etRegisterPassword.getText().toString().trim();
+        String confirmPassword = binding.etRegisterConfirmPassword.getText().toString().trim();
+
+        boolean cancel = false;
+        android.view.View focusView = null;
+
+        // Task: Form validation - Level 2
+        // Description: Validate password and confirm password.
+        if (TextUtils.isEmpty(password)) {
+            binding.tilRegisterPassword.setError("Password cannot be empty");
+            focusView = binding.etRegisterPassword;
+            cancel = true;
+        } else if (password.length() < 6) {
+            binding.tilRegisterPassword.setError("Password must be at least 6 characters");
+            focusView = binding.etRegisterPassword;
+            cancel = true;
+        } else if (TextUtils.isEmpty(confirmPassword)) {
+            binding.tilRegisterConfirmPassword.setError("Please confirm password");
+            focusView = binding.etRegisterConfirmPassword;
+            cancel = true;
+        } else if (!password.equals(confirmPassword)) {
+            binding.tilRegisterConfirmPassword.setError("Passwords do not match");
+            focusView = binding.etRegisterConfirmPassword;
+            cancel = true;
         }
 
-        // 2. 检查两次输入的密码是否一致
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "两次输入的密码不一致", Toast.LENGTH_SHORT).show();
-            return;
+
+        // Task: Form validation - Level 2
+        // Description: Validate email format.
+        if (TextUtils.isEmpty(email)) {
+            binding.tilRegisterEmail.setError("Email cannot be empty");
+            focusView = binding.etRegisterEmail;
+            cancel = true;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.tilRegisterEmail.setError("Please enter a valid email address");
+            focusView = binding.etRegisterEmail;
+            cancel = true;
         }
 
-        // 3. 检查用户名是否已存在
-        User existingUser = dbHelper.getUserByUsername(username);
-        if (existingUser != null) {
-            Toast.makeText(this, "该用户名已被注册", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // 4. 创建新用户并添加到数据库
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPassword(password); // 注意：实际项目中密码需要加密存储
-        newUser.setRole(role);
-
-        long result = dbHelper.addUser(newUser);
-
-        if (result != -1) {
-            Toast.makeText(this, "注册成功！", Toast.LENGTH_SHORT).show();
-            finish(); // 注册成功后关闭当前页面，返回登录页
+        if (cancel) {
+            if (focusView != null) {
+                focusView.requestFocus();
+            }
         } else {
-            Toast.makeText(this, "注册失败，请稍后再试", Toast.LENGTH_SHORT).show();
+            // TODO: In a real app, call backend API or database to create a new user
+            // Here we simulate successful registration and auto-login
+            performRegistration(email,password);
         }
     }
+    private void performRegistration(String email,String password) {
+        // Save login state and user info
+        sharedPreferences.edit()
+                .putBoolean(Constants.KEY_LOGGED_IN, true)
+                .putString(Constants.KEY_EMAIL, email)
+                .putString(Constants.PASSWORD, password)
+                .apply();
+
+        Toast.makeText(this, "Registration successful and logged in!", Toast.LENGTH_SHORT).show();
+        // Close registration page and return to previous page
+        finish();
+    }
+
 }

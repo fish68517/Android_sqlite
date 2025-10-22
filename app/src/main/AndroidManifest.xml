@@ -35,11 +35,25 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
-            <intent-filter>
+          <!--  <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+              <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+        android:name=".activity.RegisterActivity"
+        android:exported="false"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"/>
 
         <!-- 任务: 详细信息屏幕 - 级别 2 -->
         <activity

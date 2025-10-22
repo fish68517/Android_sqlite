@@ -45,21 +45,21 @@
         android:id="@+id/btn_biometric_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="使用生物识别登录"
+        android:text="Biometric Login"
         tools:visibility="visible" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="登录/注册" />
+        android:text="Login" />
 
     <Button
         android:id="@+id/btn_logout"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="退出登录"
+        android:text="Logout"
         android:visibility="gone"
         tools:visibility="visible"/>
 
