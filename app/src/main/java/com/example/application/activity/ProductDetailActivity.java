@@ -32,7 +32,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     .into(binding.detailProductImage);
         }
 
-        binding.myToolbar.setTitle("商品详情");
+        binding.myToolbar.setTitle("Product Details");
 
         // 2. 将 Toolbar 设置为 Action Bar
         setSupportActionBar(binding.myToolbar);

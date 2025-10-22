@@ -187,7 +187,7 @@ public class ProfileFragment extends Fragment {
         binding.btnBiometricLogin.setVisibility(isBiometricAvailable() ? View.VISIBLE : View.GONE);
         boolean isLoggedIn = sharedPreferences.getBoolean(KEY_LOGGED_IN, false);
         if (isLoggedIn) {
-            binding.profileName.setText("尊贵的用户");
+            binding.profileName.setText("Dear user");
             binding.profileEmail.setText(sharedPreferences.getString(KEY_EMAIL, ""));
             binding.btnLogin.setVisibility(View.GONE);
             binding.btnLogout.setVisibility(View.VISIBLE);
@@ -201,8 +201,8 @@ public class ProfileFragment extends Fragment {
             }
 
         } else {
-            binding.profileName.setText("访客");
-            binding.profileEmail.setText("请先登录");
+            binding.profileName.setText("Guest");
+            binding.profileEmail.setText("Please log in first");
             binding.btnLogin.setVisibility(View.VISIBLE);
             binding.btnLogout.setVisibility(View.GONE);
             binding.profileImage.setImageResource(R.drawable.ic_profile);
@@ -215,12 +215,12 @@ public class ProfileFragment extends Fragment {
 
         // 2. 创建 AlertDialog.Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
-                .setTitle("登录/注册")
+                .setTitle("Login")
                 .setView(dialogBinding.getRoot())
                 // 3. 将按钮的监听器设置为 null。这是关键一步，它阻止了对话框在按钮被点击后自动关闭。
                 // 我们将手动控制对话框的关闭时机。
-                .setPositiveButton("登录", null)
-                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss());
+                .setPositiveButton("Login", null)
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         // 4. 创建并显示对话框
         AlertDialog dialog = builder.create();
@@ -251,12 +251,12 @@ public class ProfileFragment extends Fragment {
         // 任务: 对话框 (AlertDialog) - 级别 1
         // 描述: 使用AlertDialog来创建一个确认对话框，防止用户误操作退出登录。
         new AlertDialog.Builder(requireContext())
-                .setTitle("退出登录")
-                .setMessage("你确定要退出当前账号吗？")
-                .setPositiveButton("确定", (dialog, which) -> {
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout？")
+                .setPositiveButton("Confirm", (dialog, which) -> {
                     logout();
                 })
-                .setNegativeButton("取消", null)
+                .setNegativeButton("Cancel", null)
                 .show();
     }
 
@@ -298,27 +298,27 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getContext(), "认证失败: " + errString, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Authentication failed: " + errString, Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                Toast.makeText(getContext(), "认证成功!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Authentication successful!", Toast.LENGTH_SHORT).show();
                 login(sharedPreferences.getString(KEY_EMAIL, "")); // 模拟登录
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getContext(), "认证失败，请重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Authentication failed, please try again", Toast.LENGTH_SHORT).show();
             }
         });
 
         BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("生物识别登录")
-                .setSubtitle("使用你的指纹或面部来登录")
-                .setNegativeButtonText("使用账号密码登录")
+                .setTitle("Biometric Login")
+                .setSubtitle("Use your fingerprint to login")
+                .setNegativeButtonText("Login with account password")
                 .build();
 
         biometricPrompt.authenticate(promptInfo);
@@ -365,10 +365,10 @@ public class ProfileFragment extends Fragment {
         // 任务: 表单验证 - 级别 2
         // 描述: 验证邮箱格式是否正确。
         if (TextUtils.isEmpty(email)) {
-            binding.tilEmail.setError("邮箱不能为空");
+            binding.tilEmail.setError("Email cannot be empty");
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.tilEmail.setError("请输入有效的邮箱地址");
+            binding.tilEmail.setError("Please enter a valid email address");
             return false;
         } else {
             binding.tilEmail.setError(null);
@@ -380,10 +380,10 @@ public class ProfileFragment extends Fragment {
         // 任务: 表单验证 - 级别 2
         // 描述: 验证密码长度是否符合要求。
         if (TextUtils.isEmpty(password)) {
-            binding.tilPassword.setError("密码不能为空");
+            binding.tilPassword.setError("Password cannot be empty");
             return false;
         } else if (password.length() < 6) {
-            binding.tilPassword.setError("密码长度不能少于6位");
+            binding.tilPassword.setError("Password length cannot be less than 6 characters");
             return false;
         } else {
             binding.tilPassword.setError(null);
