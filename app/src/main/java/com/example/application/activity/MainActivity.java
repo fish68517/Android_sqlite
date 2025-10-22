@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity {
                 Note noteToDelete = adapter.getNoteAt(position);
                 noteViewModel.delete(noteToDelete);
 
-                Snackbar.make(binding.getRoot(), "笔记已删除", Snackbar.LENGTH_LONG)
-                        .setAction("撤销", v -> noteViewModel.insert(noteToDelete))
+                Snackbar.make(binding.getRoot(), "Note had delete", Snackbar.LENGTH_LONG)
+                        .setAction("cancel", v -> noteViewModel.insert(noteToDelete))
                         .show();
             }
         }).attachToRecyclerView(binding.recyclerViewNotes);
