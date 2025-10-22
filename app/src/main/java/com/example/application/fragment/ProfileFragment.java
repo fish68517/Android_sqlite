@@ -1,9 +1,11 @@
 package com.example.application.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,6 +53,20 @@ public class ProfileFragment extends Fragment {
     private static final String KEY_PROFILE_IMAGE_URI = "profileImageUri";
 
     private Uri cameraImageUri;
+
+    // [新增代码 1] 创建一个新的 ActivityResultLauncher 用于请求相机权限
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            isGranted -> {
+                if (isGranted) {
+                    // 如果用户授予了权限，则直接调用拍照方法
+                    dispatchTakePictureIntent();
+                } else {
+                    // 如果用户拒绝了权限，给出一个提示
+                    Toast.makeText(getContext(), "需要相机权限才能拍照", Toast.LENGTH_SHORT).show();
+                }
+            }
+    );
 
     // 任务: 使用相机/画廊 - 级别 3
     // 描述: 使用新的Activity Result API来处理从相机和图库返回的结果。
@@ -102,13 +118,26 @@ public class ProfileFragment extends Fragment {
         builder.setItems(new CharSequence[]{"拍照", "从相册选择"}, (dialog, which) -> {
             if (which == 0) {
                 // 任务: 使用相机/画廊 - 级别 3 (相机)
-                dispatchTakePictureIntent();
+                // 改为调用新的权限检查方法
+                checkCameraPermissionAndTakePhoto();
             } else {
                 // 任务: 使用相机/画廊 - 级别 3 (画廊)
                 dispatchPickImageIntent();
             }
         });
         builder.show();
+    }
+
+    private void checkCameraPermissionAndTakePhoto() {
+        // 检查应用是否已经被授予了相机权限
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            // 如果已经有权限，直接执行拍照操作
+            dispatchTakePictureIntent();
+        } else {
+            // 如果没有权限，则启动权限请求
+            // 结果将由上面定义的 requestPermissionLauncher 来处理
+            requestPermissionLauncher.launch(Manifest.permission.CAMERA);
+        }
     }
 
     private void dispatchTakePictureIntent() {
@@ -118,11 +147,11 @@ public class ProfileFragment extends Fragment {
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                Toast.makeText(getContext(), "创建文件失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "create file failed", Toast.LENGTH_SHORT).show();
             }
             if (photoFile != null) {
                 cameraImageUri = FileProvider.getUriForFile(requireContext(),
-                        "com.example.stylehub.provider",
+                        "com.example.application.provider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
                 takePictureLauncher.launch(takePictureIntent);
@@ -155,13 +184,15 @@ public class ProfileFragment extends Fragment {
 
 
     private void updateUI() {
+        binding.btnBiometricLogin.setVisibility(isBiometricAvailable() ? View.VISIBLE : View.GONE);
         boolean isLoggedIn = sharedPreferences.getBoolean(KEY_LOGGED_IN, false);
         if (isLoggedIn) {
             binding.profileName.setText("尊贵的用户");
             binding.profileEmail.setText(sharedPreferences.getString(KEY_EMAIL, ""));
             binding.btnLogin.setVisibility(View.GONE);
             binding.btnLogout.setVisibility(View.VISIBLE);
-            binding.btnBiometricLogin.setVisibility(isBiometricAvailable() ? View.VISIBLE : View.GONE);
+
+            binding.btnBiometricLogin.setVisibility(View.GONE);
             String imageUriString = sharedPreferences.getString(KEY_PROFILE_IMAGE_URI, null);
             if(imageUriString != null){
                 Glide.with(this).load(Uri.parse(imageUriString)).circleCrop().into(binding.profileImage);
@@ -174,20 +205,46 @@ public class ProfileFragment extends Fragment {
             binding.profileEmail.setText("请先登录");
             binding.btnLogin.setVisibility(View.VISIBLE);
             binding.btnLogout.setVisibility(View.GONE);
-            binding.btnBiometricLogin.setVisibility(View.GONE);
             binding.profileImage.setImageResource(R.drawable.ic_profile);
         }
     }
 
     private void showLoginDialog() {
+        // 1. 加载并绑定对话框的视图
         DialogLoginBinding dialogBinding = DialogLoginBinding.inflate(getLayoutInflater());
-        new AlertDialog.Builder(requireContext())
+
+        // 2. 创建 AlertDialog.Builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext())
                 .setTitle("登录/注册")
                 .setView(dialogBinding.getRoot())
-                .setPositiveButton("登录", null) // Set to null to override
-                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss())
-                .create()
-                .show();
+                // 3. 将按钮的监听器设置为 null。这是关键一步，它阻止了对话框在按钮被点击后自动关闭。
+                // 我们将手动控制对话框的关闭时机。
+                .setPositiveButton("登录", null)
+                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss());
+
+        // 4. 创建并显示对话框
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // 5. 在对话框显示后，获取其“确定”按钮
+        Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+
+        // 6. 为“确定”按钮设置我们自定义的点击监听器
+        positiveButton.setOnClickListener(v -> {
+            String email = dialogBinding.etEmail.getText().toString().trim();
+            String password = dialogBinding.etPassword.getText().toString().trim();
+
+            // 7. 进行表单验证
+            boolean isEmailValid = validateEmail(dialogBinding, email);
+            boolean isPasswordValid = validatePassword(dialogBinding, password);
+
+            // 8. 只有当邮箱和密码都通过验证时，才执行登录操作并关闭对话框
+            if (isEmailValid && isPasswordValid) {
+                login(email);
+                dialog.dismiss(); // 手动关闭对话框
+            }
+            // 如果验证失败，我们什么都不做，对话框会保持显示，用户可以修正输入
+        });
     }
 
     private void showLogoutDialog() {
@@ -216,11 +273,23 @@ public class ProfileFragment extends Fragment {
         updateUI();
     }
 
+    /**
+     * 设备必须有生物识别硬件：手机必须物理上配备了指纹传感器或用于面部识别的摄像头等硬件。
+     * 用户必须在系统设置中启用了生物识别功能：硬件存在还不够，用户必须在手机的“设置” -> “安全”菜单中开启了指纹/面部解锁功能。
+     * 用户必须至少注册了一个生物特征：用户必须已经在系统中录入了至少一个指纹或他/她的面部数据。如果用户只是开启了功能但从未录入过信息，那么认证也是不可用的。
+     *
+     * BIOMETRIC_ERROR_NO_HARDWARE: 设备上没有任何生物识别硬件。
+     * BIOMETRIC_ERROR_HW_UNAVAILABLE: 硬件存在，但当前不可用（可能正在被其他应用占用，或者临时出了问题）。
+     * BIOMETRIC_ERROR_NONE_ENROLLED: 设备有硬件，但用户没有录入任何指纹或面部数据。这是最常见的原因之一。
+     * @return
+     */
     private boolean isBiometricAvailable() {
+        // 1. 获取生物识别管理器实例
         BiometricManager biometricManager = BiometricManager.from(requireContext());
+
+        // 2. 检查设备是否可以进行指定类型的生物识别认证
         return biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.BIOMETRIC_WEAK) == BiometricManager.BIOMETRIC_SUCCESS;
     }
-
     private void showBiometricPrompt() {
         // 任务: 生物识别 (Biometrics) - 级别 3
         // 描述: 这里是生物识别功能的完整实现流程。
@@ -255,7 +324,7 @@ public class ProfileFragment extends Fragment {
         biometricPrompt.authenticate(promptInfo);
     }
 
-    @Override
+/*    @Override
     public void onStart() {
         super.onStart();
         // Override the positive button click listener after the dialog is shown.
@@ -277,7 +346,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
         }
-    }
+    }*/
 
     private AlertDialog getDialog() {
         if (getActivity() != null) {

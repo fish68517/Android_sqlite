@@ -1,7 +1,7 @@
 
     <resources>
-        <string name="app_name">潮品汇 (Style Hub)</string>
-        <string name="title_home">首页</string>
-        <string name="title_search">搜索</string>
-        <string name="title_profile">我的</string>
+        <string name="app_name">FashionMall (Style Hub)</string>
+        <string name="title_home">Home</string>
+        <string name="title_search">Search</string>
+        <string name="title_profile">Mine</string>
     </resources>

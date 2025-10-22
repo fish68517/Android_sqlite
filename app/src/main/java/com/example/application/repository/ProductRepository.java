@@ -42,14 +42,14 @@ public class ProductRepository {
     // 模拟网络数据
     private List<Product> getMockProducts() {
         List<Product> products = new ArrayList<>();
-        products.add(new Product(1, "复古跑鞋", "舒适透气的复古设计跑鞋", 499.0, "https://placehold.co/600x400/E2E2E2/000?text=跑鞋"));
-        products.add(new Product(2, "简约帆布包", "大容量，适合日常通勤", 189.0, "https://placehold.co/600x400/E2E2E2/000?text=帆布包"));
-        products.add(new Product(3, "飞行员夹克", "经典款式，防风保暖", 799.0, "https://placehold.co/600x400/E2E2E2/000?text=夹克"));
-        products.add(new Product(4, "纯棉T恤", "柔软亲肤，百搭基础款", 99.0, "https://placehold.co/600x400/E2E2E2/000?text=T恤"));
-        products.add(new Product(5, "智能手表", "健康监测，时尚外观", 1299.0, "https://placehold.co/600x400/E2E2E2/000?text=手表"));
-        products.add(new Product(6, "牛仔裤", "修身剪裁，弹力舒适", 399.0, "https://placehold.co/600x400/E2E2E2/000?text=牛仔裤"));
-        products.add(new Product(7, "太阳镜", "UV400防护，潮流必备", 259.0, "https://placehold.co/600x400/E2E2E2/000?text=太阳镜"));
-        products.add(new Product(8, "针织帽", "保暖有型，秋冬搭配利器", 79.0, "https://placehold.co/600x400/E2E2E2/000?text=针织帽"));
+        products.add(new Product(1, "Retro Running Shoes", "Comfortable and breathable retro design running shoes.", 89.99, "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80"));
+        //products.add(new Product(2, "Simple Canvas Bag", "Large capacity, suitable for daily commuting.", 29.99, "https://images.unsplash.com/photo-1591561939836-54dd3e2715b7?w=600&q=80"));
+        //products.add(new Product(3, "Aviator Jacket", "Classic style, windproof and warm.", 129.99, "https://images.unsplash.com/photo-1576435728678-684f21142092?w=600&q=80"));
+        products.add(new Product(4, "Cotton T-Shirt", "Soft and skin-friendly, a versatile basic item.", 19.99, "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&q=80"));
+        products.add(new Product(5, "Smart Watch", "Health monitoring with a stylish look.", 249.00, "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80"));
+        //products.add(new Product(6, "Slim-fit Jeans", "Slim tailoring, stretchy and comfortable.", 59.99, "https://images.unsplash.com/photo-1602293589914-9FF0554c679c?w=600&q=80"));
+        products.add(new Product(7, "Sunglasses", "UV400 protection, a trendy must-have.", 45.50, "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&q=80"));
+        //products.add(new Product(8, "Knit Hat", "Warm and stylish, a great accessory for autumn and winter.", 15.00, "https://images.unsplash.com/photo-1575428652377-a3d80e281498?w=600&q=80"));
         return products;
     }
 }

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <external-path
-        name="my_images"
-        path="Android/data/com.example.stylehub/files/Pictures" />
+    <!--
+      - `external-files-path` 对应 Context.getExternalFilesDir() 返回的路径。
+      - `name` 是一个虚拟的路径段名，可以自定义。
+      - `path` 指定了具体的子目录。在你的 Java 代码中，你使用的是 Environment.DIRECTORY_PICTURES，
+        所以这里我们填写 "Pictures"。
+    -->
+    <external-files-path name="my_images" path="Pictures" />
 </paths>

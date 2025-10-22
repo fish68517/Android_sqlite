@@ -32,6 +32,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                     .into(binding.detailProductImage);
         }
 
+        binding.myToolbar.setTitle("商品详情");
+
+        // 2. 将 Toolbar 设置为 Action Bar
+        setSupportActionBar(binding.myToolbar);
         // 添加返回按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

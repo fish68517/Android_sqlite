@@ -2,6 +2,7 @@ package com.example.application.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +75,7 @@ public class ProductAdapter extends ListAdapter<Product, ProductAdapter.ProductV
 
             // 任务: 带图片的列表 (RecyclerView with Glide) - 级别 2
             // 描述: 使用Glide库从URL加载图片并显示在ImageView中。
+            Log.d("ProductAdapter", "Binding product: " + product.getImageUrl());
             Glide.with(itemView.getContext())
                     .load(product.getImageUrl())
                     .into(binding.productImage);
