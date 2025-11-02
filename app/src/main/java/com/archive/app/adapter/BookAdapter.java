@@ -1,6 +1,9 @@
 package com.archive.app.adapter;
 
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,24 +61,39 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.tvPublishDate.setText(String.format("出版日期: %s", book.getPublishDate()));
         holder.tvDescription.setText(book.getDescription() != null && !book.getDescription().isEmpty() ? book.getDescription() : "暂无简介");
 
+
+
+
         // 加载封面图片
-        String coverImageName = book.getCoverImage();
-        if (coverImageName != null && !coverImageName.isEmpty()) {
-            // 确保图片名称不包含扩展名，并且是有效的Drawable资源名
-            // 例如：如果数据库存的是 "my_image.png"，这里应该处理成 "my_image"
-            String drawableName = coverImageName.contains(".") ? coverImageName.substring(0, coverImageName.lastIndexOf('.')) : coverImageName;
-            int imageResId = context.getResources().getIdentifier(drawableName.toLowerCase(), "drawable", context.getPackageName());
-            if (imageResId != 0) {
-                holder.ivCover.setImageResource(imageResId);
+        // --- 2. 修改后的图片加载逻辑 ---
+        String coverImageString = book.getCoverImage();
+        if (!TextUtils.isEmpty(coverImageString)) {
+            // 判断是 URI 还是 drawable 资源名
+            if (coverImageString.startsWith("content://") || coverImageString.startsWith("file://")) {
+                // 这是新的 URI 路径
+                try {
+                    Uri imageUri = Uri.parse(coverImageString);
+                    holder.ivCover.setImageURI(imageUri);
+                } catch (Exception e) {
+                    // 如果URI解析或加载失败（例如文件已被删除），显示默认图片
+                    Log.e("BookAdapter", "加载图片URI失败: " + coverImageString, e);
+                    holder.ivCover.setImageResource(R.drawable.default_book_icon);
+                }
             } else {
-                // 如果特定图片未找到，使用默认图片
-                holder.ivCover.setImageResource(R.drawable.default_book_icon);
+                // 这是旧的 drawable 资源名 (为了兼容旧数据)
+                int imageResId = context.getResources().getIdentifier(
+                        coverImageString.toLowerCase(), "drawable", context.getPackageName());
+                if (imageResId != 0) {
+                    holder.ivCover.setImageResource(imageResId);
+                } else {
+                    holder.ivCover.setImageResource(R.drawable.default_book_icon);
+                }
             }
         } else {
             // 如果没有图片信息，使用默认图片
             holder.ivCover.setImageResource(R.drawable.default_book_icon);
         }
-
+        // --- 图片加载逻辑修改结束 ---
         // 设置按钮的点击监听
         holder.btnView.setOnClickListener(v -> {
             if (listener != null) {

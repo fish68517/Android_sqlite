@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- 其他输入框保持不变 -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +63,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="分类*" 
+                android:text="分类*"
                 android:textSize="12sp"/>
             <Spinner
                 android:id="@+id/spinner_book_category"
@@ -80,25 +81,57 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="出版日期 (YYYY-MM-DD)"
-                    android:inputType="date" />
-                <!-- 提示: 点击此框可以使用 DatePickerDialog 优化日期选择 -->
+                    android:focusable="false"
+                    android:clickable="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+
+            <!-- ** 新增/修改的封面部分 ** -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="书籍封面"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"/>
+
+            <ImageView
+                android:id="@+id/iv_cover_preview"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:background="@android:color/darker_gray"
+                android:src="@drawable/default_book_icon"
+                android:contentDescription="书籍封面预览"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_book_cover_image"
-                    android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_take_photo"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="封面图片名称 (例如: java_cover)" />
-                 <!-- 用户输入 drawable 目录下不带扩展名的文件名 -->
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:text="拍照"
+                    android:layout_marginEnd="16dp"/>
+
+                <Button
+                    android:id="@+id/btn_choose_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="从相册选择"/>
+            </LinearLayout>
+            <!-- ** 封面部分结束 ** -->
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_book_description"
@@ -118,4 +151,4 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout> 
+</LinearLayout>

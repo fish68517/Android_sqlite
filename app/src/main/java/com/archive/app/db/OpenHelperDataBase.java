@@ -757,4 +757,77 @@ public class OpenHelperDataBase extends SQLiteOpenHelper {
 
         return categoryCounts;
     }
+
+    // loadedBooks = dbHelper.searchBooks(query);
+    // 在 OpenHelperDataBase.java 中使用这个正确的方法
+
+    /**
+     * 根据关键字搜索书籍 (标题、作者或分类名)
+     * @param query 搜索关键字
+     * @return 匹配的书籍列表
+     */
+    public List<Book> searchBooks(String query) {
+        List<Book> books = new ArrayList<>();
+        // 1. 处理边缘情况：如果搜索词为空，返回所有书籍
+        if (query == null || query.trim().isEmpty()) {
+            return getAllBooks();
+        }
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        // 2. 正确的SQL查询：使用 LEFT JOIN 连接分类表，以便能搜索分类名
+        String searchQuery = "SELECT b.*, c." + COLUMN_CATEGORY_NAME + " AS category_name FROM " + TABLE_BOOK + " b LEFT JOIN " +
+                TABLE_CATEGORY + " c ON b." + COLUMN_BOOK_CATEGORY_ID + " = c." + COLUMN_CATEGORY_ID +
+                " WHERE b." + COLUMN_BOOK_TITLE + " LIKE ? OR b." + COLUMN_BOOK_AUTHOR + " LIKE ? OR c." + COLUMN_CATEGORY_NAME + " LIKE ?" + // 按标题、作者、分类名搜索
+                " ORDER BY b." + COLUMN_BOOK_TITLE + " ASC";
+
+        // 3. 为 LIKE 子句准备带通配符的参数
+        String searchPattern = "%" + query + "%";
+
+        try {
+            // 4. 使用参数绑定执行查询，防止SQL注入
+            cursor = db.rawQuery(searchQuery, new String[]{searchPattern, searchPattern, searchPattern});
+
+            // 5. 正确的循环逻辑
+            if (cursor.moveToFirst()) {
+                do {
+                    // 5a. 在循环【内部】创建新的Book对象
+                    Book book = new Book();
+
+                    // 5b. 从Cursor中读取每一列的数据，并设置到Book对象中
+                    book.setId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOK_ID)));
+                    book.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_TITLE)));
+                    book.setAuthor(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_AUTHOR)));
+                    book.setIsbn(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_ISBN)));
+                    book.setCoverImage(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_COVER_IMAGE)));
+                    book.setDescription(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_DESCRIPTION)));
+                    book.setPublishDate(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_PUBLISH_DATE)));
+                    book.setCategoryId(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CATEGORY_ID)));
+                    book.setCreateTime(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_CREATE_TIME)));
+
+                    int categoryNameColumnIndex = cursor.getColumnIndex("category_name");
+                    if (categoryNameColumnIndex != -1 && !cursor.isNull(categoryNameColumnIndex)) {
+                        book.setCategoryName(cursor.getString(categoryNameColumnIndex));
+                    } else {
+                        book.setCategoryName("未分类");
+                    }
+
+                    // 5c. 将【填充好数据】的Book对象添加到列表中
+                    books.add(book);
+
+                } while (cursor.moveToNext());
+            }
+            Log.i(TAG, "搜索 '" + query + "' 找到 " + books.size() + " 本书");
+        } catch (Exception e) {
+            Log.e(TAG, "searchBooks: 搜索图书时发生错误", e);
+        } finally {
+            // 6. 在 finally 块中确保资源被关闭
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+        return books;
+    }
+
 } 

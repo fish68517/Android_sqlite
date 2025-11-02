@@ -9,6 +9,15 @@
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+    <!-- 1. 声明相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- 2. (可选但推荐) 声明应用需要相机硬件。
+         android:required="false" 表示即使设备没有相机，应用也能安装，
+         这对于您的应用是合适的情况，因为相机只是一个可选功能。 -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -47,6 +56,16 @@
 
 
 
+        <!-- 声明 FileProvider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
 
 

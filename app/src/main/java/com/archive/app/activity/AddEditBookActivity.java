@@ -1,9 +1,13 @@
 package com.archive.app.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,12 +15,18 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import com.archive.app.db.OpenHelperDataBase;
 import com.archive.app.model.Book;
@@ -24,9 +34,12 @@ import com.archive.app.model.Category;
 import com.example.myapplication.R; // 根据其他文件，R文件在此包下
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -38,15 +51,23 @@ public class AddEditBookActivity extends AppCompatActivity {
     public static final String EXTRA_BOOK = "extra_book_to_edit"; // Intent中传递Book对象的键
     private static final String TAG = "AddEditBookActivity";
 
-    private TextInputEditText etTitle, etAuthor, etIsbn, etPublishDate, etCoverImage, etDescription;
+    private TextInputEditText etTitle, etAuthor, etIsbn, etPublishDate, etDescription;
     private Spinner spinnerCategory;
-    private Button btnSave;
+    private ImageView ivCoverPreview;
+    private Button btnSave, btnTakePhoto, btnChooseGallery;
     private Toolbar toolbar;
 
     private OpenHelperDataBase dbHelper;
     private Book currentBook; // 当前正在编辑的书籍对象，如果为null则为添加模式
     private List<Category> categoryList; // 分类列表
     private final Calendar calendar = Calendar.getInstance(); // 用于日期选择器
+
+    private Uri currentImageUri = null; // 用于存储当前封面图片的URI
+
+    // 新的 ActivityResultLauncher
+    private ActivityResultLauncher<String> requestCameraPermissionLauncher;
+    private ActivityResultLauncher<Uri> takePictureLauncher;
+    private ActivityResultLauncher<PickVisualMediaRequest> pickMediaLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +84,19 @@ public class AddEditBookActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        initializeLaunchers(); // 初始化 Launchers
+
         // 初始化视图组件
         etTitle = findViewById(R.id.et_book_title);
         etAuthor = findViewById(R.id.et_book_author);
         etIsbn = findViewById(R.id.et_book_isbn);
         spinnerCategory = findViewById(R.id.spinner_book_category);
         etPublishDate = findViewById(R.id.et_book_publish_date);
-        etCoverImage = findViewById(R.id.et_book_cover_image);
+
+        btnTakePhoto = findViewById(R.id.btn_take_photo);
+        btnChooseGallery = findViewById(R.id.btn_choose_gallery);
+        ivCoverPreview = findViewById(R.id.iv_cover_preview);
+
         etDescription = findViewById(R.id.et_book_description);
         btnSave = findViewById(R.id.btn_save_book);
 
@@ -90,12 +117,127 @@ public class AddEditBookActivity extends AppCompatActivity {
             }
             Log.d(TAG, "进入添加模式");
         }
+        setupClickListeners();
+    }
 
-        // 出版日期 EditText 点击事件，弹出日期选择器
+    /**
+     * 设置点击事件监听
+     */
+    private void setupClickListeners() {
         etPublishDate.setOnClickListener(v -> showDatePickerDialog());
-
-        // 保存按钮点击事件
         btnSave.setOnClickListener(v -> saveBookData());
+        btnTakePhoto.setOnClickListener(v -> checkCameraPermissionAndLaunch());
+        btnChooseGallery.setOnClickListener(v -> {
+            // 启动系统的照片选择器
+            pickMediaLauncher.launch(new PickVisualMediaRequest.Builder()
+                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                    .build());
+        });
+    }
+
+    /**
+     * 检查相机权限并启动相机
+     */
+    private void checkCameraPermissionAndLaunch() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            // 已有权限，直接启动相机
+            launchCamera();
+        } else {
+            // 请求权限
+            requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA);
+        }
+    }
+
+    /**
+     * 启动相机应用
+     */
+    private void launchCamera() {
+        File imageFile = null;
+        try {
+            imageFile = createImageFile();
+        } catch (IOException ex) {
+            Log.e(TAG, "创建图片文件失败", ex);
+            Toast.makeText(this, "创建图片文件失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (imageFile != null) {
+            // 从文件创建 content URI
+            Uri photoURI = FileProvider.getUriForFile(this,
+                    getApplicationContext().getPackageName() + ".provider",
+                    imageFile);
+            currentImageUri = photoURI;
+            // 启动相机
+            takePictureLauncher.launch(currentImageUri);
+        }
+    }
+
+    /**
+     * 创建用于存储相机照片的临时文件
+     * @return 创建的文件
+     * @throws IOException
+     */
+    private File createImageFile() throws IOException {
+        // 创建一个唯一的文件名
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        return image;
+    }
+
+    /**
+     * 初始化所有 ActivityResultLauncher
+     */
+    private void initializeLaunchers() {
+        // 1. 注册权限请求回调
+        requestCameraPermissionLauncher = registerForActivityResult(
+                new ActivityResultContracts.RequestPermission(),
+                isGranted -> {
+                    if (isGranted) {
+                        // 权限被授予，启动相机
+                        launchCamera();
+                    } else {
+                        // 权限被拒绝，提示用户
+                        Toast.makeText(this, "相机权限被拒绝，无法拍照", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // 2. 注册拍照结果回调
+        takePictureLauncher = registerForActivityResult(
+                new ActivityResultContracts.TakePicture(),
+                success -> {
+                    if (success) {
+                        // 拍照成功，currentImageUri 已指向图片
+                        ivCoverPreview.setImageURI(currentImageUri);
+                        Log.d(TAG, "拍照成功，URI: " + currentImageUri);
+                    } else {
+                        // 用户取消了拍照或拍照失败
+                        Log.d(TAG, "拍照操作被取消或失败");
+                        currentImageUri = null; // 重置URI
+                    }
+                });
+
+        // 3. 注册相册选择结果回调
+        pickMediaLauncher = registerForActivityResult(
+                new ActivityResultContracts.PickVisualMedia(),
+                uri -> {
+                    if (uri != null) {
+                        // 图片选择成功
+                        Log.d(TAG, "从相册选择的URI: " + uri);
+                        // 申请对URI的持久访问权限
+                        getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        currentImageUri = uri;
+                        ivCoverPreview.setImageURI(currentImageUri);
+                    } else {
+                        // 用户没有选择任何图片
+                        Log.d(TAG, "没有从相册选择图片");
+                    }
+                });
     }
 
     /**
@@ -123,7 +265,7 @@ public class AddEditBookActivity extends AppCompatActivity {
             etAuthor.setText(currentBook.getAuthor());
             etIsbn.setText(currentBook.getIsbn());
             etPublishDate.setText(currentBook.getPublishDate());
-            etCoverImage.setText(currentBook.getCoverImage());
+            // etCoverImage.setText(currentBook.getCoverImage());
             etDescription.setText(currentBook.getDescription());
 
             // 设置Spinner选中项
@@ -182,7 +324,7 @@ public class AddEditBookActivity extends AppCompatActivity {
         String author = etAuthor.getText().toString().trim();
         String isbn = etIsbn.getText().toString().trim();
         String publishDateStr = etPublishDate.getText().toString().trim();
-        String coverImageName = etCoverImage.getText().toString().trim();
+        // String coverImageName = etCoverImage.getText().toString().trim();
         String description = etDescription.getText().toString().trim();
 
         // 基本校验
@@ -212,10 +354,21 @@ public class AddEditBookActivity extends AppCompatActivity {
         book.setAuthor(author);
         book.setIsbn(isbn);
         book.setPublishDate(publishDateStr);
-        book.setCoverImage(coverImageName.toLowerCase().replace(".png", "").replace(".jpg", "")); // 简单处理图片名
+        // book.setCoverImage(coverImageName.toLowerCase().replace(".png", "").replace(".jpg", "")); // 简单处理图片名
         book.setDescription(description);
         book.setCategoryId(categoryId);
         book.setCategoryName(categoryName); // 虽然数据库不直接存，但Book对象中可以有
+
+        // ** 保存封面图片路径 **
+        if (currentImageUri != null) {
+            book.setCoverImage(currentImageUri.toString());
+        } else if (currentBook != null && !TextUtils.isEmpty(currentBook.getCoverImage())) {
+            // 编辑模式下，如果用户没有选择新图片，则保留旧图片
+            book.setCoverImage(currentBook.getCoverImage());
+        } else {
+            // 添加模式下没有选择图片，或编辑模式下删除了图片
+            book.setCoverImage(""); // 存空字符串
+        }
 
         boolean successOperation;
         String successMessage;
