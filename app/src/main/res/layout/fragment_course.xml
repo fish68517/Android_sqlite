@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F2F2">
+
+    <!-- 1. 新增：页面标题 -->
+    <TextView
+        android:id="@+id/tv_page_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:text="课程管理"
+        android:textColor="#333333"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:elevation="4dp" />
+    <!-- elevation用于增加阴影，更有层次感 -->
+
+    <!-- 2. 修改：课程列表 -->
+    <!-- 关键点：增加了 android:layout_below="@id/tv_page_title" -->
+    <ListView
+        android:id="@+id/list_view_course"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_page_title"
+
+        android:divider="#E0E0E0"
+        android:dividerHeight="1dp"
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
+    <!-- 空列表提示 -->
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="暂无课程，请点击右下角添加"
+        android:textColor="#999999"
+        android:visibility="gone"/>
+
+    <!-- 添加按钮 -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="#2196F3"
+        app:tint="#FFFFFF"
+        android:contentDescription="添加课程"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp" />
+
+</RelativeLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FAFAFA">
+
+    <!-- 页面标题 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加新课程"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:layout_marginBottom="32dp" />
+
+    <!-- 课程名称输入框 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="课程名称"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入课程名称 (如: Java程序设计)"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 上课时间输入框 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上课时间"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/et_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入时间 (如: 周一 1-2节)"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="16dp" />
+
+    <!-- 上课地点输入框 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上课地点"
+        android:textSize="14sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/et_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入地点 (如: 教学楼 301)"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="32dp" />
+
+    <!-- 保存按钮 -->
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="保存课程"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="12dp"
+        android:backgroundTint="#2196F3"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_course"
         android:icon="@android:drawable/ic_menu_compass"
-        android:title="首页"/>
+        android:title="课程"/>
     <item
-        android:id="@+id/nav_books"
+        android:id="@+id/nav_homework"
         android:icon="@android:drawable/ic_menu_agenda"
-        android:title="图书"/>
+        android:title="作业"/>
     <item
-        android:id="@+id/nav_categories"
+        android:id="@+id/nav_exam"
         android:icon="@android:drawable/ic_menu_mapmode"
-        android:title="分类"/>
+        android:title="考试"/>
     <item
         android:id="@+id/nav_profile"
+        android:visible="false"
         android:icon="@android:drawable/ic_menu_myplaces"
         android:title="我的"/>
 </menu> 

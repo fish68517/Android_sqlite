@@ -24,6 +24,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "goodbook"
+rootProject.name = "课程管理项目"
 include(":app")
  
