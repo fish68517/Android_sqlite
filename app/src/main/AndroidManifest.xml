@@ -23,7 +23,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="Android项目"
+        android:label="goodbook"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:name="com.archive.app.MyApplication"
         android:supportsRtl="true"
