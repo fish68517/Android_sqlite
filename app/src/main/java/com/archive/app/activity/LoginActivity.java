@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.archive.app.MyApplication;
 import com.archive.app.db.OpenHelperDataBase;
-import com.archive.app.model.User;
 import com.example.myapplication.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "账号和密码不能为空", Toast.LENGTH_SHORT).show();
                 return;
             }
-            User user = dbHelper.loginUser(username, password, role);
+    /*        User user = dbHelper.loginUser(username, password, role);
             if (user != null) {
                 Log.i(TAG, "登录成功: " + username + "，角色: " + role);
                 Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
@@ -67,8 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                 savePreferences(username, password, role, selectedRoleId, cbRememberPassword.isChecked());
 
                 // 跳转到主页面
-                MyApplication.setUser(user);
-                startActivity(new Intent(this, AdminMainActivity.class));
+               *//* MyApplication.setUser(user);
+                startActivity(new Intent(this, AdminMainActivity.class));*//*
                 finish();
             } else {
                 Log.w(TAG, "登录失败: " + username + "，角色: " + role);
@@ -77,11 +76,11 @@ public class LoginActivity extends AppCompatActivity {
                 // 处理记住密码逻辑
                 savePreferences(username, password, role, selectedRoleId, cbRememberPassword.isChecked());
 
-                // 跳转到主页面
+              *//*  // 跳转到主页面
                 MyApplication.setUser(user);
-                startActivity(new Intent(this, AdminMainActivity.class));
+                startActivity(new Intent(this, AdminMainActivity.class));*//*
                 finish();
-            }
+            }*/
         });
 
         btnToRegister.setOnClickListener(v -> {

@@ -7,10 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.archive.app.model.User;
-import com.archive.app.model.Book;
-import com.archive.app.model.Category;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
