@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.myapplication.app.fragment.CourseFragment;
 import com.myapplication.app.fragment.ExamFragment;
 import com.myapplication.app.fragment.HomeworkFragment;
+import com.myapplication.app.fragment.MediaFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new HomeworkFragment();
                     } else if (itemId == R.id.nav_exam) {
                         selectedFragment = new ExamFragment();
+                    } else {
+                        selectedFragment = new MediaFragment();
                     }
 
                     if (selectedFragment != null) {

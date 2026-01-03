@@ -21,12 +21,17 @@
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
 
+    <!-- 必须：前台服务权限 (Android 9+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" /> <!-- Android 14+ 建议 -->
+
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="goodbook"
+        android:label="课程管理系统"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:name="com.myapplication.app.MyApplication"
         android:supportsRtl="true"
@@ -42,6 +47,12 @@
         <activity android:name="com.myapplication.app.activity.AddCourseActivity" />
         <activity android:name="com.myapplication.app.activity.AddHomeworkActivity" />
         <activity android:name="com.myapplication.app.activity.AddExamActivity" />
+
+        <activity android:name="com.myapplication.app.activity.AddMediaActivity"/>
+
+        <service android:name="com.myapplication.app.MusicService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true"/>
 
         <activity android:name="com.myapplication.app.activity.LoginActivity"
             android:exported="true">

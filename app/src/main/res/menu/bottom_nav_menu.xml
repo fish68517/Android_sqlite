@@ -14,7 +14,7 @@
         android:title="考试"/>
     <item
         android:id="@+id/nav_profile"
-        android:visible="false"
+
         android:icon="@android:drawable/ic_menu_myplaces"
-        android:title="我的"/>
+        android:title="音频管理"/>
 </menu> 

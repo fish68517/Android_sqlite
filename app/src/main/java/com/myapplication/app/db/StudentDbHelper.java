@@ -38,6 +38,17 @@ public class StudentDbHelper extends SQLiteOpenHelper {
     public static final String COL_USER_NAME = "username";
     public static final String COL_USER_PASS = "password";
 
+
+
+
+    // 1. 新增表名和字段
+    public static final String TABLE_MEDIA = "media";
+    public static final String COL_MEDIA_NAME = "name";
+    public static final String COL_MEDIA_PATH = "path"; // 存 assets 下的文件名
+    public static final String COL_MEDIA_AUTHOR = "author";
+
+
+
     public StudentDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -74,6 +85,16 @@ public class StudentDbHelper extends SQLiteOpenHelper {
         return result != -1;
     }
 
+    // 3. 辅助方法：添加音频 (用于 MediaFragment 调用)
+    public void addMedia(String name, String path, String author) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_MEDIA_NAME, name);
+        values.put(COL_MEDIA_PATH, path);
+        values.put(COL_MEDIA_AUTHOR, author);
+        db.insert(TABLE_MEDIA, null, values);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         // 1. 创建用户表
@@ -82,6 +103,14 @@ public class StudentDbHelper extends SQLiteOpenHelper {
                 COL_USER_NAME + " TEXT, " +
                 COL_USER_PASS + " TEXT)";
         db.execSQL(createUserTable);
+
+        // 2. 创建音频表
+        String createMediaTable = "CREATE TABLE " + TABLE_MEDIA + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_MEDIA_NAME + " TEXT, " +
+                COL_MEDIA_PATH + " TEXT, " +
+                COL_MEDIA_AUTHOR + " TEXT)";
+        db.execSQL(createMediaTable);
 
         // 2. 创建课程表
         String createCourseTable = "CREATE TABLE " + TABLE_COURSE + " (" +
