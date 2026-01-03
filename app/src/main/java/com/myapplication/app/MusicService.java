@@ -78,6 +78,12 @@ public class MusicService extends Service {
                 String title = intent.getStringExtra("title");
                 String author = intent.getStringExtra("author");
                 playMusic(assetPath, title, author);
+            } else if (ACTION_PAUSE.equals(intent.getAction())) {
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause();
+                    isPaused = true;
+                    showNotification(true); // 显示“暂停状态”的图标
+                }
             }
         }
         return START_NOT_STICKY;
