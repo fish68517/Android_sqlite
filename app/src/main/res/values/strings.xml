@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HealthDietApp</string>
+
+    <!-- Login Activity -->
+    <string name="login_title">登录</string>
+    <string name="username_hint">用户名</string>
+    <string name="password_hint">密码</string>
+    <string name="login_button">登录</string>
+    <string name="register_link">没有账户？立即注册</string>
+
+    <!-- Register Activity -->
+    <string name="register_title">注册</string>
+    <string name="confirm_password_hint">确认密码</string>
+    <string name="register_button">注册</string>
+    <string name="login_link">已有账户？立即登录</string>
+
+    <!-- Preferences Setup Activity -->
+    <string name="preferences_title">设置偏好</string>
+    <string name="taste_tendency_label">口味倾向</string>
+    <string name="diet_type_label">饮食类型</string>
+    <string name="health_goal_label">健身目标</string>
+    <string name="save_button">保存</string>
+
+    <!-- Main Activity -->
+    <string name="home_tab">首页</string>
+    <string name="category_tab">分类</string>
+    <string name="discover_tab">发现</string>
+    <string name="profile_tab">我的</string>
+    <string name="more_tab">更多</string>
+
+    <!-- Category Fragment -->
+    <string name="search_recipes">搜索食谱</string>
+    <string name="search">搜索</string>
+    <string name="search_history">搜索历史</string>
+    <string name="clear_history">清空历史</string>
+
+    <!-- Common -->
+    <string name="error_message">出错了，请重试</string>
+    <string name="success_message">操作成功</string>
+    <string name="cancel_button">取消</string>
+    <string name="confirm_button">确认</string>
+    <string name="logout">退出登录</string>
+    <string name="loading">加载中...</string>
+    <string name="edit">编辑</string>
+    <string name="user_avatar">用户头像</string>
+    <string name="my_posts">我的发布</string>
+    <string name="my_following">我的关注</string>
+    <string name="my_collections">我的收藏</string>
+    <string name="account_management">账号管理</string>
+    <string name="feedback">意见反馈</string>
+    <string name="contact_us">联系我们</string>
+
+    <!-- Edit Profile Activity -->
+    <string name="edit_profile_title">编辑个人信息</string>
+    <string name="back">返回</string>
+    <string name="upload_avatar">上传头像</string>
+    <string name="nickname_label">昵称</string>
+    <string name="nickname_hint">请输入昵称</string>
+    <string name="username_label">用户名</string>
+
+    <!-- My Following Activity -->
+    <string name="unfollow">取消关注</string>
+    <string name="follow">关注</string>
+    <string name="author_profile">作者个人页</string>
+    <string name="posts">发布内容</string>
+
+    <!-- Account Management Activity -->
+    <string name="change_password">修改密码</string>
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="delete_account">删除账户</string>
+    <string name="delete_account_warning">删除账户后，所有数据将被永久删除，此操作无法撤销。</string>
+</resources>

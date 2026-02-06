@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_margin"
+    android:gravity="center"
+    android:background="@color/md_theme_light_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/preferences_title"
+        android:textSize="@dimen/text_size_title"
+        android:textColor="@color/md_theme_light_primary"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/screen_margin_large" />
+
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin_large">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/taste_tendency_label"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/taste_tendency_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin_large"
+        android:hint="@string/diet_type_label"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
+        app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/diet_type_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin_large"
+        android:hint="@string/health_goal_label"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
+        app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+        app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
+        app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/health_goal_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_height"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/save_button"
+        app:cornerRadius="@dimen/button_corner_radius" />
+
+</LinearLayout>

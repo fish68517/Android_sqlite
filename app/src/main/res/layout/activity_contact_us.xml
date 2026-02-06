@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_light_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_margin">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact Us"
+            android:textSize="@dimen/text_size_title"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_primary"
+            android:layout_marginBottom="@dimen/screen_margin" />
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get in touch with us through any of these channels"
+            android:textSize="@dimen/text_size_body"
+            android:textColor="@color/dark_gray"
+            android:layout_marginBottom="@dimen/screen_margin" />
+
+        <!-- Email Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_primary"
+            android:layout_marginTop="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small" />
+
+        <TextView
+            android:id="@+id/emailText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="support@healthdietapp.com"
+            android:textSize="@dimen/text_size_body"
+            android:textColor="@color/dark_gray"
+            android:layout_marginBottom="@dimen/screen_margin_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/emailButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:text="Send Email"
+            android:textSize="@dimen/text_size_body"
+            android:layout_marginBottom="@dimen/screen_margin"
+            app:cornerRadius="@dimen/button_corner_radius" />
+
+        <!-- Phone Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Phone"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_primary"
+            android:layout_marginTop="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small" />
+
+        <TextView
+            android:id="@+id/phoneText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+1-800-123-4567"
+            android:textSize="@dimen/text_size_body"
+            android:textColor="@color/dark_gray"
+            android:layout_marginBottom="@dimen/screen_margin_small" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/phoneButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:text="Call Us"
+            android:textSize="@dimen/text_size_body"
+            android:layout_marginBottom="@dimen/screen_margin"
+            app:cornerRadius="@dimen/button_corner_radius" />
+
+        <!-- Social Media Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Follow Us"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_primary"
+            android:layout_marginTop="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/screen_margin">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/facebookButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_weight="1"
+                android:text="Facebook"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginEnd="@dimen/screen_margin_small"
+                app:cornerRadius="@dimen/button_corner_radius" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/twitterButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_weight="1"
+                android:text="Twitter"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginEnd="@dimen/screen_margin_small"
+                app:cornerRadius="@dimen/button_corner_radius" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/instagramButton"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_weight="1"
+                android:text="Instagram"
+                android:textSize="@dimen/text_size_small"
+                app:cornerRadius="@dimen/button_corner_radius" />
+
+        </LinearLayout>
+
+        <!-- Additional Info -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="We're here to help! Feel free to reach out with any questions, feedback, or concerns. Our team typically responds within 24 hours."
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/dark_gray"
+            android:layout_marginTop="@dimen/screen_margin" />
+
+    </LinearLayout>
+
+</ScrollView>

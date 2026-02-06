@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolution {
+    eachArtifact {
+        goOffline false
+    }
+}
+repositories {
+    google()
+    mavenCentral()
+}
+
+rootProject.name = "HealthDietApp"
+include ':app'

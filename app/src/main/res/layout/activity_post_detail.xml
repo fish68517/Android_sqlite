@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_margin">
+
+    <!-- Post Image -->
+    <ImageView
+        android:id="@+id/postDetailImage"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="@dimen/screen_margin"
+        android:contentDescription="Post image" />
+
+    <!-- Post Title -->
+    <TextView
+        android:id="@+id/postDetailTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post Title"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_light_primary"
+        android:layout_marginBottom="@dimen/screen_margin_small" />
+
+    <!-- Post Author -->
+    <TextView
+        android:id="@+id/postDetailAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="By: Author"
+        android:textSize="@dimen/text_size_body"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="@dimen/screen_margin_small" />
+
+    <!-- Post Content -->
+    <TextView
+        android:id="@+id/postDetailContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post content..."
+        android:textSize="@dimen/text_size_body"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="@dimen/screen_margin" />
+
+    <!-- Post Likes -->
+    <TextView
+        android:id="@+id/postDetailLikes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 likes"
+        android:textSize="@dimen/text_size_body"
+        android:textColor="@android:color/darker_gray"
+        android:layout_marginBottom="@dimen/screen_margin" />
+
+    <!-- Interaction Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/screen_margin">
+
+        <Button
+            android:id="@+id/likeButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="1"
+            android:text="Like"
+            android:textSize="@dimen/text_size_body"
+            android:background="?attr/colorPrimary"
+            android:layout_marginEnd="@dimen/screen_margin_small" />
+
+        <Button
+            android:id="@+id/collectButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="1"
+            android:text="Collect"
+            android:textSize="@dimen/text_size_body"
+            android:background="?attr/colorPrimary"
+            android:layout_marginEnd="@dimen/screen_margin_small" />
+
+        <Button
+            android:id="@+id/followButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="1"
+            android:text="Follow"
+            android:textSize="@dimen/text_size_body"
+            android:background="?attr/colorSecondary" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_margin"
+    android:background="@color/md_theme_light_background">
+
+    <!-- Date Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/dateNavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/component_spacing">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/prevDateButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="&lt;"
+            android:textSize="@dimen/text_size_subtitle"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/datePickerButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/screen_margin_small"
+            android:layout_marginEnd="@dimen/screen_margin_small"
+            android:text="Today"
+            android:textSize="@dimen/text_size_body"
+            app:cornerRadius="@dimen/button_corner_radius" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nextDateButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=">"
+            android:textSize="@dimen/text_size_subtitle"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:insetLeft="0dp"
+            android:insetRight="0dp"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+    </LinearLayout>
+
+    <!-- My Recipes Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Recipes"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textColor="@color/md_theme_light_primary"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/screen_margin_small" />
+
+    <!-- Breakfast Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/breakfastCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin_small"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/elevation_small"
+        app:strokeColor="@color/md_theme_light_outline"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Breakfast"
+                android:textSize="@dimen/text_size_body"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_light_primary" />
+
+            <TextView
+                android:id="@+id/breakfastRecipeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No recipe scheduled"
+                android:textSize="@dimen/text_size_body"
+                android:textColor="@color/md_theme_light_on_surface_variant"
+                android:layout_marginTop="@dimen/screen_margin_small" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Lunch Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/lunchCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin_small"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/elevation_small"
+        app:strokeColor="@color/md_theme_light_outline"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lunch"
+                android:textSize="@dimen/text_size_body"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_light_primary" />
+
+            <TextView
+                android:id="@+id/lunchRecipeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No recipe scheduled"
+                android:textSize="@dimen/text_size_body"
+                android:textColor="@color/md_theme_light_on_surface_variant"
+                android:layout_marginTop="@dimen/screen_margin_small" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Dinner Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/dinnerCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin_small"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/elevation_small"
+        app:strokeColor="@color/md_theme_light_outline"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dinner"
+                android:textSize="@dimen/text_size_body"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_light_primary" />
+
+            <TextView
+                android:id="@+id/dinnerRecipeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No recipe scheduled"
+                android:textSize="@dimen/text_size_body"
+                android:textColor="@color/md_theme_light_on_surface_variant"
+                android:layout_marginTop="@dimen/screen_margin_small" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Daily Record Entry -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dailyRecordButton"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:text="Record Daily Health Data"
+        android:textSize="@dimen/text_size_body"
+        android:layout_marginTop="@dimen/component_spacing"
+        android:layout_marginBottom="@dimen/component_spacing"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:backgroundTint="@color/md_theme_light_secondary" />
+
+    <!-- Recommended Recipes Section Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/screen_margin_small">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Recommended Recipes"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textColor="@color/md_theme_light_primary"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/moreRecommendedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More"
+            android:textSize="@dimen/text_size_body"
+            android:paddingStart="@dimen/screen_margin"
+            android:paddingEnd="@dimen/screen_margin"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+    </LinearLayout>
+
+    <!-- Recommended Recipes RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recommendedRecipesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" />
+
+</LinearLayout>

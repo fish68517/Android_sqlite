@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 1. 将根布局从 LinearLayout 改为 CoordinatorLayout -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.BookFragment">
+
+    <!-- 我们可以使用 AppBarLayout 来更好地管理 Toolbar/SearchView -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+        android:background="?android:attr/windowBackground">
+
+        <!-- 搜索框 -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view_books"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:queryHint="按书名、作者或分类搜索..."
+            app:iconifiedByDefault="false" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <!-- 2. 主要内容区域 (列表) -->
+    <!-- app:layout_behavior 属性告诉列表，它应该在 AppBarLayout 下方滚动 -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout_books"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_books"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                tools:listitem="@layout/item_book" />
+
+            <ProgressBar
+                android:id="@+id/pb_loading_books"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_empty_books"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="书库为空，请添加书籍"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    <!-- 3. FloatingActionButton 作为 CoordinatorLayout 的直接子级 -->
+    <!-- 它现在可以浮动在其他内容之上 -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="添加新书"
+        app:tint="@android:color/white"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

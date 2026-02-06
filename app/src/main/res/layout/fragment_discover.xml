@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_margin"
+    android:background="@color/md_theme_light_background">
+
+    <!-- Post Search Bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/component_spacing">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/postSearchBar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:hint="Search posts..."
+                android:inputType="text"
+                android:textSize="@dimen/text_size_body" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/postSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height"
+            android:text="Search"
+            android:textSize="@dimen/text_size_body"
+            android:layout_marginStart="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius" />
+    </LinearLayout>
+
+    <!-- Tools Section Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tools"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textColor="@color/md_theme_light_primary"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/screen_margin_small" />
+
+    <!-- Tools Cards Container (Horizontal Scroll) -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/component_spacing"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Food Ranking Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/foodRankingCard"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="@dimen/screen_margin_small"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/elevation_small"
+                app:strokeColor="@color/md_theme_light_outline"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/screen_margin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Food Ranking"
+                        android:textSize="@dimen/text_size_body"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_light_primary"
+                        android:gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- What to Eat Today Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/whatToEatCard"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="@dimen/screen_margin_small"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/elevation_small"
+                app:strokeColor="@color/md_theme_light_outline"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/screen_margin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="What to Eat Today"
+                        android:textSize="@dimen/text_size_body"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_light_primary"
+                        android:gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Food Weight Estimation Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/foodWeightCard"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="@dimen/screen_margin_small"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/elevation_small"
+                app:strokeColor="@color/md_theme_light_outline"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/screen_margin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Food Weight"
+                        android:textSize="@dimen/text_size_body"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_light_primary"
+                        android:gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Daily Q&A Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/dailyQACard"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:layout_marginEnd="@dimen/screen_margin_small"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/elevation_small"
+                app:strokeColor="@color/md_theme_light_outline"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/screen_margin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Daily Q&A"
+                        android:textSize="@dimen/text_size_body"
+                        android:textStyle="bold"
+                        android:textColor="@color/md_theme_light_primary"
+                        android:gravity="center" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Recommended Posts Section Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/screen_margin_small">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Recommended Posts"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textColor="@color/md_theme_light_primary"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/publishPostButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Publish"
+            android:textSize="@dimen/text_size_body"
+            android:paddingStart="@dimen/screen_margin"
+            android:paddingEnd="@dimen/screen_margin"
+            app:cornerRadius="@dimen/button_corner_radius"
+            app:backgroundTint="@color/md_theme_light_secondary" />
+    </LinearLayout>
+
+    <!-- Recommended Posts RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recommendedPostsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" />
+
+</LinearLayout>

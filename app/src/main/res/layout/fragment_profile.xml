@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_margin"
+    android:background="@color/md_theme_light_background">
+
+    <!-- User Profile Card -->
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/screen_margin"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/elevation_small"
+        app:strokeColor="@color/md_theme_light_outline"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <!-- User Avatar and Info -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Avatar -->
+                <ImageView
+                    android:id="@+id/userAvatar"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_default_avatar"
+                    android:contentDescription="@string/user_avatar"
+                    android:scaleType="centerCrop" />
+
+                <!-- User Info -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="@dimen/screen_margin">
+
+                    <!-- Nickname -->
+                    <TextView
+                        android:id="@+id/userNickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loading"
+                        android:textSize="@dimen/text_size_subtitle"
+                        android:textColor="@color/md_theme_light_on_surface"
+                        android:textStyle="bold" />
+
+                    <!-- Username -->
+                    <TextView
+                        android:id="@+id/userUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/loading"
+                        android:textSize="@dimen/text_size_body"
+                        android:textColor="@color/md_theme_light_outline"
+                        android:layout_marginTop="4dp" />
+
+                </LinearLayout>
+
+                <!-- Edit Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/editProfileButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    android:textSize="@dimen/text_size_small"
+                    app:cornerRadius="@dimen/button_corner_radius"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Function Menu -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- My Posts -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myPostsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_posts"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <!-- My Following -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myFollowingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_following"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <!-- My Collections -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myCollectionsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_collections"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <!-- Account Management -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/accountManagementButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/account_management"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <!-- Feedback -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/feedbackButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/feedback"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <!-- Contact Us -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/contactUsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/contact_us"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+    </LinearLayout>
+
+    <!-- Logout Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="@dimen/screen_margin"
+        android:text="@string/logout"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:backgroundTint="@color/md_theme_light_error" />
+
+</LinearLayout>

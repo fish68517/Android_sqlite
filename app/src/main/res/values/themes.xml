@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material Design 3 Theme with custom colors -->
+    <style name="Theme.HealthDietApp" parent="Theme.Material3.Light">
+        <!-- Primary color: Light Green -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_on_primary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_on_primary_container</item>
+
+        <!-- Secondary color: Pink -->
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_on_secondary_container</item>
+
+        <!-- Tertiary color -->
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_on_tertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiary_container</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_on_tertiary_container</item>
+
+        <!-- Error color -->
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorOnError">@color/md_theme_light_on_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_error_container</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_on_error_container</item>
+
+        <!-- Background and surface colors -->
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_on_background</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_on_surface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_on_surface_variant</item>
+
+        <!-- Outline color -->
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_light_outline_variant</item>
+
+        <!-- Scrim color -->
+        <item name="colorScrim">@color/md_theme_light_scrim</item>
+
+        <!-- Shape attributes -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.HealthDietApp.SmallComponent</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.HealthDietApp.MediumComponent</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.HealthDietApp.LargeComponent</item>
+    </style>
+
+    <!-- Shape appearance styles -->
+    <style name="ShapeAppearance.HealthDietApp.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="ShapeAppearance.HealthDietApp.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.HealthDietApp.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+</resources>

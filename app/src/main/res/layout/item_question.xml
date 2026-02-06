@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@color/md_theme_light_surface"
+    android:layout_margin="8dp">
+
+    <!-- Category -->
+    <TextView
+        android:id="@+id/categoryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/md_theme_light_secondary"
+        android:layout_marginBottom="4dp" />
+
+    <!-- Question -->
+    <TextView
+        android:id="@+id/questionText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_light_on_surface"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Answer -->
+    <TextView
+        android:id="@+id/answerText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/md_theme_light_on_surface"
+        android:maxLines="3"
+        android:ellipsize="end" />
+
+</LinearLayout>

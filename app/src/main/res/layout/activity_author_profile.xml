@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/md_theme_light_background">
+
+    <!-- Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:background="@color/md_theme_light_primary">
+
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textColor="@color/md_theme_light_on_primary"
+            android:backgroundTint="@android:color/transparent" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/author_profile"
+            android:textSize="@dimen/text_size_headline"
+            android:textColor="@color/md_theme_light_on_primary"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp" />
+
+    </LinearLayout>
+
+    <!-- Author Profile Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_margin"
+        android:background="@drawable/card_background"
+        android:layout_margin="@dimen/screen_margin">
+
+        <!-- Author Avatar -->
+        <ImageView
+            android:id="@+id/authorAvatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:background="@android:color/darker_gray"
+            android:contentDescription="Author avatar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/screen_margin" />
+
+        <!-- Author Nickname -->
+        <TextView
+            android:id="@+id/authorNickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Author Name"
+            android:textSize="@dimen/text_size_headline"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_primary"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/screen_margin_small" />
+
+        <!-- Author Username -->
+        <TextView
+            android:id="@+id/authorUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@username"
+            android:textSize="@dimen/text_size_body"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/screen_margin" />
+
+        <!-- Follow Button -->
+        <Button
+            android:id="@+id/followButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/follow"
+            android:textColor="@color/md_theme_light_primary"
+            android:backgroundTint="@android:color/transparent" />
+
+    </LinearLayout>
+
+    <!-- Author Posts Section -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/posts"
+        android:textSize="@dimen/text_size_subtitle"
+        android:textStyle="bold"
+        android:textColor="@color/md_theme_light_primary"
+        android:padding="@dimen/screen_margin" />
+
+    <!-- Posts RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/postsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/screen_margin" />
+
+</LinearLayout>

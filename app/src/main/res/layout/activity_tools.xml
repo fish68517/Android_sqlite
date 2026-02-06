@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/screen_margin">
+
+    <!-- Header with Back Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/component_spacing">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="&lt;"
+            android:textSize="@dimen/text_size_subtitle"
+            android:background="?attr/colorPrimary" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Health Tools"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_primary"
+            android:layout_marginStart="@dimen/screen_margin" />
+    </LinearLayout>
+
+    <!-- Tools ScrollView -->
+    <ScrollView
+        android:id="@+id/toolsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Food Ranking Card -->
+            <LinearLayout
+                android:id="@+id/foodRankingCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/component_spacing">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🏆 Food Rankings"
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:layout_marginBottom="@dimen/screen_margin_small" />
+
+                <TextView
+                    android:id="@+id/foodRankingContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:lineSpacingExtra="4dp" />
+            </LinearLayout>
+
+            <!-- What to Eat Today Card -->
+            <LinearLayout
+                android:id="@+id/whatToEatCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/component_spacing">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🍽️ What to Eat Today"
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:layout_marginBottom="@dimen/screen_margin_small" />
+
+                <TextView
+                    android:id="@+id/whatToEatContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="@dimen/screen_margin" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:spacing="@dimen/component_spacing">
+
+                    <Button
+                        android:id="@+id/randomSnackButton"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_weight="1"
+                        android:text="Random Snack"
+                        android:textSize="@dimen/text_size_body"
+                        android:background="?attr/colorPrimary"
+                        android:layout_marginEnd="@dimen/screen_margin_small" />
+
+                    <Button
+                        android:id="@+id/randomFastFoodButton"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/button_height"
+                        android:layout_weight="1"
+                        android:text="Random Takeout"
+                        android:textSize="@dimen/text_size_body"
+                        android:background="?attr/colorSecondary"
+                        android:layout_marginStart="@dimen/screen_margin_small" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Food Weight Estimation Card -->
+            <LinearLayout
+                android:id="@+id/foodWeightCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/component_spacing">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⚖️ Food Weight Reference"
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:layout_marginBottom="@dimen/screen_margin_small" />
+
+                <TextView
+                    android:id="@+id/foodWeightContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:lineSpacingExtra="4dp" />
+            </LinearLayout>
+
+            <!-- Daily Q&A Card -->
+            <LinearLayout
+                android:id="@+id/dailyQACard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/component_spacing">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡 Daily Health Q&A"
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:layout_marginBottom="@dimen/screen_margin_small" />
+
+                <TextView
+                    android:id="@+id/dailyQAContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:lineSpacingExtra="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

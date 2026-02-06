@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_light_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_margin">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Feedback"
+            android:textSize="@dimen/text_size_title"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_light_primary"
+            android:layout_marginBottom="@dimen/screen_margin" />
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please share your feedback to help us improve"
+            android:textSize="@dimen/text_size_body"
+            android:textColor="@color/dark_gray"
+            android:layout_marginBottom="@dimen/screen_margin" />
+
+        <!-- Feedback Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/screen_margin"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
+            app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+            app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
+            app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/feedbackInput"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:hint="Enter your feedback here..."
+                android:inputType="textMultiLine"
+                android:gravity="top" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Submit Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:text="Submit"
+            android:textSize="@dimen/text_size_body"
+            android:layout_marginBottom="@dimen/screen_margin"
+            app:cornerRadius="@dimen/button_corner_radius" />
+
+        <!-- Cancel Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cancelButton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:text="Cancel"
+            android:textSize="@dimen/text_size_body"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+    </LinearLayout>
+
+</ScrollView>
