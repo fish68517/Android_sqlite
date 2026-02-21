@@ -1,75 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myapplication"
+    package="com.example.healthdietapp"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="25"
+        android:minSdkVersion="24"
         android:targetSdkVersion="34" />
 
-    <uses-feature
-        android:name="android.hardware.telephony"
-        android:required="false" />
-
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- Android 13+ 需要 -->
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-
-    <!-- 1. 声明相机权限 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <!--
-         2. (可选但推荐) 声明应用需要相机硬件。
-         android:required="false" 表示即使设备没有相机，应用也能安装，
-         这对于您的应用是合适的情况，因为相机只是一个可选功能。
-    -->
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
-    <!-- 必须：前台服务权限 (Android 9+) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
-
     <permission
-        android:name="com.example.myapplication.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.example.healthdietapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.myapplication.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" /> <!-- Android 14+ 建议 -->
+    <uses-permission android:name="com.example.healthdietapp.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
     <application
-        android:name="com.myapplication.app.MyApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-        android:dataExtractionRules="@xml/data_extraction_rules"
         android:debuggable="true"
         android:extractNativeLibs="false"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="课程管理系统"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.MyApplication" >
-        <receiver android:name="com.myapplication.app.AlarmReceiver" />
-
+        android:theme="@style/Theme.HealthDietApp" >
         <activity
-            android:name="com.myapplication.app.activity.MainActivity"
-            android:exported="true" >
-        </activity>
-        <activity android:name="com.myapplication.app.activity.AddCourseActivity" />
-        <activity android:name="com.myapplication.app.activity.AddHomeworkActivity" />
-        <activity android:name="com.myapplication.app.activity.AddExamActivity" />
-        <activity android:name="com.myapplication.app.activity.AddMediaActivity" />
-
-        <service
-            android:name="com.myapplication.app.MusicService"
-            android:exported="true"
-            android:foregroundServiceType="mediaPlayback" />
-
-        <activity
-            android:name="com.myapplication.app.activity.LoginActivity"
+            android:name="com.example.healthdietapp.activities.SplashActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,23 +35,63 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.myapplication.app.activity.RegisterActivity"
-            android:exported="true" >
-        </activity>
+            android:name="com.example.healthdietapp.activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.PreferencesSetupActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.RecipeDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.HealthRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.AddRecipeActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.PostDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.ToolsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.CreatePostActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.MyPostsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.MyFollowingActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.AuthorProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.MyCollectionsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.AccountManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.FeedbackActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.healthdietapp.activities.ContactUsActivity"
+            android:exported="false" />
 
-        <!-- 声明 FileProvider -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.myapplication.provider"
-            android:exported="false"
-            android:grantUriPermissions="true" >
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.example.myapplication.androidx-startup"
+            android:authorities="com.example.healthdietapp.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"
