@@ -82,10 +82,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
             // Highlight selected category
             if (position == selectedPosition) {
                 categoryName.setTextColor(itemView.getContext().getColor(R.color.md_theme_light_primary));
-                categoryName.setTextStyle(android.graphics.Typeface.BOLD);
+
             } else {
                 categoryName.setTextColor(itemView.getContext().getColor(android.R.color.darker_gray));
-                categoryName.setTextStyle(android.graphics.Typeface.NORMAL);
+
             }
             
             itemView.setOnClickListener(v -> listener.onCategoryClick(category, position));

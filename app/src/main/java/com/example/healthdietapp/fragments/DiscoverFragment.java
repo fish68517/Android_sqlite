@@ -23,6 +23,7 @@ import com.example.healthdietapp.database.DatabaseHelper;
 import com.example.healthdietapp.database.PostDAO;
 import com.example.healthdietapp.models.Post;
 import com.example.healthdietapp.utils.SessionManager;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +36,10 @@ public class DiscoverFragment extends Fragment {
     private EditText postSearchBar;
     private Button postSearchButton;
     private Button publishPostButton;
-    private LinearLayout foodRankingCard;
-    private LinearLayout whatToEatCard;
-    private LinearLayout foodWeightCard;
-    private LinearLayout dailyQACard;
+    private MaterialCardView foodRankingCard;
+    private MaterialCardView whatToEatCard;
+    private MaterialCardView foodWeightCard;
+    private MaterialCardView dailyQACard;
     private RecyclerView recommendedPostsRecyclerView;
 
     private DatabaseHelper dbHelper;

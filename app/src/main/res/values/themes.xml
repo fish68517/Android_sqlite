@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Material Design 3 Theme with custom colors -->
-    <style name="Theme.HealthDietApp" parent="Theme.Material3.Light">
+    <style name="Theme.HealthDietApp"
+        parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary color: Light Green -->
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_on_primary</item>
@@ -39,7 +40,7 @@
         <item name="colorOutlineVariant">@color/md_theme_light_outline_variant</item>
 
         <!-- Scrim color -->
-        <item name="colorScrim">@color/md_theme_light_scrim</item>
+<!--        <item name="colorScrim">@color/md_theme_light_scrim</item>-->
 
         <!-- Shape attributes -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.HealthDietApp.SmallComponent</item>

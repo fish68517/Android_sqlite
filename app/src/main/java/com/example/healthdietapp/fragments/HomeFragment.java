@@ -26,6 +26,7 @@ import com.example.healthdietapp.models.Recipe;
 import com.example.healthdietapp.models.UserRecipe;
 import com.example.healthdietapp.utils.DateUtils;
 import com.example.healthdietapp.utils.SessionManager;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,9 +42,9 @@ public class HomeFragment extends Fragment {
     private Button datePickerButton;
     private Button dailyRecordButton;
     private Button moreRecommendedButton;
-    private LinearLayout breakfastCard;
-    private LinearLayout lunchCard;
-    private LinearLayout dinnerCard;
+    private MaterialCardView breakfastCard;
+    private MaterialCardView lunchCard;
+    private MaterialCardView dinnerCard;
     private TextView breakfastRecipeName;
     private TextView lunchRecipeName;
     private TextView dinnerRecipeName;
@@ -184,7 +185,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadUserRecipes() {
-        new Thread(() -> {
+
             try {
                 List<UserRecipe> userRecipes = userRecipeDAO.getUserRecipesByDate(userId, currentDate);
                 
@@ -209,15 +210,16 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                requireActivity().runOnUiThread(() -> {
-                    updateMealCard(breakfastRecipeName, breakfastRecipe);
-                    updateMealCard(lunchRecipeName, lunchRecipe);
-                    updateMealCard(dinnerRecipeName, dinnerRecipe);
-                });
+                Recipe finalBreakfastRecipe = breakfastRecipe;
+                Recipe finalLunchRecipe = lunchRecipe;
+                Recipe finalDinnerRecipe = dinnerRecipe;
+                updateMealCard(breakfastRecipeName, finalBreakfastRecipe);
+                updateMealCard(lunchRecipeName, finalLunchRecipe);
+                updateMealCard(dinnerRecipeName, finalDinnerRecipe);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }).start();
+
     }
 
     private void updateMealCard(TextView mealTextView, Recipe recipe) {
@@ -231,15 +233,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadRecommendedRecipes() {
-        new Thread(() -> {
-            try {
-                List<Recipe> recommendedRecipes = recipeDAO.getRecommendedRecipes(10);
-                requireActivity().runOnUiThread(() -> {
-                    recipeAdapter.updateRecipes(recommendedRecipes);
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        List<Recipe> recommendedRecipes = recipeDAO.getRecommendedRecipes(10);
+        recipeAdapter.updateRecipes(recommendedRecipes);
     }
 }

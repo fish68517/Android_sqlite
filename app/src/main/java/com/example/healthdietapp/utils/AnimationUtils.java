@@ -7,7 +7,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+
 
 import com.example.healthdietapp.R;
 
@@ -55,6 +55,10 @@ public class AnimationUtils {
         
         Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_out);
         view.startAnimation(animation);
+    }
+
+    private static Animation loadAnimation(Context context, int fadeOut) {
+        return null;
     }
 
     /**
