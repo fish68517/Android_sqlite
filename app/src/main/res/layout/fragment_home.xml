@@ -27,18 +27,18 @@
             android:insetLeft="0dp"
             android:insetRight="0dp"
             app:cornerRadius="@dimen/button_corner_radius"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/datePickerButton"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/currentDateText"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/screen_margin_small"
-            android:layout_marginEnd="@dimen/screen_margin_small"
-            android:text="Today"
-            android:textSize="@dimen/text_size_body"
-            app:cornerRadius="@dimen/button_corner_radius" />
+            android:gravity="center"
+            android:text="今天"
+            android:textSize="@dimen/text_size_subtitle"
+            android:textStyle="bold"
+             />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/nextDateButton"
@@ -51,29 +51,32 @@
             android:insetLeft="0dp"
             android:insetRight="0dp"
             app:cornerRadius="@dimen/button_corner_radius"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
     </LinearLayout>
 
     <!-- My Recipes Section -->
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/myRecipesTitle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Recipes"
-        android:textSize="@dimen/text_size_subtitle"
-        android:textColor="@color/md_theme_light_primary"
+        android:text="我的食谱"
+        android:textSize="@dimen/text_size_title"
         android:textStyle="bold"
-        android:layout_marginBottom="@dimen/screen_margin_small" />
+
+        android:layout_marginBottom="@dimen/component_spacing" />
 
     <!-- Breakfast Card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/breakfastCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/screen_margin_small"
+        android:layout_marginBottom="@dimen/component_spacing"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/elevation_small"
         app:strokeColor="@color/md_theme_light_outline"
-        app:strokeWidth="1dp">
+        app:strokeWidth="1dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,19 +84,20 @@
             android:orientation="vertical"
             android:padding="@dimen/screen_margin">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/breakfastTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Breakfast"
+                android:text="早餐"
                 android:textSize="@dimen/text_size_body"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_primary" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/breakfastRecipeName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No recipe scheduled"
+                android:text="暂无安排"
                 android:textSize="@dimen/text_size_body"
                 android:textColor="@color/md_theme_light_on_surface_variant"
                 android:layout_marginTop="@dimen/screen_margin_small" />
@@ -105,11 +109,12 @@
         android:id="@+id/lunchCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/screen_margin_small"
+        android:layout_marginBottom="@dimen/component_spacing"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/elevation_small"
         app:strokeColor="@color/md_theme_light_outline"
-        app:strokeWidth="1dp">
+        app:strokeWidth="1dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,22 +122,23 @@
             android:orientation="vertical"
             android:padding="@dimen/screen_margin">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/lunchTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lunch"
+                android:text="午餐"
                 android:textSize="@dimen/text_size_body"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_primary" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lunchRecipeName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No recipe scheduled"
+                android:text="暂无安排"
                 android:textSize="@dimen/text_size_body"
                 android:textColor="@color/md_theme_light_on_surface_variant"
-                android:layout_marginTop="@dimen/screen_margin_small" />
+                android:layout_marginTop="@dimen/screen_margin_small"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -141,11 +147,12 @@
         android:id="@+id/dinnerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/screen_margin_small"
+        android:layout_marginBottom="@dimen/component_spacing"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/elevation_small"
         app:strokeColor="@color/md_theme_light_outline"
-        app:strokeWidth="1dp">
+        app:strokeWidth="1dp"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,72 +160,70 @@
             android:orientation="vertical"
             android:padding="@dimen/screen_margin">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/dinnerTitle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dinner"
+                android:text="晚餐"
                 android:textSize="@dimen/text_size_body"
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_primary" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/dinnerRecipeName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No recipe scheduled"
+                android:text="暂无安排"
                 android:textSize="@dimen/text_size_body"
                 android:textColor="@color/md_theme_light_on_surface_variant"
                 android:layout_marginTop="@dimen/screen_margin_small" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Daily Record Entry -->
+    <!-- Record Button -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dailyRecordButton"
+        android:id="@+id/recordHealthDataButton"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:text="Record Daily Health Data"
-        android:textSize="@dimen/text_size_body"
-        android:layout_marginTop="@dimen/component_spacing"
+        android:layout_height="wrap_content"
+        android:text="记录每日健康数据"
         android:layout_marginBottom="@dimen/component_spacing"
-        app:cornerRadius="@dimen/button_corner_radius"
-        app:backgroundTint="@color/md_theme_light_secondary" />
+        app:cornerRadius="@dimen/button_corner_radius" />
 
-    <!-- Recommended Recipes Section Header -->
+    <!-- Recommended Recipes Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/screen_margin_small">
+        android:layout_marginBottom="@dimen/component_spacing">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/recommendedTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Recommended Recipes"
-            android:textSize="@dimen/text_size_subtitle"
-            android:textColor="@color/md_theme_light_primary"
-            android:textStyle="bold" />
+            android:text="推荐食谱"
+            android:textSize="@dimen/text_size_title"
+            android:textStyle="bold"
+
+            android:textColor="@color/md_theme_light_primary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/moreRecommendedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="More"
-            android:textSize="@dimen/text_size_body"
-            android:paddingStart="@dimen/screen_margin"
-            android:paddingEnd="@dimen/screen_margin"
+            android:text="更多"
             app:cornerRadius="@dimen/button_corner_radius"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+            app:iconPadding="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"/>
     </LinearLayout>
 
-    <!-- Recommended Recipes RecyclerView -->
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recommendedRecipesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal" />
+        android:layout_weight="1" />
 
 </LinearLayout>

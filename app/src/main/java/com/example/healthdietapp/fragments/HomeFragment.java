@@ -26,6 +26,7 @@ import com.example.healthdietapp.models.Recipe;
 import com.example.healthdietapp.models.UserRecipe;
 import com.example.healthdietapp.utils.DateUtils;
 import com.example.healthdietapp.utils.SessionManager;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -37,11 +38,11 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
-    private Button prevDateButton;
-    private Button nextDateButton;
-    private Button datePickerButton;
-    private Button dailyRecordButton;
-    private Button moreRecommendedButton;
+    private MaterialButton prevDateButton;
+    private MaterialButton nextDateButton;
+    // private MaterialButton datePickerButton;
+    // private Button dailyRecordButton;
+    private MaterialButton moreRecommendedButton;
     private MaterialCardView breakfastCard;
     private MaterialCardView lunchCard;
     private MaterialCardView dinnerCard;
@@ -79,8 +80,8 @@ public class HomeFragment extends Fragment {
     private void initializeViews(View view) {
         prevDateButton = view.findViewById(R.id.prevDateButton);
         nextDateButton = view.findViewById(R.id.nextDateButton);
-        datePickerButton = view.findViewById(R.id.datePickerButton);
-        dailyRecordButton = view.findViewById(R.id.dailyRecordButton);
+      //  datePickerButton = view.findViewById(R.id.datePickerButton);
+       // dailyRecordButton = view.findViewById(R.id.dailyRecordButton);
         moreRecommendedButton = view.findViewById(R.id.moreRecommendedButton);
         breakfastCard = view.findViewById(R.id.breakfastCard);
         lunchCard = view.findViewById(R.id.lunchCard);
@@ -117,12 +118,12 @@ public class HomeFragment extends Fragment {
             loadRecipes();
         });
 
-        datePickerButton.setOnClickListener(v -> showDatePicker());
+        /*datePickerButton.setOnClickListener(v -> showDatePicker());*/
 
-        dailyRecordButton.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), HealthRecordActivity.class);
-            startActivity(intent);
-        });
+//        dailyRecordButton.setOnClickListener(v -> {
+//            Intent intent = new Intent(requireContext(), HealthRecordActivity.class);
+//            startActivity(intent);
+//        });
 
         moreRecommendedButton.setOnClickListener(v -> {
             // Navigate to CategoryFragment
@@ -137,7 +138,7 @@ public class HomeFragment extends Fragment {
 
     private void updateDateDisplay() {
         String displayDate = DateUtils.getDisplayDate(currentDate);
-        datePickerButton.setText(displayDate);
+        // datePickerButton.setText(displayDate);
     }
 
     private void showDatePicker() {

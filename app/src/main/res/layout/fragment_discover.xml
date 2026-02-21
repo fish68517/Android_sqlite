@@ -29,7 +29,7 @@
                 android:id="@+id/postSearchBar"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
-                android:hint="Search posts..."
+                android:hint="搜索..."
                 android:inputType="text"
                 android:textSize="@dimen/text_size_body" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -38,7 +38,7 @@
             android:id="@+id/postSearchButton"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height"
-            android:text="Search"
+            android:text="搜索"
             android:textSize="@dimen/text_size_body"
             android:layout_marginStart="@dimen/screen_margin_small"
             app:cornerRadius="@dimen/button_corner_radius" />
@@ -48,7 +48,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tools"
+        android:text="工具"
         android:textSize="@dimen/text_size_subtitle"
         android:textColor="@color/md_theme_light_primary"
         android:textStyle="bold"
@@ -88,7 +88,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Food Ranking"
+                        android:text="美食榜单"
                         android:textSize="@dimen/text_size_body"
                         android:textStyle="bold"
                         android:textColor="@color/md_theme_light_primary"
@@ -117,7 +117,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="What to Eat Today"
+                        android:text="今天吃什么"
                         android:textSize="@dimen/text_size_body"
                         android:textStyle="bold"
                         android:textColor="@color/md_theme_light_primary"
@@ -146,7 +146,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Food Weight"
+                        android:text="食物重量"
                         android:textSize="@dimen/text_size_body"
                         android:textStyle="bold"
                         android:textColor="@color/md_theme_light_primary"
@@ -197,7 +197,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Recommended Posts"
+            android:text="推荐帖子"
             android:textSize="@dimen/text_size_subtitle"
             android:textColor="@color/md_theme_light_primary"
             android:textStyle="bold" />
@@ -206,7 +206,7 @@
             android:id="@+id/publishPostButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Publish"
+            android:text="发布"
             android:textSize="@dimen/text_size_body"
             android:paddingStart="@dimen/screen_margin"
             android:paddingEnd="@dimen/screen_margin"
