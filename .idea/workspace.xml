@@ -25,7 +25,22 @@
           <theme>@style/Theme.HealthDietApp</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_contact_us.xml">
+        <config>
+          <theme>@style/Theme.HealthDietApp</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_create_post.xml">
+        <config>
+          <theme>@style/Theme.HealthDietApp</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_edit_profile.xml">
+        <config>
+          <theme>@style/Theme.HealthDietApp</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml">
         <config>
           <theme>@style/Theme.HealthDietApp</theme>
         </config>
@@ -51,6 +66,11 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_my_collections.xml">
+        <config>
+          <theme>@style/Theme.HealthDietApp</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_my_likes.xml">
         <config>
           <theme>@style/Theme.HealthDietApp</theme>
         </config>
@@ -127,11 +147,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="077b6f28-65b4-40c6-80b6-0cbc45c70e95" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/MyLikesActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/fragments/LikePostFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/user_avatar_full_fill.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_my_likes.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/ContactUsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/ContactUsActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/EditProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/EditProfileActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/FeedbackActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/FeedbackActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/MyCollectionsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/activities/MyCollectionsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/adapters/CollectionPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/adapters/CollectionPagerAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/adapters/CollectionPostAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/adapters/CollectionPostAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/fragments/CollectionPostFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/fragments/CollectionPostFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/database/PostDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/database/PostDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/fragments/CategoryFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/fragments/CategoryFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/fragments/ProfileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/healthdietapp/fragments/ProfileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_contact_us.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_contact_us.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_edit_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_edit_profile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_feedback.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_category.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_profile.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,9 +256,9 @@
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Acode\Android\complete\AA项目归档\作业_Android_Sqlite_普通项目\Android项目\HomeWork_Android_Sqlite_Repository2\app\src\main\res\drawable" />
+      <recent name="D:\Acode\Android\complete\AA项目归档\作业_Android_Sqlite_普通项目\Android项目\HomeWork_Android_Sqlite_Repository2\app\src\main\res\layout" />
       <recent name="D:\Acode\Android\complete\AA项目归档\作业_Android_Sqlite_普通项目\Android项目\HomeWork_Android_Sqlite_Repository2" />
       <recent name="D:\Acode\Android\complete\AA项目归档\作业_Android_Sqlite_普通项目\Android项目\HomeWork_Android_Sqlite_Repository2\app\src\main\assets" />
-      <recent name="D:\Acode\Android\complete\AA项目归档\作业_Android_Sqlite_普通项目\Android项目\HomeWork_Android_Sqlite_Repository2\app\src\main\res\layout" />
       <recent name="D:\Acode\Android\complete\AA项目归档\作业_Android_Sqlite_普通项目\Android项目\HomeWork_Android_Sqlite_Repository2\app\src\main\res\xml" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -233,10 +266,11 @@
       <recent name="D:\Acode\Android\complete\AA项目归档\作业_Android_Sqlite_普通项目\Android项目\HomeWork_Android_Sqlite_Repository2\app\src\main\res\mipmap-xhdpi" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.healthdietapp.fragments" />
+      <recent name="com.example.healthdietapp.activities" />
       <recent name="com.example.application.fragment" />
       <recent name="com.example.application.activity" />
       <recent name="com.example.application.model" />
-      <recent name="com.example.studentmanager.adapter" />
     </key>
   </component>
   <component name="RunManager">

@@ -10,6 +10,7 @@ import com.example.healthdietapp.database.RecipeDAO;
 import com.example.healthdietapp.fragments.CollectionRecipeFragment;
 import com.example.healthdietapp.fragments.CollectionPostFragment;
 import com.example.healthdietapp.fragments.CollectionQuestionFragment;
+import com.example.healthdietapp.fragments.LikePostFragment;
 
 /**
  * CollectionPagerAdapter - Adapter for ViewPager2 in MyCollectionsActivity
@@ -30,27 +31,21 @@ public class CollectionPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        /*switch (position) {
-            case 0:
-                return CollectionRecipeFragment.newInstance(userId, recipeDAO);
-            case 1:
-                return CollectionPostFragment.newInstance(userId, postDAO);
-            case 2:
-                return CollectionQuestionFragment.newInstance(userId);
-            default:
-                return new Fragment();
-        }*/
-
         switch (position) {
             case 0:
+                return LikePostFragment.newInstance(userId, postDAO);
+            case 1:
                 return CollectionPostFragment.newInstance(userId, postDAO);
+           /* case 2:
+                return CollectionQuestionFragment.newInstance(userId);*/
             default:
                 return new Fragment();
         }
+
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 2;
     }
 }

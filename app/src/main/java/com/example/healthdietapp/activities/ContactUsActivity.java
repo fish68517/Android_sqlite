@@ -40,6 +40,16 @@ public class ContactUsActivity extends AppCompatActivity {
         initializeViews();
         setupListeners();
         displayContactInfo();
+
+        TextView toolbarTitle = findViewById(R.id.toolbarTitle);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("联系我们");
+        }
+
+        Button backButton = findViewById(R.id.backButton);
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
     }
 
     private void initializeViews() {

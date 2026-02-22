@@ -32,10 +32,11 @@
 
                 <!-- Avatar -->
                 <ImageView
+
                     android:id="@+id/userAvatar"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/ic_default_avatar"
+                    android:src="@drawable/user_avatar_full_fill"
                     android:contentDescription="@string/user_avatar"
                     android:scaleType="centerCrop" />
 
@@ -104,6 +105,7 @@
 
         <!-- My Following -->
         <com.google.android.material.button.MaterialButton
+            android:visibility="gone"
             android:id="@+id/myFollowingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,6 +131,7 @@
         <!-- My Collections -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/myLikesButton"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="我的点赞"
@@ -140,6 +143,7 @@
 
         <!-- Account Management -->
         <com.google.android.material.button.MaterialButton
+            android:visibility="gone"
             android:id="@+id/accountManagementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

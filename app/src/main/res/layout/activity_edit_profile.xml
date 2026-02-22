@@ -7,39 +7,8 @@
     android:padding="@dimen/screen_margin"
     android:background="@color/md_theme_light_background">
 
-    <!-- Header -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/screen_margin">
+    <include layout="@layout/layout_toolbar" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/back"
-            app:cornerRadius="@dimen/button_corner_radius"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/edit_profile_title"
-            android:textSize="@dimen/text_size_title"
-            android:textColor="@color/md_theme_light_on_surface"
-            android:textStyle="bold"
-            android:gravity="center" />
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <!-- Scrollable Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -50,39 +19,35 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Avatar Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/screen_margin"
                 android:layout_marginBottom="@dimen/screen_margin_large">
 
-                <!-- Avatar Image -->
                 <ImageView
                     android:id="@+id/avatarImageView"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:src="@drawable/ic_default_avatar"
-                    android:contentDescription="@string/user_avatar"
-                    android:scaleType="centerCrop"
-                    android:layout_marginBottom="@dimen/screen_margin_small" />
+                    android:contentDescription="用户头像" />
 
-                <!-- Upload Avatar Button -->
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/uploadAvatarButton"
+                    android:id="@+id/changeAvatarButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/upload_avatar"
-                    app:cornerRadius="@dimen/button_corner_radius" />
-
+                    android:text="更换头像"
+                    android:layout_marginTop="@dimen/screen_margin_small"
+                    style="@style/Widget.MaterialComponents.Button.TextButton" />
             </LinearLayout>
 
-            <!-- Nickname Section -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/screen_margin"
+                android:hint="昵称"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
                 app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
@@ -90,19 +55,17 @@
                 app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/nicknameEditText"
+                    android:id="@+id/nicknameInput"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/input_height"
-                    android:hint="@string/nickname_hint"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Username Display (Read-only) -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/screen_margin_large"
-                android:hint="@string/username_label"
+                android:hint="账号 (不可修改)"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
                 app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
@@ -121,13 +84,12 @@
 
     </ScrollView>
 
-    <!-- Save Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
-        android:text="@string/save_button"
-        android:textSize="@dimen/text_size_button"
+        android:text="保存修改"
+        android:textSize="@dimen/text_size_body"
         android:layout_marginTop="@dimen/screen_margin"
         app:cornerRadius="@dimen/button_corner_radius" />
 

@@ -3,6 +3,7 @@ package com.example.healthdietapp.activities;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,6 +38,16 @@ public class FeedbackActivity extends AppCompatActivity {
         initializeViews();
         initializeDatabase();
         setupListeners();
+
+        TextView toolbarTitle = findViewById(R.id.toolbarTitle);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("意见反馈");
+        }
+
+        Button backButton = findViewById(R.id.backButton);
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
     }
 
     private void initializeViews() {
@@ -69,31 +80,29 @@ public class FeedbackActivity extends AppCompatActivity {
 
         submitButton.setEnabled(false);
 
-        new Thread(() -> {
-            try {
-                Feedback feedback = new Feedback();
-                feedback.setUserId(userId);
-                feedback.setContent(feedbackContent);
-                feedback.setCreatedAt(System.currentTimeMillis());
+        try {
+            Feedback feedback = new Feedback();
+            feedback.setUserId(userId);
+            feedback.setContent(feedbackContent);
+            feedback.setCreatedAt(System.currentTimeMillis());
 
-                boolean success = postDAO.createFeedback(feedback);
+            boolean success = postDAO.createFeedback(feedback);
 
-                runOnUiThread(() -> {
-                    submitButton.setEnabled(true);
-                    if (success) {
-                        ErrorHandler.showShortToast(this, "反馈已提交");
-                        finish();
-                    } else {
-                        ErrorHandler.showShortToast(this, "提交反馈失败");
-                    }
-                });
-            } catch (Exception e) {
-                ErrorHandler.logException("FeedbackActivity", e);
-                runOnUiThread(() -> {
-                    submitButton.setEnabled(true);
-                    ErrorHandler.handleDatabaseException(this, e);
-                });
-            }
-        }).start();
+            runOnUiThread(() -> {
+                submitButton.setEnabled(true);
+                if (success) {
+                    ErrorHandler.showShortToast(this, "反馈已提交");
+                    finish();
+                } else {
+                    ErrorHandler.showShortToast(this, "提交反馈失败");
+                }
+            });
+        } catch (Exception e) {
+            ErrorHandler.logException("FeedbackActivity", e);
+            runOnUiThread(() -> {
+                submitButton.setEnabled(true);
+                ErrorHandler.handleDatabaseException(this, e);
+            });
+        }
     }
 }

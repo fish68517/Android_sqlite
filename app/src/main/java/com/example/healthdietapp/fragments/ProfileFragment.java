@@ -24,6 +24,7 @@ import com.example.healthdietapp.activities.MyFollowingActivity;
 import com.example.healthdietapp.database.DatabaseHelper;
 import com.example.healthdietapp.database.UserDAO;
 import com.example.healthdietapp.models.User;
+import com.example.healthdietapp.utils.ImageUtils;
 import com.example.healthdietapp.utils.SessionManager;
 
 /**
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment {
 
     private void initializeViews(View view) {
         userAvatar = view.findViewById(R.id.userAvatar);
+
         userNickname = view.findViewById(R.id.userNickname);
         userUsername = view.findViewById(R.id.userUsername);
         editProfileButton = view.findViewById(R.id.editProfileButton);

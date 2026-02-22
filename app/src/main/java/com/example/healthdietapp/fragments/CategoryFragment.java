@@ -214,7 +214,7 @@ public class CategoryFragment extends Fragment {
                     selectedCategoryId = mainCategories.get(0).getCategoryId();
                     Log.d(TAG, "默认选中第一个主分类: " + mainCategories.get(0).getName());
                     categoryAdapter.setSelectedPosition(0);
-                    loadSubcategoriesAndRecipes(selectedCategoryId);
+                    loadSubcategoriesAndRecipes(mainCategories.get(0).getName());
                 }
             } else {
                 Log.w(TAG, "主分类数据为 null");

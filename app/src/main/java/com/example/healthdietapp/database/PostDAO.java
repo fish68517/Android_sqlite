@@ -336,6 +336,33 @@ public class PostDAO {
         }
     }
 
+
+    /**
+     * Get user's collected posts
+     */
+    public List<Post> getUserLikesPosts(String userId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<Post> posts = new ArrayList<>();
+        try {
+            Cursor cursor = db.rawQuery(
+                    "SELECT p.* FROM posts p " +
+                            "INNER JOIN post_likes pl ON p.post_id = pl.post_id " +
+                            "WHERE pl.user_id = ? " +
+                            "ORDER BY pl.liked_at DESC",
+                    new String[]{userId});
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    posts.add(cursorToPost(cursor));
+                }
+                cursor.close();
+            }
+            return posts;
+        } finally {
+            db.close();
+        }
+    }
+
     /**
      * Get user's collected posts
      */

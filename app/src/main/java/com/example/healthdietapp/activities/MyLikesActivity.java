@@ -1,35 +1,23 @@
 package com.example.healthdietapp.activities;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.healthdietapp.R;
-import com.example.healthdietapp.adapters.CollectionRecipeAdapter;
-import com.example.healthdietapp.adapters.CollectionPostAdapter;
-import com.example.healthdietapp.adapters.CollectionQuestionAdapter;
 import com.example.healthdietapp.adapters.CollectionPagerAdapter;
 import com.example.healthdietapp.database.DatabaseHelper;
 import com.example.healthdietapp.database.PostDAO;
 import com.example.healthdietapp.database.RecipeDAO;
-import com.example.healthdietapp.models.Post;
-import com.example.healthdietapp.models.Recipe;
-import com.example.healthdietapp.models.HealthQuestion;
 import com.example.healthdietapp.utils.SessionManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * MyCollectionsActivity - Displays user's collected items (recipes, posts, questions)
  */
-public class MyCollectionsActivity extends AppCompatActivity {
+public class MyLikesActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
@@ -75,10 +63,10 @@ public class MyCollectionsActivity extends AppCompatActivity {
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("点赞");
+                    tab.setText("点赞帖子");
                     break;
                 case 1:
-                    tab.setText("收藏");
+                    tab.setText("点赞帖子");
                     break;
                 case 2:
                     tab.setText("Questions");

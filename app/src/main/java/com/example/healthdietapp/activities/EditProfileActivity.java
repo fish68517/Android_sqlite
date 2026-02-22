@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,8 +23,11 @@ import com.example.healthdietapp.database.DatabaseHelper;
 import com.example.healthdietapp.database.UserDAO;
 import com.example.healthdietapp.models.User;
 import com.example.healthdietapp.utils.ErrorHandler;
+import com.example.healthdietapp.utils.ImageUtils;
 import com.example.healthdietapp.utils.SessionManager;
 import com.example.healthdietapp.utils.ValidationUtils;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * EditProfileActivity - Allows users to edit their profile information
@@ -36,11 +40,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private UserDAO userDAO;
     
     private ImageView avatarImageView;
-    private Button uploadAvatarButton;
-    private EditText nicknameEditText;
-    private TextView usernameTextView;
-    private Button saveButton;
-    private Button backButton;
+    private MaterialButton uploadAvatarButton;
+    private TextInputEditText nicknameEditText;
+    private TextInputEditText usernameTextView;
+    private MaterialButton saveButton;
+
     
     private String userId;
     private User currentUser;
@@ -59,6 +63,18 @@ public class EditProfileActivity extends AppCompatActivity {
         setupActivityResultLaunchers();
         loadUserInfo();
         setupButtonListeners();
+
+        TextView toolbarTitle = findViewById(R.id.toolbarTitle);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("编辑资料");
+        }
+
+        Button backButton = findViewById(R.id.backButton);
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
+        Log.d("EditProfileActivity", "onCreate:" + " userId=" + userId + " currentUser=" + currentUser.getAvatar());
+        ImageUtils.loadFirstImage(avatarImageView, currentUser.getAvatar());
     }
 
     private void initializeManagers() {
@@ -70,11 +86,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void initializeViews() {
         avatarImageView = findViewById(R.id.avatarImageView);
-        uploadAvatarButton = findViewById(R.id.uploadAvatarButton);
-        nicknameEditText = findViewById(R.id.nicknameEditText);
+        uploadAvatarButton = findViewById(R.id.changeAvatarButton);
+        nicknameEditText = findViewById(R.id.nicknameInput);
         usernameTextView = findViewById(R.id.usernameTextView);
         saveButton = findViewById(R.id.saveButton);
-        backButton = findViewById(R.id.backButton);
+
     }
 
     private void setupActivityResultLaunchers() {
@@ -104,25 +120,23 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserInfo() {
-        new Thread(() -> {
-            try {
-                currentUser = userDAO.getUserById(userId);
-                if (currentUser != null) {
-                    runOnUiThread(() -> {
-                        displayUserInfo(currentUser);
-                    });
-                } else {
-                    runOnUiThread(() -> {
-                        ErrorHandler.showShortToast(this, "用户信息加载失败");
-                    });
-                }
-            } catch (Exception e) {
-                ErrorHandler.logException("EditProfileActivity", e);
+        try {
+            currentUser = userDAO.getUserById(userId);
+            if (currentUser != null) {
                 runOnUiThread(() -> {
-                    ErrorHandler.handleDatabaseException(this, e);
+                    displayUserInfo(currentUser);
+                });
+            } else {
+                runOnUiThread(() -> {
+                    ErrorHandler.showShortToast(this, "用户信息加载失败");
                 });
             }
-        }).start();
+        } catch (Exception e) {
+            ErrorHandler.logException("EditProfileActivity", e);
+            runOnUiThread(() -> {
+                ErrorHandler.handleDatabaseException(this, e);
+            });
+        }
     }
 
     private void displayUserInfo(User user) {
@@ -139,7 +153,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void setupButtonListeners() {
-        backButton.setOnClickListener(v -> finish());
+
         
         uploadAvatarButton.setOnClickListener(v -> requestImagePermissionAndPick());
         
@@ -190,27 +204,24 @@ public class EditProfileActivity extends AppCompatActivity {
         if (selectedAvatarPath != null) {
             currentUser.setAvatar(selectedAvatarPath);
         }
-        
-        // Save to database in background thread
-        new Thread(() -> {
-            try {
-                boolean success = userDAO.updateUser(currentUser);
-                runOnUiThread(() -> {
-                    saveButton.setEnabled(true);
-                    if (success) {
-                        ErrorHandler.showShortToast(this, "个人资料已更新");
-                        finish();
-                    } else {
-                        ErrorHandler.showShortToast(this, "更新个人资料失败");
-                    }
-                });
-            } catch (Exception e) {
-                ErrorHandler.logException("EditProfileActivity", e);
-                runOnUiThread(() -> {
-                    saveButton.setEnabled(true);
-                    ErrorHandler.handleDatabaseException(this, e);
-                });
-            }
-        }).start();
+
+        try {
+            boolean success = userDAO.updateUser(currentUser);
+            runOnUiThread(() -> {
+                saveButton.setEnabled(true);
+                if (success) {
+                    ErrorHandler.showShortToast(this, "个人资料已更新");
+                    finish();
+                } else {
+                    ErrorHandler.showShortToast(this, "更新个人资料失败");
+                }
+            });
+        } catch (Exception e) {
+            ErrorHandler.logException("EditProfileActivity", e);
+            runOnUiThread(() -> {
+                saveButton.setEnabled(true);
+                ErrorHandler.handleDatabaseException(this, e);
+            });
+        }
     }
 }
