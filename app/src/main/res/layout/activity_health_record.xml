@@ -93,17 +93,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/noRecordMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="您尚未记录该日期的数据"
-                android:textSize="@dimen/text_size_body"
-                android:textColor="@color/md_theme_light_on_surface_variant"
-                android:gravity="center"
-                android:padding="@dimen/screen_margin"
-                android:visibility="gone" />
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/weightSection"
                 android:layout_width="match_parent"
@@ -205,20 +194,39 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/input_height"
                             android:inputType="text"
-                            android:hint="例如：胸围: 90, 腰围: 75, 臀围: 95" />
+                            android:hint="腰围(例如：胸围: 90, 腰围: 75, 臀围: 95)" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/saveButton"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:text="保存记录"
-        android:textSize="@dimen/text_size_body"
-        android:layout_marginTop="@dimen/component_spacing"
-        app:cornerRadius="@dimen/button_corner_radius" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/component_spacing">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saveButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="1"
+            android:text="保存记录"
+            android:textSize="@dimen/text_size_body"
+            android:layout_marginEnd="8dp"
+            app:cornerRadius="@dimen/button_corner_radius" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewChartButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height"
+            android:layout_weight="1"
+            android:text="健康曲线"
+            android:textSize="@dimen/text_size_body"
+            android:layout_marginStart="8dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:cornerRadius="@dimen/button_corner_radius" />
+    </LinearLayout>
 
 </LinearLayout>

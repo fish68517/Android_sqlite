@@ -15,6 +15,30 @@ import java.util.UUID;
 public class HealthRecordDAO {
     private DatabaseHelper dbHelper;
 
+    /**
+     * 获取用户所有的健康记录，并按日期升序排列（用于绘制图表）
+     */
+    public List<HealthRecord> getAllHealthRecordsForUser(String userId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        List<HealthRecord> records = new ArrayList<>();
+        try {
+            // 按照 date 升序排列 (ASC)
+            Cursor cursor = db.query("health_records", null, "user_id = ?",
+                    new String[]{userId}, null, null, "date ASC");
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    records.add(cursorToHealthRecord(cursor));
+                }
+                cursor.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.close();
+        }
+        return records;
+    }
+
     public HealthRecordDAO(DatabaseHelper dbHelper) {
         this.dbHelper = dbHelper;
     }

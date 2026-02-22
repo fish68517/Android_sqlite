@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.healthdietapp.R;
+import com.example.healthdietapp.activities.HealthRecordActivity;
 import com.example.healthdietapp.activities.RecipeDetailActivity;
 import com.example.healthdietapp.adapters.RecipeAdapter;
 import com.example.healthdietapp.database.DatabaseHelper;
@@ -141,7 +142,14 @@ public class HomeFragment extends Fragment {
         });
 
         // 绑定保存按钮事件
-        saveMealsButton.setOnClickListener(v -> saveDailyMeals());
+        // saveMealsButton.setOnClickListener(v -> saveDailyMeals());
+        saveMealsButton.setOnClickListener(
+                v -> {
+                    Intent intent = new Intent(requireContext(), HealthRecordActivity.class);
+                    intent.putExtra("date", currentDate);
+                    startActivity(intent);
+                }
+        );
     }
 
     private void updateDateDisplay() {
@@ -184,7 +192,7 @@ public class HomeFragment extends Fragment {
         recommendedRecipesRecyclerView.setLayoutManager(layoutManager);
         recipeAdapter = new RecipeAdapter(new ArrayList<>(), recipe -> {
             Intent intent = new Intent(requireContext(), RecipeDetailActivity.class);
-            intent.putExtra("recipe_id", recipe.getRecipeId());
+            intent.putExtra("recipe_id", recipe.getRecipeId());//
             startActivity(intent);
         });
         recommendedRecipesRecyclerView.setAdapter(recipeAdapter);
@@ -300,7 +308,7 @@ public class HomeFragment extends Fragment {
                 String newRecipeId = UUID.randomUUID().toString();
                 customRecipe.setRecipeId(newRecipeId);
                 customRecipe.setName(recipeName);
-                customRecipe.setCategory("自定义输入");
+                customRecipe.setCategory(mealType);
                 customRecipe.setCreatedBy(userId);
                 customRecipe.setCreatedAt(System.currentTimeMillis());
                 customRecipe.setUpdatedAt(System.currentTimeMillis());
@@ -316,7 +324,7 @@ public class HomeFragment extends Fragment {
             UserRecipe userRecipe = new UserRecipe();
             userRecipe.setUserRecipeId(UUID.randomUUID().toString());
             userRecipe.setUserId(userId);
-            userRecipe.setRecipeId(newRecipeId);
+            userRecipe.setRecipeId(existingRecipe.getRecipeId());
             userRecipe.setDate(currentDate);
             userRecipe.setMealType(mealType);
             userRecipe.setAddedAt(System.currentTimeMillis());

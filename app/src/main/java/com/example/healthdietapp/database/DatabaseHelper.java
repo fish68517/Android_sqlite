@@ -27,6 +27,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Insert simplified Chinese mock data (only runs when DB is first created)
         insertMockData(db);
+
+        insertChartMockData(db); // 新增：插入图表专用的连续 7 天模拟数据
+    }
+
+    /**
+     * 新增：专门为测试图表生成的连续 7 天健康模拟数据 (针对用户 U001)
+     */
+    private void insertChartMockData(SQLiteDatabase db) {
+        db.beginTransaction();
+        try {
+            // 我们为用户 U001 生成连续 7 天的体重(下降趋势)和饮水数据
+            String[] sqlList = new String[] {
+                    "INSERT OR REPLACE INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('CHART_01', 'U001', '2026-02-15', 70.5, 1.5, '', 1771000000);",
+                    "INSERT OR REPLACE INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('CHART_02', 'U001', '2026-02-16', 70.2, 2.0, '', 1771100000);",
+                    "INSERT OR REPLACE INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('CHART_03', 'U001', '2026-02-17', 69.8, 1.8, '', 1771200000);",
+                    "INSERT OR REPLACE INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('CHART_04', 'U001', '2026-02-18', 69.5, 2.5, '', 1771300000);",
+                    "INSERT OR REPLACE INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('CHART_05', 'U001', '2026-02-19', 69.0, 2.2, '', 1771400000);",
+                    "INSERT OR REPLACE INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('CHART_06', 'U001', '2026-02-20', 68.6, 2.0, '', 1771500000);",
+                    "INSERT OR REPLACE INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('CHART_07', 'U001', '2026-02-21', 68.2, 2.5, '', 1771600000);"
+            };
+            for (String sql : sqlList) {
+                db.execSQL(sql);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override

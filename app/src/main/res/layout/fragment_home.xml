@@ -163,7 +163,7 @@
         android:id="@+id/saveMealsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="保存今日食谱"
+        android:text="查看健康记录"
         android:layout_marginBottom="@dimen/screen_margin"
         app:cornerRadius="@dimen/button_corner_radius" />
 

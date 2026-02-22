@@ -1,11 +1,11 @@
 package com.example.healthdietapp.activities;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,10 +31,12 @@ public class HealthRecordActivity extends AppCompatActivity {
     private Button nextDateButton;
     private Button datePickerButton;
     private Button saveButton;
+    private Button viewChartButton; // 新增：查看曲线按钮
+
     private EditText weightInput;
     private EditText waterInput;
     private EditText measurementsInput;
-    private TextView noRecordMessage;
+
     private MaterialCardView weightSection;
     private MaterialCardView waterSection;
     private MaterialCardView measurementsSection;
@@ -56,7 +58,7 @@ public class HealthRecordActivity extends AppCompatActivity {
         initializeDatabase();
         initializeCurrentDate();
         setupDateNavigation();
-        setupSaveButton();
+        setupListeners();
         loadRecord();
     }
 
@@ -66,10 +68,12 @@ public class HealthRecordActivity extends AppCompatActivity {
         nextDateButton = findViewById(R.id.nextDateButton);
         datePickerButton = findViewById(R.id.datePickerButton);
         saveButton = findViewById(R.id.saveButton);
+        viewChartButton = findViewById(R.id.viewChartButton); // 绑定曲线按钮
+
         weightInput = findViewById(R.id.weightInput);
         waterInput = findViewById(R.id.waterInput);
         measurementsInput = findViewById(R.id.measurementsInput);
-        noRecordMessage = findViewById(R.id.noRecordMessage);
+
         weightSection = findViewById(R.id.weightSection);
         waterSection = findViewById(R.id.waterSection);
         measurementsSection = findViewById(R.id.measurementsSection);
@@ -134,8 +138,20 @@ public class HealthRecordActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    private void setupSaveButton() {
+    private void setupListeners() {
         saveButton.setOnClickListener(v -> saveRecord());
+
+        // 绑定跳转曲线图事件
+        viewChartButton.setOnClickListener(v -> {
+            try {
+                // 等你创建好 HealthChartActivity 后，解除下面的注释即可跳转
+                 Intent intent = new Intent(HealthRecordActivity.this, HealthChartActivity.class);
+                 startActivity(intent);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void loadRecord() {
@@ -153,28 +169,32 @@ public class HealthRecordActivity extends AppCompatActivity {
     }
 
     private void displayRecord() {
+        // 去掉了原来根据 currentRecord 隐藏界面的逻辑，让三个卡片始终可见
+        weightSection.setVisibility(android.view.View.VISIBLE);
+        waterSection.setVisibility(android.view.View.VISIBLE);
+        measurementsSection.setVisibility(android.view.View.VISIBLE);
+
         if (currentRecord == null) {
-            // No record for this date
-            noRecordMessage.setVisibility(android.view.View.VISIBLE);
-            weightSection.setVisibility(android.view.View.GONE);
-            waterSection.setVisibility(android.view.View.GONE);
-            measurementsSection.setVisibility(android.view.View.GONE);
+            // 没有数据时，清空输入框，方便用户直接输入新数据
             clearInputs();
         } else {
-            // Record exists, display it
-            noRecordMessage.setVisibility(android.view.View.GONE);
-            weightSection.setVisibility(android.view.View.VISIBLE);
-            waterSection.setVisibility(android.view.View.VISIBLE);
-            measurementsSection.setVisibility(android.view.View.VISIBLE);
-
+            // 有数据时，直接将数据回填到 EditText 中
             if (currentRecord.getWeight() > 0) {
                 weightInput.setText(String.valueOf(currentRecord.getWeight()));
+            } else {
+                weightInput.setText("");
             }
+
             if (currentRecord.getWaterIntake() > 0) {
                 waterInput.setText(String.valueOf((int) currentRecord.getWaterIntake()));
+            } else {
+                waterInput.setText("");
             }
+
             if (currentRecord.getMeasurements() != null && !currentRecord.getMeasurements().isEmpty()) {
                 measurementsInput.setText(currentRecord.getMeasurements());
+            } else {
+                measurementsInput.setText("");
             }
         }
     }
@@ -190,13 +210,13 @@ public class HealthRecordActivity extends AppCompatActivity {
         String waterStr = waterInput.getText().toString().trim();
         String measurements = measurementsInput.getText().toString().trim();
 
-        // Validate at least one field is filled
+        // 至少输入一项
         if (weightStr.isEmpty() && waterStr.isEmpty() && measurements.isEmpty()) {
             ErrorHandler.handleValidationException(this, "请至少输入一项健康数据");
             return;
         }
 
-        // Validate numeric inputs if provided
+        // 校验输入范围
         if (!weightStr.isEmpty()) {
             ValidationUtils.ValidationResult weightValidation = ValidationUtils.validateNumericInput(weightStr, "体重", 20, 300);
             if (!weightValidation.isValid()) {
@@ -218,7 +238,9 @@ public class HealthRecordActivity extends AppCompatActivity {
         new Thread(() -> {
             try {
                 HealthRecord record;
-                if (currentRecord != null) {
+                boolean isUpdating = (currentRecord != null); // 判断是更新还是新建
+
+                if (isUpdating) {
                     record = currentRecord;
                 } else {
                     record = new HealthRecord();
@@ -236,8 +258,9 @@ public class HealthRecordActivity extends AppCompatActivity {
                     record.setMeasurements(measurements);
                 }
 
+                // 执行数据库保存/更新操作
                 boolean success;
-                if (currentRecord != null) {
+                if (isUpdating) {
                     success = healthRecordDAO.updateHealthRecord(record);
                 } else {
                     success = healthRecordDAO.createHealthRecord(record);
@@ -247,8 +270,8 @@ public class HealthRecordActivity extends AppCompatActivity {
                     saveButton.setEnabled(true);
                     if (success) {
                         ErrorHandler.showShortToast(this, "记录已保存");
-                        currentRecord = record;
-                        displayRecord();
+                        currentRecord = record; // 更新当前缓存
+                        displayRecord();        // 重新展示最新数据
                     } else {
                         ErrorHandler.showShortToast(this, "保存记录失败");
                     }

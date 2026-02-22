@@ -3,6 +3,7 @@ package com.example.healthdietapp.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.healthdietapp.R;
 import com.example.healthdietapp.models.Recipe;
+import com.example.healthdietapp.utils.ImageUtils;
 
 import java.util.List;
 
@@ -58,15 +60,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         private TextView recipeName;
         private TextView recipeDescription;
 
+        private ImageView recipeImage;
+
         RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeName = itemView.findViewById(R.id.recipeName);
             recipeDescription = itemView.findViewById(R.id.recipeDescription);
+            recipeImage = itemView.findViewById(R.id.recipeImage);
         }
 
         void bind(Recipe recipe, OnRecipeClickListener listener) {
             recipeName.setText(recipe.getName());
             recipeDescription.setText(recipe.getDescription());
+            ImageUtils.loadFirstImage(recipeImage, recipe.getImageUrl());
             itemView.setOnClickListener(v -> listener.onRecipeClick(recipe));
         }
     }

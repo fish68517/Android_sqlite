@@ -47,6 +47,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".activities.HealthChartActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".activities.PostDetailActivity"
             android:exported="false" />
 

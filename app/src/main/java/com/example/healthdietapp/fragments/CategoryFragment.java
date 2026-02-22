@@ -109,7 +109,7 @@ public class CategoryFragment extends Fragment {
             selectedCategoryId = category.getCategoryId();
             Log.d(TAG, "点击主分类: " + category.getName() + " (ID: " + selectedCategoryId + ")");
             categoryAdapter.setSelectedPosition(position);
-            loadSubcategoriesAndRecipes(selectedCategoryId);
+            loadSubcategoriesAndRecipes(category.getName());
         });
         mainCategoriesRecyclerView.setAdapter(categoryAdapter);
 
@@ -225,16 +225,10 @@ public class CategoryFragment extends Fragment {
         }
     }
 
-    private void loadSubcategoriesAndRecipes(String parentCategoryId) {
-        Log.d(TAG, "开始加载子分类及对应的食谱, 父分类ID: " + parentCategoryId);
+    private void loadSubcategoriesAndRecipes(String categoryName) {
+        Log.d(TAG, "开始加载子分类及对应的食谱, 父分类: " + categoryName);
         try {
-            List<RecipeCategory> subcategories = recipeDAO.getSubcategories(parentCategoryId);
-            List<Recipe> recipes = recipeDAO.getRecipesByCategory(parentCategoryId);
-
-            if (subcategories != null) {
-                Log.d(TAG, "加载子分类成功, 共 " + subcategories.size() + " 项");
-                subcategoryAdapter.updateSubcategories(subcategories);
-            }
+            List<Recipe> recipes = recipeDAO.getRecipesByCategory(categoryName);
             if (recipes != null) {
                 Log.d(TAG, "加载食谱成功, 共 " + recipes.size() + " 项");
                 recipeAdapter.updateRecipes(recipes);
