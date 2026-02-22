@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.healthdietapp.R;
 import com.example.healthdietapp.activities.AccountManagementActivity;
+import com.example.healthdietapp.activities.AddRecipeActivity;
 import com.example.healthdietapp.activities.ContactUsActivity;
 import com.example.healthdietapp.activities.EditProfileActivity;
 import com.example.healthdietapp.activities.FeedbackActivity;
@@ -82,6 +83,7 @@ public class ProfileFragment extends Fragment {
         editProfileButton = view.findViewById(R.id.editProfileButton);
         myPostsButton = view.findViewById(R.id.myPostsButton);
         myFollowingButton = view.findViewById(R.id.myFollowingButton);
+
         myCollectionsButton = view.findViewById(R.id.myCollectionsButton);
         accountManagementButton = view.findViewById(R.id.accountManagementButton);
         feedbackButton = view.findViewById(R.id.feedbackButton);
@@ -138,7 +140,7 @@ public class ProfileFragment extends Fragment {
         });
 
         myFollowingButton.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), MyFollowingActivity.class);
+            Intent intent = new Intent(requireContext(), AddRecipeActivity.class);
             startActivity(intent);
         });
 

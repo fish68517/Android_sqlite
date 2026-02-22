@@ -105,11 +105,11 @@
 
         <!-- My Following -->
         <com.google.android.material.button.MaterialButton
-            android:visibility="gone"
+
             android:id="@+id/myFollowingButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/my_following"
+            android:text="添加菜谱"
             android:gravity="start|center_vertical"
             android:paddingStart="@dimen/screen_margin"
             android:layout_marginBottom="@dimen/screen_margin_small"
