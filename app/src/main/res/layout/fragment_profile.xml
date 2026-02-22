@@ -126,6 +126,18 @@
             app:cornerRadius="@dimen/button_corner_radius"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
+        <!-- My Collections -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myLikesButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的点赞"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/screen_margin"
+            android:layout_marginBottom="@dimen/screen_margin_small"
+            app:cornerRadius="@dimen/button_corner_radius"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
         <!-- Account Management -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/accountManagementButton"

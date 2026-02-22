@@ -2,6 +2,7 @@ package com.example.healthdietapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,7 @@ public class DiscoverFragment extends Fragment {
         postDAO = new PostDAO(dbHelper);
         sessionManager = new SessionManager(requireContext());
         userId = sessionManager.getUserId();
+        Log.d("User ID:", userId);
     }
 
     private void setupRecyclerView() {

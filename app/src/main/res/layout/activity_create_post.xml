@@ -10,17 +10,8 @@
         android:orientation="vertical"
         android:padding="@dimen/screen_margin">
 
-        <!-- Title -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Create Post"
-            android:textSize="@dimen/text_size_title"
-            android:textStyle="bold"
-            android:textColor="@color/md_theme_light_primary"
-            android:layout_marginBottom="@dimen/screen_margin" />
+        <include layout="@layout/layout_toolbar" />
 
-        <!-- Image Upload Area -->
         <FrameLayout
             android:id="@+id/imageUploadArea"
             android:layout_width="match_parent"
@@ -46,13 +37,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tap to upload image"
+                    android:text="点击上传图片"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@color/dark_gray" />
             </LinearLayout>
         </FrameLayout>
 
-        <!-- Image Upload Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
                 android:layout_weight="1"
-                android:text="Gallery"
+                android:text="相册"
                 android:textSize="@dimen/text_size_body"
                 android:background="?attr/colorPrimary"
                 android:layout_marginEnd="@dimen/screen_margin_small" />
@@ -74,29 +64,27 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/button_height"
                 android:layout_weight="1"
-                android:text="Camera"
+                android:text="拍照"
                 android:textSize="@dimen/text_size_body"
                 android:background="?attr/colorSecondary" />
         </LinearLayout>
 
-        <!-- Title Input -->
         <EditText
             android:id="@+id/postTitleInput"
             android:layout_width="match_parent"
             android:layout_height="@dimen/input_height"
-            android:hint="Post Title"
+            android:hint="帖子标题"
             android:inputType="text"
             android:padding="@dimen/screen_margin_small"
             android:background="@color/md_theme_light_surface_variant"
             android:textSize="@dimen/text_size_body"
             android:layout_marginBottom="@dimen/screen_margin" />
 
-        <!-- Content Input -->
         <EditText
             android:id="@+id/postContentInput"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:hint="Post Content"
+            android:hint="帖子内容..."
             android:inputType="textMultiLine"
             android:gravity="top"
             android:padding="@dimen/screen_margin_small"
@@ -104,35 +92,32 @@
             android:textSize="@dimen/text_size_body"
             android:layout_marginBottom="@dimen/screen_margin" />
 
-        <!-- Tags Input -->
         <EditText
             android:id="@+id/postTagsInput"
             android:layout_width="match_parent"
             android:layout_height="@dimen/input_height"
-            android:hint="Tags (comma separated)"
+            android:hint="标签 (多个标签请用逗号分隔)"
             android:inputType="text"
             android:padding="@dimen/screen_margin_small"
             android:background="@color/md_theme_light_surface_variant"
             android:textSize="@dimen/text_size_body"
             android:layout_marginBottom="@dimen/screen_margin" />
 
-        <!-- Publish Button -->
         <Button
             android:id="@+id/publishButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
-            android:text="Publish"
+            android:text="发布"
             android:textSize="@dimen/text_size_body"
             android:textStyle="bold"
             android:background="?attr/colorPrimary"
             android:layout_marginBottom="@dimen/screen_margin" />
 
-        <!-- Cancel Button -->
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
-            android:text="Cancel"
+            android:text="取消"
             android:textSize="@dimen/text_size_body"
             android:background="@color/md_theme_light_outline" />
 

@@ -343,4 +343,26 @@ public class RecipeDAO {
         category.setIcon(cursor.getString(cursor.getColumnIndexOrThrow("icon")));
         return category;
     }
+
+    // 根据时间和userId 以及 mealType 查询食谱
+    public Recipe getRecipeByUserMeal(String userId, String date, String mealType) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        try {
+            Cursor cursor = db.rawQuery(
+                    "SELECT r.* FROM recipes r " +
+                    "INNER JOIN user_recipes ur ON r.recipe_id = ur.recipe_id " +
+                    "WHERE ur.user_id = ? AND ur.date = ? AND ur.meal_type = ?",
+                    new String[]{userId, date, mealType});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                Recipe recipe = cursorToRecipe(cursor);
+                cursor.close();
+
+                return recipe;
+            }
+            return null;
+        } finally {
+            db.close();
+        }
+    }
 }

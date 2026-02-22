@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:padding="@dimen/screen_margin">
 
-    <!-- Post Image -->
+    <include layout="@layout/layout_toolbar" />
+
     <ImageView
         android:id="@+id/postDetailImage"
         android:layout_width="match_parent"
@@ -15,48 +16,42 @@
         android:layout_marginBottom="@dimen/screen_margin"
         android:contentDescription="Post image" />
 
-    <!-- Post Title -->
     <TextView
         android:id="@+id/postDetailTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Post Title"
+        android:text="帖子标题"
         android:textSize="@dimen/text_size_subtitle"
         android:textStyle="bold"
         android:textColor="@color/md_theme_light_primary"
         android:layout_marginBottom="@dimen/screen_margin_small" />
 
-    <!-- Post Author -->
     <TextView
         android:id="@+id/postDetailAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="By: Author"
+        android:text="作者: "
         android:textSize="@dimen/text_size_body"
         android:textColor="@android:color/darker_gray"
         android:layout_marginBottom="@dimen/screen_margin_small" />
 
-    <!-- Post Content -->
     <TextView
         android:id="@+id/postDetailContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Post content..."
+        android:text="帖子内容..."
         android:textSize="@dimen/text_size_body"
-        android:textColor="@android:color/black"
         android:layout_marginBottom="@dimen/screen_margin" />
 
-    <!-- Post Likes -->
     <TextView
         android:id="@+id/postDetailLikes"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0 likes"
+        android:text="0 点赞"
         android:textSize="@dimen/text_size_body"
-        android:textColor="@android:color/darker_gray"
-        android:layout_marginBottom="@dimen/screen_margin" />
+        android:textColor="@color/md_theme_light_primary"
+        android:textStyle="bold" />
 
-    <!-- Interaction Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_weight="1"
-            android:text="Like"
+            android:text="点赞"
             android:textSize="@dimen/text_size_body"
             android:background="?attr/colorPrimary"
             android:layout_marginEnd="@dimen/screen_margin_small" />
@@ -79,19 +74,21 @@
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_weight="1"
-            android:text="Collect"
+            android:text="收藏"
             android:textSize="@dimen/text_size_body"
             android:background="?attr/colorPrimary"
             android:layout_marginEnd="@dimen/screen_margin_small" />
 
         <Button
+            android:visibility="gone"
             android:id="@+id/followButton"
             android:layout_width="0dp"
             android:layout_height="@dimen/button_height"
             android:layout_weight="1"
-            android:text="Follow"
+            android:text="关注"
             android:textSize="@dimen/text_size_body"
-            android:background="?attr/colorSecondary" />
+            android:background="?attr/colorPrimary" />
+
     </LinearLayout>
 
 </LinearLayout>

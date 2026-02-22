@@ -3,7 +3,6 @@ package com.example.healthdietapp.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * DatabaseHelper - Manages SQLite database creation and upgrades
@@ -11,25 +10,20 @@ import android.util.Log;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = "DatabaseHelper"; // 增加日志 TAG
-
     private static final String DATABASE_NAME = "health_diet_app.db";
     private static final int DATABASE_VERSION = 1;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d(TAG, "DatabaseHelper 实例化，数据库名：" + DATABASE_NAME);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d(TAG, "==== onCreate: 开始创建数据库表 ====");
         // Create all database tables
         createUsersTables(db);
         createRecipeTables(db);
         createCommunityTables(db);
         createUtilityTables(db);
-        Log.d(TAG, "所有数据表创建完成");
 
         // Insert simplified Chinese mock data (only runs when DB is first created)
         insertMockData(db);
@@ -37,7 +31,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "==== onUpgrade: 升级数据库 (版本 " + oldVersion + " -> " + newVersion + ") ====");
         // Handle database version upgrades
         // For now, drop all tables and recreate them
         dropAllTables(db);
@@ -186,12 +179,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (user_id) REFERENCES users(user_id))");
     }
 
+
     /**
      * 插入简体中文模拟数据（每张表 5-6 条）。
      * 注意：该方法仅在数据库首次创建（onCreate）时调用一次。
      */
     private void insertMockData(SQLiteDatabase db) {
-        Log.d(TAG, "准备批量插入本地模拟数据...");
         db.beginTransaction();
         try {
             // 开启外键约束（Android SQLite 默认可能关闭）
@@ -210,18 +203,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "INSERT INTO user_preferences (preference_id, user_id, taste_tendency, diet_type, health_goal, restrictions) VALUES ('P004', 'U004', '偏重口', '低碳', '塑形', '不吃海鲜');",
                     "INSERT INTO user_preferences (preference_id, user_id, taste_tendency, diet_type, health_goal, restrictions) VALUES ('P005', 'U005', '偏清淡', '素食', '健康管理', '无');",
                     "INSERT INTO user_preferences (preference_id, user_id, taste_tendency, diet_type, health_goal, restrictions) VALUES ('P006', 'U006', '偏重口', '地中海', '减脂', '不吃内脏');",
-                    "INSERT INTO recipe_categories (category_id, name, parent_category_id, icon) VALUES ('C001', '早餐', NULL, 'icon_breakfast.png');",
                     "INSERT INTO recipe_categories (category_id, name, parent_category_id, icon) VALUES ('C002', '主食', NULL, 'icon_staple.png');",
                     "INSERT INTO recipe_categories (category_id, name, parent_category_id, icon) VALUES ('C003', '轻食', NULL, 'icon_salad.png');",
                     "INSERT INTO recipe_categories (category_id, name, parent_category_id, icon) VALUES ('C004', '家常菜', NULL, 'icon_home.png');",
                     "INSERT INTO recipe_categories (category_id, name, parent_category_id, icon) VALUES ('C005', '汤羹', NULL, 'icon_soup.png');",
                     "INSERT INTO recipe_categories (category_id, name, parent_category_id, icon) VALUES ('C006', '能量碗', NULL, 'icon_bowl.png');",
-                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R001', '番茄鸡胸肉意面', '高蛋白低脂，适合减脂期', '鸡胸肉,全麦意面,番茄,洋葱,橄榄油', '1.鸡胸切丁煎熟 2.番茄炒出汁 3.煮意面拌匀', '热量:450kcal;蛋白质:38g;脂肪:10g;碳水:52g', 'C002', 'img_r001.jpg', 'U001', 1769559890, 1771287890);",
-                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R002', '清炒西兰花虾仁', '清淡鲜香，补充优质蛋白', '西兰花,虾仁,蒜,盐,黑胡椒', '1.焯西兰花 2.虾仁滑炒 3.合炒调味', '热量:220kcal;蛋白质:24g;脂肪:8g;碳水:12g', 'C004', 'img_r002.jpg', 'U002', 1769819090, 1771201490);",
-                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R003', '燕麦酸奶水果杯', '早餐快手，饱腹感强', '燕麦,无糖酸奶,香蕉,蓝莓,坚果', '1.杯底铺燕麦 2.加酸奶 3.放水果', '热量:310kcal;蛋白质:16g;脂肪:9g;碳水:42g', 'C001', 'img_r003.jpg', 'U003', 1770423890, 1771547090);",
-                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R004', '牛油果鸡蛋沙拉', '低碳高脂，适合控糖', '牛油果,鸡蛋,生菜,柠檬汁', '1.鸡蛋煮熟切块 2.牛油果拌匀 3.加柠檬汁', '热量:380kcal;蛋白质:18g;脂肪:28g;碳水:14g', 'C003', 'img_r004.jpg', 'U004', 1770683090, 1771633490);",
-                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R005', '菌菇豆腐汤', '低脂暖胃，适合晚餐', '豆腐,香菇,金针菇,小葱', '1.菌菇煮开 2.下豆腐 3.少盐调味', '热量:160kcal;蛋白质:14g;脂肪:6g;碳水:10g', 'C005', 'img_r005.jpg', 'U005', 1770942290, 1771633490);",
-                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R006', '黑椒牛肉蔬菜碗', '高蛋白能量餐，适合增肌', '牛里脊,彩椒,洋葱,糙米,黑胡椒', '1.牛肉快炒 2.蔬菜翻炒 3.铺糙米装碗', '热量:520kcal;蛋白质:40g;脂肪:14g;碳水:58g', 'C006', 'img_r006.jpg', 'U002', 1771115090, 1771719890);",
+                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R001', '番茄鸡胸肉意面', '高蛋白低脂，适合减脂期', '鸡胸肉,全麦意面,番茄,洋葱,橄榄油', '1.鸡胸切丁煎熟 2.番茄炒出汁 3.煮意面拌匀', '热量:450kcal;蛋白质:38g;脂肪:10g;碳水:52g', '主食', 'img_r001.jpg', 'U001', 1769559890, 1771287890);",
+                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R002', '清炒西兰花虾仁', '清淡鲜香，补充优质蛋白', '西兰花,虾仁,蒜,盐,黑胡椒', '1.焯西兰花 2.虾仁滑炒 3.合炒调味', '热量:220kcal;蛋白质:24g;脂肪:8g;碳水:12g', '家常菜', 'img_r002.jpg', 'U002', 1769819090, 1771201490);",
+                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R003', '燕麦酸奶水果杯', '早餐快手，饱腹感强', '燕麦,无糖酸奶,香蕉,蓝莓,坚果', '1.杯底铺燕麦 2.加酸奶 3.放水果', '热量:310kcal;蛋白质:16g;脂肪:9g;碳水:42g', '早餐', 'img_r003.jpg', 'U003', 1770423890, 1771547090);",
+                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R004', '牛油果鸡蛋沙拉', '低碳高脂，适合控糖', '牛油果,鸡蛋,生菜,柠檬汁', '1.鸡蛋煮熟切块 2.牛油果拌匀 3.加柠檬汁', '热量:380kcal;蛋白质:18g;脂肪:28g;碳水:14g', '轻食', 'img_r004.jpg', 'U004', 1770683090, 1771633490);",
+                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R005', '菌菇豆腐汤', '低脂暖胃，适合晚餐', '豆腐,香菇,金针菇,小葱', '1.菌菇煮开 2.下豆腐 3.少盐调味', '热量:160kcal;蛋白质:14g;脂肪:6g;碳水:10g', '汤羹', 'img_r005.jpg', 'U005', 1770942290, 1771633490);",
+                    "INSERT INTO recipes (recipe_id, name, description, ingredients, instructions, nutrition_info, category, image_url, created_by, created_at, updated_at) VALUES ('R006', '黑椒牛肉蔬菜碗', '高蛋白能量餐，适合增肌', '牛里脊,彩椒,洋葱,糙米,黑胡椒', '1.牛肉快炒 2.蔬菜翻炒 3.铺糙米装碗', '热量:520kcal;蛋白质:40g;脂肪:14g;碳水:58g', '能量碗', 'img_r006.jpg', 'U002', 1771115090, 1771719890);",
                     "INSERT INTO user_recipes (user_recipe_id, user_id, recipe_id, date, meal_type, added_at) VALUES ('UR001', 'U001', 'R003', '2026-02-18', '早餐', 1771374290);",
                     "INSERT INTO user_recipes (user_recipe_id, user_id, recipe_id, date, meal_type, added_at) VALUES ('UR002', 'U001', 'R002', '2026-02-19', '午餐', 1771460690);",
                     "INSERT INTO user_recipes (user_recipe_id, user_id, recipe_id, date, meal_type, added_at) VALUES ('UR003', 'U002', 'R006', '2026-02-19', '晚餐', 1771460690);",
@@ -234,12 +226,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "INSERT INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('HR004', 'U003', '2026-02-20', 62.0, 2.0, '{\"waist\":70,\"hip\":90}', 1771547090);",
                     "INSERT INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('HR005', 'U004', '2026-02-21', 80.3, 1.6, '{\"waist\":90,\"hip\":102}', 1771633490);",
                     "INSERT INTO health_records (record_id, user_id, date, weight, water_intake, measurements, recorded_at) VALUES ('HR006', 'U005', '2026-02-21', 55.8, 2.3, '{\"waist\":66,\"hip\":88}', 1771633490);",
-                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST001', 'U001', '一周减脂打卡分享', '这周坚持每天走一万步，体重下降了0.6kg，饮食以清淡为主。', 'img_post1_a.jpg,img_post1_b.jpg', '减脂,打卡,运动', 12, 3, 1771287890);",
-                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST002', 'U002', '增肌期怎么吃更舒服？', '我把主食换成糙米和土豆，训练后补充乳清，感觉恢复更快。', 'img_post2.jpg', '增肌,饮食,训练', 8, 2, 1771374290);",
-                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST003', 'U003', '控糖早餐推荐', '燕麦+无糖酸奶+蓝莓真的很顶，饱腹又不容易犯困。', 'img_post3.jpg', '控糖,早餐,燕麦', 15, 5, 1771460690);",
-                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST004', 'U004', '低碳也能好吃', '牛油果鸡蛋沙拉加一点柠檬汁，口感很清爽。', 'img_post4.jpg', '低碳,轻食', 6, 1, 1771547090);",
-                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST005', 'U005', '素食晚餐记录', '今晚做了菌菇豆腐汤，简单但很满足，睡前也不饿。', 'img_post5.jpg', '素食,晚餐,汤', 9, 0, 1771633490);",
-                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST006', 'U006', '喝水真的有用吗？', '我这两天把喝水量提高到2L以上，皮肤状态确实变好一些。', 'img_post6.jpg', '喝水,习惯', 4, 0, 1771719890);",
+                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST001', 'U001', '一周减脂打卡分享', '这周坚持每天走一万步，体重下降了0.6kg，饮食以清淡为主。', 'img_post1_a.jpg,img_post1_b.jpg', '减脂,打卡,运动', 12, 3, 1771287890, 1771287890);",
+                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST002', 'U002', '增肌期怎么吃更舒服？', '我把主食换成糙米和土豆，训练后补充乳清，感觉恢复更快。', 'img_post2.jpg', '增肌,饮食,训练', 8, 2, 1771374290, 1771287890);",
+                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST003', 'U003', '控糖早餐推荐', '燕麦+无糖酸奶+蓝莓真的很顶，饱腹又不容易犯困。', 'img_post3.jpg', '控糖,早餐,燕麦', 15, 5, 1771460690, 1771287890);",
+                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST004', 'U004', '低碳也能好吃', '牛油果鸡蛋沙拉加一点柠檬汁，口感很清爽。', 'img_post4.jpg', '低碳,轻食', 6, 1, 1771547090, 1771287890);",
+                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST005', 'U005', '素食晚餐记录', '今晚做了菌菇豆腐汤，简单但很满足，睡前也不饿。', 'img_post5.jpg', '素食,晚餐,汤', 9, 0, 1771633490, 1771287890);",
+                    "INSERT INTO posts (post_id, user_id, title, content, images, tags, likes, comments, created_at, updated_at) VALUES ('POST006', 'U006', '喝水真的有用吗？', '我这两天把喝水量提高到2L以上，皮肤状态确实变好一些。', 'img_post6.jpg', '喝水,习惯', 4, 0, 1771719890, 1771287890);",
                     "INSERT INTO post_likes (like_id, user_id, post_id, liked_at) VALUES ('L001', 'U002', 'POST001', 1771374290);",
                     "INSERT INTO post_likes (like_id, user_id, post_id, liked_at) VALUES ('L002', 'U003', 'POST001', 1771374290);",
                     "INSERT INTO post_likes (like_id, user_id, post_id, liked_at) VALUES ('L003', 'U001', 'POST003', 1771547090);",
@@ -283,17 +275,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
             db.setTransactionSuccessful();
-            Log.d(TAG, "本地模拟数据全部插入成功！共执行了 " + sqlList.length + " 条插入语句。");
-        } catch (Exception e) {
-            Log.e(TAG, "插入本地模拟数据时发生异常", e);
         } finally {
             db.endTransaction();
-            Log.d(TAG, "结束数据库事务");
         }
     }
 
     private void dropAllTables(SQLiteDatabase db) {
-        Log.d(TAG, "清除所有旧的数据表...");
         db.execSQL("DROP TABLE IF EXISTS feedbacks");
         db.execSQL("DROP TABLE IF EXISTS search_history");
         db.execSQL("DROP TABLE IF EXISTS health_questions");

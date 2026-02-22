@@ -70,8 +70,8 @@
             <!-- Food Ranking Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/foodRankingCard"
-                android:layout_width="150dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
                 android:layout_marginEnd="@dimen/screen_margin_small"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/elevation_small"
@@ -99,8 +99,8 @@
             <!-- What to Eat Today Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/whatToEatCard"
-                android:layout_width="150dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
                 android:layout_marginEnd="@dimen/screen_margin_small"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/elevation_small"
@@ -128,8 +128,8 @@
             <!-- Food Weight Estimation Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/foodWeightCard"
-                android:layout_width="150dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
                 android:layout_marginEnd="@dimen/screen_margin_small"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/elevation_small"
@@ -157,8 +157,8 @@
             <!-- Daily Q&A Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/dailyQACard"
-                android:layout_width="150dp"
-                android:layout_height="120dp"
+                android:layout_width="100dp"
+                android:layout_height="80dp"
                 android:layout_marginEnd="@dimen/screen_margin_small"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/elevation_small"

@@ -3,10 +3,12 @@ package com.example.healthdietapp.fragments;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.healthdietapp.R;
-import com.example.healthdietapp.activities.HealthRecordActivity;
 import com.example.healthdietapp.activities.RecipeDetailActivity;
 import com.example.healthdietapp.adapters.RecipeAdapter;
 import com.example.healthdietapp.database.DatabaseHelper;
@@ -32,25 +33,30 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Home Fragment - Displays user's daily recipes and recommendations
  */
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
+
     private MaterialButton prevDateButton;
     private MaterialButton nextDateButton;
-    private MaterialButton dailyRecordButton;
-    // 1. 恢复按钮的声明
     private MaterialButton datePickerButton;
-
     private MaterialButton moreRecommendedButton;
+    private MaterialButton saveMealsButton; // 新增：保存按钮
+
     private MaterialCardView breakfastCard;
     private MaterialCardView lunchCard;
     private MaterialCardView dinnerCard;
-    private TextView breakfastRecipeName;
-    private TextView lunchRecipeName;
-    private TextView dinnerRecipeName;
+
+    // 改为 EditText，以支持用户输入
+    private EditText breakfastRecipeName;
+    private EditText lunchRecipeName;
+    private EditText dinnerRecipeName;
+
     private RecyclerView recommendedRecipesRecyclerView;
 
     private DatabaseHelper dbHelper;
@@ -82,17 +88,18 @@ public class HomeFragment extends Fragment {
     private void initializeViews(View view) {
         prevDateButton = view.findViewById(R.id.prevDateButton);
         nextDateButton = view.findViewById(R.id.nextDateButton);
-        dailyRecordButton = view.findViewById(R.id.recordHealthDataButton);
-        // 2. 恢复按钮的绑定
         datePickerButton = view.findViewById(R.id.datePickerButton);
-
         moreRecommendedButton = view.findViewById(R.id.moreRecommendedButton);
+        saveMealsButton = view.findViewById(R.id.saveMealsButton); // 绑定保存按钮
+
         breakfastCard = view.findViewById(R.id.breakfastCard);
         lunchCard = view.findViewById(R.id.lunchCard);
         dinnerCard = view.findViewById(R.id.dinnerCard);
+
         breakfastRecipeName = view.findViewById(R.id.breakfastRecipeName);
         lunchRecipeName = view.findViewById(R.id.lunchRecipeName);
         dinnerRecipeName = view.findViewById(R.id.dinnerRecipeName);
+
         recommendedRecipesRecyclerView = view.findViewById(R.id.recommendedRecipesRecyclerView);
     }
 
@@ -122,16 +129,9 @@ public class HomeFragment extends Fragment {
             loadRecipes();
         });
 
-        // 3. 恢复点击事件，点击触发 showDatePicker()
         datePickerButton.setOnClickListener(v -> showDatePicker());
 
-        dailyRecordButton.setOnClickListener(v -> {
-            Intent intent = new Intent(requireContext(), HealthRecordActivity.class);
-            startActivity(intent);
-        });
-
         moreRecommendedButton.setOnClickListener(v -> {
-            // Navigate to CategoryFragment
             if (getActivity() != null) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, new CategoryFragment())
@@ -139,11 +139,13 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
+
+        // 绑定保存按钮事件
+        saveMealsButton.setOnClickListener(v -> saveDailyMeals());
     }
 
     private void updateDateDisplay() {
         String displayDate = DateUtils.getDisplayDate(currentDate);
-        // 4. 恢复日期的文本更新，将当前日期显示在按钮上
         if (datePickerButton != null) {
             datePickerButton.setText(displayDate);
         }
@@ -163,8 +165,8 @@ public class HomeFragment extends Fragment {
                 requireContext(),
                 (view, year, month, dayOfMonth) -> {
                     currentDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth);
-                    updateDateDisplay(); // 更新按钮上的日期文本
-                    loadRecipes();       // 根据新选择的日期重新加载食谱数据
+                    updateDateDisplay();
+                    loadRecipes();
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -194,53 +196,147 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadUserRecipes() {
-        try {
-            List<UserRecipe> userRecipes = userRecipeDAO.getUserRecipesByDate(userId, currentDate);
+        new Thread(() -> {
+            try {
+                List<UserRecipe> userRecipes = userRecipeDAO.getUserRecipesByDate(userId, currentDate);
 
-            Recipe breakfastRecipe = null;
-            Recipe lunchRecipe = null;
-            Recipe dinnerRecipe = null;
+                Recipe breakfastRecipe = null;
+                Recipe lunchRecipe = null;
+                Recipe dinnerRecipe = null;
 
-            for (UserRecipe userRecipe : userRecipes) {
-                Recipe recipe = recipeDAO.getRecipeById(userRecipe.getRecipeId());
-                if (recipe != null) {
-                    switch (userRecipe.getMealType()) {
-                        case "breakfast":
-                            breakfastRecipe = recipe;
-                            break;
-                        case "lunch":
-                            lunchRecipe = recipe;
-                            break;
-                        case "dinner":
-                            dinnerRecipe = recipe;
-                            break;
+                for (UserRecipe userRecipe : userRecipes) {
+                    Recipe recipe = recipeDAO.getRecipeById(userRecipe.getRecipeId());
+                    if (recipe != null) {
+                        switch (userRecipe.getMealType()) {
+                            case "breakfast":
+                                breakfastRecipe = recipe;
+                                break;
+                            case "lunch":
+                                lunchRecipe = recipe;
+                                break;
+                            case "dinner":
+                                dinnerRecipe = recipe;
+                                break;
+                        }
                     }
                 }
-            }
 
-            Recipe finalBreakfastRecipe = breakfastRecipe;
-            Recipe finalLunchRecipe = lunchRecipe;
-            Recipe finalDinnerRecipe = dinnerRecipe;
-            updateMealCard(breakfastRecipeName, finalBreakfastRecipe);
-            updateMealCard(lunchRecipeName, finalLunchRecipe);
-            updateMealCard(dinnerRecipeName, finalDinnerRecipe);
-        } catch (Exception e) {
-            e.printStackTrace();
+                Recipe finalBreakfastRecipe = breakfastRecipe;
+                Recipe finalLunchRecipe = lunchRecipe;
+                Recipe finalDinnerRecipe = dinnerRecipe;
+
+                if (isAdded() && getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        updateMealCard(breakfastRecipeName, finalBreakfastRecipe);
+                        updateMealCard(lunchRecipeName, finalLunchRecipe);
+                        updateMealCard(dinnerRecipeName, finalDinnerRecipe);
+                    });
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "加载用户食谱异常", e);
+            }
+        }).start();
+    }
+
+    // 修改为接收 EditText
+    private void updateMealCard(EditText mealEditText, Recipe recipe) {
+        if (recipe != null && recipe.getName() != null && !recipe.getName().isEmpty()) {
+            mealEditText.setText(recipe.getName());
+        } else {
+            mealEditText.setText(""); // 清空，让 hint 提示语显示出来
         }
     }
 
-    private void updateMealCard(TextView mealTextView, Recipe recipe) {
-        if (recipe != null) {
-            mealTextView.setText(recipe.getName());
-            mealTextView.setTextColor(requireContext().getColor(android.R.color.black));
-        } else {
-            mealTextView.setText("没有安排食谱");
-            mealTextView.setTextColor(requireContext().getColor(android.R.color.darker_gray));
+    // 新增：保存三餐到数据库
+    private void saveDailyMeals() {
+        String breakfastText = breakfastRecipeName.getText().toString().trim();
+        String lunchText = lunchRecipeName.getText().toString().trim();
+        String dinnerText = dinnerRecipeName.getText().toString().trim();
+
+        if (TextUtils.isEmpty(breakfastText) && TextUtils.isEmpty(lunchText) && TextUtils.isEmpty(dinnerText)) {
+            Toast.makeText(requireContext(), "请至少输入一顿饭的食谱", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        saveMealsButton.setEnabled(false);
+        saveMealsButton.setText("保存中...");
+
+        try {
+            saveSingleMeal("breakfast", breakfastText);
+            saveSingleMeal("lunch", lunchText);
+            saveSingleMeal("dinner", dinnerText);
+
+            if (isAdded() && getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    saveMealsButton.setEnabled(true);
+                    saveMealsButton.setText("保存今日食谱");
+                    Toast.makeText(requireContext(), "食谱保存成功！", Toast.LENGTH_SHORT).show();
+                });
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "保存三餐异常", e);
+            if (isAdded() && getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    saveMealsButton.setEnabled(true);
+                    saveMealsButton.setText("保存今日食谱");
+                    Toast.makeText(requireContext(), "保存失败，请重试", Toast.LENGTH_SHORT).show();
+                });
+            }
+        }
+    }
+
+    // 新增：处理单顿饭的保存逻辑
+    private void saveSingleMeal(String mealType, String recipeName) {
+        // 先删除该日期、该顿饭的历史记录（防止抛出 UNIQUE 约束异常）
+
+        // 如果用户在输入框写了内容，才进行添加
+        if (!recipeName.isEmpty()) {
+            // 1. 生成一条自定义食谱放入 recipes 表
+            // 先查询当天currentDate 是否存在食谱，如果存在则更新，不存在则插
+
+            Recipe existingRecipe = recipeDAO.getRecipeByUserMeal(userId,currentDate,mealType);
+            if (existingRecipe == null) {
+                // 不存在则创建新食谱
+                Recipe customRecipe = new Recipe();
+                String newRecipeId = UUID.randomUUID().toString();
+                customRecipe.setRecipeId(newRecipeId);
+                customRecipe.setName(recipeName);
+                customRecipe.setCategory("自定义输入");
+                customRecipe.setCreatedBy(userId);
+                customRecipe.setCreatedAt(System.currentTimeMillis());
+                customRecipe.setUpdatedAt(System.currentTimeMillis());
+                recipeDAO.createRecipe(customRecipe);
+            } else {
+                // 已存在则更新食谱名称和更新时间
+                existingRecipe.setName(recipeName);
+                existingRecipe.setUpdatedAt(System.currentTimeMillis());
+                recipeDAO.updateRecipe(existingRecipe);
+            }
+
+            // 2. 将这条食谱关联到 user_recipes 安排表中
+            UserRecipe userRecipe = new UserRecipe();
+            userRecipe.setUserRecipeId(UUID.randomUUID().toString());
+            userRecipe.setUserId(userId);
+            userRecipe.setRecipeId(newRecipeId);
+            userRecipe.setDate(currentDate);
+            userRecipe.setMealType(mealType);
+            userRecipe.setAddedAt(System.currentTimeMillis());
+
+
+            userRecipeDAO.addUserRecipe(userRecipe);
+            Log.d(TAG, "成功保存食谱: [" + mealType + "] " + recipeName);
         }
     }
 
     private void loadRecommendedRecipes() {
-        List<Recipe> recommendedRecipes = recipeDAO.getRecommendedRecipes(10);
-        recipeAdapter.updateRecipes(recommendedRecipes);
+        try {
+            List<Recipe> recommendedRecipes = recipeDAO.getRecommendedRecipes(10);
+            if (isAdded() && getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    recipeAdapter.updateRecipes(recommendedRecipes);
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -57,8 +57,18 @@ public class AnimationUtils {
         view.startAnimation(animation);
     }
 
-    private static Animation loadAnimation(Context context, int fadeOut) {
-        return null;
+    private static Animation loadAnimation(Context context, int animResId) {
+        try {
+            // 使用 Android 系统自带的 AnimationUtils 来加载 res/anim/ 下的真实动画
+            // 注意：必须写全路径 android.view.animation.AnimationUtils，防止与当前类名冲突
+            return android.view.animation.AnimationUtils.loadAnimation(context, animResId);
+        } catch (Exception e) {
+            // 如果某个动画 XML 文件（如 R.anim.button_click）还没创建，
+            // 捕获异常并返回一个默认的“假动画”(透明度1到1，持续0秒)，防止APP崩溃
+            android.view.animation.AlphaAnimation defaultAnim = new android.view.animation.AlphaAnimation(1.0f, 1.0f);
+            defaultAnim.setDuration(0);
+            return defaultAnim;
+        }
     }
 
     /**

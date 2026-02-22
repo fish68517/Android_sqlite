@@ -67,130 +67,106 @@
 
         android:layout_marginBottom="@dimen/component_spacing" />
 
-    <!-- Breakfast Card -->
+
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/breakfastCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/component_spacing"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="@dimen/elevation_small"
-        app:strokeColor="@color/md_theme_light_outline"
-        app:strokeWidth="1dp"
-        >
-
+        app:cardCornerRadius="@dimen/button_corner_radius"
+        app:cardElevation="2dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/screen_margin">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/breakfastTitle"
-                android:layout_width="match_parent"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="早餐"
-                android:textSize="@dimen/text_size_body"
+                android:text="早餐: "
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_primary" />
-
-            <com.google.android.material.textview.MaterialTextView
+            <EditText
                 android:id="@+id/breakfastRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="暂无安排"
-                android:textSize="@dimen/text_size_body"
-                android:textColor="@color/md_theme_light_on_surface_variant"
-                android:layout_marginTop="@dimen/screen_margin_small" />
+                android:background="@null"
+                android:hint="点击输入早餐食谱"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Lunch Card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/lunchCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/component_spacing"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="@dimen/elevation_small"
-        app:strokeColor="@color/md_theme_light_outline"
-        app:strokeWidth="1dp"
-        >
-
+        app:cardCornerRadius="@dimen/button_corner_radius"
+        app:cardElevation="2dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/screen_margin">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/lunchTitle"
-                android:layout_width="match_parent"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="午餐"
-                android:textSize="@dimen/text_size_body"
+                android:text="午餐: "
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_primary" />
-
-            <com.google.android.material.textview.MaterialTextView
+            <EditText
                 android:id="@+id/lunchRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="暂无安排"
-                android:textSize="@dimen/text_size_body"
-                android:textColor="@color/md_theme_light_on_surface_variant"
-                android:layout_marginTop="@dimen/screen_margin_small"/>
+                android:background="@null"
+                android:hint="点击输入午餐食谱"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Dinner Card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/dinnerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/component_spacing"
-        app:cardCornerRadius="@dimen/card_corner_radius"
-        app:cardElevation="@dimen/elevation_small"
-        app:strokeColor="@color/md_theme_light_outline"
-        app:strokeWidth="1dp"
-        >
-
+        app:cardCornerRadius="@dimen/button_corner_radius"
+        app:cardElevation="2dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/screen_margin">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/dinnerTitle"
-                android:layout_width="match_parent"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="晚餐"
-                android:textSize="@dimen/text_size_body"
+                android:text="晚餐: "
                 android:textStyle="bold"
                 android:textColor="@color/md_theme_light_primary" />
-
-            <com.google.android.material.textview.MaterialTextView
+            <EditText
                 android:id="@+id/dinnerRecipeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="暂无安排"
-                android:textSize="@dimen/text_size_body"
-                android:textColor="@color/md_theme_light_on_surface_variant"
-                android:layout_marginTop="@dimen/screen_margin_small" />
+                android:background="@null"
+                android:hint="点击输入晚餐食谱"
+                android:textSize="14sp"
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- Record Button -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/recordHealthDataButton"
+        android:id="@+id/saveMealsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="记录每日健康数据"
-        android:layout_marginBottom="@dimen/component_spacing"
+        android:text="保存今日食谱"
+        android:layout_marginBottom="@dimen/screen_margin"
         app:cornerRadius="@dimen/button_corner_radius" />
 
-    <!-- Recommended Recipes Section -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -206,7 +182,6 @@
             android:text="推荐食谱"
             android:textSize="@dimen/text_size_title"
             android:textStyle="bold"
-
             android:textColor="@color/md_theme_light_primary" />
 
         <com.google.android.material.button.MaterialButton
@@ -220,11 +195,11 @@
             android:insetBottom="0dp"/>
     </LinearLayout>
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recommendedRecipesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingEnd="@dimen/screen_margin"/>
 
 </LinearLayout>

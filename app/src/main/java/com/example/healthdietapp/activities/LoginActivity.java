@@ -116,8 +116,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Encrypt password for verification
-        String encryptedPassword = PasswordUtils.encryptPassword(password);
-        if (encryptedPassword == null) {
+        //String encryptedPassword = PasswordUtils.encryptPassword(password);
+        if (password == null) {
             ErrorHandler.showShortToast(this, "密码加密失败，请重试");
             return;
         }
@@ -126,33 +126,31 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setEnabled(false);
 
         // Verify login credentials in background thread
-        new Thread(() -> {
-            try {
-                User user = userDAO.verifyLogin(username, encryptedPassword);
-                runOnUiThread(() -> {
-                    loginButton.setEnabled(true);
-                    if (user != null) {
-                        // 登录成功 - 保存账号密码状态
-                        saveCredentials(username, password);
+        try {
+            User user = userDAO.verifyLogin(username, password);
+            runOnUiThread(() -> {
+                loginButton.setEnabled(true);
+                if (user != null) {
+                    // 登录成功 - 保存账号密码状态
+                    saveCredentials(username, password);
 
-                        // Login successful - save session and navigate to home
-                        String token = generateLoginToken(user.getUserId());
-                        sessionManager.saveLoginSession(user.getUserId(), user.getUsername(), token);
+                    // Login successful - save session and navigate to home
+                    String token = generateLoginToken(user.getUserId());
+                    sessionManager.saveLoginSession(user.getUserId(), user.getUsername(), token);
 
-                        ErrorHandler.showShortToast(this, "登录成功");
-                        navigateToHome();
-                    } else {
-                        // Login failed - show error message
-                        ErrorHandler.handleAuthenticationException(this, "用户名或密码错误");
-                    }
-                });
-            } catch (Exception e) {
-                runOnUiThread(() -> {
-                    loginButton.setEnabled(true);
-                    ErrorHandler.handleDatabaseException(this, e);
-                });
-            }
-        }).start();
+                    ErrorHandler.showShortToast(this, "登录成功");
+                    navigateToHome();
+                } else {
+                    // Login failed - show error message
+                    ErrorHandler.handleAuthenticationException(this, "用户名或密码错误");
+                }
+            });
+        } catch (Exception e) {
+            runOnUiThread(() -> {
+                loginButton.setEnabled(true);
+                ErrorHandler.handleDatabaseException(this, e);
+            });
+        }
     }
 
     // 保存或清除 SharedPreferences 中的密码信息

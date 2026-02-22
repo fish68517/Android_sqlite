@@ -1,6 +1,7 @@
 package com.example.healthdietapp.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,12 +14,19 @@ import com.example.healthdietapp.database.DatabaseHelper;
 import com.example.healthdietapp.database.PostDAO;
 import com.example.healthdietapp.models.Post;
 import com.example.healthdietapp.utils.AnimationUtils;
+import com.example.healthdietapp.utils.ImageUtils;
 import com.example.healthdietapp.utils.SessionManager;
 
 /**
  * PostDetailActivity - Displays detailed view of a post with interaction options
  */
 public class PostDetailActivity extends AppCompatActivity {
+
+    private static final String TAG = "PostDetailActivity";
+
+    // 顶部公共 Toolbar 控件
+    private Button backButton;
+    private TextView toolbarTitle;
 
     private ImageView postImage;
     private TextView postTitle;
@@ -44,10 +52,26 @@ public class PostDetailActivity extends AppCompatActivity {
         initializeViews();
         initializeDatabase();
         loadPostData();
-        setupInteractionButtons();
+        setupListeners();
     }
 
     private void initializeViews() {
+        // 绑定 Toolbar 控件
+        backButton = findViewById(R.id.backButton);
+        toolbarTitle = findViewById(R.id.toolbarTitle);
+
+        // 设置自定义标题并绑定返回事件
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("帖子详情");
+        }
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> {
+                Log.d(TAG, "点击了返回键，关闭当前页面");
+                finish();
+            });
+        }
+
+        // 绑定其他帖子控件
         postImage = findViewById(R.id.postDetailImage);
         postTitle = findViewById(R.id.postDetailTitle);
         postContent = findViewById(R.id.postDetailContent);
@@ -63,58 +87,61 @@ public class PostDetailActivity extends AppCompatActivity {
         postDAO = new PostDAO(dbHelper);
         sessionManager = new SessionManager(this);
         userId = sessionManager.getUserId();
+        postId = getIntent().getStringExtra("postId");
+        Log.d(TAG, "初始化完成, 当前 userId: " + userId + ", postId: " + postId);
     }
 
     private void loadPostData() {
-        postId = getIntent().getStringExtra("postId");
         if (postId == null) {
-            Toast.makeText(this, "Post not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "帖子ID为空", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        new Thread(() -> {
+        try {
             post = postDAO.getPostById(postId);
-            runOnUiThread(() -> {
-                if (post != null) {
-                    displayPostData();
-                    updateInteractionButtonStates();
-                } else {
-                    Toast.makeText(PostDetailActivity.this, "Failed to load post", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            });
-        }).start();
+            if (post != null) {
+                Log.d(TAG, "成功加载帖子: " + post.getTitle());
+                displayPost();
+                updateInteractionButtonStates();
+            } else {
+                Log.w(TAG, "找不到对应ID的帖子: " + postId);
+                Toast.makeText(this, "帖子加载失败", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "加载帖子数据时发生异常", e);
+        }
     }
 
-    private void displayPostData() {
+    private void displayPost() {
         postTitle.setText(post.getTitle());
         postContent.setText(post.getContent());
-        postAuthor.setText("By: " + post.getUserId());
-        postLikes.setText(post.getLikes() + " likes");
-        
-        // Apply fade in animation to content
-        AnimationUtils.applyFadeInAnimation(postTitle);
-        AnimationUtils.applyFadeInAnimation(postContent);
+        postAuthor.setText("作者 ID: " + post.getUserId());
+        postLikes.setText(post.getLikes() + " 点赞");
+
+        // 这里同样可以利用和之前 Adapter 相似的逻辑去加载首张图片
+        // 为了演示，这里暂时使用兜底灰色（如果你想显示相册图，可以参照 Adapter 的代码提取 img_post1.jpg 进行展示）
+
+        ImageUtils.loadFirstImage(postImage, post.getImages());
     }
 
-    private void setupInteractionButtons() {
+    private void setupListeners() {
         likeButton.setOnClickListener(v -> {
-            AnimationUtils.applyRippleEffect(likeButton);
-            toggleLike();
+            AnimationUtils.applyButtonPressAnimation(likeButton, this::toggleLike);
         });
+
         collectButton.setOnClickListener(v -> {
-            AnimationUtils.applyRippleEffect(collectButton);
-            toggleCollect();
+            AnimationUtils.applyButtonPressAnimation(collectButton, this::toggleCollection);
         });
+
         followButton.setOnClickListener(v -> {
-            AnimationUtils.applyRippleEffect(followButton);
-            toggleFollow();
+            AnimationUtils.applyButtonPressAnimation(followButton, this::toggleFollow);
         });
     }
 
     private void toggleLike() {
-        new Thread(() -> {
+        try {
             boolean hasLiked = postDAO.hasUserLikedPost(userId, postId);
             boolean success;
 
@@ -125,19 +152,22 @@ public class PostDetailActivity extends AppCompatActivity {
             }
 
             if (success) {
-                post = postDAO.getPostById(postId);
                 runOnUiThread(() -> {
-                    displayPostData();
                     updateInteractionButtonStates();
-                    String message = hasLiked ? "Unliked" : "Liked";
+                    String message = hasLiked ? "已取消点赞" : "点赞成功";
                     Toast.makeText(PostDetailActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                    // 重新加载并更新点赞数展示
+                    loadPostData();
                 });
             }
-        }).start();
+        } catch (Exception e) {
+            Log.e(TAG, "点赞操作异常", e);
+        }
     }
 
-    private void toggleCollect() {
-        new Thread(() -> {
+    private void toggleCollection() {
+        try {
             boolean hasCollected = postDAO.hasUserCollectedPost(userId, postId);
             boolean success;
 
@@ -148,17 +178,17 @@ public class PostDetailActivity extends AppCompatActivity {
             }
 
             if (success) {
-                runOnUiThread(() -> {
-                    updateInteractionButtonStates();
-                    String message = hasCollected ? "Removed from collection" : "Added to collection";
-                    Toast.makeText(PostDetailActivity.this, message, Toast.LENGTH_SHORT).show();
-                });
+                updateInteractionButtonStates();
+                String message = hasCollected ? "已取消收藏" : "收藏成功";
+                Toast.makeText(PostDetailActivity.this, message, Toast.LENGTH_SHORT).show();
             }
-        }).start();
+        } catch (Exception e) {
+            Log.e(TAG, "收藏操作异常", e);
+        }
     }
 
     private void toggleFollow() {
-        new Thread(() -> {
+        try {
             boolean isFollowing = postDAO.isUserFollowing(userId, post.getUserId());
             boolean success;
 
@@ -171,24 +201,28 @@ public class PostDetailActivity extends AppCompatActivity {
             if (success) {
                 runOnUiThread(() -> {
                     updateInteractionButtonStates();
-                    String message = isFollowing ? "Unfollowed" : "Followed";
+                    String message = isFollowing ? "已取消关注" : "关注成功";
                     Toast.makeText(PostDetailActivity.this, message, Toast.LENGTH_SHORT).show();
                 });
             }
-        }).start();
+        } catch (Exception e) {
+            Log.e(TAG, "关注操作异常", e);
+        }
     }
 
     private void updateInteractionButtonStates() {
-        new Thread(() -> {
+        try {
             boolean hasLiked = postDAO.hasUserLikedPost(userId, postId);
             boolean hasCollected = postDAO.hasUserCollectedPost(userId, postId);
             boolean isFollowing = postDAO.isUserFollowing(userId, post.getUserId());
 
             runOnUiThread(() -> {
-                likeButton.setText(hasLiked ? "Unlike" : "Like");
-                collectButton.setText(hasCollected ? "Remove Collection" : "Collect");
-                followButton.setText(isFollowing ? "Unfollow" : "Follow");
+                likeButton.setText(hasLiked ? "取消点赞" : "点赞");
+                collectButton.setText(hasCollected ? "取消收藏" : "收藏");
+                followButton.setText(isFollowing ? "取消关注" : "关注");
             });
-        }).start();
+        } catch (Exception e) {
+            Log.e(TAG, "更新按钮状态异常", e);
+        }
     }
 }

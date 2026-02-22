@@ -94,54 +94,52 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setEnabled(false);
 
         // Perform registration in background thread
-        new Thread(() -> {
-            try {
-                // Validate username uniqueness
-                if (userDAO.usernameExists(username)) {
-                    runOnUiThread(() -> {
-                        registerButton.setEnabled(true);
-                        ErrorHandler.handleValidationException(this, "用户名已存在，请选择其他用户名");
-                    });
-                    return;
-                }
-
-                // Encrypt password
-                String encryptedPassword = PasswordUtils.encryptPassword(password);
-                if (encryptedPassword == null) {
-                    runOnUiThread(() -> {
-                        registerButton.setEnabled(true);
-                        ErrorHandler.showShortToast(this, "密码加密失败，请重试");
-                    });
-                    return;
-                }
-
-                // Create new user
-                User newUser = new User();
-                newUser.setUsername(username);
-                newUser.setPassword(encryptedPassword);
-                newUser.setNickname(username); // Default nickname is username
-                newUser.setCreatedAt(System.currentTimeMillis());
-                newUser.setUpdatedAt(System.currentTimeMillis());
-
-                // Save user to database
-                boolean success = userDAO.createUser(newUser);
-
+        try {
+            // Validate username uniqueness
+            if (userDAO.usernameExists(username)) {
                 runOnUiThread(() -> {
                     registerButton.setEnabled(true);
-                    if (success) {
-                        ErrorHandler.showShortToast(this, "注册成功，请设置您的饮食偏好");
-                        navigateToPreferencesSetup(newUser.getUserId());
-                    } else {
-                        ErrorHandler.showShortToast(this, "注册失败，请重试");
-                    }
+                    ErrorHandler.handleValidationException(this, "用户名已存在，请选择其他用户名");
                 });
-            } catch (Exception e) {
-                runOnUiThread(() -> {
-                    registerButton.setEnabled(true);
-                    ErrorHandler.handleDatabaseException(this, e);
-                });
+                return;
             }
-        }).start();
+
+            // Encrypt password
+            // String encryptedPassword = PasswordUtils.encryptPassword(password);
+            if (password == null) {
+                runOnUiThread(() -> {
+                    registerButton.setEnabled(true);
+                    ErrorHandler.showShortToast(this, "请输入密码，请重试");
+                });
+                return;
+            }
+
+            // Create new user
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(password);
+            newUser.setNickname(username); // Default nickname is username
+            newUser.setCreatedAt(System.currentTimeMillis());
+            newUser.setUpdatedAt(System.currentTimeMillis());
+
+            // Save user to database
+            boolean success = userDAO.createUser(newUser);
+
+            runOnUiThread(() -> {
+                registerButton.setEnabled(true);
+                if (success) {
+                    ErrorHandler.showShortToast(this, "注册成功，请设置您的饮食偏好");
+                    navigateToPreferencesSetup(newUser.getUserId());
+                } else {
+                    ErrorHandler.showShortToast(this, "注册失败，请重试");
+                }
+            });
+        } catch (Exception e) {
+            runOnUiThread(() -> {
+                registerButton.setEnabled(true);
+                ErrorHandler.handleDatabaseException(this, e);
+            });
+        }
     }
 
     private void navigateToPreferencesSetup(String userId) {

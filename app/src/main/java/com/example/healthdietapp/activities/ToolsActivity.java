@@ -5,17 +5,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthdietapp.R;
 import com.example.healthdietapp.database.DatabaseHelper;
 import com.example.healthdietapp.database.PostDAO;
-import com.example.healthdietapp.models.HealthQuestion;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -24,7 +20,10 @@ import java.util.Random;
  */
 public class ToolsActivity extends AppCompatActivity {
 
+    // Toolbar 控件
     private Button backButton;
+    private TextView toolbarTitle;
+
     private ScrollView toolsScrollView;
     private LinearLayout foodRankingCard;
     private LinearLayout whatToEatCard;
@@ -47,194 +46,119 @@ public class ToolsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tools);
 
         initializeViews();
-        initializeDatabase();
-        setupClickListeners();
-        loadToolsContent();
+        initializeData();
+        setupListeners();
     }
 
     private void initializeViews() {
+        // 绑定公共 Toolbar 并设置标题
         backButton = findViewById(R.id.backButton);
+        toolbarTitle = findViewById(R.id.toolbarTitle);
+
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("健康工具");
+        }
+
+        // 绑定卡片与内容视图
         toolsScrollView = findViewById(R.id.toolsScrollView);
         foodRankingCard = findViewById(R.id.foodRankingCard);
         whatToEatCard = findViewById(R.id.whatToEatCard);
         foodWeightCard = findViewById(R.id.foodWeightCard);
         dailyQACard = findViewById(R.id.dailyQACard);
+
         foodRankingContent = findViewById(R.id.foodRankingContent);
         whatToEatContent = findViewById(R.id.whatToEatContent);
         foodWeightContent = findViewById(R.id.foodWeightContent);
         dailyQAContent = findViewById(R.id.dailyQAContent);
+
         randomSnackButton = findViewById(R.id.randomSnackButton);
         randomFastFoodButton = findViewById(R.id.randomFastFoodButton);
-        random = new Random();
     }
 
-    private void initializeDatabase() {
+    private void initializeData() {
         dbHelper = new DatabaseHelper(this);
         postDAO = new PostDAO(dbHelper);
+        random = new Random();
+
+        populateStaticData();
+        displayDefaultQA();
     }
 
-    private void setupClickListeners() {
-        backButton.setOnClickListener(v -> finish());
-
-        randomSnackButton.setOnClickListener(v -> displayRandomSnack());
-        randomFastFoodButton.setOnClickListener(v -> displayRandomFastFood());
-    }
-
-    private void loadToolsContent() {
-        loadFoodRankings();
-        loadFoodWeightEstimation();
-        loadDailyQA();
-    }
-
-    /**
-     * Load and display food rankings
-     */
-    private void loadFoodRankings() {
-        String rankings = "🏆 Weight Loss Ranking:\n" +
-                "1. Chicken Breast - 165 cal/100g\n" +
-                "2. Broccoli - 34 cal/100g\n" +
-                "3. Salmon - 208 cal/100g\n\n" +
-                "🍕 Takeout Ranking:\n" +
-                "1. Pizza - 285 cal/slice\n" +
-                "2. Burger - 354 cal/piece\n" +
-                "3. Fried Chicken - 320 cal/piece\n\n" +
-                "😴 Sleep-Friendly Foods:\n" +
-                "1. Almonds - 579 cal/100g\n" +
-                "2. Milk - 61 cal/100ml\n" +
-                "3. Honey - 304 cal/100g\n\n" +
-                "💇 Hair Care Foods:\n" +
-                "1. Eggs - 155 cal/100g\n" +
-                "2. Walnuts - 654 cal/100g\n" +
-                "3. Spinach - 23 cal/100g\n\n" +
-                "🌟 Acne-Fighting Foods:\n" +
-                "1. Green Tea - 2 cal/100ml\n" +
-                "2. Blueberries - 57 cal/100g\n" +
-                "3. Carrots - 41 cal/100g";
-
-        foodRankingContent.setText(rankings);
-    }
-
-    /**
-     * Display random snack recommendation
-     */
-    private void displayRandomSnack() {
-        String[] snacks = {
-            "🍎 Apple - 52 cal/100g\nGreat source of fiber",
-            "🥜 Almonds - 579 cal/100g\nRich in protein and healthy fats",
-            "🍌 Banana - 89 cal/100g\nGood for energy",
-            "🥕 Carrot - 41 cal/100g\nLow calorie, high fiber",
-            "🍓 Strawberries - 32 cal/100g\nVitamin C rich",
-            "🥒 Cucumber - 16 cal/100g\nHydrating and low calorie",
-            "🧀 Greek Yogurt - 59 cal/100g\nHigh protein",
-            "🍞 Whole Wheat Bread - 247 cal/100g\nGood carbs"
-        };
-
-        int randomIndex = random.nextInt(snacks.length);
-        whatToEatContent.setText(snacks[randomIndex]);
-        Toast.makeText(this, "Random snack suggestion!", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Display random fast food recommendation
-     */
-    private void displayRandomFastFood() {
-        String[] fastFoods = {
-            "🍕 Pizza - 285 cal/slice\nModerate portion recommended",
-            "🍔 Burger - 354 cal/piece\nPair with salad",
-            "🍟 French Fries - 365 cal/100g\nEnjoy occasionally",
-            "🌮 Taco - 226 cal/piece\nGood protein source",
-            "🥙 Wrap - 298 cal/piece\nVegetable-filled option",
-            "🍗 Fried Chicken - 320 cal/piece\nBaked alternative available",
-            "🥤 Smoothie - 120 cal/250ml\nHealthy option",
-            "🥗 Salad - 150 cal/serving\nNutritious choice"
-        };
-
-        int randomIndex = random.nextInt(fastFoods.length);
-        whatToEatContent.setText(fastFoods[randomIndex]);
-        Toast.makeText(this, "Random takeout suggestion!", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Load and display food weight estimation reference
-     */
-    private void loadFoodWeightEstimation() {
-        String weightEstimation = "📏 STAPLE FOODS:\n" +
-                "• Rice (cooked) - 1 cup = 150g\n" +
-                "• Pasta (cooked) - 1 cup = 140g\n" +
-                "• Bread - 1 slice = 30g\n\n" +
-                "🥚 PROTEIN SOURCES:\n" +
-                "• Chicken Breast - 1 piece = 100g\n" +
-                "• Egg - 1 large = 50g\n" +
-                "• Salmon - 1 fillet = 150g\n" +
-                "• Tofu - 1 block = 200g\n\n" +
-                "🥬 VEGETABLES:\n" +
-                "• Broccoli - 1 cup = 90g\n" +
-                "• Spinach - 1 cup = 30g\n" +
-                "• Carrot - 1 medium = 60g\n" +
-                "• Tomato - 1 medium = 120g\n\n" +
-                "🥜 NUTS & SEEDS:\n" +
-                "• Almonds - 1 handful = 30g\n" +
-                "• Peanuts - 1 handful = 35g\n" +
-                "• Sunflower Seeds - 1 tbsp = 10g\n" +
-                "• Walnuts - 1 handful = 30g";
-
-        foodWeightContent.setText(weightEstimation);
-    }
-
-    /**
-     * Load and display daily health Q&A
-     */
-    private void loadDailyQA() {
-        new Thread(() -> {
-            try {
-                // Try to fetch from database first
-                HealthQuestion question = getRandomHealthQuestion();
-                runOnUiThread(() -> {
-                    if (question != null) {
-                        String qaText = "❓ " + question.getQuestion() + "\n\n" +
-                                "✅ " + question.getAnswer();
-                        dailyQAContent.setText(qaText);
-                    } else {
-                        displayDefaultQA();
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-                runOnUiThread(this::displayDefaultQA);
-            }
-        }).start();
-    }
-
-    /**
-     * Get a random health question from database
-     */
-    private HealthQuestion getRandomHealthQuestion() {
-        try {
-            // This would require a method in PostDAO to get health questions
-            // For now, return null to use default Q&A
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+    private void setupListeners() {
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
         }
+
+        // 随机零食推荐
+        randomSnackButton.setOnClickListener(v -> {
+            String[] snacks = {
+                    "苹果切片配花生酱",
+                    "希腊无糖酸奶配坚果",
+                    "一小把混合坚果",
+                    "两个水煮蛋",
+                    "全麦吐司配牛油果",
+                    "香蕉和一小块黑巧克力"
+            };
+            String selected = snacks[random.nextInt(snacks.length)];
+            whatToEatContent.setText("推荐零食：\n" + selected);
+        });
+
+        // 随机外卖/正餐推荐
+        randomFastFoodButton.setOnClickListener(v -> {
+            String[] meals = {
+                    "轻食波波碗 (Poke Bowl)",
+                    "日式寿司或刺身",
+                    "烤鸡肉蔬菜沙拉",
+                    "全麦火腿三明治",
+                    "牛肉荞麦面",
+                    "无糖无油的健康蒸菜盒"
+            };
+            String selected = meals[random.nextInt(meals.length)];
+            whatToEatContent.setText("推荐外卖：\n" + selected);
+        });
     }
 
     /**
-     * Display default Q&A if database fetch fails
+     * 填充静态的提示与参考数据 (汉化版)
+     */
+    private void populateStaticData() {
+        // 1. 食物排行榜
+        String rankings = "1. 鸡胸肉 - 高蛋白，极低脂肪\n" +
+                "2. 西兰花 - 高纤维，富含各类维生素\n" +
+                "3. 燕麦 - 复合碳水，提供持久的能量\n" +
+                "4. 三文鱼 - 富含 Omega-3 和优质脂肪\n" +
+                "5. 红薯 - 优质的低 GI (升糖指数) 碳水化合物";
+        foodRankingContent.setText(rankings);
+
+        // 2. 今天吃什么（初始占位文本）
+        whatToEatContent.setText("点击下方按钮，获取随机的健康饮食建议！");
+
+        // 3. 食物重量估算参考
+        String weightGuide = "• 1 个手掌大小的肉类 ≈ 85克\n" +
+                "• 1 个拳头大小的主食 ≈ 1 碗 (约150克)\n" +
+                "• 1 个拇指大小的脂肪 ≈ 1 汤匙 (约15克)\n" +
+                "• 1 捧零食 (如坚果) ≈ 半碗 (约30克)\n" +
+                "• 2 捧蔬菜 ≈ 1 盘 (约200克)";
+        foodWeightContent.setText(weightGuide);
+    }
+
+    /**
+     * 随机展示一条每日健康问答 (汉化版)
      */
     private void displayDefaultQA() {
         String[] questions = {
-            "❓ How much water should I drink daily?\n\n✅ Aim for 8-10 glasses (2-3 liters) per day. Adjust based on activity level and climate.",
-            "❓ What's the best time to eat?\n\n✅ Eat every 3-4 hours. Breakfast within 1 hour of waking, dinner 2-3 hours before bed.",
-            "❓ How many calories should I consume?\n\n✅ Average adult needs 2000-2500 calories. Adjust based on age, gender, and activity level.",
-            "❓ Is skipping breakfast healthy?\n\n✅ No, breakfast jumpstarts metabolism. Eat within 1-2 hours of waking.",
-            "❓ What's a healthy snack?\n\n✅ Choose nuts, fruits, yogurt, or whole grains. Avoid processed foods.",
-            "❓ How often should I exercise?\n\n✅ Aim for 150 minutes of moderate activity or 75 minutes of vigorous activity weekly.",
-            "❓ Is eating late bad?\n\n✅ Eating 2-3 hours before bed is ideal. Late eating can disrupt sleep.",
-            "❓ What's the best diet?\n\n✅ A balanced diet with proteins, carbs, fats, and vegetables. Consistency matters more than perfection."
+                "❓ 每天我应该喝多少水？\n\n✅ 建议每天喝 8-10 杯（2-3 升）水。具体请根据活动量、体重和天气炎热程度进行适度调整。",
+                "❓ 什么时候吃饭最好？\n\n✅ 建议每 3-4 小时进食一次。起床后 1 小时内吃早餐，睡前 2-3 小时吃晚餐，让肠胃有时间消化。",
+                "❓ 我应该摄入多少卡路里？\n\n✅ 成年人平均每天需要 2000-2500 卡路里。具体请根据您的年龄、性别、体重目标和运动量进行科学调整。",
+                "❓ 不吃早餐可以减肥吗？\n\n✅ 不建议。吃健康的早餐能唤醒新陈代谢，避免午餐过度饥饿导致暴饮暴食。最好在起床后 1-2 小时内进食。",
+                "❓ 什么是健康的减脂零食？\n\n✅ 优先选择天然原木食物：坚果、新鲜水果、无糖酸奶或全谷物饼干。尽量避免深加工、高糖、高油的食品。",
+                "❓ 我应该多久锻炼一次？\n\n✅ 目标是每周进行 150 分钟的中等强度有氧运动（如快走），或 75 分钟的高强度运动（如跑步），搭配 2 次力量训练。",
+                "❓ 太晚吃饭会发胖吗？\n\n✅ 发胖主要看全天总摄入的热量。但睡前 2-3 小时进食是最理想的，太晚吃大餐会加重肠胃负担并影响睡眠质量。",
+                "❓ 最好的饮食方式是什么？\n\n✅ 适合自己的才是最好的。包含优质蛋白质、粗粮碳水、健康脂肪和大量蔬菜的均衡饮食最重要。长期的坚持比短期苛刻更有效。"
         };
 
-        int randomIndex = random.nextInt(questions.length);
-        dailyQAContent.setText(questions[randomIndex]);
+        // 随机抽取一个问题显示在卡片上
+        String randomQA = questions[random.nextInt(questions.length)];
+        dailyQAContent.setText(randomQA);
     }
 }

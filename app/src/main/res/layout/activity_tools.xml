@@ -5,34 +5,8 @@
     android:orientation="vertical"
     android:padding="@dimen/screen_margin">
 
-    <!-- Header with Back Button -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/component_spacing">
+    <include layout="@layout/layout_toolbar" />
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:text="&lt;"
-            android:textSize="@dimen/text_size_subtitle"
-            android:background="?attr/colorPrimary" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Health Tools"
-            android:textSize="@dimen/text_size_subtitle"
-            android:textStyle="bold"
-            android:textColor="@color/md_theme_light_primary"
-            android:layout_marginStart="@dimen/screen_margin" />
-    </LinearLayout>
-
-    <!-- Tools ScrollView -->
     <ScrollView
         android:id="@+id/toolsScrollView"
         android:layout_width="match_parent"
@@ -43,7 +17,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Food Ranking Card -->
             <LinearLayout
                 android:id="@+id/foodRankingCard"
                 android:layout_width="match_parent"
@@ -56,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🏆 Food Rankings"
+                    android:text="🏆 食物排行榜"
                     android:textSize="@dimen/text_size_body"
                     android:textStyle="bold"
                     android:textColor="@color/md_theme_light_primary"
@@ -71,7 +44,6 @@
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
-            <!-- What to Eat Today Card -->
             <LinearLayout
                 android:id="@+id/whatToEatCard"
                 android:layout_width="match_parent"
@@ -84,7 +56,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🍽️ What to Eat Today"
+                    android:text="🍽️ 今天吃什么"
                     android:textSize="@dimen/text_size_body"
                     android:textStyle="bold"
                     android:textColor="@color/md_theme_light_primary"
@@ -110,7 +82,7 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/button_height"
                         android:layout_weight="1"
-                        android:text="Random Snack"
+                        android:text="随机零食"
                         android:textSize="@dimen/text_size_body"
                         android:background="?attr/colorPrimary"
                         android:layout_marginEnd="@dimen/screen_margin_small" />
@@ -120,14 +92,13 @@
                         android:layout_width="0dp"
                         android:layout_height="@dimen/button_height"
                         android:layout_weight="1"
-                        android:text="Random Takeout"
+                        android:text="随机外卖"
                         android:textSize="@dimen/text_size_body"
                         android:background="?attr/colorSecondary"
                         android:layout_marginStart="@dimen/screen_margin_small" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Food Weight Estimation Card -->
             <LinearLayout
                 android:id="@+id/foodWeightCard"
                 android:layout_width="match_parent"
@@ -140,7 +111,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="⚖️ Food Weight Reference"
+                    android:text="⚖️ 食物重量估算参考"
                     android:textSize="@dimen/text_size_body"
                     android:textStyle="bold"
                     android:textColor="@color/md_theme_light_primary"
@@ -155,7 +126,6 @@
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
-            <!-- Daily Q&A Card -->
             <LinearLayout
                 android:id="@+id/dailyQACard"
                 android:layout_width="match_parent"
