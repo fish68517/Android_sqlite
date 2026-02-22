@@ -185,7 +185,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             AnimationUtils.applyRippleEffect(addRecipeButton);
             if (recipe != null) {
                 try {
-                    Intent intent = new Intent(this, AddRecipeActivity.class);
+                    Intent intent = new Intent(this, AddRecipeActivityFor.class);
                     intent.putExtra("recipe_id", recipe.getRecipeId());
                     startActivity(intent);
                     AnimationUtils.applySlideInActivityTransition(this);

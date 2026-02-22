@@ -5,155 +5,164 @@
     android:orientation="vertical"
     android:padding="@dimen/screen_margin">
 
-    <!-- Header -->
-    <LinearLayout
+    <include layout="@layout/layout_toolbar" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/component_spacing">
-
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:text="&lt;"
-            android:textSize="@dimen/text_size_subtitle"
-            android:background="?attr/colorPrimary" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Add Recipe to Schedule"
-            android:textSize="@dimen/text_size_subtitle"
-            android:textStyle="bold"
-            android:textColor="@color/md_theme_light_primary"
-            android:layout_marginStart="@dimen/screen_margin" />
-    </LinearLayout>
-
-    <!-- Date Selection Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/card_background"
-        android:padding="@dimen/screen_margin"
-        android:layout_marginBottom="@dimen/component_spacing">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Date"
-            android:textSize="@dimen/text_size_body"
-            android:textStyle="bold"
-            android:textColor="@color/md_theme_light_primary"
-            android:layout_marginBottom="@dimen/screen_margin_small" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/selectedDateTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="2024-01-01"
-                android:textSize="@dimen/text_size_body"
-                android:textColor="@android:color/black" />
-
-            <Button
-                android:id="@+id/selectDateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Change Date"
-                android:textSize="@dimen/text_size_small"
-                android:background="?attr/colorPrimary" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Meal Type Selection Section -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/card_background"
-        android:padding="@dimen/screen_margin"
-        android:layout_marginBottom="@dimen/component_spacing">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Meal Type"
-            android:textSize="@dimen/text_size_body"
-            android:textStyle="bold"
-            android:textColor="@color/md_theme_light_primary"
-            android:layout_marginBottom="@dimen/screen_margin_small" />
-
-        <RadioGroup
-            android:id="@+id/mealTypeRadioGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RadioButton
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Breakfast"
-                android:textSize="@dimen/text_size_body"
+                android:layout_marginBottom="@dimen/screen_margin">
+
+                <ImageView
+                    android:id="@+id/recipeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/darker_gray"
+                    android:contentDescription="食谱图片" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="📷 点击上传图片"
+                    android:textColor="@android:color/white"
+                    android:background="#66000000"
+                    android:padding="8dp"
+                    android:layout_gravity="center" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/recipeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入食谱名称 (必填)"
+                android:textSize="@dimen/text_size_title"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_light_primary"
+                android:background="@null"
                 android:layout_marginBottom="@dimen/screen_margin_small" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/recipeCategory"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Lunch"
+                android:hint="分类 (例如: 主食，清食，家常菜)"
                 android:textSize="@dimen/text_size_body"
+                android:textColor="@android:color/darker_gray"
+                android:background="@null"
                 android:layout_marginBottom="@dimen/screen_margin_small" />
 
-            <RadioButton
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/recipeDescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dinner"
-                android:textSize="@dimen/text_size_body" />
-        </RadioGroup>
-    </LinearLayout>
+                android:hint="简单描述一下这道美食..."
+                android:textSize="@dimen/text_size_body"
+                android:background="@null"
+                android:layout_marginBottom="@dimen/screen_margin" />
 
-    <!-- Spacer -->
-    <View
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/component_spacing">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="食材"
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:layout_marginBottom="@dimen/screen_margin_small" />
+
+                <EditText
+                    android:id="@+id/recipeIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="例如: 番茄 2个, 鸡蛋 2个..."
+                    android:textSize="@dimen/text_size_body"
+                    android:background="@null"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/component_spacing">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="制作步骤"
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:layout_marginBottom="@dimen/screen_margin_small" />
+
+                <EditText
+                    android:id="@+id/recipeInstructions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="1. xxx\n2. xxx"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:gravity="top"
+                    android:textSize="@dimen/text_size_body"
+                    android:background="@null"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/card_background"
+                android:padding="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/component_spacing">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="营养信息"
+                    android:textSize="@dimen/text_size_body"
+                    android:textStyle="bold"
+                    android:textColor="@color/md_theme_light_primary"
+                    android:layout_marginBottom="@dimen/screen_margin_small" />
+
+                <EditText
+                    android:id="@+id/recipeNutrition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="例如: 热量 300kcal, 蛋白质 20g"
+                    android:textSize="@dimen/text_size_body"
+                    android:background="@null"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/saveRecipeButton"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <!-- Action Buttons -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/component_spacing">
-
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
-            android:layout_weight="1"
-            android:text="Cancel"
-            android:textSize="@dimen/text_size_body"
-            android:background="@android:color/darker_gray"
-            android:layout_marginEnd="@dimen/screen_margin_small" />
-
-        <Button
-            android:id="@+id/confirmButton"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_height"
-            android:layout_weight="1"
-            android:text="Confirm"
-            android:textSize="@dimen/text_size_body"
-            android:background="?attr/colorPrimary"
-            android:layout_marginStart="@dimen/screen_margin_small" />
-    </LinearLayout>
+        android:layout_height="@dimen/button_height"
+        android:text="保存并发布食谱"
+        android:textSize="@dimen/text_size_body"
+        android:background="?attr/colorPrimary"
+        android:layout_marginTop="@dimen/component_spacing" />
 
 </LinearLayout>

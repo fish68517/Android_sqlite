@@ -43,7 +43,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.AddRecipeActivity"
+            android:name=".activities.AddRecipeActivityFor"
             android:exported="false" />
 
         <activity
@@ -52,6 +52,10 @@
 
         <activity
             android:name=".activities.PostDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.AddRecipeActivity"
             android:exported="false" />
 
         <activity

@@ -1,55 +1,53 @@
 package com.example.healthdietapp.activities;
 
-import android.app.DatePickerDialog;
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthdietapp.R;
 import com.example.healthdietapp.database.DatabaseHelper;
 import com.example.healthdietapp.database.RecipeDAO;
-import com.example.healthdietapp.database.UserRecipeDAO;
 import com.example.healthdietapp.models.Recipe;
-import com.example.healthdietapp.models.UserRecipe;
-import com.example.healthdietapp.utils.ErrorHandler;
+import com.example.healthdietapp.utils.AnimationUtils;
 import com.example.healthdietapp.utils.SessionManager;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import java.util.UUID;
 
 /**
- * AddRecipeActivity - Handles adding a recipe to user's meal schedule
- * Includes date selection, meal type selection, and conflict handling
+ * AddRecipeActivity - 允许用户创建并保存一个新的食谱
  */
 public class AddRecipeActivity extends AppCompatActivity {
 
-    private TextView selectedDateTextView;
-    private RadioGroup mealTypeRadioGroup;
-    private Button selectDateButton;
-    private Button confirmButton;
-    private Button cancelButton;
+    private static final String TAG = "AddRecipeActivity";
+
+    private EditText recipeName;
+    private EditText recipeCategory;
+    private EditText recipeDescription;
+    private EditText recipeIngredients;
+    private EditText recipeInstructions;
+    private EditText recipeNutrition;
+
+    private Button saveRecipeButton;
     private Button backButton;
+    private TextView toolbarTitle;
+    private ImageView recipeImage;
 
     private DatabaseHelper dbHelper;
     private RecipeDAO recipeDAO;
-    private UserRecipeDAO userRecipeDAO;
     private SessionManager sessionManager;
+    private String userId;
 
-    private String recipeId;
-    private String selectedDate;
-    private String selectedMealType;
-    private Recipe recipe;
-
-    private Calendar selectedCalendar;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private String currentImageUri = ""; // 用于保存选中的图片本地绝对路径
+    private ActivityResultLauncher<String> imagePickerLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,206 +55,154 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
 
         initializeViews();
+        setupImagePicker();
         initializeDatabase();
-        loadRecipeData();
         setupClickListeners();
-        initializeDate();
     }
 
     private void initializeViews() {
-        selectedDateTextView = findViewById(R.id.selectedDateTextView);
-        mealTypeRadioGroup = findViewById(R.id.mealTypeRadioGroup);
-        selectDateButton = findViewById(R.id.selectDateButton);
-        confirmButton = findViewById(R.id.confirmButton);
-        cancelButton = findViewById(R.id.cancelButton);
+        toolbarTitle = findViewById(R.id.toolbarTitle);
+        if (toolbarTitle != null) {
+            toolbarTitle.setText("添加新食谱");
+        }
         backButton = findViewById(R.id.backButton);
+
+        recipeImage = findViewById(R.id.recipeImage);
+        recipeName = findViewById(R.id.recipeName);
+        recipeCategory = findViewById(R.id.recipeCategory);
+        recipeDescription = findViewById(R.id.recipeDescription);
+        recipeIngredients = findViewById(R.id.recipeIngredients);
+        recipeInstructions = findViewById(R.id.recipeInstructions);
+        recipeNutrition = findViewById(R.id.recipeNutrition);
+
+        saveRecipeButton = findViewById(R.id.saveRecipeButton);
+    }
+
+    private void setupImagePicker() {
+        // 注册相册返回结果
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.GetContent(),
+                uri -> {
+                    if (uri != null) {
+                        // 将外部相册图片拷贝到 APP 私有目录，获得绝对路径
+                        String localPath = copyImageToInternalStorage(uri);
+                        currentImageUri = localPath;
+
+                        // 显示选中的图片
+                        recipeImage.setImageURI(Uri.fromFile(new java.io.File(localPath)));
+                        Log.d(TAG, "图片已保存至私有目录: " + currentImageUri);
+                    }
+                }
+        );
+    }
+
+    /**
+     * 将相册的临时 URI 拷贝到应用私有目录，防止权限丢失
+     */
+    private String copyImageToInternalStorage(Uri uri) {
+        try {
+            java.io.InputStream is = getContentResolver().openInputStream(uri);
+            java.io.File dir = new java.io.File(getFilesDir(), "recipe_images");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            java.io.File file = new java.io.File(dir, "img_" + System.currentTimeMillis() + ".jpg");
+            java.io.FileOutputStream fos = new java.io.FileOutputStream(file);
+
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                fos.write(buffer, 0, length);
+            }
+
+            fos.flush();
+            fos.close();
+            is.close();
+
+            return file.getAbsolutePath();
+        } catch (Exception e) {
+            Log.e(TAG, "复制图片到本地失败", e);
+            return uri.toString();
+        }
     }
 
     private void initializeDatabase() {
         dbHelper = new DatabaseHelper(this);
         recipeDAO = new RecipeDAO(dbHelper);
-        userRecipeDAO = new UserRecipeDAO(dbHelper);
         sessionManager = new SessionManager(this);
-    }
-
-    private void loadRecipeData() {
-        recipeId = getIntent().getStringExtra("recipe_id");
-        if (recipeId == null) {
-            ErrorHandler.showShortToast(this, "食谱未找到");
-            finish();
-            return;
-        }
-
-        new Thread(() -> {
-            try {
-                recipe = recipeDAO.getRecipeById(recipeId);
-                runOnUiThread(() -> {
-                    if (recipe == null) {
-                        ErrorHandler.showShortToast(this, "食谱未找到");
-                        finish();
-                    }
-                });
-            } catch (Exception e) {
-                ErrorHandler.logException("AddRecipeActivity", e);
-                runOnUiThread(() -> {
-                    ErrorHandler.handleDatabaseException(this, e);
-                    finish();
-                });
-            }
-        }).start();
-    }
-
-    private void initializeDate() {
-        selectedCalendar = Calendar.getInstance();
-        updateDateDisplay();
-    }
-
-    private void updateDateDisplay() {
-        selectedDate = dateFormat.format(selectedCalendar.getTime());
-        selectedDateTextView.setText(selectedDate);
+        userId = sessionManager.getUserId();
     }
 
     private void setupClickListeners() {
-        selectDateButton.setOnClickListener(v -> showDatePicker());
-
-        confirmButton.setOnClickListener(v -> {
-            int selectedRadioButtonId = mealTypeRadioGroup.getCheckedRadioButtonId();
-            if (selectedRadioButtonId == -1) {
-                ErrorHandler.showShortToast(this, "请选择餐次");
-                return;
-            }
-
-            RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
-            selectedMealType = selectedRadioButton.getText().toString().toLowerCase();
-
-            addRecipeToSchedule();
+        // 点击图片区域，拉起相册
+        recipeImage.setOnClickListener(v -> {
+            AnimationUtils.applyRippleEffect(recipeImage);
+            imagePickerLauncher.launch("image/*");
         });
 
-        cancelButton.setOnClickListener(v -> finish());
-        
-        backButton.setOnClickListener(v -> finish());
+        // 绑定返回按钮
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> {
+                AnimationUtils.applyRippleEffect(backButton);
+                finish();
+            });
+        }
+
+        // 保存食谱
+        saveRecipeButton.setOnClickListener(v -> {
+            AnimationUtils.applyRippleEffect(saveRecipeButton);
+            saveNewRecipe();
+        });
     }
 
-    private void showDatePicker() {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                (view, year, month, dayOfMonth) -> {
-                    selectedCalendar.set(year, month, dayOfMonth);
-                    updateDateDisplay();
-                },
-                selectedCalendar.get(Calendar.YEAR),
-                selectedCalendar.get(Calendar.MONTH),
-                selectedCalendar.get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
-    }
-
-    private void addRecipeToSchedule() {
-        String userId = sessionManager.getUserId();
-        if (userId == null) {
-            ErrorHandler.showShortToast(this, "用户未登录");
-            finish();
+    private void saveNewRecipe() {
+        String name = recipeName.getText().toString().trim();
+        if (name.isEmpty()) {
+            Toast.makeText(this, "食谱名称不能为空！", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        confirmButton.setEnabled(false);
+        saveRecipeButton.setEnabled(false);
+        saveRecipeButton.setText("保存中...");
 
-        new Thread(() -> {
-            try {
-                // Check for conflict
-                boolean hasConflict = userRecipeDAO.hasConflict(userId, selectedDate, selectedMealType);
+        try {
+            // 组装新的 Recipe 对象
+            Recipe newRecipe = new Recipe();
+            newRecipe.setRecipeId(UUID.randomUUID().toString()); // 随机生成 ID
+            newRecipe.setName(name);
+            newRecipe.setCategory(recipeCategory.getText().toString().trim());
+            newRecipe.setDescription(recipeDescription.getText().toString().trim());
+            newRecipe.setIngredients(recipeIngredients.getText().toString().trim());
+            newRecipe.setInstructions(recipeInstructions.getText().toString().trim());
+            newRecipe.setNutritionInfo(recipeNutrition.getText().toString().trim());
+            newRecipe.setImageUrl(currentImageUri);
 
-                runOnUiThread(() -> {
-                    confirmButton.setEnabled(true);
-                    if (hasConflict) {
-                        showConflictDialog(userId);
-                    } else {
-                        performAddRecipe(userId);
-                    }
-                });
-            } catch (Exception e) {
-                ErrorHandler.logException("AddRecipeActivity", e);
-                runOnUiThread(() -> {
-                    confirmButton.setEnabled(true);
-                    ErrorHandler.handleDatabaseException(this, e);
-                });
-            }
-        }).start();
-    }
+            // 绑定创建者并设置时间戳
+            newRecipe.setCreatedBy(userId);
+            newRecipe.setCreatedAt(System.currentTimeMillis());
+            newRecipe.setUpdatedAt(System.currentTimeMillis());
 
-    private void showConflictDialog(String userId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("日程冲突")
-                .setMessage("您已为此餐次安排了食谱。请选择处理方式。")
-                .setPositiveButton("替换", (dialog, which) -> {
-                    new Thread(() -> {
-                        try {
-                            boolean success = userRecipeDAO.replaceUserRecipe(userId, selectedDate, selectedMealType, recipeId);
-                            runOnUiThread(() -> {
-                                if (success) {
-                                    ErrorHandler.showShortToast(this, "食谱已替换");
-                                    finish();
-                                } else {
-                                    ErrorHandler.showShortToast(this, "替换食谱失败");
-                                }
-                            });
-                        } catch (Exception e) {
-                            ErrorHandler.logException("AddRecipeActivity", e);
-                            runOnUiThread(() -> {
-                                ErrorHandler.handleDatabaseException(this, e);
-                            });
-                        }
-                    }).start();
-                })
-                .setNeutralButton("加餐", (dialog, which) -> {
-                    new Thread(() -> {
-                        try {
-                            boolean success = userRecipeDAO.addExtraMeal(userId, selectedDate, selectedMealType, recipeId);
-                            runOnUiThread(() -> {
-                                if (success) {
-                                    ErrorHandler.showShortToast(this, "加餐已添加");
-                                    finish();
-                                } else {
-                                    ErrorHandler.showShortToast(this, "添加加餐失败");
-                                }
-                            });
-                        } catch (Exception e) {
-                            ErrorHandler.logException("AddRecipeActivity", e);
-                            runOnUiThread(() -> {
-                                ErrorHandler.handleDatabaseException(this, e);
-                            });
-                        }
-                    }).start();
-                })
-                .setNegativeButton("取消", (dialog, which) -> dialog.dismiss())
-                .show();
-    }
+            // 调用 DAO 的 createRecipe 方法插入数据库
+            boolean success = recipeDAO.createRecipe(newRecipe);
 
-    private void performAddRecipe(String userId) {
-        new Thread(() -> {
-            try {
-                UserRecipe userRecipe = new UserRecipe();
-                userRecipe.setUserId(userId);
-                userRecipe.setRecipeId(recipeId);
-                userRecipe.setDate(selectedDate);
-                userRecipe.setMealType(selectedMealType);
-                userRecipe.setAddedAt(System.currentTimeMillis());
+            runOnUiThread(() -> {
+                saveRecipeButton.setEnabled(true);
+                saveRecipeButton.setText("保存并发布食谱");
 
-                boolean success = userRecipeDAO.addUserRecipe(userRecipe);
-                runOnUiThread(() -> {
-                    if (success) {
-                        ErrorHandler.showShortToast(this, "食谱已添加");
-                        finish();
-                    } else {
-                        ErrorHandler.showShortToast(this, "添加食谱失败");
-                    }
-                });
-            } catch (Exception e) {
-                ErrorHandler.logException("AddRecipeActivity", e);
-                runOnUiThread(() -> {
-                    ErrorHandler.handleDatabaseException(this, e);
-                });
-            }
-        }).start();
+                if (success) {
+                    Toast.makeText(AddRecipeActivity.this, "食谱添加成功！", Toast.LENGTH_SHORT).show();
+                    finish(); // 添加成功后关闭页面，返回上一页
+                } else {
+                    Toast.makeText(AddRecipeActivity.this, "添加失败，请重试", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "添加食谱异常", e);
+            runOnUiThread(() -> {
+                saveRecipeButton.setEnabled(true);
+                saveRecipeButton.setText("保存并发布食谱");
+                Toast.makeText(AddRecipeActivity.this, "添加发生异常", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 }
