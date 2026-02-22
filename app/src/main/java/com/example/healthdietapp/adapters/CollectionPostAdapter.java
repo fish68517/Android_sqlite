@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.healthdietapp.R;
 import com.example.healthdietapp.models.Post;
 import com.example.healthdietapp.utils.AnimationUtils;
+import com.example.healthdietapp.utils.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,8 @@ public class CollectionPostAdapter extends RecyclerView.Adapter<CollectionPostAd
             postContent = itemView.findViewById(R.id.postContent);
             postLikes = itemView.findViewById(R.id.postLikes);
             postImage = itemView.findViewById(R.id.postImage);
+
+
         }
 
         void bind(Post post, OnPostClickListener listener) {
@@ -79,6 +82,8 @@ public class CollectionPostAdapter extends RecyclerView.Adapter<CollectionPostAd
             postContent.setText(post.getContent());
             postLikes.setText(String.valueOf(post.getLikes()) + " likes");
             itemView.setOnClickListener(v -> listener.onPostClick(post));
+
+            ImageUtils.loadFirstImage(postImage, post.getImages());
         }
     }
 }

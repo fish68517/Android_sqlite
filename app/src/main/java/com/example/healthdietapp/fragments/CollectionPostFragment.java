@@ -73,23 +73,21 @@ public class CollectionPostFragment extends Fragment {
     }
 
     private void loadCollectedPosts() {
-        new Thread(() -> {
-            try {
-                List<Post> posts = postDAO.getUserCollectedPosts(userId);
-                getActivity().runOnUiThread(() -> {
-                    if (posts != null && !posts.isEmpty()) {
-                        adapter.updatePosts(posts);
-                    } else {
-                        Toast.makeText(getContext(), "No collected posts", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-                getActivity().runOnUiThread(() -> {
-                    Toast.makeText(getContext(), "Failed to load posts", Toast.LENGTH_SHORT).show();
-                });
-            }
-        }).start();
+        try {
+            List<Post> posts = postDAO.getUserCollectedPosts(userId);
+            getActivity().runOnUiThread(() -> {
+                if (posts != null && !posts.isEmpty()) {
+                    adapter.updatePosts(posts);
+                } else {
+                    Toast.makeText(getContext(), "No collected posts", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            getActivity().runOnUiThread(() -> {
+                Toast.makeText(getContext(), "Failed to load posts", Toast.LENGTH_SHORT).show();
+            });
+        }
     }
 
     private void onPostClick(Post post) {

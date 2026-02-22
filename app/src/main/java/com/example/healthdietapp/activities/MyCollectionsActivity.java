@@ -78,7 +78,7 @@ public class MyCollectionsActivity extends AppCompatActivity {
                     tab.setText("Recipes");
                     break;
                 case 1:
-                    tab.setText("Posts");
+                    tab.setText("社区帖子");
                     break;
                 case 2:
                     tab.setText("Questions");

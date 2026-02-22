@@ -30,7 +30,7 @@ public class CollectionPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
+        /*switch (position) {
             case 0:
                 return CollectionRecipeFragment.newInstance(userId, recipeDAO);
             case 1:
@@ -39,11 +39,18 @@ public class CollectionPagerAdapter extends FragmentStateAdapter {
                 return CollectionQuestionFragment.newInstance(userId);
             default:
                 return new Fragment();
+        }*/
+
+        switch (position) {
+            case 0:
+                return CollectionPostFragment.newInstance(userId, postDAO);
+            default:
+                return new Fragment();
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 1;
     }
 }
