@@ -40,8 +40,10 @@ public class HomeFragment extends Fragment {
 
     private MaterialButton prevDateButton;
     private MaterialButton nextDateButton;
-    // private MaterialButton datePickerButton;
-    // private Button dailyRecordButton;
+    private MaterialButton dailyRecordButton;
+    // 1. 恢复按钮的声明
+    private MaterialButton datePickerButton;
+
     private MaterialButton moreRecommendedButton;
     private MaterialCardView breakfastCard;
     private MaterialCardView lunchCard;
@@ -80,8 +82,10 @@ public class HomeFragment extends Fragment {
     private void initializeViews(View view) {
         prevDateButton = view.findViewById(R.id.prevDateButton);
         nextDateButton = view.findViewById(R.id.nextDateButton);
-      //  datePickerButton = view.findViewById(R.id.datePickerButton);
-       // dailyRecordButton = view.findViewById(R.id.dailyRecordButton);
+        dailyRecordButton = view.findViewById(R.id.recordHealthDataButton);
+        // 2. 恢复按钮的绑定
+        datePickerButton = view.findViewById(R.id.datePickerButton);
+
         moreRecommendedButton = view.findViewById(R.id.moreRecommendedButton);
         breakfastCard = view.findViewById(R.id.breakfastCard);
         lunchCard = view.findViewById(R.id.lunchCard);
@@ -118,12 +122,13 @@ public class HomeFragment extends Fragment {
             loadRecipes();
         });
 
-        /*datePickerButton.setOnClickListener(v -> showDatePicker());*/
+        // 3. 恢复点击事件，点击触发 showDatePicker()
+        datePickerButton.setOnClickListener(v -> showDatePicker());
 
-//        dailyRecordButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(requireContext(), HealthRecordActivity.class);
-//            startActivity(intent);
-//        });
+        dailyRecordButton.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), HealthRecordActivity.class);
+            startActivity(intent);
+        });
 
         moreRecommendedButton.setOnClickListener(v -> {
             // Navigate to CategoryFragment
@@ -138,7 +143,10 @@ public class HomeFragment extends Fragment {
 
     private void updateDateDisplay() {
         String displayDate = DateUtils.getDisplayDate(currentDate);
-        // datePickerButton.setText(displayDate);
+        // 4. 恢复日期的文本更新，将当前日期显示在按钮上
+        if (datePickerButton != null) {
+            datePickerButton.setText(displayDate);
+        }
     }
 
     private void showDatePicker() {
@@ -155,8 +163,8 @@ public class HomeFragment extends Fragment {
                 requireContext(),
                 (view, year, month, dayOfMonth) -> {
                     currentDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth);
-                    updateDateDisplay();
-                    loadRecipes();
+                    updateDateDisplay(); // 更新按钮上的日期文本
+                    loadRecipes();       // 根据新选择的日期重新加载食谱数据
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -186,41 +194,39 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadUserRecipes() {
+        try {
+            List<UserRecipe> userRecipes = userRecipeDAO.getUserRecipesByDate(userId, currentDate);
 
-            try {
-                List<UserRecipe> userRecipes = userRecipeDAO.getUserRecipesByDate(userId, currentDate);
-                
-                Recipe breakfastRecipe = null;
-                Recipe lunchRecipe = null;
-                Recipe dinnerRecipe = null;
+            Recipe breakfastRecipe = null;
+            Recipe lunchRecipe = null;
+            Recipe dinnerRecipe = null;
 
-                for (UserRecipe userRecipe : userRecipes) {
-                    Recipe recipe = recipeDAO.getRecipeById(userRecipe.getRecipeId());
-                    if (recipe != null) {
-                        switch (userRecipe.getMealType()) {
-                            case "breakfast":
-                                breakfastRecipe = recipe;
-                                break;
-                            case "lunch":
-                                lunchRecipe = recipe;
-                                break;
-                            case "dinner":
-                                dinnerRecipe = recipe;
-                                break;
-                        }
+            for (UserRecipe userRecipe : userRecipes) {
+                Recipe recipe = recipeDAO.getRecipeById(userRecipe.getRecipeId());
+                if (recipe != null) {
+                    switch (userRecipe.getMealType()) {
+                        case "breakfast":
+                            breakfastRecipe = recipe;
+                            break;
+                        case "lunch":
+                            lunchRecipe = recipe;
+                            break;
+                        case "dinner":
+                            dinnerRecipe = recipe;
+                            break;
                     }
                 }
-
-                Recipe finalBreakfastRecipe = breakfastRecipe;
-                Recipe finalLunchRecipe = lunchRecipe;
-                Recipe finalDinnerRecipe = dinnerRecipe;
-                updateMealCard(breakfastRecipeName, finalBreakfastRecipe);
-                updateMealCard(lunchRecipeName, finalLunchRecipe);
-                updateMealCard(dinnerRecipeName, finalDinnerRecipe);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
+            Recipe finalBreakfastRecipe = breakfastRecipe;
+            Recipe finalLunchRecipe = lunchRecipe;
+            Recipe finalDinnerRecipe = dinnerRecipe;
+            updateMealCard(breakfastRecipeName, finalBreakfastRecipe);
+            updateMealCard(lunchRecipeName, finalLunchRecipe);
+            updateMealCard(dinnerRecipeName, finalDinnerRecipe);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateMealCard(TextView mealTextView, Recipe recipe) {
@@ -228,7 +234,7 @@ public class HomeFragment extends Fragment {
             mealTextView.setText(recipe.getName());
             mealTextView.setTextColor(requireContext().getColor(android.R.color.black));
         } else {
-            mealTextView.setText("No recipe scheduled");
+            mealTextView.setText("没有安排食谱");
             mealTextView.setTextColor(requireContext().getColor(android.R.color.darker_gray));
         }
     }

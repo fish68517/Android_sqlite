@@ -17,6 +17,7 @@ import com.example.healthdietapp.utils.DateUtils;
 import com.example.healthdietapp.utils.ErrorHandler;
 import com.example.healthdietapp.utils.SessionManager;
 import com.example.healthdietapp.utils.ValidationUtils;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.Calendar;
 
@@ -34,9 +35,9 @@ public class HealthRecordActivity extends AppCompatActivity {
     private EditText waterInput;
     private EditText measurementsInput;
     private TextView noRecordMessage;
-    private LinearLayout weightSection;
-    private LinearLayout waterSection;
-    private LinearLayout measurementsSection;
+    private MaterialCardView weightSection;
+    private MaterialCardView waterSection;
+    private MaterialCardView measurementsSection;
 
     private DatabaseHelper dbHelper;
     private HealthRecordDAO healthRecordDAO;

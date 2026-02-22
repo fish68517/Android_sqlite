@@ -15,6 +15,7 @@ import com.example.healthdietapp.models.UserPreferences;
 import com.example.healthdietapp.utils.AnimationUtils;
 import com.example.healthdietapp.utils.ErrorHandler;
 import com.example.healthdietapp.utils.SessionManager;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 /**
  * Preferences Setup Activity - User dietary preferences setup screen
@@ -23,9 +24,9 @@ import com.example.healthdietapp.utils.SessionManager;
  */
 public class PreferencesSetupActivity extends AppCompatActivity {
 
-    private Spinner tasteTendencySpinner;
-    private Spinner dietTypeSpinner;
-    private Spinner healthGoalSpinner;
+    private MaterialAutoCompleteTextView tasteTendencySpinner;
+    private MaterialAutoCompleteTextView  dietTypeSpinner;
+    private MaterialAutoCompleteTextView  healthGoalSpinner;
     private Button saveButton;
     private UserDAO userDAO;
     private SessionManager sessionManager;
@@ -72,55 +73,53 @@ public class PreferencesSetupActivity extends AppCompatActivity {
     private void setupSpinners() {
         // Setup taste tendency spinner
         String[] tasteTendencies = {
-            "请选择口味倾向",
-            "清淡",
-            "微辣",
-            "中辣",
-            "重口味"
+                "清淡",
+                "微辣",
+                "中辣",
+                "重口味"
         };
+        // 注意：将 simple_spinner_item 修改为 simple_dropdown_item_1line
         ArrayAdapter<String> tasteTendencyAdapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_dropdown_item_1line,
                 tasteTendencies
         );
-        tasteTendencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tasteTendencySpinner.setAdapter(tasteTendencyAdapter);
+        // 强制点击时弹出下拉菜单
+        tasteTendencySpinner.setOnClickListener(v -> tasteTendencySpinner.showDropDown());
 
         // Setup diet type spinner
         String[] dietTypes = {
-            "请选择饮食类型",
-            "普通饮食",
-            "素食",
-            "低碳水",
-            "高蛋白",
-            "无麸质"
+                "普通饮食",
+                "素食",
+                "低碳水",
+                "高蛋白",
+                "无麸质"
         };
         ArrayAdapter<String> dietTypeAdapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_dropdown_item_1line,
                 dietTypes
         );
-        dietTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dietTypeSpinner.setAdapter(dietTypeAdapter);
+        dietTypeSpinner.setOnClickListener(v -> dietTypeSpinner.showDropDown());
 
         // Setup health goal spinner
         String[] healthGoals = {
-            "请选择健身目标",
-            "减脂",
-            "增肌",
-            "维持体重",
-            "改善体质",
-            "控制血糖"
+                "减脂",
+                "增肌",
+                "维持体重",
+                "改善体质",
+                "控制血糖"
         };
         ArrayAdapter<String> healthGoalAdapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_dropdown_item_1line,
                 healthGoals
         );
-        healthGoalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         healthGoalSpinner.setAdapter(healthGoalAdapter);
+        healthGoalSpinner.setOnClickListener(v -> healthGoalSpinner.showDropDown());
     }
-
     private void setupListeners() {
         saveButton.setOnClickListener(v -> {
             AnimationUtils.applyButtonPressAnimation(saveButton, this::handleSavePreferences);
@@ -128,15 +127,15 @@ public class PreferencesSetupActivity extends AppCompatActivity {
     }
 
     private void handleSavePreferences() {
-        // Get selected values
-        String tasteTendency = tasteTendencySpinner.getSelectedItem().toString();
-        String dietType = dietTypeSpinner.getSelectedItem().toString();
-        String healthGoal = healthGoalSpinner.getSelectedItem().toString();
+        // 获取输入框中的文本值 (MaterialAutoCompleteTextView 使用 getText() 而不是 getSelectedItem())
+        String tasteTendency = tasteTendencySpinner.getText().toString().trim();
+        String dietType = dietTypeSpinner.getText().toString().trim();
+        String healthGoal = healthGoalSpinner.getText().toString().trim();
 
-        // Validate selections
-        if (tasteTendency.startsWith("请选择") || 
-            dietType.startsWith("请选择") || 
-            healthGoal.startsWith("请选择")) {
+        // 验证用户是否已选择（同时检查是否为空以及是否是默认的提示语）
+        if (tasteTendency.isEmpty() || tasteTendency.startsWith("请选择") ||
+                dietType.isEmpty() || dietType.startsWith("请选择") ||
+                healthGoal.isEmpty() || healthGoal.startsWith("请选择")) {
             ErrorHandler.handleValidationException(this, "请完整填写所有偏好设置");
             return;
         }
@@ -150,31 +149,37 @@ public class PreferencesSetupActivity extends AppCompatActivity {
         preferences.setDietType(dietType);
         preferences.setHealthGoal(healthGoal);
 
-        // Save preferences to database in background thread
-        new Thread(() -> {
-            try {
-                boolean success = userDAO.saveUserPreferences(preferences);
-                runOnUiThread(() -> {
-                    saveButton.setEnabled(true);
-                    if (success) {
-                        ErrorHandler.showShortToast(this, "偏好设置保存成功");
-                        navigateToHome();
-                    } else {
-                        ErrorHandler.showShortToast(this, "保存失败，请重试");
-                    }
-                });
-            } catch (Exception e) {
-                ErrorHandler.logException("PreferencesSetupActivity", e);
-                runOnUiThread(() -> {
-                    saveButton.setEnabled(true);
-                    ErrorHandler.handleDatabaseException(this, e);
-                });
-            }
-        }).start();
+        try {
+            boolean success = userDAO.saveUserPreferences(preferences);
+            runOnUiThread(() -> {
+                saveButton.setEnabled(true);
+                if (success) {
+                    ErrorHandler.showShortToast(this, "偏好设置保存成功");
+                    // navigateToHome();
+                    navigateToLogin();
+                } else {
+                    ErrorHandler.showShortToast(this, "保存失败，请重试");
+                }
+            });
+        } catch (Exception e) {
+            ErrorHandler.logException("PreferencesSetupActivity", e);
+            runOnUiThread(() -> {
+                saveButton.setEnabled(true);
+                ErrorHandler.handleDatabaseException(this, e);
+            });
+        }
     }
 
     private void navigateToHome() {
         Intent intent = new Intent(PreferencesSetupActivity.this, MainActivity.class);
+        startActivity(intent);
+        AnimationUtils.applyFadeActivityTransition(this);
+        finish();
+    }
+
+
+    private void navigateToLogin() {
+        Intent intent = new Intent(PreferencesSetupActivity.this, LoginActivity.class);
         startActivity(intent);
         AnimationUtils.applyFadeActivityTransition(this);
         finish();

@@ -17,37 +17,27 @@
         android:textStyle="bold"
         android:layout_marginBottom="@dimen/screen_margin_large" />
 
-    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/screen_margin_large">
+        android:hint="请选择口味倾向"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/taste_tendency_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/taste_tendency_label"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
-            app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
-            app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
-            app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
-
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:id="@+id/taste_tendency_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/input_height"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </com.google.android.material.textfield.MaterialAutoCompleteTextView>
+            android:inputType="none" /> </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/screen_margin_large"
-        android:hint="@string/diet_type_label"
+        android:hint="请选择饮食类型"
         app:boxBackgroundMode="outline"
         app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
         app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"
         app:boxCornerRadiusTopStart="@dimen/button_corner_radius">
 
@@ -62,8 +52,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/screen_margin_large"
-        android:hint="@string/health_goal_label"
+        android:hint="请选择健身目标"
         app:boxBackgroundMode="outline"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
         app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
         app:boxCornerRadiusTopEnd="@dimen/button_corner_radius"

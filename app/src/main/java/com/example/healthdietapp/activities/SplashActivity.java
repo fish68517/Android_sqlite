@@ -39,7 +39,7 @@ public class SplashActivity extends AppCompatActivity {
         // Check if user is logged in
         if (sessionManager.isLoggedIn()) {
             // User is logged in - navigate to MainActivity
-            navigateToHome();
+            navigateToLogin();
         } else {
             // User is not logged in - navigate to LoginActivity
             navigateToLogin();

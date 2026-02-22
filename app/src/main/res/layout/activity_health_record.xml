@@ -7,7 +7,6 @@
     android:padding="@dimen/screen_margin"
     android:background="@color/md_theme_light_background">
 
-    <!-- Header with Back Button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,14 +31,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Health Record"
+            android:text="健康记录"
             android:textSize="@dimen/text_size_subtitle"
             android:textStyle="bold"
             android:textColor="@color/md_theme_light_primary"
             android:layout_marginStart="@dimen/screen_margin" />
     </LinearLayout>
 
-    <!-- Date Navigation -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +65,7 @@
             android:layout_weight="1"
             android:layout_marginStart="@dimen/screen_margin_small"
             android:layout_marginEnd="@dimen/screen_margin_small"
-            android:text="Today"
+            android:text="今天"
             android:textSize="@dimen/text_size_body"
             app:cornerRadius="@dimen/button_corner_radius" />
 
@@ -75,7 +73,7 @@
             android:id="@+id/nextDateButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:text=">"
+            android:text="&gt;"
             android:textSize="@dimen/text_size_subtitle"
             android:insetTop="0dp"
             android:insetBottom="0dp"
@@ -85,7 +83,6 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
     </LinearLayout>
 
-    <!-- ScrollView for content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -96,19 +93,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- No Record Message -->
             <TextView
                 android:id="@+id/noRecordMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You haven't recorded any data for this date"
+                android:text="您尚未记录该日期的数据"
                 android:textSize="@dimen/text_size_body"
                 android:textColor="@color/md_theme_light_on_surface_variant"
                 android:gravity="center"
                 android:padding="@dimen/screen_margin"
                 android:visibility="gone" />
 
-            <!-- Weight Section -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/weightSection"
                 android:layout_width="match_parent"
@@ -128,7 +123,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Weight (kg)"
+                        android:hint="体重 (kg)"
                         app:boxBackgroundMode="outline"
                         app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
                         app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
@@ -144,7 +139,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Water Intake Section -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/waterSection"
                 android:layout_width="match_parent"
@@ -164,7 +158,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Water Intake (ml)"
+                        android:hint="饮水量 (ml)"
                         app:boxBackgroundMode="outline"
                         app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
                         app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
@@ -180,7 +174,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Measurements Section -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/measurementsSection"
                 android:layout_width="match_parent"
@@ -200,7 +193,7 @@
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Body Measurements (cm)"
+                        android:hint=""
                         app:boxBackgroundMode="outline"
                         app:boxCornerRadiusBottomEnd="@dimen/button_corner_radius"
                         app:boxCornerRadiusBottomStart="@dimen/button_corner_radius"
@@ -212,19 +205,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/input_height"
                             android:inputType="text"
-                            android:hint="e.g., Chest: 90, Waist: 75, Hip: 95" />
+                            android:hint="例如：胸围: 90, 腰围: 75, 臀围: 95" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
 
-    <!-- Save Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height"
-        android:text="Save Record"
+        android:text="保存记录"
         android:textSize="@dimen/text_size_body"
         android:layout_marginTop="@dimen/component_spacing"
         app:cornerRadius="@dimen/button_corner_radius" />
