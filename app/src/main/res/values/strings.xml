@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">校园健康</string>
+    
+    <!-- 通用 -->
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="submit">提交</string>
+    <string name="loading">加载中...</string>
+    <string name="load_failed">加载失败</string>
+    <string name="network_error">网络错误</string>
+    <string name="unknown_error">未知错误</string>
+    
+    <!-- 登录注册 -->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="username">用户名</string>
+    <string name="phone">邮箱</string>
+    <string name="password">密码</string>
+    <string name="login_success">登录成功</string>
+    <string name="register_success">注册成功</string>
+    
+    <!-- 首页 -->
+    <string name="home">首页</string>
+    <string name="publish">发布</string>
+    <string name="community">社区</string>
+    <string name="shopping">购物</string>
+    <string name="mine">我的</string>
+    
+    <!-- 宠物 -->
+    <string name="pet_name">宠物名称</string>
+    <string name="pet_type">宠物类型</string>
+    <string name="publish_pet">发布宠物</string>
+    <string name="adopt">领养</string>
+    <string name="help_raise">帮养</string>
+    
+    <!-- 社区 -->
+    <string name="publish_post">发布动态</string>
+    
+    <!-- 商品 -->
+    <string name="add_to_cart">加入购物车</string>
+    <string name="buy_now">立即购买</string>
+    
+    <!-- 我的 -->
+    <string name="my_profile">个人资料</string>
+    <string name="my_pets">我的宠物</string>
+    <string name="my_posts">我的动态</string>
+    <string name="my_orders">我的订单</string>
+    <string name="settings">设置</string>
+    <string name="logout">退出登录</string>
+</resources>
+
