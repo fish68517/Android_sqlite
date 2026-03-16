@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hakimi.R;
-import com.hakimi.model.ClassSchedule;
 
 import java.util.ArrayList;
 import java.util.List;
