@@ -2,6 +2,7 @@ package com.hakimi;
 
 import android.app.Application;
 
+import com.hakimi.local.LocalHealthRepository;
 import com.hakimi.model.User;
 
 /**
@@ -12,12 +13,13 @@ import com.hakimi.model.User;
 public class HakimiApplication extends Application {
 
     private static HakimiApplication instance;
-    public static User curUser = new User(9);
+    public static User curUser;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        LocalHealthRepository.getInstance(this).ensureSeedData();
     }
 
     public static HakimiApplication getInstance() {

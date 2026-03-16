@@ -6,6 +6,13 @@ android {
     namespace 'com.hakimi'
     compileSdk 34
 
+    def siliconFlowBaseUrl = (project.findProperty("siliconflow.baseUrl")
+            ?: "https://api.siliconflow.cn/v1").toString()
+    def siliconFlowApiKey = (project.findProperty("siliconflow.apiKey")
+            ?: "").toString()
+    def siliconFlowModel = (project.findProperty("siliconflow.model")
+            ?: "tencent/Hunyuan-MT-7B").toString()
+
     defaultConfig {
         applicationId "com.hakimi"
         minSdk 24
@@ -14,6 +21,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "SILICONFLOW_BASE_URL", "\"${siliconFlowBaseUrl}\""
+        buildConfigField "String", "SILICONFLOW_API_KEY", "\"${siliconFlowApiKey}\""
+        buildConfigField "String", "SILICONFLOW_MODEL", "\"${siliconFlowModel}\""
     }
 
     buildTypes {
@@ -30,6 +40,7 @@ android {
     
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 }
 
@@ -40,19 +51,17 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.7.6'
     implementation 'androidx.navigation:navigation-ui:2.7.6'
+    implementation 'androidx.room:room-runtime:2.6.1'
+    annotationProcessor 'androidx.room:room-compiler:2.6.1'
+    implementation 'androidx.work:work-runtime:2.9.1'
     
-    // Retrofit网络请求
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    // Retrofit缃戠粶璇锋眰
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     
-    // 图片加载
+    // 鍥剧墖鍔犺浇
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     
     // WebSocket
@@ -70,10 +79,10 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.10.1'
     
-    // 权限管理
+    // 鏉冮檺绠＄悊
     implementation 'com.github.permissions-dispatcher:permissionsdispatcher:4.9.2'
     
-    // 刷新控件
+    // 鍒锋柊鎺т欢
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
     implementation 'com.scwang.smart:refresh-header-classics:2.0.3'
     implementation 'com.scwang.smart:refresh-footer-classics:2.0.3'
@@ -85,14 +94,11 @@ dependencies {
     implementation 'androidx.core:core:1.12.0'
 
 
-        // RxJava 核心库
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
+        // RxJava 鏍稿績搴?
 
-    // RxAndroid: 为RxJava提供Android主线程调度器等功能
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+    // RxAndroid: 涓篟xJava鎻愪緵Android涓荤嚎绋嬭皟搴﹀櫒绛夊姛鑳?
 
-    // Retrofit 的 RxJava 3 适配器，让 Retrofit 的接口方法可以返回 Observable, Single 等
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    // Retrofit 鐨?RxJava 3 閫傞厤鍣紝璁?Retrofit 鐨勬帴鍙ｆ柟娉曞彲浠ヨ繑鍥?Observable, Single 绛?
     
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

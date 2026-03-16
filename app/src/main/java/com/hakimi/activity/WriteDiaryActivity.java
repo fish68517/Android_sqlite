@@ -1,4 +1,4 @@
-package com.hakimi.ui.activity;
+package com.hakimi.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,22 +11,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hakimi.HakimiApplication;
 import com.hakimi.R;
-import com.hakimi.model.ApiResponse;
+import com.hakimi.local.LocalHealthRepository;
+import com.hakimi.local.LocalResult;
 import com.hakimi.model.Diary;
-import com.hakimi.network.ApiService;
-import com.hakimi.network.RetrofitClient;
 import com.hakimi.utils.SharedPrefManager;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class WriteDiaryActivity extends AppCompatActivity {
 
     private EditText etDiaryContent;
     private RadioGroup rgMood;
     private Button btnSaveDiary;
-    private ApiService apiService;
+    private LocalHealthRepository localRepository;
     private SharedPrefManager sharedPrefManager;
 
     @Override
@@ -34,7 +29,7 @@ public class WriteDiaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_diary);
 
-        apiService = RetrofitClient.getInstance().getApiService();
+        localRepository = LocalHealthRepository.getInstance(this);
         sharedPrefManager = SharedPrefManager.getInstance();
 
         etDiaryContent = findViewById(R.id.et_diary_content);
@@ -48,46 +43,34 @@ public class WriteDiaryActivity extends AppCompatActivity {
     private void saveDiary() {
         String content = etDiaryContent.getText().toString().trim();
         if (TextUtils.isEmpty(content)) {
-            Toast.makeText(this, "\u8bf7\u8f93\u5165\u65e5\u8bb0\u5185\u5bb9", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入日记内容", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Long userId = getCurrentUserId();
         if (userId == null || userId <= 0) {
-            Toast.makeText(this, "\u672a\u83b7\u53d6\u5230\u5f53\u524d\u7528\u6237", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "未获取到当前用户", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Diary diary = new Diary();
-        diary.setUserId(userId);
-        diary.setContent(content);
-        diary.setMood(getSelectedMood());
-
         btnSaveDiary.setEnabled(false);
-        btnSaveDiary.setText("\u4fdd\u5b58\u4e2d...");
+        btnSaveDiary.setText("保存中...");
 
-        apiService.createDiary(diary).enqueue(new Callback<ApiResponse<Diary>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<Diary>> call, Response<ApiResponse<Diary>> response) {
-                btnSaveDiary.setEnabled(true);
-                btnSaveDiary.setText("\u4fdd\u5b58");
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    Toast.makeText(WriteDiaryActivity.this, "\u65e5\u8bb0\u4fdd\u5b58\u6210\u529f", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
-                    finish();
-                } else {
-                    Toast.makeText(WriteDiaryActivity.this, "\u65e5\u8bb0\u4fdd\u5b58\u5931\u8d25", Toast.LENGTH_SHORT).show();
-                }
-            }
+        LocalResult<Diary> result = localRepository.createDiary(userId, content, getSelectedMood());
 
-            @Override
-            public void onFailure(Call<ApiResponse<Diary>> call, Throwable t) {
-                btnSaveDiary.setEnabled(true);
-                btnSaveDiary.setText("\u4fdd\u5b58");
-                Toast.makeText(WriteDiaryActivity.this, "\u7f51\u7edc\u9519\u8bef: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        btnSaveDiary.setEnabled(true);
+        btnSaveDiary.setText("保存");
+
+        if (result.isSuccess()) {
+            Toast.makeText(this, "日记保存成功", Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
+            finish();
+            return;
+        }
+
+        Toast.makeText(this,
+                TextUtils.isEmpty(result.getMessage()) ? "日记保存失败" : result.getMessage(),
+                Toast.LENGTH_SHORT).show();
     }
 
     private int getSelectedMood() {

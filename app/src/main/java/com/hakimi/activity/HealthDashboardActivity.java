@@ -1,4 +1,4 @@
-package com.hakimi.ui.activity;
+package com.hakimi.activity;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -36,11 +36,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hakimi.HakimiApplication;
 import com.hakimi.R;
-import com.hakimi.model.ApiResponse;
+import com.hakimi.local.LocalHealthRepository;
+import com.hakimi.local.LocalResult;
 import com.hakimi.model.ExerciseData;
-import com.hakimi.model.PageResponse;
-import com.hakimi.network.ApiService;
-import com.hakimi.network.RetrofitClient;
 import com.hakimi.receiver.ExerciseReminderReceiver;
 import com.hakimi.utils.SharedPrefManager;
 
@@ -54,10 +52,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HealthDashboardActivity extends AppCompatActivity {
 
@@ -79,7 +73,7 @@ public class HealthDashboardActivity extends AppCompatActivity {
     private Button btnSaveSchedule;
     private TextView tvScheduleList;
 
-    private ApiService apiService;
+    private LocalHealthRepository repository;
     private SharedPrefManager sharedPrefManager;
     private SharedPreferences localPrefs;
     private final Gson gson = new Gson();
@@ -90,7 +84,7 @@ public class HealthDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_dashboard);
 
-        apiService = RetrofitClient.getInstance().getApiService();
+        repository = LocalHealthRepository.getInstance(this);
         sharedPrefManager = SharedPrefManager.getInstance();
         localPrefs = getSharedPreferences(PREF_HEALTH, MODE_PRIVATE);
 
@@ -122,13 +116,13 @@ public class HealthDashboardActivity extends AppCompatActivity {
 
     private void setupWeekdaySpinner() {
         List<String> weekdays = new ArrayList<>();
-        weekdays.add("\u5468\u4e00");
-        weekdays.add("\u5468\u4e8c");
-        weekdays.add("\u5468\u4e09");
-        weekdays.add("\u5468\u56db");
-        weekdays.add("\u5468\u4e94");
-        weekdays.add("\u5468\u516d");
-        weekdays.add("\u5468\u65e5");
+        weekdays.add("周一");
+        weekdays.add("周二");
+        weekdays.add("周三");
+        weekdays.add("周四");
+        weekdays.add("周五");
+        weekdays.add("周六");
+        weekdays.add("周日");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, weekdays);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -166,7 +160,7 @@ public class HealthDashboardActivity extends AppCompatActivity {
         String durationText = etExerciseDuration.getText().toString().trim();
 
         if (TextUtils.isEmpty(type) || TextUtils.isEmpty(location) || TextUtils.isEmpty(durationText)) {
-            Toast.makeText(this, "\u8bf7\u586b\u5199\u5b8c\u6574\u7684\u8fd0\u52a8\u4fe1\u606f", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请填写完整的运动信息", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -174,78 +168,40 @@ public class HealthDashboardActivity extends AppCompatActivity {
         try {
             duration = Integer.parseInt(durationText);
             if (duration <= 0) {
-                Toast.makeText(this, "\u8fd0\u52a8\u65f6\u957f\u5fc5\u987b\u5927\u4e8e0", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "运动时长必须大于0", Toast.LENGTH_SHORT).show();
                 return;
             }
         } catch (Exception e) {
-            Toast.makeText(this, "\u8fd0\u52a8\u65f6\u957f\u8bf7\u8f93\u5165\u6570\u5b57", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "运动时长请输入数字", Toast.LENGTH_SHORT).show();
             return;
         }
 
         Long userId = getCurrentUserId();
         if (userId == null || userId <= 0) {
-            Toast.makeText(this, "\u672a\u83b7\u53d6\u5230\u5f53\u524d\u7528\u6237", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "未获取到当前用户", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        ExerciseData body = new ExerciseData();
-        body.setUserId(userId);
-        body.setExerciseType(type);
-        body.setLocation(location);
-        body.setDuration(duration);
+        LocalResult<ExerciseData> result = repository.addExerciseRecord(userId, type, location, duration);
+        if (!result.isSuccess()) {
+            Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        apiService.dailyCheckIn(body).enqueue(new Callback<ApiResponse<ExerciseData>>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResponse<ExerciseData>> call,
-                    @NonNull Response<ApiResponse<ExerciseData>> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    Toast.makeText(HealthDashboardActivity.this, "\u8fd0\u52a8\u8bb0\u5f55\u5df2\u4fdd\u5b58", Toast.LENGTH_SHORT).show();
-                    etExerciseType.setText("");
-                    etExerciseLocation.setText("");
-                    etExerciseDuration.setText("");
-                    loadExerciseData();
-                } else {
-                    String msg = response.body() != null ? response.body().getMessage() : "\u8bf7\u7a0d\u540e\u91cd\u8bd5";
-                    Toast.makeText(HealthDashboardActivity.this, "\u4fdd\u5b58\u5931\u8d25: " + msg, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResponse<ExerciseData>> call, @NonNull Throwable t) {
-                Toast.makeText(HealthDashboardActivity.this, "\u7f51\u7edc\u9519\u8bef: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        Toast.makeText(this, "运动记录已保存", Toast.LENGTH_SHORT).show();
+        etExerciseType.setText("");
+        etExerciseLocation.setText("");
+        etExerciseDuration.setText("");
+        loadExerciseData();
     }
 
     private void loadExerciseData() {
-        apiService.getExerciseData(1, 200).enqueue(new Callback<ApiResponse<PageResponse<ExerciseData>>>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResponse<PageResponse<ExerciseData>>> call,
-                    @NonNull Response<ApiResponse<PageResponse<ExerciseData>>> response) {
-                if (!response.isSuccessful() || response.body() == null || !response.body().isSuccess()) {
-                    return;
-                }
-
-                Long userId = getCurrentUserId();
-                List<ExerciseData> all = new ArrayList<>();
-                PageResponse<ExerciseData> pageResponse = response.body().getData();
-                if (pageResponse != null && pageResponse.getRecords() != null) {
-                    all.addAll(pageResponse.getRecords());
-                }
-
-                List<ExerciseData> mine = new ArrayList<>();
-                for (ExerciseData item : all) {
-                    if (userId != null && userId.equals(item.getUserId())) {
-                        mine.add(item);
-                    }
-                }
-                renderWeeklyChart(mine);
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResponse<PageResponse<ExerciseData>>> call, @NonNull Throwable t) {
-            }
-        });
+        Long userId = getCurrentUserId();
+        if (userId == null || userId <= 0) {
+            return;
+        }
+        List<ExerciseData> mine = repository.getExerciseRecordsByUser(userId);
+        renderWeeklyChart(mine);
     }
 
     private void renderWeeklyChart(List<ExerciseData> data) {
@@ -335,12 +291,12 @@ public class HealthDashboardActivity extends AppCompatActivity {
         int weekdayIndex = spWeekday.getSelectedItemPosition();
 
         if (TextUtils.isEmpty(courseName) || TextUtils.isEmpty(reminderTime)) {
-            Toast.makeText(this, "\u8bf7\u586b\u5199\u5b8c\u6574\u7684\u8bfe\u8868\u4fe1\u606f", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请填写完整的课表信息", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!reminderTime.matches("^\\d{2}:\\d{2}$")) {
-            Toast.makeText(this, "\u63d0\u9192\u65f6\u95f4\u683c\u5f0f\u9700\u4e3aHH:mm", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "提醒时间格式需为HH:mm", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -356,7 +312,7 @@ public class HealthDashboardActivity extends AppCompatActivity {
 
         etCourseName.setText("");
         etReminderTime.setText("");
-        Toast.makeText(this, "\u8bfe\u8868\u5df2\u4fdd\u5b58\u5e76\u8bbe\u7f6e\u63d0\u9192", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "课表已保存并设置提醒", Toast.LENGTH_SHORT).show();
     }
 
     private void loadSchedules() {
@@ -377,7 +333,7 @@ public class HealthDashboardActivity extends AppCompatActivity {
 
     private void renderScheduleList() {
         if (schedules.isEmpty()) {
-            tvScheduleList.setText("\u6682\u65e0\u8bfe\u8868\u63d0\u9192");
+            tvScheduleList.setText("暂无课表提醒");
             return;
         }
 
@@ -399,19 +355,19 @@ public class HealthDashboardActivity extends AppCompatActivity {
     private String weekdayLabel(int day) {
         switch (day) {
             case 1:
-                return "\u5468\u4e00";
+                return "周一";
             case 2:
-                return "\u5468\u4e8c";
+                return "周二";
             case 3:
-                return "\u5468\u4e09";
+                return "周三";
             case 4:
-                return "\u5468\u56db";
+                return "周四";
             case 5:
-                return "\u5468\u4e94";
+                return "周五";
             case 6:
-                return "\u5468\u516d";
+                return "周六";
             case 7:
-                return "\u5468\u65e5";
+                return "周日";
             default:
                 return "";
         }
@@ -511,9 +467,9 @@ public class HealthDashboardActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQ_NOTIFICATION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "\u63d0\u9192\u901a\u77e5\u5df2\u5f00\u542f", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "提醒通知已开启", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, "\u672a\u6388\u6743\u901a\u77e5\uff0c\u63d0\u9192\u53ef\u80fd\u4e0d\u4f1a\u663e\u793a", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "未授权通知，提醒可能不会显示", Toast.LENGTH_SHORT).show();
             }
         }
     }

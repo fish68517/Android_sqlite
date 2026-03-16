@@ -1,64 +1,110 @@
-package com.hakimi.ui.activity;
+package com.hakimi.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hakimi.R;
+import com.hakimi.ai.AiSymptomService;
+import com.hakimi.ai.SiliconFlowAiSymptomService;
+
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AIAssistantActivity extends AppCompatActivity {
 
     private EditText etQuestionInput;
+    private Button btnVoiceInput;
     private Button btnSendQuestion;
     private TextView tvAnswerResult;
+    private AiSymptomService aiSymptomService;
+    private ExecutorService ioExecutor;
+
+    private final ActivityResultLauncher<Intent> speechLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() != RESULT_OK || result.getData() == null) {
+                    return;
+                }
+                ArrayList<String> text = result.getData()
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                if (text != null && !text.isEmpty()) {
+                    etQuestionInput.setText(text.get(0));
+                    etQuestionInput.setSelection(etQuestionInput.getText().length());
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ai_assistant);
 
+        aiSymptomService = new SiliconFlowAiSymptomService();
+        ioExecutor = Executors.newSingleThreadExecutor();
         initViews();
         setupListeners();
     }
 
     private void initViews() {
         etQuestionInput = findViewById(R.id.et_question_input);
+        btnVoiceInput = findViewById(R.id.btn_voice_input);
         btnSendQuestion = findViewById(R.id.btn_send_question);
         tvAnswerResult = findViewById(R.id.tv_answer_result);
     }
 
     private void setupListeners() {
+        btnVoiceInput.setOnClickListener(v -> startVoiceInput());
         btnSendQuestion.setOnClickListener(v -> sendQuestion());
+    }
+
+    private void startVoiceInput() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.SIMPLIFIED_CHINESE.toLanguageTag());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Describe symptoms, e.g. stomach ache");
+        try {
+            speechLauncher.launch(intent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Voice input is not supported on this device", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void sendQuestion() {
         String question = etQuestionInput.getText().toString().trim();
         if (TextUtils.isEmpty(question)) {
-            Toast.makeText(this, "\u8bf7\u8f93\u5165\u95ee\u9898", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please input your question", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String answer = getPlaceholderAnswer(question);
-        tvAnswerResult.setText(answer);
+        btnSendQuestion.setEnabled(false);
+        btnSendQuestion.setText("Analyzing...");
+        tvAnswerResult.setText("Calling AI, please wait...");
+
+        ioExecutor.execute(() -> {
+            String answer = aiSymptomService.askSymptom(question);
+            runOnUiThread(() -> {
+                btnSendQuestion.setEnabled(true);
+                btnSendQuestion.setText("Send");
+                tvAnswerResult.setText(answer);
+            });
+        });
     }
 
-    // Placeholder answer logic. Replace this with real askAI API call later.
-    private String getPlaceholderAnswer(String question) {
-        String q = question.toLowerCase();
-        if (q.contains("\u8dd1\u6b65") || q.contains("run")) {
-            return "\u5efa\u8bae\u8dd1\u6b65\u524d\u5148\u70ed\u8eab5-10\u5206\u949f\uff0c\u8dd1\u540e\u505a\u62c9\u4f38\uff0c\u6bcf\u54683-4\u6b21\u66f4\u7a33\u5b9a\u3002";
+    @Override
+    protected void onDestroy() {
+        if (ioExecutor != null) {
+            ioExecutor.shutdownNow();
         }
-        if (q.contains("\u51cf\u8102") || q.contains("\u51cf\u91cd")) {
-            return "\u51cf\u8102\u7684\u5173\u952e\u662f\u996e\u98df\u63a7\u5236+\u89c4\u5f8b\u8fd0\u52a8\uff0c\u53ef\u5148\u4ece\u6bcf\u592930\u5206\u949f\u6709\u6c27\u5f00\u59cb\u3002";
-        }
-        if (q.contains("\u589e\u808c")) {
-            return "\u589e\u808c\u5efa\u8bae\u4ee5\u529b\u91cf\u8bad\u7ec3\u4e3b\uff0c\u6ce8\u610f\u86cb\u767d\u8d28\u6444\u5165\u548c\u8db3\u591f\u7761\u7720\u3002";
-        }
-        return "\u8fd9\u662f\u6682\u65f6\u5360\u4f4d\u56de\u7b54\uff1a\u4f60\u7684\u95ee\u9898\u5f88\u6709\u4ef7\u503c\uff0c\u5efa\u8bae\u7ed3\u5408\u4f5c\u606f\u5236\u5b9a\u53ef\u6301\u7eed\u7684\u8bad\u7ec3\u8ba1\u5212\u3002";
+        super.onDestroy();
     }
 }

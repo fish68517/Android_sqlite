@@ -1,4 +1,4 @@
-package com.hakimi.ui.adapter;
+package com.hakimi.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hakimi.R;
 import com.hakimi.model.Post;
-import com.hakimi.network.ApiService;
 import com.hakimi.utils.ImageLoader;
 
 import java.util.ArrayList;
@@ -72,8 +71,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         if (!TextUtils.isEmpty(post.getImagePath())) {
             holder.ivPostImage.setVisibility(View.VISIBLE);
-            String imageUrl = ApiService.BASE_URL.replace("/api/", "") + trimLeadingSlash(post.getImagePath());
-            ImageLoader.loadImage(imageUrl, holder.ivPostImage);
+            ImageLoader.loadImage(post.getImagePath(), holder.ivPostImage);
         } else {
             holder.ivPostImage.setVisibility(View.GONE);
         }
@@ -98,10 +96,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public int getItemCount() {
         return postList == null ? 0 : postList.size();
-    }
-
-    private String trimLeadingSlash(String path) {
-        return path.startsWith("/") ? path.substring(1) : path;
     }
 
     private String formatTime(String createdAt) {

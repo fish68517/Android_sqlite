@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -25,17 +26,17 @@
         <activity
             android:name=".activity.SplashActivity"
             android:exported="true"
-            android:theme="@style/Theme.HakimiPet.Launcher" />
-
-        <activity
-            android:name=".activity.LoginActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:theme="@style/Theme.HakimiPet.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".activity.RegisterActivity"
@@ -43,37 +44,37 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.CreatePostActivity"
+            android:name=".activity.CreatePostActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.WriteDiaryActivity"
+            android:name=".activity.WriteDiaryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.AIAssistantActivity"
+            android:name=".activity.AIAssistantActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.HealthDashboardActivity"
+            android:name=".activity.HealthDashboardActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.ClassScheduleActivity"
+            android:name=".activity.ClassScheduleActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.VirtualFitnessActivity"
+            android:name=".activity.VirtualFitnessActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.activity.CommentActivity"
+            android:name=".activity.CommentActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
@@ -81,15 +82,29 @@
             android:name=".receiver.ExerciseReminderReceiver"
             android:exported="false" />
 
+        <receiver
+            android:name=".receiver.MedicationActionReceiver"
+            android:exported="false" />
+
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.HealthCheckinActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.HealthCheckinStatsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.ReminderCenterActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

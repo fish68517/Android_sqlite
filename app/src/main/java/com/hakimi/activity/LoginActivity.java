@@ -13,18 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.gson.Gson;
 import com.hakimi.HakimiApplication;
 import com.hakimi.R;
-import com.hakimi.model.ApiResponse;
+import com.hakimi.local.LocalHealthRepository;
+import com.hakimi.local.LocalResult;
 import com.hakimi.model.User;
-import com.hakimi.network.ApiService;
-import com.hakimi.network.RetrofitClient;
 import com.hakimi.utils.SharedPrefManager;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnRegister;
 
-    private ApiService apiService;
+    private LocalHealthRepository localRepository;
     private SharedPrefManager sharedPrefManager;
 
     @Override
@@ -43,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         sharedPrefManager = SharedPrefManager.getInstance();
-        apiService = RetrofitClient.getInstance().getApiService();
+        localRepository = LocalHealthRepository.getInstance(this);
 
         initViews();
         restoreSavedLogin();
@@ -76,72 +68,46 @@ public class LoginActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(account)) {
-            Toast.makeText(this, "\u8bf7\u8f93\u5165\u624b\u673a\u53f7\u6216\u7528\u6237\u540d",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入手机号或用户名", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "\u8bf7\u8f93\u5165\u5bc6\u7801", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        Map<String, String> params = new HashMap<>();
-        params.put("account", account);
-        params.put("password", password);
-
         btnLogin.setEnabled(false);
-        btnLogin.setText("\u767b\u5f55\u4e2d...");
+        btnLogin.setText("登录中...");
 
-        apiService.login(params).enqueue(new Callback<ApiResponse<User>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<User>> call,
-                    Response<ApiResponse<User>> response) {
-                btnLogin.setEnabled(true);
-                btnLogin.setText("\u767b\u5f55");
+        LocalResult<User> result = localRepository.login(account, password);
 
-                if (response.isSuccessful() && response.body() != null) {
-                    ApiResponse<User> apiResponse = response.body();
-                    if (apiResponse.isSuccess() && apiResponse.getData() != null) {
-                        User user = apiResponse.getData();
-                        Gson gson = new Gson();
+        btnLogin.setEnabled(true);
+        btnLogin.setText("登录");
 
-                        saveLoginPreference(account, password);
+        if (!result.isSuccess() || result.getData() == null) {
+            Toast.makeText(this,
+                    TextUtils.isEmpty(result.getMessage()) ? "登录失败" : result.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-                        HakimiApplication.getInstance().curUser = user;
-                        sharedPrefManager.saveToken(gson.toJson(user));
-                        if (user.getId() != null) {
-                            sharedPrefManager.saveUserId(user.getId());
-                        }
-                        sharedPrefManager.saveUsername(user.getUsername());
-                        sharedPrefManager.savePhone(user.getPhone());
+        User user = result.getData();
+        Gson gson = new Gson();
 
-                        Toast.makeText(LoginActivity.this, "登录成功",
-                                Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
-                    } else {
-                        String message = apiResponse.getMessage();
-                        if (TextUtils.isEmpty(message)) {
-                            message = "\u767b\u5f55\u5931\u8d25";
-                        }
-                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(LoginActivity.this, "\u767b\u5f55\u5931\u8d25",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
+        saveLoginPreference(account, password);
 
-            @Override
-            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-                btnLogin.setEnabled(true);
-                btnLogin.setText("\u767b\u5f55");
-                Toast.makeText(LoginActivity.this,
-                        "\u7f51\u7edc\u9519\u8bef: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        HakimiApplication.setUser(user);
+        sharedPrefManager.saveToken(gson.toJson(user));
+        if (user.getId() != null) {
+            sharedPrefManager.saveUserId(user.getId());
+        }
+        sharedPrefManager.saveUsername(user.getUsername());
+        sharedPrefManager.savePhone(user.getPhone());
+
+        Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     private void saveLoginPreference(String account, String password) {

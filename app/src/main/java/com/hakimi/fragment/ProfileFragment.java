@@ -1,11 +1,9 @@
 package com.hakimi.fragment;
 
-import android.content.res.ColorStateList;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -24,27 +22,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.hakimi.HakimiApplication;
 import com.hakimi.R;
 import com.hakimi.activity.LoginActivity;
-import com.hakimi.model.ApiResponse;
+import com.hakimi.local.LocalHealthRepository;
+import com.hakimi.local.LocalResult;
 import com.hakimi.model.User;
-import com.hakimi.network.ApiService;
-import com.hakimi.network.RetrofitClient;
-import com.hakimi.utils.ImageLoader;
 import com.hakimi.utils.SharedPrefManager;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
@@ -54,14 +39,14 @@ public class ProfileFragment extends Fragment {
     private TextView tvWeight;
     private TextView tvEmail;
 
-    private ApiService apiService;
+    private LocalHealthRepository localRepository;
     private SharedPrefManager sharedPrefManager;
     private User currentUser;
 
     private final ActivityResultLauncher<String> avatarPickerLauncher =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 if (uri != null) {
-                    uploadAvatar(uri);
+                    saveAvatar(uri);
                 }
             });
 
@@ -76,7 +61,7 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        apiService = RetrofitClient.getInstance().getApiService();
+        localRepository = LocalHealthRepository.getInstance(requireContext());
         sharedPrefManager = SharedPrefManager.getInstance();
 
         initViews(view);
@@ -94,9 +79,7 @@ public class ProfileFragment extends Fragment {
 
     private void setupListeners(View view) {
         ivAvatar.setOnClickListener(v -> avatarPickerLauncher.launch("image/*"));
-
         view.findViewById(R.id.btn_edit_body_data).setOnClickListener(v -> showEditBodyDataDialog());
-
         view.findViewById(R.id.btn_logout).setOnClickListener(v -> logout());
     }
 
@@ -107,39 +90,31 @@ public class ProfileFragment extends Fragment {
             return;
         }
 
-        apiService.getUserProfile(userId).enqueue(new Callback<ApiResponse<User>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()
-                        && response.body().getData() != null) {
-                    currentUser = response.body().getData();
-                    HakimiApplication.setUser(currentUser);
-                    sharedPrefManager.saveUsername(currentUser.getUsername());
-                    bindUserInfo(currentUser);
-                } else {
-                    Toast.makeText(getContext(), "\u52a0\u8f7d\u7528\u6237\u4fe1\u606f\u5931\u8d25", Toast.LENGTH_SHORT).show();
-                }
-            }
+        User user = localRepository.getUserById(userId);
+        if (user == null) {
+            renderGuestState();
+            return;
+        }
 
-            @Override
-            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-                Toast.makeText(getContext(), "\u52a0\u8f7d\u7528\u6237\u4fe1\u606f\u5931\u8d25: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        currentUser = user;
+        HakimiApplication.setUser(user);
+        sharedPrefManager.saveUsername(user.getUsername());
+        bindUserInfo(user);
     }
 
     private void bindUserInfo(User user) {
-        tvUsername.setText(TextUtils.isEmpty(user.getUsername()) ? "\u672a\u767b\u5f55\u7528\u6237" : user.getUsername());
-        tvEmail.setText(TextUtils.isEmpty(user.getEmail()) ? "--" : user.getEmail());
+        tvUsername.setText(TextUtils.isEmpty(user.getUsername()) ? "未登录用户" : user.getUsername());
+        tvEmail.setText(TextUtils.isEmpty(user.getPhone()) ? "--" : user.getPhone());
         tvHeight.setText(user.getHeight() == null ? "--" : String.valueOf(user.getHeight()));
         tvWeight.setText(user.getWeight() == null ? "--" : String.valueOf(user.getWeight()));
 
         if (!TextUtils.isEmpty(user.getAvatar())) {
-            String imageUrl = ApiService.BASE_URL.replace("/api/", "") + trimLeadingSlash(user.getAvatar());
             ivAvatar.setPadding(0, 0, 0, 0);
             ivAvatar.setImageTintList(null);
-            ImageLoader.loadCircleImage(imageUrl, ivAvatar);
+            Glide.with(this)
+                    .load(Uri.parse(user.getAvatar()))
+                    .circleCrop()
+                    .into(ivAvatar);
         } else {
             ivAvatar.setPadding(dpToPx(16), dpToPx(16), dpToPx(16), dpToPx(16));
             ivAvatar.setImageTintList(ColorStateList.valueOf(0xFF4A90E2));
@@ -148,7 +123,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void renderGuestState() {
-        tvUsername.setText("\u672a\u767b\u5f55\u7528\u6237");
+        tvUsername.setText("未登录用户");
         tvEmail.setText("--");
         tvHeight.setText("--");
         tvWeight.setText("--");
@@ -159,7 +134,7 @@ public class ProfileFragment extends Fragment {
 
     private void showEditBodyDataDialog() {
         if (currentUser == null) {
-            Toast.makeText(getContext(), "\u8bf7\u5148\u767b\u5f55", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -169,14 +144,14 @@ public class ProfileFragment extends Fragment {
         container.setPadding(padding, padding, padding, 0);
 
         EditText etHeight = new EditText(requireContext());
-        etHeight.setHint("\u8eab\u9ad8(cm)");
+        etHeight.setHint("身高(cm)");
         etHeight.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         if (currentUser.getHeight() != null) {
             etHeight.setText(String.valueOf(currentUser.getHeight()));
         }
 
         EditText etWeight = new EditText(requireContext());
-        etWeight.setHint("\u4f53\u91cd(kg)");
+        etWeight.setHint("体重(kg)");
         etWeight.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         if (currentUser.getWeight() != null) {
             etWeight.setText(String.valueOf(currentUser.getWeight()));
@@ -186,10 +161,10 @@ public class ProfileFragment extends Fragment {
         container.addView(etWeight);
 
         new AlertDialog.Builder(requireContext())
-                .setTitle("\u7f16\u8f91\u8eab\u4f53\u6570\u636e")
+                .setTitle("编辑身体数据")
                 .setView(container)
-                .setNegativeButton("\u53d6\u6d88", null)
-                .setPositiveButton("\u4fdd\u5b58", (dialog, which) ->
+                .setNegativeButton("取消", null)
+                .setPositiveButton("保存", (dialog, which) ->
                         updateBodyData(etHeight.getText().toString().trim(),
                                 etWeight.getText().toString().trim()))
                 .show();
@@ -200,91 +175,48 @@ public class ProfileFragment extends Fragment {
             return;
         }
 
-        User updateUser = new User();
-        updateUser.setUsername(currentUser.getUsername());
-        updateUser.setEmail(currentUser.getEmail());
-        updateUser.setAvatar(currentUser.getAvatar());
-        updateUser.setHeight(parseDouble(height));
-        updateUser.setWeight(parseDouble(weight));
+        LocalResult<User> result = localRepository.updateBodyData(
+                currentUser.getId(),
+                currentUser.getUsername(),
+                currentUser.getEmail(),
+                parseDouble(height),
+                parseDouble(weight),
+                currentUser.getAvatar());
 
-        apiService.updateUser(currentUser.getId(), updateUser).enqueue(new Callback<ApiResponse<Object>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    currentUser.setHeight(updateUser.getHeight());
-                    currentUser.setWeight(updateUser.getWeight());
-                    bindUserInfo(currentUser);
-                    Toast.makeText(getContext(), "\u8eab\u4f53\u6570\u636e\u4fdd\u5b58\u6210\u529f", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "\u8eab\u4f53\u6570\u636e\u4fdd\u5b58\u5931\u8d25", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
-                Toast.makeText(getContext(), "\u4fdd\u5b58\u5931\u8d25: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void uploadAvatar(Uri uri) {
-        if (currentUser == null || currentUser.getId() == null) {
-            Toast.makeText(getContext(), "\u8bf7\u5148\u767b\u5f55", Toast.LENGTH_SHORT).show();
+        if (!result.isSuccess() || result.getData() == null) {
+            Toast.makeText(getContext(), "身体数据保存失败", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        try {
-            File imageFile = copyUriToCacheFile(uri);
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", imageFile.getName(), requestFile);
-
-            apiService.uploadFile(filePart).enqueue(new Callback<ApiResponse<String>>() {
-                @Override
-                public void onResponse(Call<ApiResponse<String>> call, Response<ApiResponse<String>> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                        updateAvatarPath(response.body().getData());
-                    } else {
-                        Toast.makeText(getContext(), "\u5934\u50cf\u4e0a\u4f20\u5931\u8d25", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ApiResponse<String>> call, Throwable t) {
-                    Toast.makeText(getContext(), "\u5934\u50cf\u4e0a\u4f20\u5931\u8d25: " + t.getMessage(),
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (IOException e) {
-            Toast.makeText(getContext(), "\u56fe\u7247\u5904\u7406\u5931\u8d25", Toast.LENGTH_SHORT).show();
-        }
+        currentUser = result.getData();
+        HakimiApplication.setUser(currentUser);
+        bindUserInfo(currentUser);
+        Toast.makeText(getContext(), "身体数据保存成功", Toast.LENGTH_SHORT).show();
     }
 
-    private void updateAvatarPath(String avatarPath) {
-        User updateUser = new User();
-        updateUser.setUsername(currentUser.getUsername());
-        updateUser.setEmail(currentUser.getEmail());
-        updateUser.setHeight(currentUser.getHeight());
-        updateUser.setWeight(currentUser.getWeight());
-        updateUser.setAvatar(avatarPath);
+    private void saveAvatar(Uri uri) {
+        if (currentUser == null || currentUser.getId() == null) {
+            Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        apiService.updateUser(currentUser.getId(), updateUser).enqueue(new Callback<ApiResponse<Object>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    currentUser.setAvatar(avatarPath);
-                    bindUserInfo(currentUser);
-                    Toast.makeText(getContext(), "\u5934\u50cf\u66f4\u6362\u6210\u529f", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "\u5934\u50cf\u4fdd\u5b58\u5931\u8d25", Toast.LENGTH_SHORT).show();
-                }
-            }
+        LocalResult<User> result = localRepository.updateBodyData(
+                currentUser.getId(),
+                currentUser.getUsername(),
+                currentUser.getEmail(),
+                currentUser.getHeight(),
+                currentUser.getWeight(),
+                uri.toString());
 
-            @Override
-            public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
-                Toast.makeText(getContext(), "\u5934\u50cf\u4fdd\u5b58\u5931\u8d25: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (!result.isSuccess() || result.getData() == null) {
+            Toast.makeText(getContext(), "头像保存失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        currentUser = result.getData();
+        HakimiApplication.setUser(currentUser);
+        bindUserInfo(currentUser);
+        Toast.makeText(getContext(), "头像更换成功", Toast.LENGTH_SHORT).show();
     }
 
     private void logout() {
@@ -315,43 +247,6 @@ public class ProfileFragment extends Fragment {
         } catch (NumberFormatException e) {
             return null;
         }
-    }
-
-    private String trimLeadingSlash(String path) {
-        return path.startsWith("/") ? path.substring(1) : path;
-    }
-
-    private File copyUriToCacheFile(Uri uri) throws IOException {
-        String fileName = getFileName(uri);
-        File tempFile = new File(requireContext().getCacheDir(), fileName);
-
-        try (InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
-             FileOutputStream outputStream = new FileOutputStream(tempFile)) {
-            if (inputStream == null) {
-                throw new IOException("Input stream is null");
-            }
-            byte[] buffer = new byte[8192];
-            int length;
-            while ((length = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, length);
-            }
-        }
-        return tempFile;
-    }
-
-    private String getFileName(Uri uri) {
-        String result = "avatar_" + System.currentTimeMillis() + ".jpg";
-        if ("content".equals(uri.getScheme())) {
-            try (Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null)) {
-                if (cursor != null && cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(MediaStore.Images.Media.DISPLAY_NAME);
-                    if (index >= 0) {
-                        result = cursor.getString(index);
-                    }
-                }
-            }
-        }
-        return result;
     }
 
     private int dpToPx(int dp) {

@@ -19,14 +19,18 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.hakimi.HakimiApplication;
 import com.hakimi.R;
+import com.hakimi.activity.AIAssistantActivity;
+import com.hakimi.activity.HealthCheckinActivity;
+import com.hakimi.activity.HealthCheckinStatsActivity;
+import com.hakimi.activity.HealthDashboardActivity;
 import com.hakimi.adapter.BannerAdapter;
+import com.hakimi.adapter.FeatureAdapter;
+import com.hakimi.local.LocalHealthRepository;
+import com.hakimi.local.model.HealthCheckinSummary;
 import com.hakimi.model.FeatureItem;
-import com.hakimi.ui.activity.AIAssistantActivity;
-import com.hakimi.ui.activity.ClassScheduleActivity;
-import com.hakimi.ui.activity.HealthDashboardActivity;
-import com.hakimi.ui.activity.VirtualFitnessActivity;
-import com.hakimi.ui.adapter.FeatureAdapter;
+import com.hakimi.utils.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +42,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView rvFeatures;
     private ViewPager2 vpHomeBanner;
     private LinearLayout llBannerIndicator;
+    private LocalHealthRepository repository;
+    private SharedPrefManager sharedPrefManager;
     private final Handler bannerHandler = new Handler(Looper.getMainLooper());
     private final Runnable bannerRunnable = this::showNextBanner;
     private List<String> bannerItems = new ArrayList<>();
@@ -52,6 +58,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        repository = LocalHealthRepository.getInstance(requireContext());
+        sharedPrefManager = SharedPrefManager.getInstance();
         initViews(view);
         setupBannerCarousel();
         setupFeatureGrid();
@@ -61,6 +69,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         startBannerAutoScroll();
+        setupFeatureGrid();
     }
 
     @Override
@@ -82,6 +91,10 @@ public class HomeFragment extends Fragment {
         rvFeatures = view.findViewById(R.id.rv_home_features);
         vpHomeBanner = view.findViewById(R.id.vp_home_banner);
         llBannerIndicator = view.findViewById(R.id.ll_banner_indicator);
+        view.findViewById(R.id.btn_home_ai).setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), AIAssistantActivity.class)));
+        view.findViewById(R.id.btn_home_checkin).setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), HealthCheckinActivity.class)));
     }
 
     private void setupBannerCarousel() {
@@ -170,11 +183,19 @@ public class HomeFragment extends Fragment {
         rvFeatures.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvFeatures.setNestedScrollingEnabled(false);
 
+        String summaryLabel = "\u6253\u5361\u7edf\u8ba1";
+        long userId = getCurrentUserId();
+        if (userId > 0) {
+            HealthCheckinSummary summary = repository.getHealthCheckinSummary(userId);
+            summaryLabel = "\u6253\u5361\u7edf\u8ba1\n\u6c34" + summary.getWaterCount()
+                    + " \u836f" + summary.getMedicineCount();
+        }
+
         List<FeatureItem> items = new ArrayList<>();
         items.add(new FeatureItem("\u5065\u5eb7\u6570\u636e", android.R.drawable.ic_menu_info_details));
-        items.add(new FeatureItem("\u8bfe\u8868\u4fe1\u606f", android.R.drawable.ic_menu_my_calendar));
         items.add(new FeatureItem("AI\u52a9\u624b", android.R.drawable.ic_menu_manage));
-        items.add(new FeatureItem("\u865a\u62df\u5065\u8eab", android.R.drawable.ic_menu_help));
+        items.add(new FeatureItem("\u6253\u5361\u4e0e\u7528\u836f", android.R.drawable.ic_menu_edit));
+        items.add(new FeatureItem(summaryLabel, android.R.drawable.ic_menu_recent_history));
 
         FeatureAdapter adapter = new FeatureAdapter(items);
         adapter.setOnItemClickListener(position -> {
@@ -186,23 +207,30 @@ public class HomeFragment extends Fragment {
                 return;
             }
             if (position == 1) {
-                startActivity(new Intent(getActivity(), ClassScheduleActivity.class));
-                return;
-            }
-            if (position == 2) {
                 startActivity(new Intent(getActivity(), AIAssistantActivity.class));
                 return;
             }
-            if (position == 3) {
-                startActivity(new Intent(getActivity(), VirtualFitnessActivity.class));
+            if (position == 2) {
+                startActivity(new Intent(getActivity(), HealthCheckinActivity.class));
                 return;
             }
-            Toast.makeText(
-                    getContext(),
-                    "\u5373\u5c06\u8fdb\u5165\uff1a" + items.get(position).getName(),
-                    Toast.LENGTH_SHORT
-            ).show();
+            if (position == 3) {
+                startActivity(new Intent(getActivity(), HealthCheckinStatsActivity.class));
+                return;
+            }
+            Toast.makeText(getContext(), "Navigate: " + items.get(position).getName(), Toast.LENGTH_SHORT).show();
         });
         rvFeatures.setAdapter(adapter);
+    }
+
+    private long getCurrentUserId() {
+        long userId = sharedPrefManager.getUserId();
+        if (userId > 0) {
+            return userId;
+        }
+        if (HakimiApplication.curUser != null && HakimiApplication.curUser.getId() != null) {
+            return HakimiApplication.curUser.getId();
+        }
+        return 0L;
     }
 }

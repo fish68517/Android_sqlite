@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">校园健康</string>
+    <string name="app_name">个人健康助手</string>
     
     <!-- 通用 -->
     <string name="confirm">确定</string>

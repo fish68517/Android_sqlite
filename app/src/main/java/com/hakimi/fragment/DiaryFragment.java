@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,12 +24,10 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.hakimi.HakimiApplication;
 import com.hakimi.R;
-import com.hakimi.model.ApiResponse;
+import com.hakimi.activity.WriteDiaryActivity;
+import com.hakimi.adapter.DiaryAdapter;
+import com.hakimi.local.LocalHealthRepository;
 import com.hakimi.model.Diary;
-import com.hakimi.network.ApiService;
-import com.hakimi.network.RetrofitClient;
-import com.hakimi.ui.activity.WriteDiaryActivity;
-import com.hakimi.ui.adapter.DiaryAdapter;
 import com.hakimi.utils.SharedPrefManager;
 
 import java.time.LocalDate;
@@ -44,17 +41,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class DiaryFragment extends Fragment {
 
     private RecyclerView rvDiaryList;
     private Button btnWriteDiary;
     private LineChart lineChartMood;
     private DiaryAdapter diaryAdapter;
-    private ApiService apiService;
+    private LocalHealthRepository localRepository;
     private SharedPrefManager sharedPrefManager;
     private final List<Diary> diaryList = new ArrayList<>();
 
@@ -68,7 +61,7 @@ public class DiaryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        apiService = RetrofitClient.getInstance().getApiService();
+        localRepository = LocalHealthRepository.getInstance(requireContext());
         sharedPrefManager = SharedPrefManager.getInstance();
 
         initViews(view);
@@ -124,13 +117,13 @@ public class DiaryFragment extends Fragment {
             @Override
             public String getFormattedValue(float value) {
                 if (value == 1f) {
-                    return "\u4e0d\u5f00\u5fc3";
+                    return "不开心";
                 }
                 if (value == 2f) {
-                    return "\u4e00\u822c";
+                    return "一般";
                 }
                 if (value == 3f) {
-                    return "\u5f00\u5fc3";
+                    return "开心";
                 }
                 return "";
             }
@@ -145,28 +138,11 @@ public class DiaryFragment extends Fragment {
             return;
         }
 
-        apiService.getDiaries(userId).enqueue(new Callback<ApiResponse<List<Diary>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<Diary>>> call, Response<ApiResponse<List<Diary>>> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
-                    List<Diary> diaries = response.body().getData();
-                    diaryList.clear();
-                    if (diaries != null) {
-                        diaryList.addAll(diaries);
-                    }
-                    diaryAdapter.setDiaries(diaryList);
-                    updateChart(diaryList);
-                } else {
-                    Toast.makeText(getContext(), "\u52a0\u8f7d\u65e5\u8bb0\u5931\u8d25", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<List<Diary>>> call, Throwable t) {
-                Toast.makeText(getContext(), "\u52a0\u8f7d\u65e5\u8bb0\u5931\u8d25: " + t.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        List<Diary> diaries = localRepository.getDiaries(userId);
+        diaryList.clear();
+        diaryList.addAll(diaries);
+        diaryAdapter.setDiaries(diaryList);
+        updateChart(diaryList);
     }
 
     private void updateChart(List<Diary> diaries) {
@@ -174,7 +150,8 @@ public class DiaryFragment extends Fragment {
         Map<LocalDate, Diary> latestDiaryByDate = new HashMap<>();
 
         List<Diary> sortedDiaries = new ArrayList<>(diaries);
-        Collections.sort(sortedDiaries, Comparator.comparing(Diary::getCreatedAt, Comparator.nullsLast(String::compareTo)));
+        Collections.sort(sortedDiaries,
+                Comparator.comparing(Diary::getCreatedAt, Comparator.nullsLast(String::compareTo)));
 
         for (Diary diary : sortedDiaries) {
             LocalDate date = parseDate(diary.getCreatedAt());

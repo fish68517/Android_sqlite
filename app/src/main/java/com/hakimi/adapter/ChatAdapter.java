@@ -1,4 +1,4 @@
-package com.hakimi.ui.adapter;
+package com.hakimi.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

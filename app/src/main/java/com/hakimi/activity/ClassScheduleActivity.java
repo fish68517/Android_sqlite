@@ -1,4 +1,4 @@
-package com.hakimi.ui.activity;
+package com.hakimi.activity;
 
 import android.Manifest;
 import android.app.AlarmManager;
@@ -28,10 +28,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hakimi.HakimiApplication;
 import com.hakimi.R;
+import com.hakimi.adapter.ClassScheduleAdapter;
 import com.hakimi.db.ClassScheduleDbHelper;
 import com.hakimi.model.ClassSchedule;
 import com.hakimi.receiver.ExerciseReminderReceiver;
-import com.hakimi.ui.adapter.ClassScheduleAdapter;
 import com.hakimi.utils.SharedPrefManager;
 
 import java.util.ArrayList;
