@@ -7,6 +7,8 @@
 # Gradle 缓存
 .gradle/
 .gradle_user_home/
+.gradle_proj_cache/
+.gradle_tmp/
 build/
 */build/
 gradle/

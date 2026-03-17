@@ -1,43 +1,105 @@
--- 个人健康助手本地 SQLite 初始化脚本
--- 适用于 Android Studio / sqlite3 导入
-
-PRAGMA foreign_keys = ON;
-
-DROP TABLE IF EXISTS diaries;
-DROP TABLE IF EXISTS users;
-
-CREATE TABLE users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    phone TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    email TEXT,
-    height REAL,
-    weight REAL,
-    avatar TEXT,
-    created_at INTEGER NOT NULL,
-    updated_at INTEGER NOT NULL
+-- 1. 用户表 (UserEntity)
+CREATE TABLE IF NOT EXISTS `users` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `username` TEXT NOT NULL DEFAULT '',
+    `phone` TEXT NOT NULL DEFAULT '',
+    `password` TEXT NOT NULL DEFAULT '',
+    `email` TEXT,
+    `height` REAL,
+    `weight` REAL,
+    `avatar` TEXT,
+    `createdAt` INTEGER NOT NULL,
+    `updatedAt` INTEGER NOT NULL
 );
 
-CREATE TABLE diaries (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
-    content TEXT NOT NULL,
-    mood INTEGER NOT NULL DEFAULT 2,
-    created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+-- 2. 社区帖子表 (CommunityPostEntity)
+CREATE TABLE IF NOT EXISTS `community_posts` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `content` TEXT NOT NULL DEFAULT '',
+    `imagePath` TEXT,
+    `likesCount` INTEGER NOT NULL DEFAULT 0,
+    `createdAt` TEXT NOT NULL DEFAULT '',
+    `updatedAt` TEXT NOT NULL DEFAULT ''
 );
 
-INSERT INTO users (username, phone, password, email, height, weight, avatar, created_at, updated_at)
-VALUES
-('演示用户', '13800000000', '123456', 'demo@health.local', 170.0, 65.0, NULL, 1742083200000, 1742083200000),
-('张小明', '13900000001', '123456', 'xiaoming@health.local', 176.0, 72.5, NULL, 1742083200000, 1742083200000),
-('李小红', '13900000002', '123456', 'xiaohong@health.local', 162.0, 54.0, NULL, 1742083200000, 1742083200000);
+-- 3. 帖子评论表 (PostCommentEntity)
+CREATE TABLE IF NOT EXISTS `post_comments` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `postId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `content` TEXT NOT NULL DEFAULT '',
+    `createdAt` TEXT NOT NULL DEFAULT '',
+    `updatedAt` TEXT NOT NULL DEFAULT ''
+);
 
-INSERT INTO diaries (user_id, content, mood, created_at, updated_at)
-VALUES
-(1, '今天完成了30分钟快走，喝水8杯，状态很好。', 3, '2026-03-14T08:30:00', '2026-03-14T08:30:00'),
-(1, '中午有点疲惫，午休后做了拉伸，感觉恢复了。', 2, '2026-03-15T13:20:00', '2026-03-15T13:20:00'),
-(2, '晚饭后散步40分钟，睡前记录体重。', 3, '2026-03-13T21:10:00', '2026-03-13T21:10:00'),
-(3, '今天有些感冒症状，早点休息并多喝温水。', 1, '2026-03-12T22:00:00', '2026-03-12T22:00:00');
+-- 4. 日记表 (DiaryEntity)
+CREATE TABLE IF NOT EXISTS `diaries` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `content` TEXT NOT NULL DEFAULT '',
+    `mood` INTEGER NOT NULL DEFAULT 0,
+    `createdAt` TEXT NOT NULL DEFAULT '',
+    `updatedAt` TEXT NOT NULL DEFAULT ''
+);
+
+-- 5. 运动记录表 (ExerciseRecordEntity)
+CREATE TABLE IF NOT EXISTS `exercise_records` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `exerciseType` TEXT NOT NULL DEFAULT '',
+    `location` TEXT NOT NULL DEFAULT '',
+    `duration` INTEGER NOT NULL DEFAULT 0,
+    `createdAt` TEXT NOT NULL DEFAULT '',
+    `updatedAt` TEXT NOT NULL DEFAULT ''
+);
+
+-- 6. 健身计划表 (FitnessPlanEntity)
+CREATE TABLE IF NOT EXISTS `fitness_plans` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `goal` TEXT NOT NULL DEFAULT '',
+    `planContent` TEXT NOT NULL DEFAULT '',
+    `createdAt` TEXT NOT NULL DEFAULT '',
+    `updatedAt` TEXT NOT NULL DEFAULT ''
+);
+
+-- 7. 习惯表 (HabitEntity)
+CREATE TABLE IF NOT EXISTS `habits` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `name` TEXT NOT NULL DEFAULT '',
+    `createdAt` INTEGER NOT NULL
+);
+
+-- 8. 习惯打卡记录表 (HabitCheckinEntity)
+CREATE TABLE IF NOT EXISTS `habit_checkins` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `habitId` INTEGER NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `checkinDate` TEXT NOT NULL DEFAULT '',
+    `createdAt` INTEGER NOT NULL
+);
+
+-- 9. 用药提醒表 (MedicationReminderEntity)
+CREATE TABLE IF NOT EXISTS `medication_reminders` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `medicineName` TEXT NOT NULL DEFAULT '',
+    `dosage` TEXT NOT NULL DEFAULT '',
+    `reminderTime` TEXT NOT NULL DEFAULT '',  -- 格式: HH:mm
+    `lastTakenDate` TEXT NOT NULL DEFAULT '',
+    `enabled` INTEGER NOT NULL DEFAULT 0,    -- 0 为 false, 1 为 true
+    `createdAt` INTEGER NOT NULL,
+    `updatedAt` INTEGER NOT NULL
+);
+
+-- 10. 快捷记录表 (QuickRecordEntity)
+CREATE TABLE IF NOT EXISTS `quick_records` (
+    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    `userId` INTEGER NOT NULL,
+    `type` TEXT NOT NULL DEFAULT '',
+    `value` TEXT,
+    `note` TEXT,
+    `createdAt` INTEGER NOT NULL
+);
