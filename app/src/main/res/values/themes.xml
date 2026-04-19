@@ -1,20 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.HakimiPet" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/primary_color</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent_color</item>
-    </style>
-    
-    <style name="Theme.HakimiPet.Launcher" parent="Theme.HakimiPet">
-        <item name="android:windowBackground">@color/primary_color</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
-    
-    <!-- 无ActionBar的主题变体，用于使用自定义Toolbar的Activity -->
-    <style name="Theme.HakimiPet.NoActionBar" parent="Theme.HakimiPet">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-</resources>
 
+    <style name="Theme.MusicPlayer" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorPrimaryContainer">@color/bottom_nav_indicator</item>
+        <item name="colorOnPrimaryContainer">@color/brand_primary</item>
+        <item name="colorSecondary">@color/brand_primary_dark</item>
+        <item name="android:statusBarColor">@color/page_background</item>
+        <item name="android:navigationBarColor">@color/surface_color</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowBackground">@color/page_background</item>
+        <item name="materialButtonStyle">@style/Widget.MusicPlayer.PrimaryButton</item>
+    </style>
+
+    <style name="TextAppearance.MusicPlayer.ToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.MusicPlayer" parent="" />
+
+    <style name="Widget.MusicPlayer.PrimaryButton" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/brand_primary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="cornerRadius">18dp</item>
+        <item name="android:minHeight">52dp</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.OutlineButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/stroke_color</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="cornerRadius">18dp</item>
+        <item name="android:minHeight">52dp</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.BottomNavigation.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/bottom_nav_indicator</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.StatCard">
+        <item name="android:background">@drawable/bg_status_chip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.ListCard">
+        <item name="android:background">@drawable/bg_status_chip</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="player_action_favorite">收藏歌曲</string>
+    <string name="player_action_unfavorite">取消收藏</string>
+    <string name="player_lyrics_title">歌词</string>
+    <string name="player_lyrics_empty">未找到本地歌词文件</string>
+    <string name="player_lyrics_waiting">正在等待歌词同步</string>
+    <string name="player_lyric_time_point">时间点：%1$s</string>
+    <string name="player_lyrics_next_line">下一句：%1$s</string>
+    <string name="player_lyrics_next_preview">下一句：%1$s</string>
+    <string name="player_lyrics_none_next">下一句：暂无</string>
+    <string name="player_favorite_added">已加入我喜欢</string>
+    <string name="player_favorite_removed">已取消收藏</string>
+    <string name="playlist_section_favorites">我喜欢</string>
+    <string name="playlist_section_recent">最近播放</string>
+    <string name="playlist_count_template">%1$d 首歌曲</string>
+    <string name="playlist_empty_favorites">还没有收藏歌曲，播放页点一下星标就会收进这里。</string>
+    <string name="playlist_empty_recent">还没有最近播放记录，从音乐库或播放页开始听歌后会自动记录。</string>
+    <string name="playlist_empty_scan">请先扫描本地歌曲，收藏和最近播放才会显示出来。</string>
+</resources>

@@ -6,7 +6,9 @@
 
 # Gradle 缓存
 .gradle/
+.downloads/
 .gradle_user_home/
+.gradle_user_home_fix/
 .gradle_proj_cache/
 .gradle_tmp/
 build/

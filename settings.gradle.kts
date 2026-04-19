@@ -44,5 +44,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "健康助手"
+rootProject.name = "音乐播放器"
 include(":app")

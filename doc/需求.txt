@@ -1,0 +1,14 @@
+基于Android的云音乐播放器拟采用Android平台Java语言，实现音乐播放、个性化推荐、收藏添加歌单等功能，可以解决用户体验优化，提升用户使用感的问题。老师对该课题的建议如下：
+2.该有的音乐播放基本功能都应有，要有亮点，比如添加：添加ai 。 可以类比市面上的qq音乐播放器
+3.明确歌单来源，扫描本地音乐。
+4，建议添加歌词，更新扩充音乐库，添加自建歌单功能，创建多种歌单
+5：ai 的api 如下
+  "SiliconFlow": {
+    "Provider": "SiliconFlow",
+    
+    "BaseUrl": "https://api.siliconflow.cn/v1",
+    
+    "ApiKey": "sk-kkqzlhkehosnzpixglqyhxtsjqbikocvtjixvkaggqybrmge",
+    
+    "Model": "tencent/Hunyuan-MT-7B" 
+  }

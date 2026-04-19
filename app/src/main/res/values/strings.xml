@@ -1,52 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">个人健康助手</string>
-    
-    <!-- 通用 -->
-    <string name="confirm">确定</string>
-    <string name="cancel">取消</string>
-    <string name="submit">提交</string>
-    <string name="loading">加载中...</string>
-    <string name="load_failed">加载失败</string>
-    <string name="network_error">网络错误</string>
-    <string name="unknown_error">未知错误</string>
-    
-    <!-- 登录注册 -->
-    <string name="login">登录</string>
-    <string name="register">注册</string>
-    <string name="username">用户名</string>
-    <string name="phone">邮箱</string>
-    <string name="password">密码</string>
-    <string name="login_success">登录成功</string>
-    <string name="register_success">注册成功</string>
-    
-    <!-- 首页 -->
-    <string name="home">首页</string>
-    <string name="publish">发布</string>
-    <string name="community">社区</string>
-    <string name="shopping">购物</string>
-    <string name="mine">我的</string>
-    
-    <!-- 宠物 -->
-    <string name="pet_name">宠物名称</string>
-    <string name="pet_type">宠物类型</string>
-    <string name="publish_pet">发布宠物</string>
-    <string name="adopt">领养</string>
-    <string name="help_raise">帮养</string>
-    
-    <!-- 社区 -->
-    <string name="publish_post">发布动态</string>
-    
-    <!-- 商品 -->
-    <string name="add_to_cart">加入购物车</string>
-    <string name="buy_now">立即购买</string>
-    
-    <!-- 我的 -->
-    <string name="my_profile">个人资料</string>
-    <string name="my_pets">我的宠物</string>
-    <string name="my_posts">我的动态</string>
-    <string name="my_orders">我的订单</string>
-    <string name="settings">设置</string>
-    <string name="logout">退出登录</string>
-</resources>
+    <string name="app_name">本地音乐播放器</string>
 
+    <string name="nav_home">首页</string>
+    <string name="nav_library">音乐库</string>
+    <string name="nav_playlist">歌单</string>
+    <string name="nav_ai">AI</string>
+    <string name="nav_mine">我的</string>
+
+    <string name="title_home">首页</string>
+    <string name="title_library">音乐库</string>
+    <string name="title_playlist">歌单</string>
+    <string name="title_ai">AI 助手</string>
+    <string name="title_mine">我的</string>
+
+    <string name="mini_player_title">播放控制区骨架已完成</string>
+    <string name="mini_player_subtitle">下一阶段将接入本地扫描、播放队列和真实播放能力</string>
+    <string name="mini_player_scanning_title">正在扫描本地音乐</string>
+    <string name="mini_player_scanning_subtitle">请稍候，正在从 MediaStore 读取音频文件</string>
+    <string name="mini_player_ready_title">已读取到 %1$d 首本地歌曲</string>
+    <string name="mini_player_ready_subtitle">%1$d 位歌手 / %2$d 张专辑 / %3$d 个文件夹</string>
+    <string name="mini_player_now_playing">%1$s / %2$s / %3$s</string>
+    <string name="mini_player_permission_title">需要读取本地音频权限</string>
+    <string name="mini_player_permission_subtitle">授权后即可扫描设备中的歌曲并展示到音乐库</string>
+    <string name="mini_player_empty_title">还没有扫描到本地音乐</string>
+    <string name="mini_player_empty_subtitle">可以在首页或音乐库点击“立即扫描”开始读取设备音频</string>
+
+    <string name="home_welcome">本地音乐播放器</string>
+    <string name="home_intro">当前版本已经接入本地权限申请、MediaStore 扫描、音乐库展示、播放队列和基础播放控制，后续将继续补齐歌词、歌单和播放模式。</string>
+    <string name="home_card_library_title">曲库状态</string>
+    <string name="home_library_loading">正在扫描设备中的音频文件，请稍候。</string>
+    <string name="home_library_empty">尚未扫描到本地音乐，可以先点击上方按钮开始扫描。</string>
+    <string name="home_library_summary">当前曲库包含 %1$d 首歌曲、%2$d 位歌手、%3$d 张专辑、%4$d 个文件夹。</string>
+    <string name="home_card_next_title">下一阶段开发重点</string>
+    <string name="home_card_next_desc_empty">下一步将继续完善歌词显示、最近播放、收藏歌单和更多播放模式。在此之前，你已经可以完成本地曲库扫描和基础播放。</string>
+    <string name="home_card_next_desc_ready">已经成功扫描到 %1$d 首歌曲。下一步会直接在这批数据上继续接入歌词、最近播放、收藏和歌单联动。</string>
+
+    <string name="ai_library_summary">当前本地曲库共有 %1$d 首歌曲、%2$d 位歌手、%3$d 张专辑、%4$d 个文件夹。</string>
+    <string name="ai_library_preview_title">示例歌曲预览：</string>
+    <string name="ai_intro_title">AI 音乐助手</string>
+    <string name="ai_intro_desc">这个页面不是普通聊天框，它会结合本地曲库、当前播放歌曲和你的提问，给出更贴近音乐使用场景的建议。</string>
+    <string name="ai_status_ready">SiliconFlow 已连接</string>
+    <string name="ai_status_missing_key">未配置 SiliconFlow 密钥</string>
+    <string name="ai_status_busy">AI 正在思考</string>
+    <string name="ai_context_title">当前可用上下文</string>
+    <string name="ai_context_desc_ready">AI 会读取本地曲库概览、示例歌曲和当前播放信息，再结合你的问题进行回答。</string>
+    <string name="ai_context_desc_empty">当前还没有扫描到曲库，AI 可以先帮你设计功能或给出通用建议，扫描完成后会回答得更具体。</string>
+    <string name="ai_quick_title">快捷功能</string>
+    <string name="ai_quick_playlist">生成今日听歌方案</string>
+    <string name="ai_quick_extend">延伸当前歌曲推荐</string>
+    <string name="ai_quick_style">总结本地曲库风格</string>
+    <string name="ai_quick_scene">生成场景化建议</string>
+    <string name="ai_chat_hint">输入你想问的音乐问题</string>
+    <string name="ai_send">发送</string>
+    <string name="ai_empty_title">还没有开始对话</string>
+    <string name="ai_empty_desc">你可以直接提问，也可以先点击上面的快捷功能，让 AI 根据本地曲库生成结果。</string>
+    <string name="ai_pending_message">AI 正在思考，请稍候…</string>
+    <string name="ai_welcome_message">我是你的 AI 音乐助手。你可以让我根据本地曲库做听歌建议、总结风格、围绕当前歌曲给出延伸推荐，或者帮你设计更适合这个播放器的功能想法。</string>
+    <string name="ai_current_song_template">当前播放：%1$s - %2$s / %3$s</string>
+    <string name="ai_no_current_song">当前没有正在播放的歌曲。</string>
+    <string name="ai_prompt_playlist">请基于我的本地曲库，给我生成一个“今天适合播放的顺序建议”，按早晨、通勤、工作、夜晚四个时段来安排，并说明理由。</string>
+    <string name="ai_prompt_extend">请结合我当前正在播放的歌曲，分析它的风格，并推荐 5 首适合继续接着听的方向。优先从我的本地曲库里挑选思路，如果曲库信息不足，再给出风格方向建议。</string>
+    <string name="ai_prompt_style">请总结我的本地曲库特点，包括常见歌手、专辑、可能偏好的风格，以及这个曲库最适合的使用场景。</string>
+    <string name="ai_prompt_scene">请围绕学习、运动、夜间放松三个场景，分别给我推荐适合的听歌思路，并说明我应该优先从本地曲库中挑哪些类型的歌。</string>
+    <string name="ai_error_missing_key">未检测到 SiliconFlow API Key，请先在 local.properties 中配置后再使用 AI 功能。</string>
+    <string name="ai_error_empty_input">请输入问题后再发送。</string>
+    <string name="ai_error_request">AI 请求失败，请稍后重试。</string>
+    <string name="ai_error_parse">AI 返回内容解析失败，请稍后重试。</string>
+    <string name="ai_model_info">模型：%1$s</string>
+    <string name="ai_context_song_count">曲库歌曲数：%1$d</string>
+
+    <string name="library_intro_title">音乐库</string>
+    <string name="library_intro_desc">这一页已经接入本地音频扫描结果，支持歌曲、歌手、专辑、文件夹四个维度的浏览，并支持本地关键字筛选。</string>
+    <string name="library_search_hint">搜索歌曲名、歌手名、专辑名或文件夹</string>
+    <string name="library_tab_song">歌曲</string>
+    <string name="library_tab_artist">歌手</string>
+    <string name="library_tab_album">专辑</string>
+    <string name="library_tab_folder">文件夹</string>
+    <string name="library_subtitle_artist_group">本地歌手分组</string>
+    <string name="library_subtitle_album_group">本地专辑分组</string>
+    <string name="library_subtitle_folder_group">本地文件夹分组</string>
+    <string name="library_count_song">歌曲\n%1$d</string>
+    <string name="library_count_artist">歌手\n%1$d</string>
+    <string name="library_count_album">专辑\n%1$d</string>
+    <string name="library_count_folder">文件夹\n%1$d</string>
+    <string name="library_count_suffix">%1$d 首</string>
+    <string name="library_empty_no_data_title">还没有本地曲库</string>
+    <string name="library_empty_no_data_desc">请先授予音频读取权限，然后点击“立即扫描”读取设备中的本地音乐文件。</string>
+    <string name="library_empty_search_title">没有匹配结果</string>
+    <string name="library_empty_search_desc">当前筛选条件下没有找到对应内容，可以修改关键字或重新扫描曲库。</string>
+    <string name="library_group_click_tip">当前只支持直接播放歌曲，分组详情页会在后续阶段接入。</string>
+
+    <string name="playlist_intro_title">歌单骨架</string>
+    <string name="playlist_intro_desc">这一页为“我喜欢、最近播放、自建歌单”预留了入口，下一阶段会接入本地数据库。</string>
+    <string name="playlist_favorite_stub">我喜欢：等待收藏功能接入</string>
+    <string name="playlist_recent_stub">最近播放：等待播放记录接入</string>
+    <string name="playlist_custom_stub">自建歌单：等待数据库与详情页接入</string>
+    <string name="playlist_next_step_title">后续实现方向</string>
+    <string name="playlist_next_step_desc">完成歌词、最近播放和收藏体系后，这里会接入歌单增删改查、歌曲收藏、最近播放和歌单详情页。</string>
+
+    <string name="mine_intro_title">我的骨架</string>
+    <string name="mine_intro_desc">这里保留设置与说明入口，用于承接扫描设置、歌词设置、权限说明和关于应用等功能。</string>
+    <string name="mine_item_scan">扫描设置：自动扫描、重新扫描、过滤短音频</string>
+    <string name="mine_item_lyric">歌词设置：本地歌词读取与无歌词提示</string>
+    <string name="mine_item_about">关于应用：版本、项目说明、开发阶段</string>
+    <string name="mine_project_info_title">当前工程状态</string>
+    <string name="mine_project_info_desc">当前工程已经完成主架构重建，并接入本地音频扫描、音乐库浏览和基础播放控制。后续将继续接入歌词、歌单、最近播放和更多播放模式。</string>
+
+    <string name="player_page_title">播放页</string>
+    <string name="player_song_name">示例歌曲</string>
+    <string name="player_song_meta">歌手 / 专辑信息将在真实播放时显示</string>
+    <string name="player_song_meta_live">%1$s / %2$s</string>
+    <string name="player_status_stub">仅展示界面骨架，尚未接入真实播放</string>
+    <string name="player_status_playing">正在播放</string>
+    <string name="player_status_paused">已暂停</string>
+    <string name="player_status_empty">暂无播放歌曲</string>
+    <string name="player_empty_title">还没有开始播放</string>
+    <string name="player_empty_desc">请先回到音乐库点击一首歌曲，系统会自动建立当前播放队列并进入播放页。</string>
+    <string name="player_queue_summary">当前队列第 %1$d 首，共 %2$d 首</string>
+    <string name="player_queue_empty">当前还没有播放队列</string>
+    <string name="player_progress_start">00:00</string>
+    <string name="player_progress_end">03:45</string>
+    <string name="player_next_step_title">下一步将接入的播放能力</string>
+    <string name="player_next_step_desc">包括 MediaPlayer 播放控制、进度同步、上一首下一首、播放模式、歌词联动、播放队列和迷你播放器联动。</string>
+    <string name="player_next_step_desc_playback">当前已经接入真实歌曲切换、暂停继续、进度拖动和当前播放队列。下一步会继续接入播放模式、歌词、最近播放和歌单联动。</string>
+
+    <string name="action_scan_now">立即扫描</string>
+    <string name="action_scan_again">重新扫描</string>
+    <string name="action_open_player">查看播放页骨架</string>
+    <string name="action_play">播放</string>
+    <string name="action_previous">上一首</string>
+    <string name="action_next">下一首</string>
+    <string name="content_player_cover">播放器封面占位图</string>
+
+    <string name="permission_status_granted">本地音频权限已授权，可以直接扫描并浏览曲库。</string>
+    <string name="permission_status_missing">当前尚未授权读取本地音频，点击“立即扫描”时会请求权限。</string>
+    <string name="permission_request_denied">未获得本地音频权限，无法扫描设备歌曲。</string>
+
+    <string name="song_unknown_title">未知歌曲</string>
+    <string name="song_unknown_artist">未知歌手</string>
+    <string name="song_unknown_album">未知专辑</string>
+    <string name="song_unknown_folder">未知文件夹</string>
+
+    <string name="message_player_queue_empty">当前没有可播放的歌曲，请先扫描并在音乐库中点击一首歌曲。</string>
+    <string name="message_player_stub">当前仅完成播放器界面骨架，尚未接入真实播放逻辑。</string>
+</resources>
