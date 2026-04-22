@@ -15,195 +15,471 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="健康数据看板"
-            android:textColor="#222222"
-            android:textSize="22sp"
+            android:text="@string/health_dashboard_title"
+            android:textColor="#1D1D1F"
+            android:textSize="24sp"
             android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/health_today_steps"
+                        android:textColor="#5F6368"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_steps_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/health_value_placeholder"
+                        android:textColor="#1D1D1F"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/health_latest_heart_rate"
+                        android:textColor="#5F6368"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_heart_rate_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/health_value_placeholder"
+                        android:textColor="#1D1D1F"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/health_latest_blood_pressure"
+                        android:textColor="#5F6368"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_blood_pressure_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/health_value_placeholder"
+                        android:textColor="#1D1D1F"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/health_unresolved_alerts"
+                        android:textColor="#5F6368"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_alert_count_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="0"
+                        android:textColor="#D93025"
+                        android:textSize="22sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="录入运动信息"
-                    android:textColor="#333333"
-                    android:textSize="15sp"
+                    android:text="@string/health_manual_blood_pressure_entry"
+                    android:textColor="#1D1D1F"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/et_exercise_type"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:hint="运动方式，例如：跑步"
-                    android:inputType="text"
-                    android:minHeight="44dp"
-                    android:paddingHorizontal="12dp" />
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/et_exercise_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:hint="运动地点，例如：操场"
-                    android:inputType="text"
-                    android:minHeight="44dp"
-                    android:paddingHorizontal="12dp" />
+                    <EditText
+                        android:id="@+id/et_systolic"
+                        android:layout_width="0dp"
+                        android:layout_height="46dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_systolic"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
 
-                <EditText
-                    android:id="@+id/et_exercise_duration"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:hint="运动时长（分钟）"
-                    android:inputType="number"
-                    android:minHeight="44dp"
-                    android:paddingHorizontal="12dp" />
+                    <EditText
+                        android:id="@+id/et_diastolic"
+                        android:layout_width="0dp"
+                        android:layout_height="46dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_diastolic"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/btn_save_exercise"
+                    android:id="@+id/btn_save_blood_pressure"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="#4CAF50"
-                    android:text="保存运动记录"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="#34A853"
+                    android:text="@string/health_save_blood_pressure"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="近7天运动周报（分钟）"
-                    android:textColor="#333333"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/bar_chart_weekly"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:visibility="gone"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="12dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="课表与下课运动提醒"
-                    android:textColor="#333333"
-                    android:textSize="15sp"
+                    android:text="@string/health_weekly_step_trend"
+                    android:textColor="#1D1D1F"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <EditText
-                    android:id="@+id/et_course_name"
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/chart_steps_weekly"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:hint="课程名称"
-                    android:inputType="text"
-                    android:minHeight="44dp"
-                    android:paddingHorizontal="12dp" />
+                    android:layout_height="220dp"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-                <Spinner
-                    android:id="@+id/sp_weekday"
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/health_weekly_heart_rate_trend"
+                    android:textColor="#1D1D1F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/chart_heart_rate_weekly"
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/rounded_edit_text"
-                    android:paddingHorizontal="12dp" />
+                    android:layout_height="220dp"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/health_alert_thresholds"
+                    android:textColor="#1D1D1F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/health_section_heart_rate_thresholds"
+                    android:textColor="#5F6368"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/et_reminder_time"
+                        android:id="@+id/et_heart_rate_low"
                         android:layout_width="0dp"
                         android:layout_height="44dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_edit_text"
-                        android:focusable="false"
-                        android:hint="提醒时间 HH:mm"
+                        android:hint="@string/health_hint_hr_low"
+                        android:inputType="number"
                         android:paddingHorizontal="12dp" />
 
-                    <Button
-                        android:id="@+id/btn_pick_time"
-                        android:layout_width="92dp"
+                    <EditText
+                        android:id="@+id/et_heart_rate_high"
+                        android:layout_width="0dp"
                         android:layout_height="44dp"
                         android:layout_marginStart="8dp"
-                        android:text="选择时间" />
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_hr_high"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btn_save_schedule"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:layout_marginTop="8dp"
-                    android:backgroundTint="#1E88E5"
-                    android:text="保存课表并提醒"
-                    android:textColor="#FFFFFF" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="已保存提醒"
-                    android:textColor="#555555"
-                    android:textSize="13sp" />
+                    android:layout_marginTop="12dp"
+                    android:text="@string/health_section_blood_pressure_thresholds"
+                    android:textColor="#5F6368"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tv_schedule_list"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="#333333"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_systolic_low"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_sys_low"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
+
+                    <EditText
+                        android:id="@+id/et_systolic_high"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_sys_high"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/health_section_step_thresholds"
+                    android:textColor="#5F6368"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_diastolic_low"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_dia_low"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
+
+                    <EditText
+                        android:id="@+id/et_diastolic_high"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_dia_high"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_step_goal"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_step_goal"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
+
+                    <EditText
+                        android:id="@+id/et_step_alert_threshold"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_edit_text"
+                        android:hint="@string/health_hint_low_step_alert"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_save_alert_rules"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/health_save_thresholds" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/health_recent_alerts"
+                    android:textColor="#1D1D1F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_recent_alerts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/health_no_recent_alerts"
+                    android:textColor="#5F6368"
                     android:textSize="14sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

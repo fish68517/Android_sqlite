@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.hakimi'
+    namespace 'com.Health'
     compileSdk 34
 
     def siliconFlowBaseUrl = (project.findProperty("siliconflow.baseUrl")
@@ -14,8 +14,8 @@ android {
             ?: "tencent/Hunyuan-MT-7B").toString()
 
     defaultConfig {
-        applicationId "com.hakimi"
-        minSdk 24
+        applicationId "com.Health"
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -54,6 +54,8 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.6.1'
     annotationProcessor 'androidx.room:room-compiler:2.6.1'
     implementation 'androidx.work:work-runtime:2.9.1'
+    implementation 'androidx.health.connect:connect-client:1.0.0-alpha11'
+    implementation 'com.google.guava:guava:31.1-android'
     
     // Retrofit缃戠粶璇锋眰
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
