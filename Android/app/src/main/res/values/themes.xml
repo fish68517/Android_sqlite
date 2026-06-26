@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ReadingAssistant" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorAccent">@color/brand_primary</item>
+        <item name="android:statusBarColor">@color/page_background</item>
+        <item name="android:navigationBarColor">@color/surface_color</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:windowBackground">@color/page_background</item>
+    </style>
+
+    <style name="Theme.MusicPlayer" parent="Theme.ReadingAssistant" />
+
+    <style name="TextAppearance" />
+
+    <style name="TextAppearance.MusicPlayer" />
+
+    <style name="TextAppearance.MusicPlayer.ToolbarTitle">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.MusicPlayer" parent="" />
+
+    <style name="Widget.MusicPlayer.BottomNavigation" />
+
+    <style name="Widget.MusicPlayer.PrimaryButton">
+        <item name="android:backgroundTint">@color/brand_primary</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:minHeight">52dp</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.OutlineButton">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:minHeight">52dp</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.BottomNavigation.ActiveIndicator">
+        <item name="android:color">@color/bottom_nav_indicator</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.StatCard">
+        <item name="android:background">@drawable/bg_status_chip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.MusicPlayer.ListCard">
+        <item name="android:background">@drawable/bg_status_chip</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingTop">18dp</item>
+        <item name="android:paddingEnd">18dp</item>
+        <item name="android:paddingBottom">18dp</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

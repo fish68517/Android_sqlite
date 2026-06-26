@@ -1,0 +1,82 @@
+plugins {
+    id 'com.android.application'
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { inputStream ->
+        localProperties.load(inputStream)
+    }
+}
+
+def readProjectConfig = { String key, String defaultValue ->
+    def value = project.findProperty(key)
+    if (value == null || value.toString().trim().isEmpty()) {
+        value = localProperties.getProperty(key)
+    }
+    if (value == null || value.toString().trim().isEmpty()) {
+        value = defaultValue
+    }
+    return value.toString().trim()
+}
+
+def asBuildConfigString = { String value ->
+    return "\"" + value.replace("\\", "\\\\").replace("\"", "\\\"") + "\""
+}
+
+android {
+    namespace 'com.readingassistant.app'
+    compileSdk 34
+
+    def glmBaseUrl = readProjectConfig("GLM_BASE_URL", "https://open.bigmodel.cn/api/paas/v4")
+    def glmApiKey = readProjectConfig("GLM_API_KEY", "")
+    def glmTextModel = readProjectConfig("GLM_TEXT_MODEL", "glm-5.2")
+    def glmVisionModel = readProjectConfig("GLM_VISION_MODEL", "glm-4v-plus")
+    def glmKnowledgeId = readProjectConfig("GLM_KNOWLEDGE_ID", "")
+    def kimiBaseUrl = readProjectConfig("KIMI_BASE_URL", "https://api.moonshot.ai/v1")
+    def kimiApiKey = readProjectConfig("KIMI_API_KEY", "")
+    def kimiModel = readProjectConfig("KIMI_MODEL", "")
+    def aiTimeoutSeconds = readProjectConfig("AI_REQUEST_TIMEOUT_SECONDS", "20")
+    def aiSummaryMaxChars = readProjectConfig("AI_SUMMARY_MAX_CHARS", "80")
+
+    defaultConfig {
+        applicationId "com.readingassistant.app"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField "String", "GLM_BASE_URL", asBuildConfigString(glmBaseUrl)
+        buildConfigField "String", "GLM_API_KEY", asBuildConfigString(glmApiKey)
+        buildConfigField "String", "GLM_TEXT_MODEL", asBuildConfigString(glmTextModel)
+        buildConfigField "String", "GLM_VISION_MODEL", asBuildConfigString(glmVisionModel)
+        buildConfigField "String", "GLM_KNOWLEDGE_ID", asBuildConfigString(glmKnowledgeId)
+        buildConfigField "String", "KIMI_BASE_URL", asBuildConfigString(kimiBaseUrl)
+        buildConfigField "String", "KIMI_API_KEY", asBuildConfigString(kimiApiKey)
+        buildConfigField "String", "KIMI_MODEL", asBuildConfigString(kimiModel)
+        buildConfigField "int", "AI_REQUEST_TIMEOUT_SECONDS", aiTimeoutSeconds
+        buildConfigField "int", "AI_SUMMARY_MAX_CHARS", aiSummaryMaxChars
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}

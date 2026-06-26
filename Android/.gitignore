@@ -1,0 +1,45 @@
+# 依赖包
+*.jar
+*.war
+*.ear
+*.aar
+
+# Gradle 缓存
+.gradle/
+.downloads/
+.gradle_user_home/
+.gradle_user_home_fix/
+.gradle_user_home_*/
+.gradle_build_cache_*/
+.gradle_proj_cache/
+.gradle_tmp/
+build/
+*/build/
+gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE 配置
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# 构建输出
+out/
+bin/
+gen/
+
+# 本地配置
+local.properties
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+
+# 临时文件
+*.tmp
+*.swp
+*~

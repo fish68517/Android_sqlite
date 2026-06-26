@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand_primary">#246BFD</color>
+    <color name="brand_primary_dark">#1B4FCC</color>
+    <color name="page_background">#F5F7FB</color>
+    <color name="surface_color">#FFFFFFFF</color>
+    <color name="text_primary">#182230</color>
+    <color name="text_secondary">#667085</color>
+    <color name="stroke_color">#DCE3EC</color>
+    <color name="bottom_nav_selected">#246BFD</color>
+    <color name="bottom_nav_unselected">#98A2B3</color>
+    <color name="bottom_nav_indicator">#EAF2FF</color>
+</resources>
