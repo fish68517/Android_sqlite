@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">无感签到</string>
+    <string name="notification_channel_name">课程自动签到</string>
+    <string name="notification_channel_description">课程时段自动采集签到证据</string>
+</resources>
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#3157D5</color>
+    <color name="page_background">#F4F6FB</color>
+    <color name="card_background">#FFFFFFFF</color>
+    <color name="text_primary">#1D2433</color>
+    <color name="text_secondary">#677087</color>
+    <color name="divider">#E4E8F0</color>
+    <color name="success">#168A5B</color>
+    <color name="warning">#C57B00</color>
+    <color name="danger">#C63D4D</color>
+    <color name="white">#FFFFFF</color>
+</resources>

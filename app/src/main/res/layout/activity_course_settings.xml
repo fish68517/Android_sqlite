@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="课程设置"
+            android:textColor="@color/text_primary"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="第一版只配置一门课程"
+            android:textColor="@color/text_secondary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:elevation="2dp"
+            android:orientation="vertical">
+
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="课程名称" />
+            <EditText android:id="@+id/etCourseName" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="例如：移动应用程序设计" android:inputType="textCapSentences" />
+
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="上课星期" />
+            <Spinner android:id="@+id/spWeekday" android:layout_width="match_parent" android:layout_height="48dp" />
+
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="上课时间" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                <Button android:id="@+id/btnStartTime" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="开始 08:00" android:textAllCaps="false" />
+                <Space android:layout_width="8dp" android:layout_height="1dp" />
+                <Button android:id="@+id/btnEndTime" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="结束 09:40" android:textAllCaps="false" />
+            </LinearLayout>
+
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="教室坐标" />
+            <TextView android:id="@+id/tvLocation" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="尚未设置" android:textColor="@color/text_secondary" />
+            <Button android:id="@+id/btnUseCurrentLocation" android:layout_width="match_parent" android:layout_height="48dp" android:layout_marginTop="8dp" android:text="使用当前位置作为教室位置" android:textAllCaps="false" />
+
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="允许距离（米）" />
+            <EditText android:id="@+id/etRadius" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="150" android:inputType="numberDecimal" />
+
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="自动签到间隔" />
+            <Spinner android:id="@+id/spInterval" android:layout_width="match_parent" android:layout_height="48dp" />
+
+            <Switch
+                android:id="@+id/switchAuto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:checked="true"
+                android:text="启用自动签到"
+                android:textColor="@color/text_primary" />
+        </LinearLayout>
+
+        <Button android:id="@+id/btnSaveCourse" style="@style/PrimaryButton" android:text="保存课程设置" />
+        <Button android:id="@+id/btnBack" style="@style/SecondaryButton" android:text="返回首页" />
+    </LinearLayout>
+</ScrollView>

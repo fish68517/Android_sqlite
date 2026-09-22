@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="签到历史"
+        android:textColor="@color/text_primary"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvHistoryStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="暂无记录"
+        android:textColor="@color/text_secondary" />
+
+    <ListView
+        android:id="@+id/listHistory"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp" />
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="暂无签到记录\n请先在首页执行测试签到"
+        android:textColor="@color/text_secondary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/btnExportCsv" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="导出 CSV" android:textAllCaps="false" />
+        <Space android:layout_width="8dp" android:layout_height="1dp" />
+        <Button android:id="@+id/btnExportJson" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="导出 JSON" android:textAllCaps="false" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnShareCsv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:text="通过系统应用分享 CSV 内容"
+        android:textAllCaps="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button android:id="@+id/btnClearHistory" android:layout_width="0dp" android:layout_height="48dp" android:layout_marginTop="8dp" android:layout_weight="1" android:text="清空记录" android:textAllCaps="false" />
+        <Space android:layout_width="8dp" android:layout_height="1dp" />
+        <Button android:id="@+id/btnBack" android:layout_width="0dp" android:layout_height="48dp" android:layout_marginTop="8dp" android:layout_weight="1" android:text="返回首页" android:textAllCaps="false" />
+    </LinearLayout>
+</LinearLayout>
