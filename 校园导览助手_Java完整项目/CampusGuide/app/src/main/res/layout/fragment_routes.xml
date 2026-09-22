@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="精选校园路线"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="根据时间和兴趣，选择适合你的参观路线"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_chip" android:text="新生推荐" android:textColor="@color/primary_dark" android:textSize="12sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="初识校园经典路线" android:textColor="@color/text_primary" android:textSize="19sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="南门 → 校史馆 → 图书馆 → 湖心花园" android:textColor="@color/text_secondary" android:textSize="14sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="约 45 分钟　·　1.8 公里　·　4 个地点" android:textColor="@color/secondary_dark" android:textSize="13sp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/button_route_classic" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="查看路线详情" app:cornerRadius="12dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_chip" android:text="学习生活" android:textColor="@color/primary_dark" android:textSize="12sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="高效学习生活路线" android:textColor="@color/text_primary" android:textSize="19sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="实验楼 → 图书馆 → 第一食堂 → 体育馆" android:textColor="@color/text_secondary" android:textSize="14sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="约 35 分钟　·　1.3 公里　·　4 个地点" android:textColor="@color/secondary_dark" android:textSize="13sp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/button_route_life" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="查看路线详情" app:cornerRadius="12dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="2dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="18dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:background="@drawable/bg_chip" android:text="休闲漫步" android:textColor="@color/primary_dark" android:textSize="12sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="湖畔活力路线" android:textColor="@color/text_primary" android:textSize="19sp" android:textStyle="bold" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="湖心花园 → 体育馆 → 第一食堂" android:textColor="@color/text_secondary" android:textSize="14sp" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="约 25 分钟　·　0.9 公里　·　3 个地点" android:textColor="@color/secondary_dark" android:textSize="13sp" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/button_route_relax" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp" android:text="查看路线详情" app:cornerRadius="12dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</ScrollView>

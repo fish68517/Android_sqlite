@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/primary"
+            app:cardCornerRadius="22dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal" android:padding="22dp">
+                <ImageView android:layout_width="68dp" android:layout_height="68dp" android:background="@color/white" android:contentDescription="用户头像" android:padding="14dp" android:src="@drawable/ic_person" />
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:id="@+id/text_profile_name" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="校园访客" android:textColor="@color/white" android:textSize="21sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="欢迎使用校园导览服务" android:textColor="#DDF3EC" android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="24dp" android:layout_marginBottom="8dp" android:text="应用服务" android:textColor="@color/text_primary" android:textSize="18sp" android:textStyle="bold" />
+
+        <com.google.android.material.card.MaterialCardView android:id="@+id/card_about" android:layout_width="match_parent" android:layout_height="wrap_content" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" app:cardCornerRadius="16dp" app:strokeColor="@color/divider" app:strokeWidth="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="64dp" android:gravity="center_vertical" android:orientation="horizontal" android:paddingHorizontal="18dp">
+                <ImageView android:layout_width="28dp" android:layout_height="28dp" android:contentDescription="关于" android:src="@drawable/ic_info" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="14dp" android:layout_weight="1" android:text="关于校园导览助手" android:textColor="@color/text_primary" android:textSize="16sp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textColor="@color/text_secondary" android:textSize="26sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView android:id="@+id/card_logout" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:clickable="true" android:focusable="true" android:foreground="?attr/selectableItemBackground" app:cardCornerRadius="16dp" app:strokeColor="@color/divider" app:strokeWidth="1dp">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="64dp" android:gravity="center_vertical" android:orientation="horizontal" android:paddingHorizontal="18dp">
+                <ImageView android:layout_width="28dp" android:layout_height="28dp" android:contentDescription="退出登录" android:src="@drawable/ic_logout" />
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginStart="14dp" android:layout_weight="1" android:text="退出登录" android:textColor="@color/danger" android:textSize="16sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="28dp" android:gravity="center" android:text="Campus Guide v1.0\n本地数据 · 无需联网 · 保护隐私" android:textColor="@color/text_secondary" android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>
