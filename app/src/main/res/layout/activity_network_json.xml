@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background" android:orientation="vertical" android:padding="20dp">
+    <TextView style="@style/LabTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="网络 JSON 与 WebView" />
+    <TextView style="@style/LabSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="HttpURLConnection、JSON 解析、网络权限和网页加载" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+        <Button android:id="@+id/btnFetchJson" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="请求 JSON" android:textAllCaps="false" />
+        <Button android:id="@+id/btnOpenWeb" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:text="打开网页" android:textAllCaps="false" />
+    </LinearLayout>
+    <ListView android:id="@+id/listNetworkResult" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="8dp" android:layout_weight="1" android:background="@drawable/bg_card" android:dividerHeight="1dp" />
+    <WebView android:id="@+id/webView" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="8dp" android:layout_weight="1" android:visibility="gone" />
+</LinearLayout>

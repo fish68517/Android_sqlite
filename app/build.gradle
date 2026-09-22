@@ -1,0 +1,156 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.knowledgelabs'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.example.knowledgelabs'
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    flavorDimensions += 'lab'
+    productFlavors {
+        ch01 {
+            dimension 'lab'
+            applicationIdSuffix '.ch01'
+            versionNameSuffix '-ch01'
+            manifestPlaceholders = [appLabel: '实验01 HelloStart']
+            buildConfigField 'String', 'LAB_ID', '"ch01"'
+            buildConfigField 'String', 'LAB_TITLE', '"第1章 HelloStart"'
+        }
+        ch02 {
+            dimension 'lab'
+            applicationIdSuffix '.ch02'
+            versionNameSuffix '-ch02'
+            manifestPlaceholders = [appLabel: '实验02 KotlinToolbox']
+            buildConfigField 'String', 'LAB_ID', '"ch02"'
+            buildConfigField 'String', 'LAB_TITLE', '"第2章 KotlinToolbox"'
+        }
+        ch03 {
+            dimension 'lab'
+            applicationIdSuffix '.ch03'
+            versionNameSuffix '-ch03'
+            manifestPlaceholders = [appLabel: '实验03 ActivityNotebook']
+            buildConfigField 'String', 'LAB_ID', '"ch03"'
+            buildConfigField 'String', 'LAB_TITLE', '"第3章 ActivityNotebook"'
+        }
+        ch04 {
+            dimension 'lab'
+            applicationIdSuffix '.ch04'
+            versionNameSuffix '-ch04'
+            manifestPlaceholders = [appLabel: '实验04 ComponentGallery']
+            buildConfigField 'String', 'LAB_ID', '"ch04"'
+            buildConfigField 'String', 'LAB_TITLE', '"第4章 ComponentGallery"'
+        }
+        ch05 {
+            dimension 'lab'
+            applicationIdSuffix '.ch05'
+            versionNameSuffix '-ch05'
+            manifestPlaceholders = [appLabel: '实验05 FragmentNews']
+            buildConfigField 'String', 'LAB_ID', '"ch05"'
+            buildConfigField 'String', 'LAB_TITLE', '"第5章 FragmentNews"'
+        }
+        ch06 {
+            dimension 'lab'
+            applicationIdSuffix '.ch06'
+            versionNameSuffix '-ch06'
+            manifestPlaceholders = [appLabel: '实验06 BroadcastSession']
+            buildConfigField 'String', 'LAB_ID', '"ch06"'
+            buildConfigField 'String', 'LAB_TITLE', '"第6章 BroadcastSession"'
+        }
+        ch07 {
+            dimension 'lab'
+            applicationIdSuffix '.ch07'
+            versionNameSuffix '-ch07'
+            manifestPlaceholders = [appLabel: '实验07 LocalVault']
+            buildConfigField 'String', 'LAB_ID', '"ch07"'
+            buildConfigField 'String', 'LAB_TITLE', '"第7章 LocalVault"'
+        }
+        ch08 {
+            dimension 'lab'
+            applicationIdSuffix '.ch08'
+            versionNameSuffix '-ch08'
+            manifestPlaceholders = [appLabel: '实验08 ContactViewer']
+            buildConfigField 'String', 'LAB_ID', '"ch08"'
+            buildConfigField 'String', 'LAB_TITLE', '"第8章 ContactViewer"'
+        }
+        ch09 {
+            dimension 'lab'
+            applicationIdSuffix '.ch09'
+            versionNameSuffix '-ch09'
+            manifestPlaceholders = [appLabel: '实验09 MediaCenter']
+            buildConfigField 'String', 'LAB_ID', '"ch09"'
+            buildConfigField 'String', 'LAB_TITLE', '"第9章 MediaCenter"'
+        }
+        ch10 {
+            dimension 'lab'
+            applicationIdSuffix '.ch10'
+            versionNameSuffix '-ch10'
+            manifestPlaceholders = [appLabel: '实验10 BackgroundDownloader']
+            buildConfigField 'String', 'LAB_ID', '"ch10"'
+            buildConfigField 'String', 'LAB_TITLE', '"第10章 BackgroundDownloader"'
+        }
+        ch11 {
+            dimension 'lab'
+            applicationIdSuffix '.ch11'
+            versionNameSuffix '-ch11'
+            manifestPlaceholders = [appLabel: '实验11 NetworkJsonClient']
+            buildConfigField 'String', 'LAB_ID', '"ch11"'
+            buildConfigField 'String', 'LAB_TITLE', '"第11章 NetworkJsonClient"'
+        }
+        ch15 {
+            dimension 'lab'
+            applicationIdSuffix '.ch15'
+            versionNameSuffix '-ch15'
+            manifestPlaceholders = [appLabel: '实验12 WeatherLite']
+            buildConfigField 'String', 'LAB_ID', '"ch15"'
+            buildConfigField 'String', 'LAB_TITLE', '"第15章 WeatherLite"'
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+}
+
+tasks.register('assembleAllLabsDebug') {
+    group = 'build'
+    description = '一次生成 12 个知识点实验的 Debug APK'
+    dependsOn(
+            'assembleCh01Debug', 'assembleCh02Debug', 'assembleCh03Debug',
+            'assembleCh04Debug', 'assembleCh05Debug', 'assembleCh06Debug',
+            'assembleCh07Debug', 'assembleCh08Debug', 'assembleCh09Debug',
+            'assembleCh10Debug', 'assembleCh11Debug', 'assembleCh15Debug'
+    )
+}

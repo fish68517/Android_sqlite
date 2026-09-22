@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background" android:orientation="vertical" android:padding="20dp">
+    <TextView style="@style/LabTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Activity 双页面便签" />
+    <TextView style="@style/LabSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="生命周期、Intent 数据传递、Toast 与返回栈" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical">
+        <EditText android:id="@+id/etNoteTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="便签标题" android:inputType="textCapSentences" />
+        <EditText android:id="@+id/etNoteContent" android:layout_width="match_parent" android:layout_height="160dp" android:gravity="top" android:hint="输入便签正文" android:inputType="textMultiLine" />
+        <Button android:id="@+id/btnPreviewNote" style="@style/LabButton" android:text="打开第二个 Activity 预览" />
+        <Button android:id="@+id/btnOpenBrowser" style="@style/LabButton" android:text="隐式 Intent 打开 Android 官网" />
+    </LinearLayout>
+</LinearLayout>
+

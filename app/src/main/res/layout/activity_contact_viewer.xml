@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background" android:orientation="vertical" android:padding="20dp">
+    <TextView style="@style/LabTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="经授权读取联系人" />
+    <TextView style="@style/LabSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="ContentResolver、URI、危险权限和隐私提示" />
+    <Button android:id="@+id/btnLoadContacts" style="@style/LabButton" android:text="申请权限并读取联系人" />
+    <TextView android:id="@+id/tvContactPrivacy" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="仅在本机展示姓名和电话，不上传任何数据。" android:textColor="@color/text_secondary" />
+    <ListView android:id="@+id/listSystemContacts" android:layout_width="match_parent" android:layout_height="0dp" android:layout_marginTop="8dp" android:layout_weight="1" />
+</LinearLayout>
+

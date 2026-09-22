@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background" android:orientation="vertical" android:padding="20dp">
+    <TextView style="@style/LabTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Fragment 新闻" />
+    <TextView style="@style/LabSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="手机为单栏切换，平板为列表与详情双栏" />
+    <FrameLayout android:id="@+id/newsListContainer" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+</LinearLayout>
+

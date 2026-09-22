@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="${appLabel}"
+        android:roundIcon="@drawable/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.KnowledgeLabs"
+        android:usesCleartextTraffic="false">
+
+        <activity android:name=".ch15.WeatherLiteActivity" android:exported="false" />
+        <activity android:name=".ch11.NetworkJsonClientActivity" android:exported="false" />
+        <activity android:name=".ch10.BackgroundDownloaderActivity" android:exported="false" />
+        <activity android:name=".ch09.MediaCenterActivity" android:exported="false" />
+        <activity android:name=".ch08.ContactViewerActivity" android:exported="false" />
+        <activity android:name=".ch07.LocalVaultActivity" android:exported="false" />
+        <activity android:name=".ch06.BroadcastSessionActivity" android:exported="false" />
+        <activity android:name=".ch05.FragmentNewsActivity" android:exported="false" />
+        <activity android:name=".ch04.ComponentGalleryActivity" android:exported="false" />
+        <activity android:name=".ch03.NoteDetailActivity" android:exported="false" />
+        <activity android:name=".ch03.ActivityNotebookActivity" android:exported="false" />
+        <activity android:name=".ch02.KotlinToolboxActivity" android:exported="false" />
+        <activity android:name=".ch01.HelloStartActivity" android:exported="false" />
+        <activity
+            android:name=".LabLauncherActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".ch10.DownloadService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+    </application>
+
+</manifest>

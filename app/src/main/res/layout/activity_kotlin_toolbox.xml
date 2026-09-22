@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+        <TextView style="@style/LabTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Kotlin 单位换算与成绩统计" />
+        <TextView style="@style/LabSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="变量、函数、集合、空安全、类与函数式 API" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical">
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="公里数" />
+            <EditText android:id="@+id/etKilometers" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="例如 3.5" android:inputType="numberDecimal" />
+            <Button android:id="@+id/btnConvert" style="@style/LabButton" android:text="换算为米" />
+            <TextView android:id="@+id/tvConvertResult" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="@color/text_primary" android:textSize="16sp" />
+
+            <TextView style="@style/FieldLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="成绩（英文逗号分隔）" />
+            <EditText android:id="@+id/etScores" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="86,92,75,100" android:inputType="text" />
+            <Button android:id="@+id/btnAnalyze" style="@style/LabButton" android:text="统计成绩" />
+            <TextView android:id="@+id/tvScoreResult" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="@color/text_primary" android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
+

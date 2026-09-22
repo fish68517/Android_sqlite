@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/background" android:orientation="vertical" android:padding="20dp">
+    <TextView style="@style/LabTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="控件与联系人列表" />
+    <TextView style="@style/LabSubtitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="EditText、Button、ImageView、ProgressBar、AlertDialog、RecyclerView" />
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+        <EditText android:id="@+id/etContactName" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:hint="联系人姓名" android:inputType="textPersonName" />
+        <Button android:id="@+id/btnAddContact" android:layout_width="wrap_content" android:layout_height="48dp" android:text="添加" android:textAllCaps="false" />
+    </LinearLayout>
+    <ProgressBar android:id="@+id/progressGallery" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="10" android:progress="3" />
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/recyclerContacts" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:clipToPadding="false" android:paddingTop="8dp" />
+</LinearLayout>
+
