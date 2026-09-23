@@ -1,0 +1,211 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram id="chen-er-1" name="Page-1">
+    <mxGraphModel dx="1737" dy="1043" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="291" pageHeight="413" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="en_user" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="User 用户" vertex="1">
+          <mxGeometry height="40" width="140" x="250" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="en_diet" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="Diet 饮食" vertex="1">
+          <mxGeometry height="40" width="140" x="750" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="en_exercise" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="Exercise 运动" vertex="1">
+          <mxGeometry height="40" width="140" x="750" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="en_assessment" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="Assessment 测评" vertex="1">
+          <mxGeometry height="40" width="140" x="1250" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="en_knowledge" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="Knowledge 知识" vertex="1">
+          <mxGeometry height="40" width="140" x="750" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="en_history" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="History 历史记录" vertex="1">
+          <mxGeometry height="40" width="140" x="250" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_record_diet" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="记录" vertex="1">
+          <mxGeometry height="50" width="80" x="540" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_perform" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="执行" vertex="1">
+          <mxGeometry height="50" width="80" x="540" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_complete" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="完成" vertex="1">
+          <mxGeometry height="50" width="80" x="1030" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_read" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="阅读" vertex="1">
+          <mxGeometry height="50" width="80" x="540" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_generate" parent="1" style="rhombus;whiteSpace=wrap;html=1;fontSize=14;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontColor=#000000;" value="产生" vertex="1">
+          <mxGeometry height="50" width="80" x="176" y="608" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_u1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="用户ID (id)" vertex="1">
+          <mxGeometry height="40" width="90" x="128" y="348" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_u2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="用户名 (username)" vertex="1">
+          <mxGeometry height="40" width="110" x="60" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_u1" edge="1" parent="1" source="en_user" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_u1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_u2" edge="1" parent="1" source="en_user" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_u2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_d1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="饮食ID (id)" vertex="1">
+          <mxGeometry height="40" width="90" x="775" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_d2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="饮食类型 (meal_type)" vertex="1">
+          <mxGeometry height="40" width="120" x="930" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_d1" edge="1" parent="1" source="en_diet" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_d1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_d2" edge="1" parent="1" source="en_diet" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_e1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="运动ID (id)" vertex="1">
+          <mxGeometry height="40" width="90" x="775" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_e2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="运动类型 (exercise_type)" vertex="1">
+          <mxGeometry height="40" width="130" x="914" y="359" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_e1" edge="1" parent="1" source="en_exercise" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_e1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_e2" edge="1" parent="1" source="en_exercise" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_e2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_as1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="测评ID (id)" vertex="1">
+          <mxGeometry height="40" width="90" x="1275" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_as2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="分数 (score)" vertex="1">
+          <mxGeometry height="40" width="90" x="1430" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_as1" edge="1" parent="1" source="en_assessment" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_as1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_as2" edge="1" parent="1" source="en_assessment" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_as2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_k1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="知识ID (id)" vertex="1">
+          <mxGeometry height="40" width="90" x="775" y="850" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_k2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="标题 (title)" vertex="1">
+          <mxGeometry height="40" width="90" x="930" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_k1" edge="1" parent="1" source="en_knowledge" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_k1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_k2" edge="1" parent="1" source="en_knowledge" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_k2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_h1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="历史ID (id)" vertex="1">
+          <mxGeometry height="40" width="90" x="120" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="attr_h2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;fontSize=14;fontColor=#000000;" value="操作 (action)" vertex="1">
+          <mxGeometry height="40" width="90" x="100" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_h1" edge="1" parent="1" source="en_history" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_h1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ea_h2" edge="1" parent="1" source="en_history" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="attr_h2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_ud1" edge="1" parent="1" source="en_user" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;html=1;strokeWidth=1.5;rounded=0;fontSize=14;fontColor=#000000;" target="rel_record_diet">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="305" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ud1" connectable="0" parent="edge_ud1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ud2" edge="1" parent="1" source="rel_record_diet" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;html=1;strokeWidth=1.5;rounded=0;fontSize=14;fontColor=#000000;" target="en_diet">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="305" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ud2" connectable="0" parent="edge_ud2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="N" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_up1" edge="1" parent="1" source="en_user" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="rel_perform">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_up1" connectable="0" parent="edge_up1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_up2" edge="1" parent="1" source="rel_perform" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="en_exercise">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_up2" connectable="0" parent="edge_up2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="N" vertex="1">
+          <mxGeometry relative="1" x="0.3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ur1" edge="1" parent="1" source="en_user" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;html=1;strokeWidth=1.5;rounded=0;fontSize=14;fontColor=#000000;" target="rel_read">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ur1" connectable="0" parent="edge_ur1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.8" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ur2" edge="1" parent="1" source="rel_read" style="edgeStyle=orthogonalEdgeStyle;endArrow=none;html=1;strokeWidth=1.5;rounded=0;fontSize=14;fontColor=#000000;" target="en_knowledge">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_ur2" connectable="0" parent="edge_ur2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="N" vertex="1">
+          <mxGeometry relative="1" x="0.8" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ac1" edge="1" parent="1" source="en_exercise" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="rel_complete">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_ac1" connectable="0" parent="edge_ac1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ac2" edge="1" parent="1" source="rel_complete" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="en_assessment">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_ac2" connectable="0" parent="edge_ac2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="N" vertex="1">
+          <mxGeometry relative="1" x="0.3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ug1" edge="1" parent="1" source="en_user" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="rel_generate">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_ug1" connectable="0" parent="edge_ug1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="1" vertex="1">
+          <mxGeometry relative="1" x="-0.3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ug2" edge="1" parent="1" source="rel_generate" style="endArrow=none;html=1;strokeWidth=1.5;fontSize=14;fontColor=#000000;" target="en_history">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_ug2" connectable="0" parent="edge_ug2" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=14;fontStyle=1;labelBackgroundColor=#ffffff;fontColor=#000000;" value="N" vertex="1">
+          <mxGeometry relative="1" x="0.3" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

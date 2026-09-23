@@ -1,0 +1,91 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram id="8c529048de" name="系统功能结构图">
+    <mxGraphModel dx="1226" dy="736" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="520" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="f1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="健康助手系统" vertex="1">
+          <mxGeometry height="50" width="280" x="760" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="账户与资料管理" vertex="1">
+          <mxGeometry height="60" width="150" x="167" y="117" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="健康档案管理" vertex="1">
+          <mxGeometry height="60" width="150" x="256" y="295" as="geometry" />
+        </mxCell>
+        <mxCell id="f4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="快捷记录" vertex="1">
+          <mxGeometry height="60" width="150" x="305" y="184" as="geometry" />
+        </mxCell>
+        <mxCell id="f5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="用药提醒" vertex="1">
+          <mxGeometry height="60" width="150" x="590" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="f6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="习惯打卡" vertex="1">
+          <mxGeometry height="60" width="150" x="750" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="f7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="运动与计划" vertex="1">
+          <mxGeometry height="60" width="150" x="910" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="f8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="社区互动" vertex="1">
+          <mxGeometry height="60" width="150" x="1080" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="f9" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="AI问答" vertex="1">
+          <mxGeometry height="60" width="150" x="1240" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="f10" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="健康监测闭环" vertex="1">
+          <mxGeometry height="60" width="150" x="1400" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="f11" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="步数/心率/血压采集" vertex="1">
+          <mxGeometry height="60" width="180" x="1320" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="f12" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="异常预警与通知" vertex="1">
+          <mxGeometry height="60" width="180" x="1500" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="f13" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="语音播报" vertex="1">
+          <mxGeometry height="60" width="180" x="1410" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="f14" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="阈值设置与补录" vertex="1">
+          <mxGeometry height="60" width="180" x="1590" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f2" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f2" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f3" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f3" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f4" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f5" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f5" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f6" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f6" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f7" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f7" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f8" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f8" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f9" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f9" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1f10" edge="1" parent="1" source="f1" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f10" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ef10_f11" edge="1" parent="1" source="f10" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f11" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ef10_f12" edge="1" parent="1" source="f10" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f12" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ef11_f13" edge="1" parent="1" source="f11" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f13" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ef12_f14" edge="1" parent="1" source="f12" style="endArrow=block;html=1;rounded=0;strokeWidth=2;" target="f14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

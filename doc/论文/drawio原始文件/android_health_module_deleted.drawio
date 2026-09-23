@@ -1,0 +1,209 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram id="system-function-module" name="系统功能模块图">
+    <mxGraphModel dx="1737" dy="1043" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="291" pageHeight="413" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=15;fontColor=#000000;" value="系统功能模块图" vertex="1">
+          <mxGeometry height="40" width="280" x="360" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rootbox" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#2b5d93;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=16;strokeWidth=2;" value="Android健康助手系统" vertex="1">
+          <mxGeometry height="36" width="300" x="360" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="account_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="105" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="account_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="账户管理" vertex="1">
+          <mxGeometry height="24" width="140" x="110" y="177" as="geometry" />
+        </mxCell>
+        <mxCell id="account_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="注册" vertex="1">
+          <mxGeometry height="18" width="118" x="121" y="213" as="geometry" />
+        </mxCell>
+        <mxCell id="account_item2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="登录" vertex="1">
+          <mxGeometry height="18" width="118" x="121" y="237" as="geometry" />
+        </mxCell>
+        <mxCell id="account_item3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="退出登录" vertex="1">
+          <mxGeometry height="18" width="118" x="121" y="261" as="geometry" />
+        </mxCell>
+        <mxCell id="archive_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="315" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="archive_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="健康档案" vertex="1">
+          <mxGeometry height="24" width="140" x="320" y="177" as="geometry" />
+        </mxCell>
+        <mxCell id="archive_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="身高体重管理" vertex="1">
+          <mxGeometry height="18" width="118" x="331" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="daily_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="525" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="daily_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="日常记录" vertex="1">
+          <mxGeometry height="24" width="140" x="530" y="177" as="geometry" />
+        </mxCell>
+        <mxCell id="daily_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="快速记录" vertex="1">
+          <mxGeometry height="18" width="118" x="541" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="daily_item2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="健康日记" vertex="1">
+          <mxGeometry height="18" width="118" x="541" y="244" as="geometry" />
+        </mxCell>
+        <mxCell id="remind_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="735" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="remind_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="提醒与打卡" vertex="1">
+          <mxGeometry height="24" width="140" x="740" y="177" as="geometry" />
+        </mxCell>
+        <mxCell id="remind_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="用药提醒" vertex="1">
+          <mxGeometry height="18" width="118" x="751" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="remind_item2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="习惯打卡" vertex="1">
+          <mxGeometry height="18" width="118" x="751" y="244" as="geometry" />
+        </mxCell>
+        <mxCell id="sport_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="105" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="sport_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="运动与计划" vertex="1">
+          <mxGeometry height="24" width="140" x="110" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="sport_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="运动记录" vertex="1">
+          <mxGeometry height="18" width="118" x="121" y="438" as="geometry" />
+        </mxCell>
+        <mxCell id="sport_item2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="健身目标" vertex="1">
+          <mxGeometry height="18" width="118" x="121" y="462" as="geometry" />
+        </mxCell>
+        <mxCell id="sport_item3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="统计展示" vertex="1">
+          <mxGeometry height="18" width="118" x="121" y="486" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="315" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="健康监测" vertex="1">
+          <mxGeometry height="24" width="140" x="320" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="手动补录" vertex="1">
+          <mxGeometry height="18" width="118" x="331" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="monitor_item2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="趋势看板" vertex="1">
+          <mxGeometry height="18" width="118" x="331" y="469" as="geometry" />
+        </mxCell>
+        <mxCell id="warning_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="525" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="warning_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="异常预警" vertex="1">
+          <mxGeometry height="24" width="140" x="530" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="warning_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="阈值设置" vertex="1">
+          <mxGeometry height="18" width="118" x="541" y="433" as="geometry" />
+        </mxCell>
+        <mxCell id="warning_item2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="异常判断" vertex="1">
+          <mxGeometry height="18" width="118" x="541" y="457" as="geometry" />
+        </mxCell>
+        <mxCell id="warning_item3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="通知/语音" vertex="1">
+          <mxGeometry height="18" width="118" x="541" y="481" as="geometry" />
+        </mxCell>
+        <mxCell id="warning_item4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="预警处理" vertex="1">
+          <mxGeometry height="18" width="118" x="541" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="smart_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fbff;strokeColor=#2b6fb8;fontColor=#000000;strokeWidth=2;arcSize=10;fontSize=15;" value="" vertex="1">
+          <mxGeometry height="135" width="150" x="735" y="395" as="geometry" />
+        </mxCell>
+        <mxCell id="smart_header" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dceeff;strokeColor=#2b6fb8;fontColor=#000000;fontStyle=1;fontSize=15;arcSize=15;strokeWidth=1.5;" value="互动与智能" vertex="1">
+          <mxGeometry height="24" width="140" x="740" y="402" as="geometry" />
+        </mxCell>
+        <mxCell id="smart_item1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="社区互动" vertex="1">
+          <mxGeometry height="18" width="118" x="751" y="438" as="geometry" />
+        </mxCell>
+        <mxCell id="smart_item2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="AI问答" vertex="1">
+          <mxGeometry height="18" width="118" x="751" y="462" as="geometry" />
+        </mxCell>
+        <mxCell id="smart_item3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b7cfe8;fontColor=#000000;fontSize=15;arcSize=12;" value="个人中心" vertex="1">
+          <mxGeometry height="18" width="118" x="751" y="486" as="geometry" />
+        </mxCell>
+        <mxCell id="p_root_down" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="509" y="144" as="geometry" />
+        </mxCell>
+        <mxCell id="p_top_left" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="179" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="p_top_right" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="809" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="p_mid_right" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="914" y="349" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bottom_left" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="179" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bottom_right" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="809" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="e_root_down" edge="1" parent="1" source="rootbox" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_top_bus" edge="1" parent="1" source="p_top_left" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="p_top_right" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_top_account" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="179" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="e_topdrop_account" edge="1" parent="1" source="p_top_account" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="account_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_top_archive" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="389" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="e_topdrop_archive" edge="1" parent="1" source="p_top_archive" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="archive_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_top_daily" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="599" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="e_topdrop_daily" edge="1" parent="1" source="p_top_daily" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="daily_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_top_remind" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="809" y="149" as="geometry" />
+        </mxCell>
+        <mxCell id="e_topdrop_remind" edge="1" parent="1" source="p_top_remind" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="remind_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_right_drop" edge="1" parent="1" source="p_top_right" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="p_bottom_right" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="915" y="150" />
+              <mxPoint x="915" y="370" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e_bottom_bus" edge="1" parent="1" source="p_bottom_left" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="p_bottom_right" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bottom_sport" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="179" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="e_bottomdrop_sport" edge="1" parent="1" source="p_bottom_sport" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="sport_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bottom_monitor" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="389" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="e_bottomdrop_monitor" edge="1" parent="1" source="p_bottom_monitor" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="monitor_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bottom_warning" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="599" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="e_bottomdrop_warning" edge="1" parent="1" source="p_bottom_warning" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="warning_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p_bottom_smart" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=none;strokeColor=none;opacity=0;fontSize=15;fontColor=#000000;" value="" vertex="1">
+          <mxGeometry height="2" width="2" x="809" y="369" as="geometry" />
+        </mxCell>
+        <mxCell id="e_bottomdrop_smart" edge="1" parent="1" source="p_bottom_smart" style="endArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.5;fontSize=15;fontColor=#000000;" target="smart_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

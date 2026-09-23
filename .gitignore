@@ -1,0 +1,18 @@
+# Android build
+build/
+app/build/
+.gradle/
+.gradle_tmp/
+.gradle_proj_cache/
+.idea/
+# 大压缩包
+*.zip
+*.rar
+*.tar
+*.7z
+# 日志文件
+*.log
+# 本地配置
+local.properties
+# 缓存
+.caches/

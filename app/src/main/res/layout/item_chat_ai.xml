@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="start|top"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/iv_ai_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_circle_white"
+        android:src="@android:drawable/ic_dialog_info"
+        app:tint="#4A90E2"
+        android:padding="4dp"/>
+
+    <TextView
+        android:id="@+id/tv_ai_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/bg_chat_bubble_ai"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text="正在为您生成专属计划..."
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:lineSpacingExtra="4dp"/>
+</LinearLayout>
