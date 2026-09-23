@@ -1,0 +1,52 @@
+.gitignore
+  h_c1a03fb9ff63b4 12-13,45
+app/src/main/AndroidManifest.xml
+  h_c1a03fb9ff63b4 17-19
+app/src/main/java/com/localmusic/player/activity/PlayerActivity.java
+  h_c1a03fb9ff63b4 8,22,50-51,111,120-121,148,153-154,236-301
+app/src/main/java/com/localmusic/player/activity/UserPlaylistDetailActivity.java
+  h_c1a03fb9ff63b4 1-199
+app/src/main/java/com/localmusic/player/adapter/PlaylistSongAdapter.java
+  h_c1a03fb9ff63b4 1-74
+app/src/main/java/com/localmusic/player/adapter/UserPlaylistAdapter.java
+  h_c1a03fb9ff63b4 1-79
+app/src/main/java/com/localmusic/player/fragment/PlaylistFragment.java
+  h_c1a03fb9ff63b4 3,5,7,10,19,21,25,43,47,52,67,72,76,86-91,127,134,138-140,198-226
+app/src/main/java/com/localmusic/player/model/UserPlaylist.java
+  h_c1a03fb9ff63b4 1-56
+app/src/main/java/com/localmusic/player/player/MusicPlayerManager.java
+  h_c1a03fb9ff63b4 6,18,34-35,47,49,52-53,57-58,130-132,148-150,156-216,260-266,298-309,364-405
+app/src/main/java/com/localmusic/player/player/PlaybackMode.java
+  h_c1a03fb9ff63b4 1-28
+app/src/main/java/com/localmusic/player/repository/UserMusicStateRepository.java
+  h_c1a03fb9ff63b4 10-11,13-14,16,21,33-34,41,45-46,118-206,214-218,226-227,231-255,290-301
+app/src/main/res/layout/activity_player.xml
+  h_c1a03fb9ff63b4 109-124,194-217
+app/src/main/res/layout/activity_user_playlist_detail.xml
+  h_c1a03fb9ff63b4 1-102
+app/src/main/res/layout/fragment_playlist.xml
+  h_c1a03fb9ff63b4 132-190
+app/src/main/res/layout/item_playlist_song.xml
+  h_c1a03fb9ff63b4 1-68
+app/src/main/res/layout/item_user_playlist.xml
+  h_c1a03fb9ff63b4 1-45
+app/src/main/res/values/strings_update_features.xml
+  h_c1a03fb9ff63b4 1-45
+doc/更新功能/功能规划.md
+  h_c1a03fb9ff63b4 1-235
+doc/更新功能/审核清单.md
+  h_c1a03fb9ff63b4 1-61
+doc/更新功能/技术开发计划.md
+  h_c1a03fb9ff63b4 1-435
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "30f61e555f4c8dc285ea387c96497ea5de936695",
+  "prompts": {},
+  "humans": {
+    "h_c1a03fb9ff63b4": {
+      "author": "yuhongwen <Hongwen_Yu.sgmwh@saic-gm.com>"
+    }
+  }
+}
