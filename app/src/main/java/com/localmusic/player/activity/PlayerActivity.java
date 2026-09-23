@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.localmusic.player.R;
@@ -18,6 +19,7 @@ import com.localmusic.player.util.TimeFormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class PlayerActivity extends AppCompatActivity
         implements MusicPlayerManager.Listener, UserMusicStateRepository.Listener {
@@ -45,6 +47,8 @@ public class PlayerActivity extends AppCompatActivity
         binding.buttonPrevious.setOnClickListener(v -> playerManager.playPrevious());
         binding.buttonNext.setOnClickListener(v -> playerManager.playNext());
         binding.buttonFavorite.setOnClickListener(v -> toggleFavorite());
+        binding.buttonPlaybackMode.setOnClickListener(v -> playerManager.switchPlaybackMode());
+        binding.buttonSleepTimer.setOnClickListener(v -> showSleepTimerDialog());
         binding.seekProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -104,6 +108,7 @@ public class PlayerActivity extends AppCompatActivity
             binding.buttonPrevious.setEnabled(false);
             binding.buttonNext.setEnabled(false);
             binding.buttonFavorite.setEnabled(false);
+            binding.buttonPlaybackMode.setEnabled(false);
             binding.seekProgress.setEnabled(false);
             binding.seekProgress.setProgress(0);
             binding.seekProgress.setMax(100);
@@ -112,6 +117,8 @@ public class PlayerActivity extends AppCompatActivity
             binding.buttonPlayPause.setImageResource(android.R.drawable.ic_media_play);
             lyricSongId = -1L;
             lyricLines.clear();
+            bindPlaybackModeState();
+            bindSleepTimerState();
             bindLyricState(0);
             return;
         }
@@ -138,10 +145,13 @@ public class PlayerActivity extends AppCompatActivity
         binding.buttonPlayPause.setEnabled(true);
         binding.buttonPrevious.setEnabled(playerManager.hasPrevious());
         binding.buttonNext.setEnabled(playerManager.hasNext());
+        binding.buttonPlaybackMode.setEnabled(true);
         binding.buttonPlayPause.setImageResource(
                 playerManager.isPlaying() ? android.R.drawable.ic_media_pause : android.R.drawable.ic_media_play);
 
         bindFavoriteState(song);
+        bindPlaybackModeState();
+        bindSleepTimerState();
         ensureLyricsLoaded(song);
         bindLyricState(position);
     }
@@ -222,5 +232,71 @@ public class PlayerActivity extends AppCompatActivity
             }
         }
         return currentIndex;
+    }
+
+    private void bindPlaybackModeState() {
+        String modeName = getString(playerManager.getPlaybackMode().getTitleResId());
+        binding.textPlaybackMode.setText(getString(R.string.playback_mode_label, modeName));
+        binding.buttonPlaybackMode.setText(modeName);
+    }
+
+    private void bindSleepTimerState() {
+        if (playerManager.isStopAfterCurrentSong()) {
+            binding.textSleepTimer.setText(R.string.sleep_timer_after_current);
+            return;
+        }
+        long remainingMs = playerManager.getSleepRemainingMs();
+        if (remainingMs > 0L) {
+            binding.textSleepTimer.setText(getString(
+                    R.string.sleep_timer_remaining,
+                    formatRemainingTime(remainingMs)));
+            return;
+        }
+        binding.textSleepTimer.setText(R.string.sleep_timer_off);
+    }
+
+    private void showSleepTimerDialog() {
+        String[] items = new String[]{
+                getString(R.string.sleep_timer_15),
+                getString(R.string.sleep_timer_30),
+                getString(R.string.sleep_timer_45),
+                getString(R.string.sleep_timer_60),
+                getString(R.string.sleep_timer_after_current),
+                getString(R.string.sleep_timer_cancel)
+        };
+
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.sleep_timer_title)
+                .setItems(items, (dialog, which) -> {
+                    if (which == 0) {
+                        setSleepTimerMinutes(15);
+                    } else if (which == 1) {
+                        setSleepTimerMinutes(30);
+                    } else if (which == 2) {
+                        setSleepTimerMinutes(45);
+                    } else if (which == 3) {
+                        setSleepTimerMinutes(60);
+                    } else if (which == 4) {
+                        playerManager.stopAfterCurrentSong();
+                        Toast.makeText(this, R.string.sleep_timer_set, Toast.LENGTH_SHORT).show();
+                    } else {
+                        playerManager.cancelSleepTimer();
+                        Toast.makeText(this, R.string.sleep_timer_cancelled, Toast.LENGTH_SHORT).show();
+                    }
+                    bindSleepTimerState();
+                })
+                .show();
+    }
+
+    private void setSleepTimerMinutes(int minutes) {
+        playerManager.startSleepTimer(minutes * 60_000L);
+        Toast.makeText(this, R.string.sleep_timer_set, Toast.LENGTH_SHORT).show();
+    }
+
+    private String formatRemainingTime(long remainingMs) {
+        long totalSeconds = Math.max(remainingMs / 1000L, 0L);
+        long minutes = totalSeconds / 60L;
+        long seconds = totalSeconds % 60L;
+        return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
 }

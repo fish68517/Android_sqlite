@@ -3,6 +3,7 @@ package com.localmusic.player.player;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -14,6 +15,7 @@ import com.localmusic.player.repository.UserMusicStateRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class MusicPlayerManager {
@@ -29,6 +31,8 @@ public class MusicPlayerManager {
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final CopyOnWriteArraySet<Listener> listeners = new CopyOnWriteArraySet<>();
     private final List<Song> queue = new ArrayList<>();
+    private final Random random = new Random();
+    private final UserMusicStateRepository stateRepository;
     private final Runnable progressRunnable = new Runnable() {
         @Override
         public void run() {
@@ -40,12 +44,18 @@ public class MusicPlayerManager {
     };
 
     private MediaPlayer mediaPlayer;
+    private CountDownTimer sleepTimer;
     private int currentIndex = -1;
+    private PlaybackMode playbackMode = PlaybackMode.SEQUENCE;
     private boolean prepared;
     private boolean playWhenPrepared;
+    private boolean stopAfterCurrentSong;
+    private long sleepTimerEndAtMs;
 
     private MusicPlayerManager(Context context) {
         appContext = context.getApplicationContext();
+        stateRepository = UserMusicStateRepository.getInstance(appContext);
+        playbackMode = stateRepository.getPlaybackMode();
     }
 
     public static MusicPlayerManager getInstance(Context context) {
@@ -117,8 +127,9 @@ public class MusicPlayerManager {
     }
 
     public void playNext() {
-        if (hasNext()) {
-            currentIndex++;
+        int nextIndex = resolveNextIndexByUserAction();
+        if (nextIndex >= 0) {
+            currentIndex = nextIndex;
             playCurrentSong(true);
         }
     }
@@ -134,9 +145,73 @@ public class MusicPlayerManager {
         if (currentIndex > 0) {
             currentIndex--;
             playCurrentSong(true);
+        } else if (playbackMode == PlaybackMode.LIST_LOOP && queue.size() > 1) {
+            currentIndex = queue.size() - 1;
+            playCurrentSong(true);
         } else {
             seekTo(0);
         }
+    }
+
+    public PlaybackMode getPlaybackMode() {
+        return playbackMode;
+    }
+
+    public void switchPlaybackMode() {
+        setPlaybackMode(playbackMode.next());
+    }
+
+    public void setPlaybackMode(@NonNull PlaybackMode mode) {
+        playbackMode = mode;
+        stateRepository.setPlaybackMode(mode);
+        notifyListeners();
+    }
+
+    public void startSleepTimer(long durationMs) {
+        cancelSleepTimerInternal(false);
+        stopAfterCurrentSong = false;
+        sleepTimerEndAtMs = System.currentTimeMillis() + durationMs;
+        sleepTimer = new CountDownTimer(durationMs, 1000L) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                notifyListeners();
+            }
+
+            @Override
+            public void onFinish() {
+                sleepTimer = null;
+                sleepTimerEndAtMs = 0L;
+                pause();
+                notifyListeners();
+            }
+        };
+        sleepTimer.start();
+        notifyListeners();
+    }
+
+    public void stopAfterCurrentSong() {
+        cancelSleepTimerInternal(false);
+        stopAfterCurrentSong = true;
+        notifyListeners();
+    }
+
+    public void cancelSleepTimer() {
+        cancelSleepTimerInternal(true);
+    }
+
+    public boolean hasSleepTimer() {
+        return sleepTimer != null || stopAfterCurrentSong;
+    }
+
+    public boolean isStopAfterCurrentSong() {
+        return stopAfterCurrentSong;
+    }
+
+    public long getSleepRemainingMs() {
+        if (sleepTimer == null || sleepTimerEndAtMs <= 0L) {
+            return 0L;
+        }
+        return Math.max(sleepTimerEndAtMs - System.currentTimeMillis(), 0L);
     }
 
     public boolean isPlaying() {
@@ -182,7 +257,13 @@ public class MusicPlayerManager {
     }
 
     public boolean hasNext() {
-        return currentIndex >= 0 && currentIndex < queue.size() - 1;
+        if (!hasCurrentSong()) {
+            return false;
+        }
+        if (queue.size() > 1 && (playbackMode == PlaybackMode.LIST_LOOP || playbackMode == PlaybackMode.SHUFFLE)) {
+            return true;
+        }
+        return currentIndex < queue.size() - 1;
     }
 
     public boolean hasPrevious() {
@@ -214,8 +295,18 @@ public class MusicPlayerManager {
             notifyListeners();
         });
         mediaPlayer.setOnCompletionListener(mp -> {
-            if (hasNext()) {
-                currentIndex++;
+            if (stopAfterCurrentSong) {
+                stopAfterCurrentSong = false;
+                mp.seekTo(0);
+                mp.pause();
+                stopProgressUpdates();
+                notifyListeners();
+                return;
+            }
+
+            int nextIndex = resolveNextIndexOnCompletion();
+            if (nextIndex >= 0) {
+                currentIndex = nextIndex;
                 playCurrentSong(true);
             } else {
                 mp.seekTo(0);
@@ -269,5 +360,47 @@ public class MusicPlayerManager {
                 listener.onPlayerStateChanged();
             }
         });
+    }
+
+    private int resolveNextIndexOnCompletion() {
+        if (!hasCurrentSong()) {
+            return -1;
+        }
+        if (playbackMode == PlaybackMode.SINGLE_LOOP) {
+            return currentIndex;
+        }
+        return resolveNextIndexByUserAction();
+    }
+
+    private int resolveNextIndexByUserAction() {
+        if (!hasCurrentSong()) {
+            return -1;
+        }
+        if (queue.size() == 1) {
+            return playbackMode == PlaybackMode.SEQUENCE ? -1 : 0;
+        }
+        if (playbackMode == PlaybackMode.SHUFFLE) {
+            int nextIndex = currentIndex;
+            while (nextIndex == currentIndex) {
+                nextIndex = random.nextInt(queue.size());
+            }
+            return nextIndex;
+        }
+        if (currentIndex < queue.size() - 1) {
+            return currentIndex + 1;
+        }
+        return playbackMode == PlaybackMode.LIST_LOOP ? 0 : -1;
+    }
+
+    private void cancelSleepTimerInternal(boolean notify) {
+        if (sleepTimer != null) {
+            sleepTimer.cancel();
+            sleepTimer = null;
+        }
+        sleepTimerEndAtMs = 0L;
+        stopAfterCurrentSong = false;
+        if (notify) {
+            notifyListeners();
+        }
     }
 }

@@ -1,9 +1,13 @@
 package com.localmusic.player.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -12,10 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.localmusic.player.R;
 import com.localmusic.player.activity.MainActivity;
+import com.localmusic.player.activity.UserPlaylistDetailActivity;
 import com.localmusic.player.adapter.LibraryItemAdapter;
+import com.localmusic.player.adapter.UserPlaylistAdapter;
 import com.localmusic.player.model.LibraryCategory;
 import com.localmusic.player.model.LibraryItem;
 import com.localmusic.player.model.Song;
+import com.localmusic.player.model.UserPlaylist;
 import com.localmusic.player.player.MusicPlayerManager;
 import com.localmusic.player.repository.MusicLibraryRepository;
 import com.localmusic.player.repository.UserMusicStateRepository;
@@ -33,13 +40,16 @@ public class PlaylistFragment extends Fragment
 
     private LibraryItemAdapter favoriteAdapter;
     private LibraryItemAdapter recentAdapter;
+    private UserPlaylistAdapter userPlaylistAdapter;
 
     private TextView textFavoriteCount;
     private TextView textRecentCount;
+    private TextView textCustomEmpty;
     private TextView textFavoriteEmpty;
     private TextView textRecentEmpty;
     private RecyclerView recyclerFavorites;
     private RecyclerView recyclerRecent;
+    private RecyclerView recyclerCustomPlaylists;
 
     public PlaylistFragment() {
         super(R.layout.fragment_playlist);
@@ -54,13 +64,16 @@ public class PlaylistFragment extends Fragment
 
         textFavoriteCount = view.findViewById(R.id.text_favorite_count);
         textRecentCount = view.findViewById(R.id.text_recent_count);
+        textCustomEmpty = view.findViewById(R.id.text_custom_empty);
         textFavoriteEmpty = view.findViewById(R.id.text_favorite_empty);
         textRecentEmpty = view.findViewById(R.id.text_recent_empty);
         recyclerFavorites = view.findViewById(R.id.recycler_favorites);
         recyclerRecent = view.findViewById(R.id.recycler_recent);
+        recyclerCustomPlaylists = view.findViewById(R.id.recycler_custom_playlists);
 
         favoriteAdapter = new LibraryItemAdapter(item -> playCollection(buildFavoriteSongs(), item));
         recentAdapter = new LibraryItemAdapter(item -> playCollection(buildRecentSongs(), item));
+        userPlaylistAdapter = new UserPlaylistAdapter(this::openPlaylistDetail);
 
         recyclerFavorites.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerFavorites.setAdapter(favoriteAdapter);
@@ -69,6 +82,12 @@ public class PlaylistFragment extends Fragment
         recyclerRecent.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerRecent.setAdapter(recentAdapter);
         recyclerRecent.setNestedScrollingEnabled(false);
+
+        recyclerCustomPlaylists.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerCustomPlaylists.setAdapter(userPlaylistAdapter);
+        recyclerCustomPlaylists.setNestedScrollingEnabled(false);
+
+        view.findViewById(R.id.button_create_playlist).setOnClickListener(v -> showCreatePlaylistDialog());
 
         bindState();
     }
@@ -105,15 +124,20 @@ public class PlaylistFragment extends Fragment
     private void bindState() {
         List<Song> favoriteSongs = buildFavoriteSongs();
         List<Song> recentSongs = buildRecentSongs();
+        List<UserPlaylist> customPlaylists = stateRepository.getUserPlaylists();
 
         textFavoriteCount.setText(getString(R.string.playlist_count_template, favoriteSongs.size()));
         textRecentCount.setText(getString(R.string.playlist_count_template, recentSongs.size()));
 
         favoriteAdapter.submitList(buildSongItems(favoriteSongs));
         recentAdapter.submitList(buildSongItems(recentSongs));
+        userPlaylistAdapter.submitList(customPlaylists);
 
         bindEmptyState(textFavoriteEmpty, recyclerFavorites, favoriteSongs, R.string.playlist_empty_favorites);
         bindEmptyState(textRecentEmpty, recyclerRecent, recentSongs, R.string.playlist_empty_recent);
+        boolean customEmpty = customPlaylists.isEmpty();
+        textCustomEmpty.setVisibility(customEmpty ? View.VISIBLE : View.GONE);
+        recyclerCustomPlaylists.setVisibility(customEmpty ? View.GONE : View.VISIBLE);
     }
 
     private void bindEmptyState(TextView emptyView,
@@ -170,5 +194,34 @@ public class PlaylistFragment extends Fragment
         long minutes = totalSeconds / 60;
         long seconds = totalSeconds % 60;
         return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+    }
+
+    private void showCreatePlaylistDialog() {
+        EditText input = new EditText(requireContext());
+        input.setSingleLine(true);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint(R.string.playlist_name_hint);
+        input.setText(R.string.playlist_default_name);
+        input.setSelection(input.getText().length());
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.playlist_create_title)
+                .setView(input)
+                .setNegativeButton(R.string.action_cancel, null)
+                .setPositiveButton(R.string.action_confirm, (dialog, which) -> {
+                    String name = input.getText() == null ? "" : input.getText().toString().trim();
+                    if (name.isEmpty()) {
+                        name = getString(R.string.playlist_default_name);
+                    }
+                    UserPlaylist playlist = stateRepository.createPlaylist(name);
+                    openPlaylistDetail(playlist);
+                })
+                .show();
+    }
+
+    private void openPlaylistDetail(UserPlaylist playlist) {
+        Intent intent = new Intent(requireContext(), UserPlaylistDetailActivity.class);
+        intent.putExtra(UserPlaylistDetailActivity.EXTRA_PLAYLIST_ID, playlist.getId());
+        startActivity(intent);
     }
 }

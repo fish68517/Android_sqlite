@@ -9,6 +9,8 @@
 .downloads/
 .gradle_user_home/
 .gradle_user_home_fix/
+.gradle_user_home_*/
+.gradle_build_cache_*/
 .gradle_proj_cache/
 .gradle_tmp/
 build/
