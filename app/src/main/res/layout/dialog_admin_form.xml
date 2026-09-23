@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/adminFormRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <EditText
+            android:id="@+id/adminFieldOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:inputType="text"
+            android:textColor="@color/diary_text"
+            android:textColorHint="@color/diary_text_soft" />
+
+        <EditText
+            android:id="@+id/adminFieldTwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_input"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:textColor="@color/diary_text"
+            android:textColorHint="@color/diary_text_soft" />
+
+        <EditText
+            android:id="@+id/adminFieldThree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_input"
+            android:inputType="text"
+            android:textColor="@color/diary_text"
+            android:textColorHint="@color/diary_text_soft" />
+
+        <EditText
+            android:id="@+id/adminFieldFour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_input"
+            android:inputType="text"
+            android:textColor="@color/diary_text"
+            android:textColorHint="@color/diary_text_soft" />
+
+        <EditText
+            android:id="@+id/adminFieldFive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_input"
+            android:inputType="textPassword"
+            android:textColor="@color/diary_text"
+            android:textColorHint="@color/diary_text_soft" />
+    </LinearLayout>
+</ScrollView>

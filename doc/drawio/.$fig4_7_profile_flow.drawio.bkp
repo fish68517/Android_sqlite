@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mxfile host="app.diagrams.net" modified="2026-04-28T05:04:36Z" agent="ChatGPT" version="24.7.17" type="device">
+  <diagram id="ff6691f2ddad" name="图4-7 修改个人信息流程图">
+    <mxGraphModel dx="1200" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1560" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="start" value="开始" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2B2B2B;fillColor=#E6F4EA;fontSize=32;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="640" y="35" width="320" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="center" value="进入个人中心页面" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#2B2B2B;fillColor=#DAE8FC;fontSize=30;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="550" y="140" width="500" height="75" as="geometry"/>
+        </mxCell>
+        <mxCell id="login" value="读取当前 user_id 成功？" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#2B2B2B;fillColor=#FFF2CC;fontSize=28;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="570" y="270" width="460" height="105" as="geometry"/>
+        </mxCell>
+        <mxCell id="load" value="加载当前资料：用户名、昵称、邮箱、签名" style="shape=cylinder3d;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=15;html=1;strokeColor=#2B2B2B;fillColor=#F8CECC;fontSize=27;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="500" y="430" width="600" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="edit" value="点击编辑资料&lt;br&gt;修改昵称、邮箱和个性签名" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#2B2B2B;fillColor=#DAE8FC;fontSize=30;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="520" y="570" width="560" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="email" value="邮箱格式有效？" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#2B2B2B;fillColor=#FFF2CC;fontSize=28;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="600" y="720" width="400" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="update" value="更新 users 表&lt;br&gt;nickname / email / signature / updated_at" style="shape=cylinder3d;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=15;html=1;strokeColor=#2B2B2B;fillColor=#F8CECC;fontSize=27;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="500" y="870" width="600" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="successq" value="保存成功？" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#2B2B2B;fillColor=#FFF2CC;fontSize=28;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="620" y="1025" width="360" height="95" as="geometry"/>
+        </mxCell>
+        <mxCell id="sync" value="同步 SharedPreferences 中的显示信息" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#2B2B2B;fillColor=#DAE8FC;fontSize=30;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1170" width="600" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="refresh" value="返回个人中心&lt;br&gt;刷新显示最新资料" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#2B2B2B;fillColor=#DAE8FC;fontSize=30;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="540" y="1310" width="520" height="85" as="geometry"/>
+        </mxCell>
+        <mxCell id="end" value="结束" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#2B2B2B;fillColor=#DAE8FC;fontSize=32;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1450" width="320" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="err_login" value="跳转登录页面" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#2B2B2B;fillColor=#F5F5F5;fontSize=26;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="288" width="350" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="err_email" value="提示邮箱格式错误&lt;br&gt;返回修改" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#2B2B2B;fillColor=#F5F5F5;fontSize=26;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="735" width="350" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="err_save" value="提示保存失败&lt;br&gt;保留当前输入" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#2B2B2B;fillColor=#F5F5F5;fontSize=26;fontFamily=Noto Sans CJK SC;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="1040" width="350" height="75" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="start" target="center">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="center" target="login">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="login" target="load">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="login" target="err_login">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="结束" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=20;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="err_login" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1335" y="1370"/>
+              <mxPoint x="1120" y="1485"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="load" target="edit">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="edit" target="email">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e8" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="email" target="update">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e9" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="email" target="err_email">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="update" target="successq">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e11" value="是" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="successq" target="sync">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e12" value="否" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="successq" target="err_save">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sync" target="refresh">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#2B2B2B;fontSize=22;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="refresh" target="end">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

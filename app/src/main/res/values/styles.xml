@@ -1,0 +1,12 @@
+<resources>
+    <style name="Theme.PersonalDiary" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/diary_bg</item>
+        <item name="android:navigationBarColor">@color/diary_bg</item>
+        <item name="colorPrimary">@color/diary_primary</item>
+        <item name="colorPrimaryVariant">@color/diary_primary_dark</item>
+        <item name="colorSecondary">@color/diary_primary</item>
+        <item name="android:windowBackground">@color/diary_bg</item>
+    </style>
+</resources>

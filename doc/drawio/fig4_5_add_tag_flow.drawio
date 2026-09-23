@@ -1,0 +1,107 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.6.1 Chrome/142.0.7444.265 Electron/39.8.0 Safari/537.36" version="29.6.1">
+  <diagram id="ae97df72098c" name="图4-5 用户添加标签流程图">
+    <mxGraphModel dx="2084" dy="1252" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#E6F4EA;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="开始" vertex="1">
+          <mxGeometry height="70" width="320" x="640" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="input" parent="1" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#000000;fillColor=#DAE8FC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="在新建/编辑页输入标签&lt;br&gt;或选择常用标签" vertex="1">
+          <mxGeometry height="85" width="540" x="530" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="empty" parent="1" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#FFF2CC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="标签为空？" vertex="1">
+          <mxGeometry height="95" width="360" x="620" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="clean" parent="1" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#000000;fillColor=#DAE8FC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="整理标签文本&lt;br&gt;去空格、统一分隔符、去重" vertex="1">
+          <mxGeometry height="85" width="560" x="520" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="allow" parent="1" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#000000;fillColor=#F5F5F5;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="允许 tags 为空&lt;br&gt;继续保存笔记" vertex="1">
+          <mxGeometry height="75" width="350" x="44" y="297" as="geometry" />
+        </mxCell>
+        <mxCell id="save" parent="1" style="shape=cylinder3d;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=15;html=1;strokeColor=#000000;fillColor=#F8CECC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="将标签写入 diaries.tags&lt;br&gt;随笔记保存或更新" vertex="1">
+          <mxGeometry height="90" width="500" x="550" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="successq" parent="1" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#FFF2CC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="写入成功？" vertex="1">
+          <mxGeometry height="95" width="360" x="620" y="725" as="geometry" />
+        </mxCell>
+        <mxCell id="display" parent="1" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#000000;fillColor=#DAE8FC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="列表页和详情页显示标签摘要" vertex="1">
+          <mxGeometry height="80" width="560" x="520" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="filterq" parent="1" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#FFF2CC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="用户按标签筛选？" vertex="1">
+          <mxGeometry height="100" width="420" x="590" y="1010" as="geometry" />
+        </mxCell>
+        <mxCell id="query" parent="1" style="shape=cylinder3d;whiteSpace=wrap;boundedLbl=1;backgroundOutline=1;size=15;html=1;strokeColor=#000000;fillColor=#F8CECC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="使用 tags LIKE ?&lt;br&gt;查询当前用户笔记" vertex="1">
+          <mxGeometry height="90" width="480" x="560" y="1165" as="geometry" />
+        </mxCell>
+        <mxCell id="result" parent="1" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#000000;fillColor=#DAE8FC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="显示匹配结果&lt;br&gt;无结果则显示空状态" vertex="1">
+          <mxGeometry height="85" width="500" x="550" y="1310" as="geometry" />
+        </mxCell>
+        <mxCell id="end" parent="1" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;fillColor=#DAE8FC;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="结束" vertex="1">
+          <mxGeometry height="70" width="320" x="640" y="1450" as="geometry" />
+        </mxCell>
+        <mxCell id="err" parent="1" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#000000;fillColor=#F5F5F5;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="提示保存失败&lt;br&gt;返回编辑" vertex="1">
+          <mxGeometry height="70" width="350" x="1160" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="skip" parent="1" style="whiteSpace=wrap;html=1;rounded=1;arcSize=12;strokeColor=#000000;fillColor=#F5F5F5;fontSize=31;fontFamily=Noto Sans CJK SC;strokeWidth=2;fontColor=#000000;" value="保持当前列表展示" vertex="1">
+          <mxGeometry height="70" width="350" x="1160" y="1025" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="input" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="empty" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="empty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="clean" value="否">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="empty" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="allow" value="是">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="allow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.571;exitY=1.013;exitDx=0;exitDy=0;exitPerimeter=0;strokeWidth=2;fontColor=#000000;" target="save" value="继续保存">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="244" y="620" />
+            </Array>
+            <mxPoint x="229" y="405" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="clean" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="save" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="save" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="successq" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="successq" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="display" value="是">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="successq" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="err" value="否">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="display" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="filterq" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="filterq" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="query" value="是">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="filterq" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="skip" value="否">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="skip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="end" value="结束">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1335" y="1370" />
+              <mxPoint x="1120" y="1485" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="query" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="result" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="result" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;strokeColor=#000000;fontSize=31;fontFamily=Noto Sans CJK SC;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontColor=#000000;" target="end" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

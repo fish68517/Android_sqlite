@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_diary"
+        android:icon="@drawable/ic_diary"
+        android:title="日记" />
+    <item
+        android:id="@+id/nav_moment"
+        android:icon="@drawable/ic_moment"
+        android:title="瞬间" />
+    <item
+        android:id="@+id/nav_tree_hole"
+        android:icon="@drawable/ic_tree_hole"
+        android:title="树洞" />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_search"
+        android:title="搜索" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="我的" />
+</menu>

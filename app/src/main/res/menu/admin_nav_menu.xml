@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/admin_nav_stats"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/admin_nav_stats" />
+    <item
+        android:id="@+id/admin_nav_users"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/admin_nav_users" />
+    <item
+        android:id="@+id/admin_nav_diaries"
+        android:icon="@drawable/ic_diary"
+        android:title="@string/admin_nav_diaries" />
+    <item
+        android:id="@+id/admin_nav_moments"
+        android:icon="@drawable/ic_moment"
+        android:title="@string/admin_nav_moments" />
+    <item
+        android:id="@+id/admin_nav_tree_holes"
+        android:icon="@drawable/ic_tree_hole"
+        android:title="@string/admin_nav_tree_holes" />
+    <item
+        android:id="@+id/admin_nav_posts"
+        android:icon="@drawable/ic_search"
+        android:title="@string/admin_nav_posts" />
+    <item
+        android:id="@+id/admin_nav_feedback"
+        android:icon="@drawable/ic_diary"
+        android:title="@string/admin_nav_feedback" />
+    <item
+        android:id="@+id/admin_nav_notices"
+        android:icon="@drawable/ic_moment"
+        android:title="@string/admin_nav_notices" />
+    <item
+        android:id="@+id/admin_nav_logout"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/admin_nav_logout" />
+</menu>

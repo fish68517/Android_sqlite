@@ -1,0 +1,10 @@
+<resources>
+    <color name="diary_bg">#fff1dc</color>
+    <color name="diary_bg_deep">#f4d8a9</color>
+    <color name="diary_primary">#8a5a18</color>
+    <color name="diary_primary_dark">#5f3b0d</color>
+    <color name="diary_text">#302313</color>
+    <color name="diary_text_soft">#7a684e</color>
+    <color name="diary_card">#fffaf1</color>
+    <color name="white">#ffffff</color>
+</resources>
