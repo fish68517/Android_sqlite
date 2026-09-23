@@ -1,0 +1,352 @@
+.gitignore
+  h_c1a03fb9ff63b4 1-18
+app/build.gradle
+  h_c1a03fb9ff63b4 1-112
+app/src/main/AndroidManifest.xml
+  h_c1a03fb9ff63b4 1-113
+app/src/main/java/com/health/HealthApplication.java
+  h_c1a03fb9ff63b4 1-39
+app/src/main/java/com/health/activity/AIAssistantActivity.java
+  h_c1a03fb9ff63b4 1-110
+app/src/main/java/com/health/activity/CommentActivity.java
+  h_c1a03fb9ff63b4 1-147
+app/src/main/java/com/health/activity/CreatePostActivity.java
+  h_c1a03fb9ff63b4 1-103
+app/src/main/java/com/health/activity/HealthCheckinActivity.java
+  h_c1a03fb9ff63b4 1-247
+app/src/main/java/com/health/activity/HealthCheckinStatsActivity.java
+  h_c1a03fb9ff63b4 1-321
+app/src/main/java/com/health/activity/HealthDashboardActivity.java
+  h_c1a03fb9ff63b4 1-590
+app/src/main/java/com/health/activity/LoginActivity.java
+  h_c1a03fb9ff63b4 1-122
+app/src/main/java/com/health/activity/MainActivity.java
+  h_c1a03fb9ff63b4 1-178
+app/src/main/java/com/health/activity/RegisterActivity.java
+  h_c1a03fb9ff63b4 1-81
+app/src/main/java/com/health/activity/ReminderCenterActivity.java
+  h_c1a03fb9ff63b4 1-143
+app/src/main/java/com/health/activity/SplashActivity.java
+  h_c1a03fb9ff63b4 1-31
+app/src/main/java/com/health/activity/VirtualFitnessActivity.java
+  h_c1a03fb9ff63b4 1-139
+app/src/main/java/com/health/activity/WriteDiaryActivity.java
+  h_c1a03fb9ff63b4 1-97
+app/src/main/java/com/health/adapter/BannerAdapter.java
+  h_c1a03fb9ff63b4 1-57
+app/src/main/java/com/health/adapter/ChatAdapter.java
+  h_c1a03fb9ff63b4 1-76
+app/src/main/java/com/health/adapter/CommentAdapter.java
+  h_c1a03fb9ff63b4 1-78
+app/src/main/java/com/health/adapter/CommunityPostAdapter.java
+  h_c1a03fb9ff63b4 1-158
+app/src/main/java/com/health/adapter/DiaryAdapter.java
+  h_c1a03fb9ff63b4 1-82
+app/src/main/java/com/health/adapter/FeatureAdapter.java
+  h_c1a03fb9ff63b4 1-69
+app/src/main/java/com/health/adapter/ImageUploadAdapter.java
+  h_c1a03fb9ff63b4 1-67
+app/src/main/java/com/health/adapter/PostAdapter.java
+  h_c1a03fb9ff63b4 1-132
+app/src/main/java/com/health/adapter/PostCommentAdapter.java
+  h_c1a03fb9ff63b4 1-69
+app/src/main/java/com/health/ai/AiSymptomService.java
+  h_c1a03fb9ff63b4 1-5
+app/src/main/java/com/health/ai/PlaceholderAiSymptomService.java
+  h_c1a03fb9ff63b4 1-19
+app/src/main/java/com/health/ai/SiliconFlowAiSymptomService.java
+  h_c1a03fb9ff63b4 1-200
+app/src/main/java/com/health/db/ClassScheduleDbHelper.java
+  h_c1a03fb9ff63b4 1-86
+app/src/main/java/com/health/fragment/CommunityFragment.java
+  h_c1a03fb9ff63b4 1-174
+app/src/main/java/com/health/fragment/DiaryFragment.java
+  h_c1a03fb9ff63b4 1-228
+app/src/main/java/com/health/fragment/HomeFragment.java
+  h_c1a03fb9ff63b4 1-236
+app/src/main/java/com/health/fragment/ProfileFragment.java
+  h_c1a03fb9ff63b4 1-256
+app/src/main/java/com/health/health/HealthAlertEngine.java
+  h_c1a03fb9ff63b4 1-145
+app/src/main/java/com/health/health/HealthAlertNotifier.java
+  h_c1a03fb9ff63b4 1-62
+app/src/main/java/com/health/health/HealthConnectService.java
+  h_c1a03fb9ff63b4 1-297
+app/src/main/java/com/health/health/HealthConstants.java
+  h_c1a03fb9ff63b4 1-39
+app/src/main/java/com/health/health/HealthDataSyncManager.java
+  h_c1a03fb9ff63b4 1-207
+app/src/main/java/com/health/health/HealthMonitorScheduler.java
+  h_c1a03fb9ff63b4 1-40
+app/src/main/java/com/health/health/HealthMonitorWorker.java
+  h_c1a03fb9ff63b4 1-39
+app/src/main/java/com/health/health/HealthVoiceAlertManager.java
+  h_c1a03fb9ff63b4 1-55
+app/src/main/java/com/health/local/LocalHealthRepository.java
+  h_c1a03fb9ff63b4 1-950
+app/src/main/java/com/health/local/LocalResult.java
+  h_c1a03fb9ff63b4 1-34
+app/src/main/java/com/health/local/db/AppDatabase.java
+  h_c1a03fb9ff63b4 1-155
+app/src/main/java/com/health/local/db/dao/CommunityPostDao.java
+  h_c1a03fb9ff63b4 1-25
+app/src/main/java/com/health/local/db/dao/DiaryDao.java
+  h_c1a03fb9ff63b4 1-22
+app/src/main/java/com/health/local/db/dao/ExerciseRecordDao.java
+  h_c1a03fb9ff63b4 1-19
+app/src/main/java/com/health/local/db/dao/FitnessPlanDao.java
+  h_c1a03fb9ff63b4 1-13
+app/src/main/java/com/health/local/db/dao/HabitDao.java
+  h_c1a03fb9ff63b4 1-26
+app/src/main/java/com/health/local/db/dao/HealthAlertDao.java
+  h_c1a03fb9ff63b4 1-33
+app/src/main/java/com/health/local/db/dao/HealthAlertRuleDao.java
+  h_c1a03fb9ff63b4 1-21
+app/src/main/java/com/health/local/db/dao/HealthMetricDao.java
+  h_c1a03fb9ff63b4 1-40
+app/src/main/java/com/health/local/db/dao/MedicationReminderDao.java
+  h_c1a03fb9ff63b4 1-35
+app/src/main/java/com/health/local/db/dao/PostCommentDao.java
+  h_c1a03fb9ff63b4 1-19
+app/src/main/java/com/health/local/db/dao/QuickRecordDao.java
+  h_c1a03fb9ff63b4 1-25
+app/src/main/java/com/health/local/db/dao/UserDao.java
+  h_c1a03fb9ff63b4 1-30
+app/src/main/java/com/health/local/db/entity/CommunityPostEntity.java
+  h_c1a03fb9ff63b4 1-25
+app/src/main/java/com/health/local/db/entity/DiaryEntity.java
+  h_c1a03fb9ff63b4 1-24
+app/src/main/java/com/health/local/db/entity/ExerciseRecordEntity.java
+  h_c1a03fb9ff63b4 1-27
+app/src/main/java/com/health/local/db/entity/FitnessPlanEntity.java
+  h_c1a03fb9ff63b4 1-25
+app/src/main/java/com/health/local/db/entity/HabitCheckinEntity.java
+  h_c1a03fb9ff63b4 1-19
+app/src/main/java/com/health/local/db/entity/HabitEntity.java
+  h_c1a03fb9ff63b4 1-18
+app/src/main/java/com/health/local/db/entity/HealthAlertEntity.java
+  h_c1a03fb9ff63b4 1-42
+app/src/main/java/com/health/local/db/entity/HealthAlertRuleEntity.java
+  h_c1a03fb9ff63b4 1-22
+app/src/main/java/com/health/local/db/entity/HealthMetricEntity.java
+  h_c1a03fb9ff63b4 1-41
+app/src/main/java/com/health/local/db/entity/MedicationReminderEntity.java
+  h_c1a03fb9ff63b4 1-30
+app/src/main/java/com/health/local/db/entity/PostCommentEntity.java
+  h_c1a03fb9ff63b4 1-23
+app/src/main/java/com/health/local/db/entity/QuickRecordEntity.java
+  h_c1a03fb9ff63b4 1-20
+app/src/main/java/com/health/local/db/entity/UserEntity.java
+  h_c1a03fb9ff63b4 1-28
+app/src/main/java/com/health/local/model/HabitStatus.java
+  h_c1a03fb9ff63b4 1-32
+app/src/main/java/com/health/local/model/HealthAlertItem.java
+  h_c1a03fb9ff63b4 1-113
+app/src/main/java/com/health/local/model/HealthAlertRule.java
+  h_c1a03fb9ff63b4 1-95
+app/src/main/java/com/health/local/model/HealthCheckinSummary.java
+  h_c1a03fb9ff63b4 1-77
+app/src/main/java/com/health/local/model/HealthMetricRecord.java
+  h_c1a03fb9ff63b4 1-95
+app/src/main/java/com/health/local/model/MedicationReminderItem.java
+  h_c1a03fb9ff63b4 1-59
+app/src/main/java/com/health/local/model/QuickRecordItem.java
+  h_c1a03fb9ff63b4 1-41
+app/src/main/java/com/health/model/AdoptRequestDTO.java
+  h_c1a03fb9ff63b4 1-66
+app/src/main/java/com/health/model/ApiResponse.java
+  h_c1a03fb9ff63b4 1-55
+app/src/main/java/com/health/model/ChatMessage.java
+  h_c1a03fb9ff63b4 1-30
+app/src/main/java/com/health/model/ClassSchedule.java
+  h_c1a03fb9ff63b4 1-68
+app/src/main/java/com/health/model/Comment.java
+  h_c1a03fb9ff63b4 1-58
+app/src/main/java/com/health/model/CommunityPost.java
+  h_c1a03fb9ff63b4 1-143
+app/src/main/java/com/health/model/Diary.java
+  h_c1a03fb9ff63b4 1-58
+app/src/main/java/com/health/model/ExerciseData.java
+  h_c1a03fb9ff63b4 1-67
+app/src/main/java/com/health/model/FeatureItem.java
+  h_c1a03fb9ff63b4 1-20
+app/src/main/java/com/health/model/FitnessPlan.java
+  h_c1a03fb9ff63b4 1-40
+app/src/main/java/com/health/model/Goods.java
+  h_c1a03fb9ff63b4 1-41
+app/src/main/java/com/health/model/PageResponse.java
+  h_c1a03fb9ff63b4 1-44
+app/src/main/java/com/health/model/Post.java
+  h_c1a03fb9ff63b4 1-79
+app/src/main/java/com/health/model/User.java
+  h_c1a03fb9ff63b4 1-103
+app/src/main/java/com/health/receiver/ExerciseReminderReceiver.java
+  h_c1a03fb9ff63b4 1-69
+app/src/main/java/com/health/receiver/MedicationActionReceiver.java
+  h_c1a03fb9ff63b4 1-30
+app/src/main/java/com/health/reminder/MedicationReminderScheduler.java
+  h_c1a03fb9ff63b4 1-56
+app/src/main/java/com/health/reminder/MedicationReminderWorker.java
+  h_c1a03fb9ff63b4 1-91
+app/src/main/java/com/health/utils/AiConfigUtils.java
+  h_c1a03fb9ff63b4 1-62
+app/src/main/java/com/health/utils/HealthDebugLogger.java
+  h_c1a03fb9ff63b4 1-182
+app/src/main/java/com/health/utils/ImageLoader.java
+  h_c1a03fb9ff63b4 1-165
+app/src/main/java/com/health/utils/SharedPrefManager.java
+  h_c1a03fb9ff63b4 1-145
+app/src/main/java/com/health/utils/TextUtils.java
+  h_c1a03fb9ff63b4 1-18
+app/src/main/res/drawable/bg_banner_indicator_normal.xml
+  h_c1a03fb9ff63b4 1-6
+app/src/main/res/drawable/bg_banner_indicator_selected.xml
+  h_c1a03fb9ff63b4 1-6
+app/src/main/res/drawable/bg_chat_bubble_ai.xml
+  h_c1a03fb9ff63b4 1-10
+app/src/main/res/drawable/bg_chat_bubble_user.xml
+  h_c1a03fb9ff63b4 1-8
+app/src/main/res/drawable/bg_circle_white.xml
+  h_c1a03fb9ff63b4 1-4
+app/src/main/res/drawable/rounded_edit_text.xml
+  h_c1a03fb9ff63b4 1-10
+app/src/main/res/layout/activity_ai_assistant.xml
+  h_c1a03fb9ff63b4 1-116
+app/src/main/res/layout/activity_class_schedule.xml
+  h_c1a03fb9ff63b4 1-136
+app/src/main/res/layout/activity_comment.xml
+  h_c1a03fb9ff63b4 1-141
+app/src/main/res/layout/activity_create_post.xml
+  h_c1a03fb9ff63b4 1-92
+app/src/main/res/layout/activity_health_checkin.xml
+  h_c1a03fb9ff63b4 1-172
+app/src/main/res/layout/activity_health_checkin_stats.xml
+  h_c1a03fb9ff63b4 1-106
+app/src/main/res/layout/activity_health_dashboard.xml
+  h_c1a03fb9ff63b4 1-487
+app/src/main/res/layout/activity_login.xml
+  h_c1a03fb9ff63b4 1-68
+app/src/main/res/layout/activity_main.xml
+  h_c1a03fb9ff63b4 1-22
+app/src/main/res/layout/activity_register.xml
+  h_c1a03fb9ff63b4 1-60
+app/src/main/res/layout/activity_reminder_center.xml
+  h_c1a03fb9ff63b4 1-36
+app/src/main/res/layout/activity_splash.xml
+  h_c1a03fb9ff63b4 1-18
+app/src/main/res/layout/activity_virtual_fitness.xml
+  h_c1a03fb9ff63b4 1-99
+app/src/main/res/layout/activity_write_diary.xml
+  h_c1a03fb9ff63b4 1-97
+app/src/main/res/layout/fragment_community.xml
+  h_c1a03fb9ff63b4 1-63
+app/src/main/res/layout/fragment_diary.xml
+  h_c1a03fb9ff63b4 1-67
+app/src/main/res/layout/fragment_home.xml
+  h_c1a03fb9ff63b4 1-112
+app/src/main/res/layout/fragment_profile.xml
+  h_c1a03fb9ff63b4 1-156
+app/src/main/res/layout/item_banner.xml
+  h_c1a03fb9ff63b4 1-13
+app/src/main/res/layout/item_chat_ai.xml
+  h_c1a03fb9ff63b4 1-32
+app/src/main/res/layout/item_chat_user.xml
+  h_c1a03fb9ff63b4 1-30
+app/src/main/res/layout/item_class_schedule.xml
+  h_c1a03fb9ff63b4 1-48
+app/src/main/res/layout/item_comment.xml
+  h_c1a03fb9ff63b4 1-69
+app/src/main/res/layout/item_community_post.xml
+  h_c1a03fb9ff63b4 1-127
+app/src/main/res/layout/item_diary.xml
+  h_c1a03fb9ff63b4 1-51
+app/src/main/res/layout/item_feature.xml
+  h_c1a03fb9ff63b4 1-33
+app/src/main/res/layout/item_image_upload.xml
+  h_c1a03fb9ff63b4 1-23
+app/src/main/res/layout/item_post.xml
+  h_c1a03fb9ff63b4 1-141
+app/src/main/res/layout/item_post_comment.xml
+  h_c1a03fb9ff63b4 1-47
+app/src/main/res/menu/bottom_navigation.xml
+  h_c1a03fb9ff63b4 1-24
+app/src/main/res/values/colors.xml
+  h_c1a03fb9ff63b4 1-20
+app/src/main/res/values/strings.xml
+  h_c1a03fb9ff63b4 1-52
+app/src/main/res/values/strings_health_dashboard.xml
+  h_c1a03fb9ff63b4 1-60
+app/src/main/res/values/styles.xml
+  h_c1a03fb9ff63b4 1-9
+app/src/main/res/values/themes.xml
+  h_c1a03fb9ff63b4 1-20
+build.gradle.kts
+  h_c1a03fb9ff63b4 1-17
+doc/sqlite_init.sql
+  h_c1a03fb9ff63b4 1-105
+doc/健康数据日志导出说明.md
+  h_c1a03fb9ff63b4 1-92
+doc/新增功能.txt
+  h_c1a03fb9ff63b4 1-2
+doc/新增功能开发思路和计划.md
+  h_c1a03fb9ff63b4 1-554
+doc/论文/drawio原始文件/.$系统功能结构图.drawio.bkp
+  h_c1a03fb9ff63b4 1-11
+doc/论文/drawio原始文件/android_health_module_deleted.drawio
+  h_c1a03fb9ff63b4 1-209
+doc/论文/drawio原始文件/health_er_chen.drawio
+  h_c1a03fb9ff63b4 1-211
+doc/论文/drawio原始文件/健康数据采集与预警处理流程图.drawio
+  h_c1a03fb9ff63b4 1-11
+doc/论文/drawio原始文件/系统功能结构图.drawio
+  h_c1a03fb9ff63b4 1-91
+doc/论文/drawio原始文件/系统总体架构图.drawio
+  h_c1a03fb9ff63b4 1-11
+doc/论文/drawio原始文件/系统高层用例图.drawio
+  h_c1a03fb9ff63b4 1-11
+doc/需求.md
+  h_c1a03fb9ff63b4 1-16
+gradle.properties
+  h_c1a03fb9ff63b4 1-45
+gradle/wrapper/gradle-wrapper.properties
+  h_c1a03fb9ff63b4 1-7
+gradlew
+  h_c1a03fb9ff63b4 1-249
+gradlew.bat
+  h_c1a03fb9ff63b4 1-92
+pull_ai_debug_log.ps1
+  h_c1a03fb9ff63b4 1-47
+settings.gradle.kts
+  h_c1a03fb9ff63b4 1-48
+xfyun-speech-template/README.md
+  h_c1a03fb9ff63b4 1-92
+xfyun-speech-template/build.gradle
+  h_c1a03fb9ff63b4 1-39
+xfyun-speech-template/consumer-rules.pro
+  h_c1a03fb9ff63b4 1
+xfyun-speech-template/doc/讯飞语音模块接入与使用说明.md
+  h_c1a03fb9ff63b4 1-390
+xfyun-speech-template/src/main/AndroidManifest.xml
+  h_c1a03fb9ff63b4 1-13
+xfyun-speech-template/src/main/java/com/jetpack/xfyun/speech/XfYunSpeechConfig.kt
+  h_c1a03fb9ff63b4 1-11
+xfyun-speech-template/src/main/java/com/jetpack/xfyun/speech/XfYunSpeechListener.kt
+  h_c1a03fb9ff63b4 1-9
+xfyun-speech-template/src/main/java/com/jetpack/xfyun/speech/XfYunSpeechModule.kt
+  h_c1a03fb9ff63b4 1-21
+xfyun-speech-template/src/main/java/com/jetpack/xfyun/speech/XfYunSpeechRecognizer.kt
+  h_c1a03fb9ff63b4 1-99
+xfyun-speech-template/src/main/java/com/jetpack/xfyun/speech/XfYunSpeechResultParser.kt
+  h_c1a03fb9ff63b4 1-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "3b16c643d4a259f4f22668ac34105dc4d5b7eebe",
+  "prompts": {},
+  "humans": {
+    "h_c1a03fb9ff63b4": {
+      "author": "yuhongwen <Hongwen_Yu.sgmwh@saic-gm.com>"
+    }
+  }
+}
